@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
+    protected $guarded= [] ;
+
     /**
      * Get the users for the role
      */
@@ -13,4 +15,6 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
+
+
 }
