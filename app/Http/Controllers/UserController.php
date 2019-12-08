@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\User;
@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -34,9 +36,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        User::create([
+
+            'name'=> request('name'),
+            'surname'=> request('surname'),
+            'email' => request('email'),
+            'password'=> request('password'),
+            'role_id' => request('role_id'),
+            'company_id'=> request('company_id'),
+        ]);
     }
 
     /**

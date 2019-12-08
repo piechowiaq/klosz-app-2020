@@ -19,11 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/admin/users', 'UserController');
 
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
+Route::post('/admin/users', 'UserController@store');
 
-    Route::resource('/users', 'UserController');
-    Route::resource('/roles', 'RoleController');
 
-});
+
