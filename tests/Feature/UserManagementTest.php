@@ -8,6 +8,7 @@ use Tests\TestCase;
 use App\User;
 use App\Role;
 
+
 class UserManagementTest extends TestCase
 {
     use RefreshDatabase;
@@ -15,17 +16,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_created()
     {
-
-
-        $response = $this->post('/admin/users', [
-
-            'name'=>'User Name',
-            'surname'=>'User Surname',
-            'email' => 'test@test.com',
-            'password'=> 'password',
-            'role_id' => 1,
-            'company_id'=> 1,
-        ]);
+        $response = $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $user = User::all();
         $response->assertOk();
@@ -63,5 +54,24 @@ class UserManagementTest extends TestCase
         $this->assertEquals('New Surname', User::first()->surname);
         $this->assertEquals(2, User::first()->role_id);
         $response->assertRedirect($user->fresh()->path());
+    }
+
+    /** @test */
+    public function a_user_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->post('/admin/users', $attributes = factory(User::class)->raw());
+
+        $user = User::first();
+
+        $this->assertCount(1, User::all());
+
+        $response = $this->delete($user->path());
+
+        $this->assertCount(0, User::all());
+
+        $response->assertRedirect('/admin/users');
+
     }
 }

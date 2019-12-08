@@ -2,13 +2,11 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Role;
-
+use App\Company;
 use Faker\Generator as Faker;
 
-$factory->define(Role::class, function (Faker $faker) {
+$factory->define(Company::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'description' => $faker->sentence(4),
     ];
 });
