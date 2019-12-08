@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Company;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -19,41 +20,37 @@ class UserManagementTest extends TestCase
         $response = $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $user = User::all();
+
         $response->assertOk();
+
         $this->assertCount(1, $user);
-        //$this->assertEquals(Role::first()->id, User::first()->role_id);
+
+        $this->assertEquals(Role::first()->id, User::first()->role_id);
+
+        $this->assertEquals(Company::first()->id, User::first()->company_id);
 
     }
 
     /** @test */
     public function a_user_can_be_updated()
     {
+        $this->withoutExceptionHandling();
 
-        $this->post('/admin/users', [
-
-            'name'=>'User Name',
-            'surname'=>'User Surname',
-            'email' => 'test@test.com',
-            'password'=> 'password',
-            'role_id' => 1,
-            'company_id'=> 1,
-        ]);
+        $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $user = User::first();
 
-        $response = $this->patch('/admin/users/'. $user->id,[
+        $response = $this->patch('/admin/users/'. $user->id, $attributes = [
             'name'=> 'New Name',
-            'surname'=> 'New Surname',
-            'email' => 'new@test.com',
-            'password'=> 'new pass',
-            'role_id' => 2,
-            'company_id'=> 2,
-            ]);
+         ]);
 
-        $this->assertEquals('New Name', User::first()->name);
-        $this->assertEquals('New Surname', User::first()->surname);
-        $this->assertEquals(2, User::first()->role_id);
+        $this->get($user->path().'/edit')->assertOk();
+
+        $this->assertDatabaseHas('users', $attributes);
+
         $response->assertRedirect($user->fresh()->path());
+
+
     }
 
     /** @test */
@@ -74,4 +71,53 @@ class UserManagementTest extends TestCase
         $response->assertRedirect('/admin/users');
 
     }
+
+    /** @test */
+    public function a_name_is_required()
+    {
+        $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['name' => '']));
+
+        $response->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    public function a_surname_is_required()
+    {
+        $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['surname' => '']));
+
+        $response->assertSessionHasErrors('surname');
+    }
+
+    /** @test */
+    public function a_email_is_required()
+    {
+        $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['email' => '']));
+
+        $response->assertSessionHasErrors('email');
+    }
+
+    /** @test */
+    public function a_email_is_password()
+    {
+        $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['password' => '']));
+
+        $response->assertSessionHasErrors('password');
+    }
+
+    /** @test */
+    public function a_role_id_is_password()
+    {
+        $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['role_id' => '']));
+
+        $response->assertSessionHasErrors('role_id');
+    }
+
+    /** @test */
+    public function a_company_id_is_password()
+    {
+        $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['company_id' => '']));
+
+        $response->assertSessionHasErrors('company_id');
+    }
+
 }

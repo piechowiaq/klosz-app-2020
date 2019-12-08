@@ -35,15 +35,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    /**
+     * The role associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 
     public function path()
     {
         return "/admin/users/{$this->id}";
     }
+
+
 
 }

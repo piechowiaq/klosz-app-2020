@@ -38,17 +38,7 @@ class UserController extends Controller
      */
     public function store()
     {
-        $data = request()->validate([
-            'name'=> 'required',
-            'surname'=> 'required',
-            'email' => 'required',
-            'password'=> 'required',
-            'role_id' => 'required',
-            'company_id'=> 'required',
-
-        ]);
-
-        User::create($data);
+        User::create($this->validateRequest());
     }
 
     /**
@@ -82,17 +72,7 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
-        $data = request()->validate([
-            'name'=> 'required',
-            'surname'=> 'required',
-            'email' => 'required',
-            'password'=> 'required',
-            'role_id' => 'required',
-            'company_id'=> 'required',
-
-        ]);
-
-        $user->update($data);
+        $user->update($this->validateRequest());
 
         return redirect($user->path());
     }
@@ -108,5 +88,17 @@ class UserController extends Controller
         $user->delete();
 
         return redirect('/admin/users');
+    }
+
+    protected function validateRequest()
+    {
+        return request()->validate([
+            'name'=> 'sometimes|required',
+            'surname'=> 'sometimes|required',
+            'email' => 'sometimes|required|unique:users',
+            'password'=> 'sometimes|required',
+            'role_id' => 'sometimes|required',
+            'company_id'=> 'sometimes|required',
+        ]);
     }
 }

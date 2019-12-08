@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/admin/users', 'UserController@store');
 Route::delete('/admin/users/{user}', 'UserController@destroy');
 Route::patch('/admin/users/{user}', 'UserController@update');
+Route::get('/admin/users/{user}/edit', 'UserController@edit');
 
 
 
