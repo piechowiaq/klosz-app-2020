@@ -38,15 +38,17 @@ class UserController extends Controller
      */
     public function store()
     {
-        User::create([
+        $data = request()->validate([
+            'name'=> 'required',
+            'surname'=> 'required',
+            'email' => 'required',
+            'password'=> 'required',
+            'role_id' => 'required',
+            'company_id'=> 'required',
 
-            'name'=> request('name'),
-            'surname'=> request('surname'),
-            'email' => request('email'),
-            'password'=> request('password'),
-            'role_id' => request('role_id'),
-            'company_id'=> request('company_id'),
         ]);
+
+        User::create($data);
     }
 
     /**
@@ -78,9 +80,21 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(User $user)
     {
-        //
+        $data = request()->validate([
+            'name'=> 'required',
+            'surname'=> 'required',
+            'email' => 'required',
+            'password'=> 'required',
+            'role_id' => 'required',
+            'company_id'=> 'required',
+
+        ]);
+
+        $user->update($data);
+
+        return redirect($user->path());
     }
 
     /**

@@ -41,5 +41,9 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function path()
+    {
+        return "/admin/users/{$this->id}";
+    }
 
 }

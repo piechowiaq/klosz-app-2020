@@ -15,7 +15,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_created()
     {
-        $this->withoutExceptionHandling();
+
 
         $response = $this->post('/admin/users', [
 
@@ -32,5 +32,36 @@ class UserManagementTest extends TestCase
         $this->assertCount(1, $user);
         //$this->assertEquals(Role::first()->id, User::first()->role_id);
 
+    }
+
+    /** @test */
+    public function a_user_can_be_updated()
+    {
+
+        $this->post('/admin/users', [
+
+            'name'=>'User Name',
+            'surname'=>'User Surname',
+            'email' => 'test@test.com',
+            'password'=> 'password',
+            'role_id' => 1,
+            'company_id'=> 1,
+        ]);
+
+        $user = User::first();
+
+        $response = $this->patch('/admin/users/'. $user->id,[
+            'name'=> 'New Name',
+            'surname'=> 'New Surname',
+            'email' => 'new@test.com',
+            'password'=> 'new pass',
+            'role_id' => 2,
+            'company_id'=> 2,
+            ]);
+
+        $this->assertEquals('New Name', User::first()->name);
+        $this->assertEquals('New Surname', User::first()->surname);
+        $this->assertEquals(2, User::first()->role_id);
+        $response->assertRedirect($user->fresh()->path());
     }
 }

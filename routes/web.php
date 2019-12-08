@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::post('/admin/users', 'UserController@store');
+Route::patch('/admin/users/{user}', 'UserController@update');
 
 
 
