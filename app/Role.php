@@ -16,5 +16,10 @@ class Role extends Model
         return $this->hasMany(User::class);
     }
 
+    public function path()
+    {
+        return "/admin/roles/{$this->id}";
+    }
+
 
 }

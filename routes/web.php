@@ -25,5 +25,9 @@ Route::delete('/admin/users/{user}', 'UserController@destroy');
 Route::patch('/admin/users/{user}', 'UserController@update');
 Route::get('/admin/users/{user}/edit', 'UserController@edit');
 
+Route::post('/admin/roles', 'RoleController@store');
+Route::patch('/admin/roles/{role}', 'RoleController@update');
+Route::get('/admin/roles/{role}/edit', 'RoleController@edit');
+Route::delete('/admin/roles/{role}', 'RoleController@destroy');
 
 

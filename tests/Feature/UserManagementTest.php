@@ -34,8 +34,6 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_updated()
     {
-        $this->withoutExceptionHandling();
-
         $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $user = User::first();
@@ -97,7 +95,7 @@ class UserManagementTest extends TestCase
     }
 
     /** @test */
-    public function a_email_is_password()
+    public function a_password_is_required()
     {
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['password' => '']));
 
@@ -105,7 +103,7 @@ class UserManagementTest extends TestCase
     }
 
     /** @test */
-    public function a_role_id_is_password()
+    public function a_role_id_is_required()
     {
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['role_id' => '']));
 
@@ -113,11 +111,14 @@ class UserManagementTest extends TestCase
     }
 
     /** @test */
-    public function a_company_id_is_password()
+    public function a_company_id_is_required()
     {
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['company_id' => '']));
 
         $response->assertSessionHasErrors('company_id');
     }
+
+
+
 
 }
