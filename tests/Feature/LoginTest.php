@@ -31,6 +31,25 @@ class LoginTest extends TestCase
         $this->assertCount(1, User::all());
 
     }
+
+    /** @test */
+
+    public function a_role_can_be_added()
+    {
+
+        $this->withoutExceptionHandling();
+
+        $response = $this->post('/admin/roles', [
+            'name' => 'admin'
+        ]);
+
+        $response->assertOk();
+        $this->assertCount(1, Role::all());
+
+    }
+
+
+
 }
 
 

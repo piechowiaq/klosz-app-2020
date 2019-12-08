@@ -24,5 +24,6 @@ Route::resource('/admin/users', 'UserController');
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
 
     Route::resource('/users', 'UserController');
+    Route::resource('/roles', 'RoleController');
 
 });
