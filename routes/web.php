@@ -30,4 +30,8 @@ Route::patch('/admin/roles/{role}', 'RoleController@update');
 Route::get('/admin/roles/{role}/edit', 'RoleController@edit');
 Route::delete('/admin/roles/{role}', 'RoleController@destroy');
 
+Route::post('/admin/companies', 'CompanyController@store');
+Route::patch('/admin/companies/{company}', 'CompanyController@update');
+Route::get('/admin/companies/{company}/edit', 'CompanyController@edit');
+Route::delete('/admin/companies/{company}', 'CompanyController@destroy');
 
