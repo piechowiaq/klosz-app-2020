@@ -6,6 +6,7 @@ namespace Tests\Unit;
 
 use App\Company;
 use App\Role;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,26 +15,41 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     use RefreshDatabase;
-    /** @test */
-    public function a_user_has_role()
-    {
-        $user = factory('App\User')->create();
-
-        $this->assertInstanceOf(Role::class, $user->role);
-    }
 
     /** @test */
-    public function a_user_has_company()
-    {
-        $user = factory('App\User')->create();
-
-        $this->assertInstanceOf(Company::class, $user->company);
-    }
-
     function user_has_a_path()
     {
         $user = factory(User::class)->create();
 
         $this->assertEquals("/admin/users/{$user->id}", $user->path());
     }
+
+    /** @test */
+    public function a_user_belongs_to_many_roles()
+    {
+        $user = factory(User::class)->create();
+        $role = factory(Role::class)->create();
+
+        $user->roles()->sync($role);
+
+        $this->assertDatabaseHas('role_user', [
+            'role_id' => $role->id,
+            'user_id' => $user->id
+        ]);
+    }
+
+    /** @test */
+    public function a_user_belongs_to_many_companies()
+    {
+        $user = factory(User::class)->create();
+        $company = factory(Company::class)->create();
+
+        $user->companies()->sync($company);
+
+        $this->assertDatabaseHas('company_user', [
+            'company_id' => $company->id,
+            'user_id' => $user->id
+        ]);
+    }
+
 }

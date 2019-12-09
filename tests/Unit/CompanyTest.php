@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Company;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,11 +20,24 @@ class CompanyTest extends TestCase
         $this->assertInstanceOf(Collection::class, $company->users);
     }
 
-//    /** @test */
-//    function role_has_a_path()
-//    {
-//        $role = factory(Role::class)->create();
-//
-//        $this->assertEquals("/admin/roles/{$role->id}", $role->path());
-//    }
+    /** @test */
+    function company_has_a_path()
+    {
+        $company = factory(Company::class)->create();
+
+        $this->assertEquals("/admin/companies/{$company->id}", $company->path());
+    }
+
+    public function a_comapny_belongs_to_many_users()
+    {
+        $user = factory(User::class)->create();
+        $company = factory(Company::class)->create();
+
+        $company->users()->sync($user);
+
+        $this->assertDatabaseHas('company_user', [
+            'company_id' => $company->id,
+            'user_id' => $user->id
+        ]);
+    }
 }

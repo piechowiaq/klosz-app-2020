@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
@@ -38,16 +39,16 @@ class User extends Authenticatable
     /**
      * The role associated with the user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsToMany
      */
-    public function role()
+    public function roles()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class);
     }
 
-    public function company()
+    public function companies()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsToMany(Company::class);
     }
 
     public function path()

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Role;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,11 +13,17 @@ class RoleTest extends TestCase
 {
     use RefreshDatabase;
     /** @test */
-    public function a_role_has_many_users()
+    public function a_role_belongs_to_many_users()
     {
-        $role = factory('App\Role')->create();
+        $user = factory(User::class)->create();
+        $role = factory(Role::class)->create();
 
-        $this->assertInstanceOf(Collection::class, $role->users);
+        $role->users()->sync($user);
+
+        $this->assertDatabaseHas('role_user', [
+            'role_id' => $role->id,
+            'user_id' => $user->id
+        ]);
     }
 
     /** @test */
