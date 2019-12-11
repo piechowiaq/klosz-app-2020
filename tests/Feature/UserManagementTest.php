@@ -15,15 +15,30 @@ class UserManagementTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function guests_cannot_create_update_delete_users()
+    {
+        $user = factory(User::class)->create();
+
+        $this->post('/admin/users', $user->toArray())->assertRedirect('login');
+
+        $this->patch($user->path())->assertRedirect('/login');
+
+        $this->delete($user->path())->assertRedirect('/login');
+
+    }
+
+    /** @test */
     public function a_user_can_be_created()
     {
+        $this->actingAs(factory(User::class)->create());
+
         $response = $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $user = User::all();
 
         $response->assertOk();
 
-        $this->assertCount(1, $user);
+        $this->assertCount(2, $user);
 
         //$this->assertEquals(Role::first()->id, User::first()->role_id);
 
@@ -34,6 +49,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_updated()
     {
+        $this->actingAs(factory(User::class)->create());
+
         $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $user = User::first();
@@ -54,17 +71,17 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_deleted()
     {
-        $this->withoutExceptionHandling();
+        $this->actingAs(factory(User::class)->create());
 
         $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $user = User::first();
 
-        $this->assertCount(1, User::all());
+        $this->assertCount(2, User::all());
 
         $response = $this->delete($user->path());
 
-        $this->assertCount(0, User::all());
+        $this->assertCount(1, User::all());
 
         $response->assertRedirect('/admin/users');
 
@@ -73,6 +90,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_name_is_required()
     {
+        $this->actingAs(factory(User::class)->create());
+
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['name' => '']));
 
         $response->assertSessionHasErrors('name');
@@ -81,6 +100,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_surname_is_required()
     {
+        $this->actingAs(factory(User::class)->create());
+
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['surname' => '']));
 
         $response->assertSessionHasErrors('surname');
@@ -89,6 +110,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_email_is_required()
     {
+        $this->actingAs(factory(User::class)->create());
+
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['email' => '']));
 
         $response->assertSessionHasErrors('email');
@@ -97,6 +120,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_password_is_required()
     {
+        $this->actingAs(factory(User::class)->create());
+
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['password' => '']));
 
         $response->assertSessionHasErrors('password');
@@ -105,6 +130,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_role_id_is_required()
     {
+        $this->actingAs(factory(User::class)->create());
+
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['role_id' => '']));
 
         $response->assertSessionHasErrors('role_id');
@@ -113,14 +140,11 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_company_id_is_required()
     {
+        $this->actingAs(factory(User::class)->create());
+
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['company_id' => '']));
 
         $response->assertSessionHasErrors('company_id');
     }
-
-
-
-
-
 
 }

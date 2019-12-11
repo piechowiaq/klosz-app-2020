@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class RoleManagementTest extends TestCase
 {
