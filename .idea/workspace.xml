@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/RoleManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/RoleManagementTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/UserManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/TestCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/TestCase.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -160,7 +158,7 @@
       <updated>1574966053349</updated>
       <workItem from="1574966054481" duration="13302000" />
       <workItem from="1575209132722" duration="5927000" />
-      <workItem from="1575703687547" duration="44314000" />
+      <workItem from="1575703687547" duration="46066000" />
     </task>
     <servers />
   </component>

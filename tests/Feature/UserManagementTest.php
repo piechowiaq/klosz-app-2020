@@ -10,6 +10,7 @@ use App\User;
 use App\Role;
 
 
+
 class UserManagementTest extends TestCase
 {
     use RefreshDatabase;
@@ -19,18 +20,24 @@ class UserManagementTest extends TestCase
     {
         $user = factory(User::class)->create();
 
+        $this->get('/admin/users/create')->assertRedirect('login');
+
         $this->post('/admin/users', $user->toArray())->assertRedirect('login');
 
         $this->patch($user->path())->assertRedirect('/login');
 
         $this->delete($user->path())->assertRedirect('/login');
 
+        $this->get($user->path().'/edit')->assertRedirect('/login');
+
     }
 
     /** @test */
     public function a_user_can_be_created()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
+
+        $this->get('/admin/users/create')->assertStatus(200);
 
         $response = $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
@@ -49,7 +56,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_updated()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
@@ -71,7 +78,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_deleted()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
@@ -90,7 +97,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_name_is_required()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['name' => '']));
 
@@ -100,7 +107,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_surname_is_required()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['surname' => '']));
 
@@ -110,7 +117,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_email_is_required()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['email' => '']));
 
@@ -120,7 +127,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_password_is_required()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['password' => '']));
 
@@ -130,7 +137,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_role_id_is_required()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['role_id' => '']));
 
@@ -140,7 +147,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_company_id_is_required()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['company_id' => '']));
 

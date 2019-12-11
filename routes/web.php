@@ -22,10 +22,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminController@index')->middleware('auth');
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/admin/users/create', 'UserController@create');
     Route::post('/admin/users', 'UserController@store');
     Route::delete('/admin/users/{user}', 'UserController@destroy');
     Route::patch('/admin/users/{user}', 'UserController@update');
     Route::get('/admin/users/{user}/edit', 'UserController@edit');
+
 });
 
 Auth::routes();
