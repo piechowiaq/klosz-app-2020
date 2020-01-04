@@ -19,10 +19,11 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/admin', 'AdminController@index')->middleware('auth');
+Route::get('/admin', 'UserController@index')->middleware(['auth', 'can:edit-settings']);
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'can:edit-settings']], function () {
 
+    Route::get('/admin', 'UserController@index');
     Route::get('/admin/users/create', 'UserController@create');
     Route::post('/admin/users', 'UserController@store');
     Route::delete('/admin/users/{user}', 'UserController@destroy');

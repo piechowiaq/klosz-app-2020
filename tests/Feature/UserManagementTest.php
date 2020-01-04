@@ -4,10 +4,12 @@ namespace Tests\Feature;
 
 use App\Company;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\User;
 use App\Role;
+
 
 
 
@@ -16,11 +18,29 @@ class UserManagementTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function guests_cannot_create_update_delete_users()
+    public function only_SuperAdmin_can_access_admin_panel()
     {
-        $user = factory(User::class)->create();
+
+        $this->get('/admin')->assertRedirect('login');
+
+        $this->signIn();
+
+        $this->get('/admin')->assertStatus(403);
+
+        $this->signInSuperAdmin();
+
+        $this->get('/admin')->assertOk();
+
+    }
+
+
+    /** @test */
+    public function guests_cannot_manage_users()
+    {
 
         $this->get('/admin/users/create')->assertRedirect('login');
+
+        $user = factory(User::class)->create();
 
         $this->post('/admin/users', $user->toArray())->assertRedirect('login');
 
@@ -32,10 +52,15 @@ class UserManagementTest extends TestCase
 
     }
 
+
     /** @test */
     public function a_user_can_be_created()
     {
         $this->signIn();
+
+        $this->get('/admin/users/create')->assertStatus(403);
+
+        $this->signInSuperAdmin();
 
         $this->get('/admin/users/create')->assertStatus(200);
 
@@ -45,7 +70,7 @@ class UserManagementTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertCount(2, $user);
+        $this->assertCount(3, $user);
 
         //$this->assertEquals(Role::first()->id, User::first()->role_id);
 
@@ -56,7 +81,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_updated()
     {
-        $this->signIn();
+
+        $this->signInSuperAdmin();
 
         $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
@@ -78,7 +104,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_deleted()
     {
-        $this->signIn();
+
+        $this->signInSuperAdmin();
 
         $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
@@ -97,7 +124,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_name_is_required()
     {
-        $this->signIn();
+        $this->signInSuperAdmin();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['name' => '']));
 
@@ -107,7 +134,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_surname_is_required()
     {
-        $this->signIn();
+        $this->signInSuperAdmin();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['surname' => '']));
 
@@ -115,9 +142,9 @@ class UserManagementTest extends TestCase
     }
 
     /** @test */
-    public function a_email_is_required()
+    public function an_email_is_required()
     {
-        $this->signIn();
+        $this->signInSuperAdmin();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['email' => '']));
 
@@ -127,7 +154,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_password_is_required()
     {
-        $this->signIn();
+        $this->signInSuperAdmin();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['password' => '']));
 
@@ -137,7 +164,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_role_id_is_required()
     {
-        $this->signIn();
+        $this->signInSuperAdmin();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['role_id' => '']));
 
@@ -147,7 +174,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_company_id_is_required()
     {
-        $this->signIn();
+        $this->signInSuperAdmin();
 
         $response = $this->post('/admin/users', array_merge($attributes = factory(User::class)->raw(), ['company_id' => '']));
 

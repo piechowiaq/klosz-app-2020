@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -17,7 +18,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        if (Gate::allows('edit-settings')) {
+            echo 'Admin user role is allowed';
+        } else {
+            return redirect('login');
+        }
     }
 
     /**
