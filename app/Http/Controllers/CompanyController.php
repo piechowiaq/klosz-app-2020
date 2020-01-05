@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    public function index()
+    {
+        return view('admin.companies.index');
+    }
+
     public function store()
     {
         Company::create($this->validateRequest());

@@ -62,13 +62,13 @@
                     <div class=" w-1/4">
                         <ul class="">
                             <li class="mr-6">
-                                <a class="text-red-500 hover:text-red-800" href="#">Users</a>
+                                <a class="text-red-500 hover:text-red-800" href="{{ route('users.index') }}">Users</a>
                             </li>
                             <li class="mr-6 mt-6">
-                                <a class="text-red-500 hover:text-red-800" href="#">Roles</a>
+                                <a class="text-red-500 hover:text-red-800" href="{{ route('roles.index') }}">Roles</a>
                             </li>
                             <li class="mr-6 mt-6">
-                                <a class="text-red-500 hover:text-red-800" href="#">Companies</a>
+                                <a class="text-red-500 hover:text-red-800" href="{{ route('companies.index') }}">Companies</a>
                             </li>
 
                         </ul>

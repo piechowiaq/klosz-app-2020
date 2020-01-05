@@ -24,20 +24,22 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth', 'can:edit-settings']], function () {
 
-    Route::get('/admin', 'UserController@index');
+    Route::get('/admin', 'AdminController@index');
 
-    Route::get('/admin/users', 'UserController@index');
+    Route::get('/admin/users', 'UserController@index')->name('users.index');
     Route::get('/admin/users/create', 'UserController@create');
     Route::post('/admin/users', 'UserController@store');
     Route::delete('/admin/users/{user}', 'UserController@destroy');
     Route::patch('/admin/users/{user}', 'UserController@update');
     Route::get('/admin/users/{user}/edit', 'UserController@edit');
 
+    Route::get('/admin/roles', 'RoleController@index')->name('roles.index');
     Route::post('/admin/roles', 'RoleController@store');
     Route::patch('/admin/roles/{role}', 'RoleController@update');
     Route::get('/admin/roles/{role}/edit', 'RoleController@edit');
     Route::delete('/admin/roles/{role}', 'RoleController@destroy');
 
+    Route::get('/admin/companies', 'CompanyController@index')->name('companies.index');
     Route::post('/admin/companies', 'CompanyController@store');
     Route::patch('/admin/companies/{company}', 'CompanyController@update');
     Route::get('/admin/companies/{company}/edit', 'CompanyController@edit');
