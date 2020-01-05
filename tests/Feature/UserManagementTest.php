@@ -86,7 +86,7 @@ class UserManagementTest extends TestCase
 
         $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
-        $user = User::first();
+        $user = User::where('id', '2')->first();
 
         $response = $this->patch('/admin/users/'. $user->id, $attributes = [
             'name'=> 'New Name',

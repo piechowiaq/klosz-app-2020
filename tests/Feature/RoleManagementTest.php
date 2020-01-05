@@ -17,25 +17,29 @@ class RoleManagementTest extends TestCase
     /** @test */
     public function a_role_can_be_created()
     {
+        $this->signInSuperAdmin();
+
         $response = $this->post('/admin/roles', $attributes = factory(Role::class)->raw());
 
         $role = Role::all();
 
         $response->assertOk();
 
-        $this->assertCount(1, $role);
+        $this->assertCount(2, $role);
 
     }
 
     /** @test */
     public function a_role_can_be_updated()
     {
+        $this->signInSuperAdmin();
+
         $this->post('/admin/roles', $attributes = factory(Role::class)->raw());
 
-        $role = Role::first();
+        $role = Role::where('id', '2')->first();
 
         $response = $this->patch('/admin/roles/'. $role->id, $attributes = [
-            'name'=> 'New Name',
+            'name'=> 'New Role',
         ]);
 
         $this->get($role->path().'/edit')->assertOk();
@@ -48,17 +52,17 @@ class RoleManagementTest extends TestCase
     /** @test */
     public function a_role_can_be_deleted()
     {
-        $this->withoutExceptionHandling();
+        $this->signInSuperAdmin();
 
         $this->post('/admin/roles', $attributes = factory(Role::class)->raw());
 
         $role = Role::first();
 
-        $this->assertCount(1, Role::all());
+        $this->assertCount(2, Role::all());
 
         $response = $this->delete($role->path());
 
-        $this->assertCount(0, Role::all());
+        $this->assertCount(1, Role::all());
 
         $response->assertRedirect('/admin/roles');
 
@@ -67,6 +71,8 @@ class RoleManagementTest extends TestCase
     /** @test */
     public function a_role_name_is_required()
     {
+        $this->signInSuperAdmin();
+
         $response = $this->post('/admin/roles', array_merge($attributes = factory(Role::class)->raw(), ['name' => '']));
 
         $response->assertSessionHasErrors('name');
@@ -75,6 +81,8 @@ class RoleManagementTest extends TestCase
     /** @test */
     public function a_role_description_is_required()
     {
+        $this->signInSuperAdmin();
+
         $response = $this->post('/admin/roles', array_merge($attributes = factory(Role::class)->raw(), ['description' => '']));
 
         $response->assertSessionHasErrors('description');

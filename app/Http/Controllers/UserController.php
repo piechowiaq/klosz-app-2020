@@ -18,11 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('edit-settings')) {
-            echo 'Admin user role is allowed';
-        } else {
-            return redirect('login');
-        }
+        return view('admin.home');
     }
 
     /**
