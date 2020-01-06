@@ -43,8 +43,8 @@
             </div>
         </div>
     </nav>
-    <div class="flex items-center">
-        <div class="md:w-1/2 md:mx-auto">
+    <div class="flex  items-center">
+        <div class=" mx-auto">
 
             @if (session('status'))
                 <div class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100 px-3 py-4 mb-4" role="alert">
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="flex w-full p-6">
-                    <div class=" w-1/4">
+                    <div class=" w-1/6">
                         <ul class="">
                             <li class="mr-6">
                                 <a class="text-red-500 hover:text-red-800" href="{{ route('users.index') }}">Users</a>
@@ -74,7 +74,7 @@
                         </ul>
 
                     </div>
-                    <div class="w-3/4">
+                    <div class="w-5/6">
     @yield('content')
                     </div>
                 </div>
