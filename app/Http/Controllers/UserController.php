@@ -46,9 +46,19 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user)
+    public function store()
     {
-        User::create($this->validateRequest());
+        $user = User::create($this->validateRequest());
+
+//        request()->validate([
+//            'role_id'=>'required',
+//            'company_id' =>'required']);
+
+//        $user->roles()->attach(request('role_id'));
+//
+//        $user->companies()->attach(request('company_id'));
+
+//        return redirect('admin/users');
     }
 
     /**

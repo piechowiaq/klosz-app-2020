@@ -30,7 +30,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
         $role = factory(Role::class)->create();
 
-        $user->roles()->sync($role);
+        $user->roles()->attach($role);
 
         $this->assertDatabaseHas('role_user', [
             'role_id' => $role->id,
@@ -44,7 +44,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
         $company = factory(Company::class)->create();
 
-        $user->companies()->sync($company);
+        $user->companies()->attach($company);
 
         $this->assertDatabaseHas('company_user', [
             'company_id' => $company->id,

@@ -3,17 +3,17 @@
     <input type="text" name="name" value="{{old('name') ?? $user->name}}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('name') ? 'is-invalid' : '' }}" required>
 </div>
 
-<div class="form-group">
+<div class="">
     <label for="surname" class="block mt-2 py-2">Nazwisko:</label>
     <input type="text" name="surname" value="{{old('surname') ?? $user->surname }}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('surname') ? 'is-invalid' : '' }}" required>
 </div>
 
-<div class="form-group">
+<div class="">
     <label for="email" class="block mt-2 py-2">Adres e-mail:</label>
-    <input type="email" name="emial" value="{{old('email') ?? $user->email}}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('emial') ? 'is-invalid' : '' }}" required>
+    <input type="email" name="email" value="{{old('email') ?? $user->email}}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('email') ? 'is-invalid' : '' }}" required>
 </div>
 
-<div class="form-group">
+<div class="">
     <label for="role_id" class="block mt-2 py-2">Role:</label>
     <select name="role_id[]" id="role_id" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('role_id') ? 'is-invalid' : '' }}" multiple="multiple" >
         @foreach ($roles as $role)

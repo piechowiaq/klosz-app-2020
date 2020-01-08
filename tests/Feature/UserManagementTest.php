@@ -56,6 +56,8 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_created()
     {
+
+
         $this->signIn();
 
         $this->get('/admin/users/create')->assertStatus(403);
@@ -66,17 +68,15 @@ class UserManagementTest extends TestCase
 
         $response = $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
-        $user = User::all();
-
         $response->assertOk();
+
+        $user = User::all();
 
         $this->assertCount(3, $user);
 
-        //$this->assertEquals(Role::first()->id, User::first()->role_id);
-
-        //$this->assertEquals(Company::first()->id, User::first()->company_id);
-
     }
+
+
 
     /** @test */
     public function a_user_can_be_updated()
@@ -180,5 +180,7 @@ class UserManagementTest extends TestCase
 
         $response->assertSessionHasErrors('company_id');
     }
+
+
 
 }

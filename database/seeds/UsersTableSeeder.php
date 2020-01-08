@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Bartosz',
             'surname' => 'Piechowiak',
             'email' => 'piechowiaq@gmail.com',
-            'password' => '12345678',
+            'password' => bcrypt('12345678'),
             ]);
 
         $user->roles()->save($role);
