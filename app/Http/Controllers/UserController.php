@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Gate;
 class UserController extends Controller
 {
 
-
     /**
      * Display a listing of the resource.
      *
@@ -48,17 +47,19 @@ class UserController extends Controller
      */
     public function store()
     {
-        $user = User::create($this->validateRequest());
 
-//        request()->validate([
-//            'role_id'=>'required',
-//            'company_id' =>'required']);
+         $user = User::create($this->validateRequest());
 
-//        $user->roles()->attach(request('role_id'));
-//
-//        $user->companies()->attach(request('company_id'));
+         request()->validate([
+                'role_id'=>'required',
+                'company_id' =>'required']);
 
-//        return redirect('admin/users');
+         $user->roles()->attach(request('role_id'));
+
+         $user->companies()->attach(request('company_id'));
+
+         return redirect('admin/users');
+
     }
 
     /**

@@ -57,6 +57,7 @@ class UserManagementTest extends TestCase
     public function a_user_can_be_created()
     {
 
+        //$this->withoutExceptionHandling();
 
         $this->signIn();
 
@@ -66,9 +67,7 @@ class UserManagementTest extends TestCase
 
         $this->get('/admin/users/create')->assertStatus(200);
 
-        $response = $this->post('/admin/users', $attributes = factory(User::class)->raw());
-
-        $response->assertOk();
+        $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $user = User::all();
 
