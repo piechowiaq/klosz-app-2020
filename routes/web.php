@@ -30,8 +30,9 @@ Route::group(['middleware' => ['auth', 'can:edit-settings']], function () {
     Route::get('/admin/users/create', 'UserController@create')->name('users.create');
     Route::post('/admin/users', 'UserController@store')->name('users.store');
     Route::delete('/admin/users/{user}', 'UserController@destroy');
-    Route::patch('/admin/users/{user}', 'UserController@update');
-    Route::get('/admin/users/{user}/edit', 'UserController@edit');
+    Route::patch('/admin/users/{user}', 'UserController@update')->name('users.update');
+    Route::get('/admin/users/{user}/edit', 'UserController@edit')->name('users.edit');
+    Route::get('/admin/users/{user}', 'UserController@show')->name('users.show');
 
     Route::get('/admin/roles', 'RoleController@index')->name('roles.index');
     Route::get('/admin/roles/create', 'RoleController@create')->name('roles.create');

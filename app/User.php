@@ -61,5 +61,9 @@ class User extends Authenticatable
         return $this->roles()->where('name', 'SuperAdmin')->exists();
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->name.' '.$this->surname;
+    }
 
 }

@@ -8,6 +8,7 @@ use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -70,7 +71,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -81,7 +83,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $companies = Company::all();
+        $roles = Role::all();
+
+        return view ( 'admin.users.edit', compact('user', 'companies', 'roles'));
     }
 
     /**
@@ -93,7 +98,25 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
-        $user->update($this->validateRequest());
+        $user->companies()->detach();
+        $user->roles()->detach();
+
+        request()->validate(['role_id'=>'required', 'company_id' =>'required']);
+
+        //Rule::unique to allow unique name of the training when editing
+
+        $user->update(request()->validate([
+            'name'=> 'sometimes|required',
+            'surname'=> 'sometimes|required',
+            'email' => [
+                'required', 'sometimes',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'password'=> 'sometimes|required',
+        ]));
+
+        $user->roles()->attach(request('role_id'));
+        $user->companies()->attach(request('company_id'));
 
         return redirect($user->path());
     }
