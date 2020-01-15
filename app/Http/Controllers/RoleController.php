@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\Http\Controllers\Controller;
 use App\Role;
 use Illuminate\Http\Request;
@@ -18,12 +19,16 @@ class RoleController extends Controller
 
     public function create()
     {
-        //
+        $role = new Role();
+
+        return view('admin.roles.create', compact( 'role' ));
     }
 
     public function store()
     {
         Role::create($this->validateRequest());
+
+        return redirect('admin/roles');
     }
 
     public function update(Role $role)

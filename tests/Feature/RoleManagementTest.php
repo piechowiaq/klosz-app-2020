@@ -19,11 +19,9 @@ class RoleManagementTest extends TestCase
     {
         $this->signInSuperAdmin();
 
-        $response = $this->post('/admin/roles', $attributes = factory(Role::class)->raw());
+        $this->post('/admin/roles', $attributes = factory(Role::class)->raw());
 
         $role = Role::all();
-
-        $response->assertOk();
 
         $this->assertCount(2, $role);
 

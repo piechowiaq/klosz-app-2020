@@ -22,7 +22,7 @@
     </select>
 </div>
 
-<div class="form-group">
+<div class="">
     <label for="company_id" class="block mt-2 py-2">Company:</label>
     <select name="company_id[]" id="company_id" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('company_id') ? 'is-invalid' : '' }}" multiple="multiple" >
         @foreach ($companies as $company)

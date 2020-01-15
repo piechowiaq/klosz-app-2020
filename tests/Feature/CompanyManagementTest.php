@@ -16,11 +16,9 @@ class CompanyManagementTest extends TestCase
     {
         $this->signInSuperAdmin();
 
-        $response = $this->post('/admin/companies', $attributes = factory(Company::class)->raw());
+        $this->post('/admin/companies', $attributes = factory(Company::class)->raw());
 
         $company = Company::all();
-
-        $response->assertOk();
 
         $this->assertCount(1, $company);
 

@@ -16,12 +16,16 @@ class CompanyController extends Controller
 
     public function create()
     {
-        //
+        $company = new Company();
+
+        return view('admin.companies.create', compact( 'company' ));
     }
 
     public function store()
     {
         Company::create($this->validateRequest());
+
+        return redirect('admin/companies');
     }
 
     public function edit(Company $company)

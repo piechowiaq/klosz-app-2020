@@ -118,8 +118,8 @@ class UserController extends Controller
             'surname'=> 'sometimes|required',
             'email' => 'sometimes|required|unique:users',
             'password'=> 'sometimes|required',
-            'role_id' => 'sometimes|required',
-            'company_id'=> 'sometimes|required',
+//            'role_id' => 'sometimes|required',
+//            'company_id'=> 'sometimes|required',
         ]);
     }
 }
