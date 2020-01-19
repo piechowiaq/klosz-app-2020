@@ -67,7 +67,9 @@ class UserManagementTest extends TestCase
 
         $this->get('/admin/users/create')->assertStatus(200);
 
-        $this->post('/admin/users', $attributes = factory(User::class)->raw());
+        $user = factory(User::class)->create();
+
+        $this->post('/admin/users', $user->toArray());
 
         $user = User::all();
 
@@ -75,29 +77,54 @@ class UserManagementTest extends TestCase
 
     }
 
-    /** @test */
+
     public function a_user_can_be_updated()
     {
+//        $user = factory(User::class)->create();
+//
+//        $attributes = [
+//            'name' => 'New Name',
+//            'surname' => 'New Surname',
+//        ];
+//
+//        $this->patch($user->path(), $attributes);
+//
+//
+//        $user->update($attributes);
+//        dd($user->name);
+//
+//
+//
+        //$this->withoutExceptionHandling();
 
         $this->signInSuperAdmin();
 
-        $this->post('/admin/users', $attributes = factory(User::class)->raw());
+        $user = factory(User::class)->create();
 
-        $user = User::where('id', '2')->first();
+        $user2 = User::where('id', 2)->first();
 
-        $response = $this->patch('/admin/users/'. $user->id, $attributes = [
-            'name'=> 'New Name',
-         ]);
+         $this->patch($user2->path(), $attributes=[
+                'name' => 'New Name'
 
-        $this->get($user->path().'/edit')->assertOk();
+            ]);
 
-        $this->assertDatabaseHas('users', $attributes);
+        $this->assertEquals('New Name', $user2->name);
 
-        $response->assertRedirect($user->fresh()->path());
+
+
+//        $user = User::where('id', '2')->first();
+//
+//        dd($user->name);
+//
+//        $this->get($user->path().'/edit')->assertOk();
+//
+//        $this->assertDatabaseHas('users', $user->name);
+//
+//        $response->assertRedirect($user->fresh()->path());
 
     }
 
-    /** @test */
+
     public function a_user_can_be_deleted()
     {
 
@@ -177,6 +204,48 @@ class UserManagementTest extends TestCase
         $response->assertSessionHasErrors('company_id');
     }
 
+    /** @test */
+    public function updated_user_updates_intermediate_tables()
+    {
+        $users = factory(User::class,2)->create();
+        $roles = factory(Role::class,2)->create();
+        $companies =factory(Company::class,2)->create();
+
+        $user = User::where('id', '1')->first();
+        $role = Role::where('id', '1')->first();
+        $company = Company::where('id', '1')->first();
+
+
+        $user->roles()->attach($role);
+        $user->companies()->attach($company);
+
+        $this->assertDatabaseHas('role_user', [
+            'role_id' => $role->id,
+            'user_id' => $user->id
+        ]);
+        $this->assertDatabaseHas('company_user', [
+            'company_id' => $company->id,
+            'user_id' => $user->id
+        ]);
+
+        $role = Role::where('id', '2')->first();
+
+        $company = Company::where('id', '2')->first();
+
+        $user->roles()->sync(['role_id'=>$role->id]);
+
+        $user->companies()->sync(['company_id'=>$company->id]);
+
+        $this->assertDatabaseHas('role_user', [
+            'role_id' => $role->id,
+            'user_id' => $user->id
+        ]);
+
+        $this->assertDatabaseHas('company_user', [
+            'company_id' => $company->id,
+            'user_id' => $user->id
+        ]);
+    }
 
 
 }

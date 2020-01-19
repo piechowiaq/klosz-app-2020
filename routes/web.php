@@ -22,7 +22,8 @@ Route::get('/', function () {
 
 
 
-Route::group(['middleware' => ['auth', 'can:edit-settings']], function () {
+Route::patch('/admin/roles/{role}', 'RoleController@update');
+//Route::group(['middleware' => ['auth', 'can:edit-settings']], function () {
 
     Route::get('/admin', 'AdminController@index');
 
@@ -36,8 +37,9 @@ Route::group(['middleware' => ['auth', 'can:edit-settings']], function () {
 
     Route::get('/admin/roles', 'RoleController@index')->name('roles.index');
     Route::get('/admin/roles/create', 'RoleController@create')->name('roles.create');
-    Route::post('/admin/roles', 'RoleController@store')->name('roles.store');
-    Route::patch('/admin/roles/{role}', 'RoleController@update');
+    Route::post('/admin/roles', 'RoleController@store');
+
+
     Route::get('/admin/roles/{role}/edit', 'RoleController@edit');
     Route::delete('/admin/roles/{role}', 'RoleController@destroy');
 
@@ -49,7 +51,7 @@ Route::group(['middleware' => ['auth', 'can:edit-settings']], function () {
     Route::delete('/admin/companies/{company}', 'CompanyController@destroy');
 
 
-});
+//});
 
 
 

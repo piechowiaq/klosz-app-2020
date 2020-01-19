@@ -8,7 +8,7 @@ class Role extends Model
 {
     protected $guarded= [];
 
-    /**
+     /**
      * Get the users for the role
      */
     public function users()

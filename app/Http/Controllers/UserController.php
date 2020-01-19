@@ -24,7 +24,6 @@ class UserController extends Controller
         $users = User::all();
 
         return view('admin.users.index', compact('users'));
-
     }
 
     /**
@@ -35,7 +34,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
+
         $companies = Company::all();
+
         $user = new User();
 
         return view('admin.users.create', compact( 'roles', 'companies','user' ));
@@ -51,7 +52,7 @@ class UserController extends Controller
     {
         $this->validateRequest();
 
-        $user = new User(request(['name', 'surname', 'email']));
+        $user = new User(request(['name', 'surname', 'email', 'password']));
 
         $user->save();
 
@@ -60,7 +61,6 @@ class UserController extends Controller
         $user->companies()->attach(request('company_id'));
 
         return redirect('admin/users');
-
     }
 
     /**
@@ -71,7 +71,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-
         return view('admin.users.show', compact('user'));
     }
 
@@ -84,6 +83,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $companies = Company::all();
+
         $roles = Role::all();
 
         return view ( 'admin.users.edit', compact('user', 'companies', 'roles'));
@@ -98,7 +98,13 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
-        $user->update($this->validateRequest());
+        $this->validateRequest();
+
+        $user->update(request(['name', 'surname', 'email']));
+
+        $user->roles()->sync(request('role_id'));
+
+        $user->companies()->sync(request('company_id'));
 
         return redirect($user->path());
     }
@@ -119,12 +125,12 @@ class UserController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name'=> 'sometimes|required',
-            'surname'=> 'sometimes|required',
-            'email' => 'sometimes|required|unique:users',
-            'password'=> 'sometimes|required',
-            'role_id' => 'sometimes|required',
-            'company_id'=> 'sometimes|required',
+            'name'=> 'required',
+            'surname'=> 'required',
+            'email' => 'required|unique:users',
+            'password'=> 'required',
+            'role_id' => 'exists:companies,id|required',
+            'company_id'=> 'exists:companies,id|required',
         ]);
     }
 }

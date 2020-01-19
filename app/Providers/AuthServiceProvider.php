@@ -26,10 +26,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('edit-settings', function (User $user) {
-
-            return $user->isSuperAdmin();
-
-        });
+//        Gate::define('edit-settings', function (User $user) {
+//
+//            return $user->isSuperAdmin();
+//
+//        });
     }
 }

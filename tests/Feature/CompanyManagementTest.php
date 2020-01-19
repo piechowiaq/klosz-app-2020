@@ -33,7 +33,7 @@ class CompanyManagementTest extends TestCase
 
         $company = Company::first();
 
-        $response = $this->patch('/admin/companies/'. $company->id, $attributes = [
+        $response = $this->patch($company->path(), $attributes = [
             'name'=> 'New Name',
         ]);
 
