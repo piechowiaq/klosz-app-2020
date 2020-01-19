@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -48,18 +49,17 @@ class UserController extends Controller
      */
     public function store()
     {
+        $this->validateRequest();
 
-         $user = User::create($this->validateRequest());
+        $user = new User(request(['name', 'surname', 'email']));
 
-         request()->validate([
-                'role_id'=>'required',
-                'company_id' =>'required']);
+        $user->save();
 
-         $user->roles()->attach(request('role_id'));
+        $user->roles()->attach(request('role_id'));
 
-         $user->companies()->attach(request('company_id'));
+        $user->companies()->attach(request('company_id'));
 
-         return redirect('admin/users');
+        return redirect('admin/users');
 
     }
 
@@ -98,25 +98,7 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
-        $user->companies()->detach();
-        $user->roles()->detach();
-
-        request()->validate(['role_id'=>'required', 'company_id' =>'required']);
-
-        //Rule::unique to allow unique name of the training when editing
-
-        $user->update(request()->validate([
-            'name'=> 'sometimes|required',
-            'surname'=> 'sometimes|required',
-            'email' => [
-                'required', 'sometimes',
-                Rule::unique('users')->ignore($user->id),
-            ],
-            'password'=> 'sometimes|required',
-        ]));
-
-        $user->roles()->attach(request('role_id'));
-        $user->companies()->attach(request('company_id'));
+        $user->update($this->validateRequest());
 
         return redirect($user->path());
     }
@@ -141,8 +123,8 @@ class UserController extends Controller
             'surname'=> 'sometimes|required',
             'email' => 'sometimes|required|unique:users',
             'password'=> 'sometimes|required',
-//            'role_id' => 'sometimes|required',
-//            'company_id'=> 'sometimes|required',
+            'role_id' => 'sometimes|required',
+            'company_id'=> 'sometimes|required',
         ]);
     }
 }

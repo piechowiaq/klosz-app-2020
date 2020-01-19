@@ -52,4 +52,43 @@ class UserTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function a_user_getFullNameAttribute_works()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertEquals($user->name.' '.$user->surname,  $user->getFullNameAttribute());
+
+    }
+
+    /** @test */
+    public function a_role_user_table_withTimestamps()
+    {
+        $user = factory(User::class)->create();
+        $role = factory(Role::class)->create();
+
+        $user->roles()->attach($role);
+
+        $this->assertDatabaseHas('role_user', [
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at
+        ]);
+
+    }
+
+    /** @test */
+    public function a_company_user_table_withTimestamps()
+    {
+        $user = factory(User::class)->create();
+        $company = factory(Company::class)->create();
+
+        $user->companies()->attach($company);
+
+        $this->assertDatabaseHas('company_user', [
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at
+        ]);
+
+    }
+
 }
