@@ -33,7 +33,6 @@ class UserManagementTest extends TestCase
 
     }
 
-
     /** @test */
     public function guests_cannot_manage_users()
     {
@@ -52,89 +51,55 @@ class UserManagementTest extends TestCase
 
     }
 
-
     /** @test */
     public function a_user_can_be_created()
     {
-
-        //$this->withoutExceptionHandling();
-
         $this->signIn();
 
         $this->get('/admin/users/create')->assertStatus(403);
 
         $this->signInSuperAdmin();
 
-        $this->get('/admin/users/create')->assertStatus(200);
+        $this->get('/admin/users/create')->assertOk();
 
-        $user = factory(User::class)->create();
+        $response = $this->post('/admin/users', factory(User::class)->raw());
 
-        $this->post('/admin/users', $user->toArray());
+        $this->assertCount(2, User::all());
 
-        $user = User::all();
+        $user = User::where('id', 2)->first();
 
-        $this->assertCount(3, $user);
-
+        $response->assertRedirect($user->path());
     }
 
 
     public function a_user_can_be_updated()
     {
-//        $user = factory(User::class)->create();
-//
-//        $attributes = [
-//            'name' => 'New Name',
-//            'surname' => 'New Surname',
-//        ];
-//
-//        $this->patch($user->path(), $attributes);
-//
-//
-//        $user->update($attributes);
-//        dd($user->name);
-//
-//
-//
-        //$this->withoutExceptionHandling();
-
         $this->signInSuperAdmin();
 
-        $user = factory(User::class)->create();
+        $this->post('/admin/users', factory(User::class)->raw());
 
-        $user2 = User::where('id', 2)->first();
+        $this->assertCount(2, User::all());
 
-         $this->patch($user2->path(), $attributes=[
+        $user = User::where('id', 2)->first();
+
+        $this->patch($user->path(), $attributes=[
                 'name' => 'New Name'
 
             ]);
 
-        $this->assertEquals('New Name', $user2->name);
-
-
-
-//        $user = User::where('id', '2')->first();
-//
-//        dd($user->name);
-//
-//        $this->get($user->path().'/edit')->assertOk();
-//
-//        $this->assertDatabaseHas('users', $user->name);
-//
-//        $response->assertRedirect($user->fresh()->path());
-
+        $this->assertEquals('New Name', $user->name);
     }
 
-
+    /** @test */
     public function a_user_can_be_deleted()
     {
-
         $this->signInSuperAdmin();
 
-        $this->post('/admin/users', $attributes = factory(User::class)->raw());
-
-        $user = User::first();
+        $this->post('/admin/roles', $attributes = factory(User::class)->raw());
 
         $this->assertCount(2, User::all());
+
+        $user = User::where('id', 2)->first();
 
         $response = $this->delete($user->path());
 

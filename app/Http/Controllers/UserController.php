@@ -13,14 +13,15 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        $this->authorize('update');
+
         $users = User::all();
 
         return view('admin.users.index', compact('users'));
@@ -33,6 +34,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('update');
+
         $roles = Role::all();
 
         $companies = Company::all();
@@ -50,6 +53,8 @@ class UserController extends Controller
      */
     public function store()
     {
+        $this->authorize('update');
+
         $this->validateRequest();
 
         $user = new User(request(['name', 'surname', 'email', 'password']));
@@ -71,6 +76,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->authorize('update');
+
         return view('admin.users.show', compact('user'));
     }
 
@@ -82,6 +89,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update');
+
         $companies = Company::all();
 
         $roles = Role::all();
@@ -98,6 +107,8 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
+        $this->authorize('update');
+
         $this->validateRequest();
 
         $user->update(request(['name', 'surname', 'email']));
@@ -117,6 +128,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('update');
+
         $user->delete();
 
         return redirect('/admin/users');

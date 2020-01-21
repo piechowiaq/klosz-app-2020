@@ -37,8 +37,8 @@ Route::patch('/admin/roles/{role}', 'RoleController@update');
 
     Route::get('/admin/roles', 'RoleController@index')->name('roles.index');
     Route::get('/admin/roles/create', 'RoleController@create')->name('roles.create');
-    Route::post('/admin/roles', 'RoleController@store');
-
+    Route::post('/admin/roles', 'RoleController@store')->name('roles.store');
+    Route::get('/admin/roles/{role}', 'RoleController@show')->name('roles.show');
 
     Route::get('/admin/roles/{role}/edit', 'RoleController@edit');
     Route::delete('/admin/roles/{role}', 'RoleController@destroy');

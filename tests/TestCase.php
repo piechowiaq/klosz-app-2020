@@ -23,9 +23,11 @@ abstract class TestCase extends BaseTestCase
     {
         $user = $user ?: factory(User::class)->create();
 
-        $user->roles()->save(factory(Role::class)->create([
-            'name' => 'SuperAdmin'
-        ]));
+        $role = factory(Role::class)->create([
+                'name' => 'SuperAdmin'
+            ]);
+
+        $user->roles()->save($role);
 
         $this->actingAs($user);
 
