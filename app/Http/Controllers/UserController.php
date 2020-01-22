@@ -13,10 +13,10 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     public function index()
     {
@@ -34,7 +34,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('update');
+//        $this->authorize('update');
 
         $roles = Role::all();
 
@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function store()
     {
-        $this->authorize('update');
+        //this->authorize('update');
 
         $this->validateRequest();
 
@@ -61,11 +61,11 @@ class UserController extends Controller
 
         $user->save();
 
-        $user->roles()->attach(request('role_id'));
+//        $user->roles()->attach(request('role_id'));
+//
+//        $user->companies()->attach(request('company_id'));
 
-        $user->companies()->attach(request('company_id'));
-
-        return redirect('admin/users');
+        return redirect($user->path());
     }
 
     /**
@@ -142,8 +142,8 @@ class UserController extends Controller
             'surname'=> 'required',
             'email' => 'required|unique:users',
             'password'=> 'required',
-            'role_id' => 'exists:companies,id|required',
-            'company_id'=> 'exists:companies,id|required',
+            //'role_id' => 'exists:companies,id|required',
+            //'company_id'=> 'exists:companies,id|required',
         ]);
     }
 }

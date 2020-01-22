@@ -52,6 +52,11 @@ class RoleController extends Controller
 
     }
 
+    public function edit(Role $role)
+    {
+        $this->authorize('update');
+    }
+
     public function update(Role $role)
     {
         $this->authorize('update');
@@ -59,11 +64,6 @@ class RoleController extends Controller
         $role->update($this->validateRequest());
 
         return redirect($role->path());
-    }
-
-    public function edit(Role $role)
-    {
-        $this->authorize('update');
     }
 
     public function destroy(Role $role)
@@ -74,12 +74,12 @@ class RoleController extends Controller
 
         return redirect('/admin/roles');
     }
+
     protected function validateRequest()
     {
         return request()->validate([
             'name'=> 'sometimes|required',
             'description'=> 'sometimes|required',
-
         ]);
     }
 

@@ -22,24 +22,24 @@ Route::get('/', function () {
 
 
 
-Route::patch('/admin/roles/{role}', 'RoleController@update');
-//Route::group(['middleware' => ['auth', 'can:edit-settings']], function () {
+
+
 
     Route::get('/admin', 'AdminController@index');
 
     Route::get('/admin/users', 'UserController@index')->name('users.index');
     Route::get('/admin/users/create', 'UserController@create')->name('users.create');
     Route::post('/admin/users', 'UserController@store')->name('users.store');
-    Route::delete('/admin/users/{user}', 'UserController@destroy');
     Route::patch('/admin/users/{user}', 'UserController@update')->name('users.update');
     Route::get('/admin/users/{user}/edit', 'UserController@edit')->name('users.edit');
     Route::get('/admin/users/{user}', 'UserController@show')->name('users.show');
+    Route::delete('/admin/users/{user}', 'UserController@destroy');
 
     Route::get('/admin/roles', 'RoleController@index')->name('roles.index');
     Route::get('/admin/roles/create', 'RoleController@create')->name('roles.create');
     Route::post('/admin/roles', 'RoleController@store')->name('roles.store');
     Route::get('/admin/roles/{role}', 'RoleController@show')->name('roles.show');
-
+    Route::patch('/admin/roles/{role}', 'RoleController@update');
     Route::get('/admin/roles/{role}/edit', 'RoleController@edit');
     Route::delete('/admin/roles/{role}', 'RoleController@destroy');
 
@@ -51,7 +51,6 @@ Route::patch('/admin/roles/{role}', 'RoleController@update');
     Route::delete('/admin/companies/{company}', 'CompanyController@destroy');
 
 
-//});
 
 
 

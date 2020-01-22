@@ -36,7 +36,7 @@ class CompanyController extends Controller
 
         Company::create($this->validateRequest());
 
-        return redirect('admin/companies');
+        return redirect('admin.companies');
     }
 
     public function edit(Company $company)

@@ -35,26 +35,25 @@ class RoleManagementTest extends TestCase
         $response->assertRedirect($role->path());
     }
 
-
+    /** @test */
     public function a_role_can_be_updated()
     {
         $this->withoutExceptionHandling();
 
         $this->signInSuperAdmin();
 
-        $this->post('/admin/roles', factory(Role::class)->raw());
-
-        $this->assertCount(2, Role::all());
+        $this->post('/admin/roles', $attributes = factory(Role::class)->raw());
 
         $role = Role::where('id', 2)->first();
 
-        $response = $this->patch($role->path(), [
+        $response = $this->patch('/admin/roles/'. $role->id , $attributes = [
             'name' => 'New Name',
             'description' => 'New Description'
         ]);
 
-        $this->assertEquals('New Name', $role->name);
-        $this->assertEquals('New Description', $role->description);
+        $this->assertEquals('New Name', Role::where('id', 2)->first()->name);
+
+        $this->assertDatabaseHas('Roles', $attributes);
 
         $response->assertRedirect($role->path());
     }
