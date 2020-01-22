@@ -33,7 +33,7 @@ class UserManagementTest extends TestCase
 
     }
 
-
+    /** @test */
     public function guests_cannot_manage_users()
     {
 
@@ -54,20 +54,22 @@ class UserManagementTest extends TestCase
     /** @test */
     public function a_user_can_be_created()
     {
-        $this->withoutExceptionHandling();
+        $this->signIn();
 
-//       $this->signInSuperAdmin();
+        $this->get('/admin/users/create')->assertStatus(403);
 
-        $this->post('/admin/users', $attributes = factory(User::class)->raw());
+        $this->signInSuperAdmin();
 
-       $this->assertCount(1, User::all());
+        $response = $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
-//        $user = User::where('id', 1)->first();
-//
-//        $response->assertRedirect($user->path());
+        $this->assertCount(3, User::all());
+
+        $user = User::where('id', 3)->first();
+
+        $response->assertRedirect($user->path());
     }
 
-
+    /** @test */
     public function a_user_can_be_updated()
     {
         $this->signInSuperAdmin();
@@ -88,38 +90,14 @@ class UserManagementTest extends TestCase
         $response->assertRedirect($user->path());
     }
 
-    public function a_role_can_be_updated()
+    /** @test */
+    public function a_user_can_be_deleted()
     {
         $this->withoutExceptionHandling();
 
         $this->signInSuperAdmin();
 
-        $this->post('/admin/roles', $attributes = factory(Role::class)->raw());
-
-        $role = Role::where('id', 2)->first();
-
-        $response = $this->patch('/admin/roles/'. $role->id , $attributes = [
-            'name' => 'New Name',
-            'description' => 'New Description'
-        ]);
-
-        $this->assertEquals('New Name', Role::where('id', 2)->first()->name);
-
-        $this->assertDatabaseHas('Roles', $attributes);
-
-        $response->assertRedirect($role->path());
-    }
-
-
-
-
-
-
-    public function a_user_can_be_deleted()
-    {
-        $this->signInSuperAdmin();
-
-        $this->post('/admin/roles', $attributes = factory(User::class)->raw());
+        $this->post('/admin/users', $attributes = factory(User::class)->raw());
 
         $this->assertCount(2, User::all());
 
@@ -173,7 +151,7 @@ class UserManagementTest extends TestCase
         $response->assertSessionHasErrors('password');
     }
 
-
+    /** @test */
     public function a_role_id_is_required()
     {
         $this->signInSuperAdmin();
@@ -183,7 +161,7 @@ class UserManagementTest extends TestCase
         $response->assertSessionHasErrors('role_id');
     }
 
- 
+    /** @test */
     public function a_company_id_is_required()
     {
         $this->signInSuperAdmin();

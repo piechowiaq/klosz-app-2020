@@ -21,13 +21,14 @@ class CompanyTest extends TestCase
     }
 
     /** @test */
-    function company_has_a_path()
+    public function company_has_a_path()
     {
         $company = factory(Company::class)->create();
 
         $this->assertEquals("/admin/companies/{$company->id}", $company->path());
     }
 
+    /** @test */
     public function a_comapny_belongs_to_many_users()
     {
         $user = factory(User::class)->create();

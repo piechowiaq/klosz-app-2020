@@ -77,7 +77,7 @@ class RoleManagementTest extends TestCase
 
     }
 
-
+    /** @test */
     public function a_role_name_is_required()
     {
         $this->signInSuperAdmin();
@@ -87,7 +87,7 @@ class RoleManagementTest extends TestCase
         $response->assertSessionHasErrors('name');
     }
 
-
+    /** @test */
     public function a_role_description_is_required()
     {
         $this->signInSuperAdmin();

@@ -13,10 +13,10 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index()
     {
@@ -34,7 +34,7 @@ class UserController extends Controller
      */
     public function create()
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $roles = Role::all();
 
@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function store()
     {
-        //this->authorize('update');
+        $this->authorize('update');
 
         $this->validateRequest();
 
@@ -138,12 +138,12 @@ class UserController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name'=> 'required',
-            'surname'=> 'required',
-            'email' => 'required|unique:users',
-            'password'=> 'required',
-            //'role_id' => 'exists:companies,id|required',
-            //'company_id'=> 'exists:companies,id|required',
+            'name'=> 'required|sometimes',
+            'surname'=> 'required|sometimes',
+            'email' => 'required|unique:users|sometimes',
+            'password'=> 'required|sometimes',
+            'role_id' => 'exists:roles,id|required|sometimes',
+            'company_id'=> 'exists:companies,id|required|sometimes',
         ]);
     }
 }

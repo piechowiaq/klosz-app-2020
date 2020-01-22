@@ -37,10 +37,7 @@ class RoleController extends Controller
     {
         $this->authorize('update');
 
-        $role = Role::create([
-            'name' => request('name'),
-            'description' => request('description')
-        ]);
+        $role = Role::create($this->validateRequest());
 
         return redirect($role->path());
     }
@@ -78,8 +75,8 @@ class RoleController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name'=> 'sometimes|required',
-            'description'=> 'sometimes|required',
+            'name'=> 'required|sometimes',
+            'description'=> 'required|sometimes',
         ]);
     }
 
