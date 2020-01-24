@@ -61,9 +61,9 @@ class UserController extends Controller
 
         $user->save();
 
-//        $user->roles()->attach(request('role_id'));
-//
-//        $user->companies()->attach(request('company_id'));
+        $user->roles()->attach(request('role_id'));
+
+        $user->companies()->attach(request('company_id'));
 
         return redirect($user->path());
     }

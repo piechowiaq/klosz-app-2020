@@ -19,12 +19,12 @@
             <div class="flex  justify-center md:justify-end md:w-1/6 ">
 
                 <div class=" px-2 bg-transparent hover:bg-blue-500 text-black-700 hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
-                    <a href="#" class="">Edytuj</a>
+                    <a href="{{route('companies.edit', ['company'=> $company])}}" class="">Edytuj</a>
                 </div>
 
                 <div class="px-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
 
-                    <form action="#" method="POST">
+                    <form action="{{route('companies.destroy', ['company'=> $company])}}" method="POST">
 
                         @method('DELETE')
 

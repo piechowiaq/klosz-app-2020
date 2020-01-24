@@ -33,7 +33,7 @@ Route::get('/', function () {
     Route::patch('/admin/users/{user}', 'UserController@update')->name('users.update');
     Route::get('/admin/users/{user}/edit', 'UserController@edit')->name('users.edit');
     Route::get('/admin/users/{user}', 'UserController@show')->name('users.show');
-    Route::delete('/admin/users/{user}', 'UserController@destroy');
+    Route::delete('/admin/users/{user}', 'UserController@destroy')->name('users.destroy');
 
     Route::get('/admin/roles', 'RoleController@index')->name('roles.index');
     Route::get('/admin/roles/create', 'RoleController@create')->name('roles.create');
@@ -46,9 +46,10 @@ Route::get('/', function () {
     Route::get('/admin/companies', 'CompanyController@index')->name('companies.index');
     Route::get('/admin/companies/create', 'CompanyController@create')->name('companies.create');
     Route::post('/admin/companies', 'CompanyController@store')->name('companies.store');
-    Route::patch('/admin/companies/{company}', 'CompanyController@update');
-    Route::get('/admin/companies/{company}/edit', 'CompanyController@edit');
-    Route::delete('/admin/companies/{company}', 'CompanyController@destroy');
+    Route::patch('/admin/companies/{company}', 'CompanyController@update')->name('companies.update');
+    Route::get('/admin/companies/{company}/edit', 'CompanyController@edit')->name('companies.edit');
+    Route::get('/admin/companies/{company}', 'CompanyController@show')->name('companies.show');
+    Route::delete('/admin/companies/{company}', 'CompanyController@destroy')->name('companies.destroy');
 
 
 

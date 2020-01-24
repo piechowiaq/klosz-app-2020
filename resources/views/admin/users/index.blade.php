@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="px-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
-                    <form action="#" method="POST">
+                    <form action="{{route('users.destroy', ['user'=> $user])}}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button type="submit" class="">Usuń</button>

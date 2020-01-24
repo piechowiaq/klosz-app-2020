@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -36,12 +37,22 @@ class CompanyController extends Controller
 
         Company::create($this->validateRequest());
 
-        return redirect('admin.companies');
+        return redirect('admin/companies');
+    }
+
+    public function show(Company $company)
+    {
+        $this->authorize('update');
+
+        return view('admin.companies.show', compact('company'));
     }
 
     public function edit(Company $company)
     {
+
         $this->authorize('update');
+
+        return view('admin.companies.edit', compact( 'company'));
     }
 
     public function update(Company $company)
@@ -59,7 +70,7 @@ class CompanyController extends Controller
 
         $company->delete();
 
-        return redirect('/admin/companies');
+        return redirect('admin/companies');
     }
 
     protected function validateRequest()
