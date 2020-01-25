@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -51,11 +52,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(StoreUserRequest $request)
     {
         $this->authorize('update');
-
-        $this->validateRequest();
 
         $user = new User(request(['name', 'surname', 'email', 'password']));
 
@@ -105,11 +104,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $this->authorize('update');
-
-        $this->validateRequest();
 
         $user->update(request(['name', 'surname', 'email']));
 
@@ -135,15 +132,4 @@ class UserController extends Controller
         return redirect('/admin/users');
     }
 
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'name'=> 'required|sometimes',
-            'surname'=> 'required|sometimes',
-            'email' => 'required|unique:users|sometimes',
-            'password'=> 'required|sometimes',
-            'role_id' => 'exists:roles,id|required|sometimes',
-            'company_id'=> 'exists:companies,id|required|sometimes',
-        ]);
-    }
 }
