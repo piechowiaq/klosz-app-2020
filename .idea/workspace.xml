@@ -4,7 +4,13 @@
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/UserManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/users/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -138,16 +144,16 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\companies" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\roles" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\layouts" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\companies" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views" />
       <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers" />
-      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\Admin" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\companies" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\roles" />
     </key>
   </component>
   <component name="RunDashboard">

@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 
 
-    Route::get('/admin', 'AdminController@index');
+    Route::get('/admin', 'AdminController@index')->name('admin');
 
     Route::get('/admin/users', 'UserController@index')->name('users.index');
     Route::get('/admin/users/create', 'UserController@create')->name('users.create');

@@ -8,8 +8,10 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -56,7 +58,11 @@ class UserController extends Controller
     {
         $this->authorize('update');
 
-        $user = new User(request(['name', 'surname', 'email', 'password']));
+        $user = new User(request(['name', 'surname', 'email']));
+
+        $user->password = Hash::make($request['password']);
+
+        $user->email_verified_at = Carbon::now();
 
         $user->save();
 
@@ -109,6 +115,12 @@ class UserController extends Controller
         $this->authorize('update');
 
         $user->update(request(['name', 'surname', 'email']));
+
+        $user->password = Hash::make($request['password']);
+
+        $user->email_verified_at = Carbon::now();
+
+        $user->save();
 
         $user->roles()->sync(request('role_id'));
 
