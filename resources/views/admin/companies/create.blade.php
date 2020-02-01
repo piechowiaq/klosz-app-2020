@@ -1,6 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
+
+    @include('admin.nav')
+
+
+    <div class="md:w-5/6">
 
     <div class="">
 
@@ -22,5 +27,8 @@
 
     </div>
 
+
+
+    </div>
 
 @endsection

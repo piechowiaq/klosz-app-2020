@@ -1,7 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 
+    @include('admin.nav')
+
+    <div class="md:w-5/6">
     <div class="">
 
         <div class=""> <h1>Create User</h1></div>
@@ -19,7 +22,7 @@
 
         </div>
 
-    </div>
+    </div> </div>
 
 @endsection
 

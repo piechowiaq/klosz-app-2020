@@ -1,7 +1,8 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 @section('title', 'Companies')
 @section('content')
-
+    @include('admin.nav')
+    <div class="md:w-5/6">
     <div>
         <div> <h1>Firmy</h1></div>
     </div>
@@ -20,6 +21,8 @@
 
         </form>
     </div>
+    </div>
+
 
 
 @endsection

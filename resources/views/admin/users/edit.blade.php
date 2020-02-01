@@ -1,7 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 @section('title', 'Users')
 @section('content')
 
+    @include('admin.nav')
+    <div class="md:w-5/6">
     <div>
         <div> <h1>Użytkownicy</h1></div>
     </div>
@@ -19,7 +21,7 @@
             @include('errors')
 
         </form>
-    </div>
+    </div> </div>
 
 
 @endsection

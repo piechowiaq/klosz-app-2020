@@ -1,7 +1,8 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-
+    @include('admin.nav')
+    <div class="md:w-5/6">
     <div class=" py-6 m-2 md:py-2">
         <a href="{{route('companies.create')}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Create Company</a>
     </div>
@@ -41,5 +42,5 @@
         </div>
 
     @endforeach
-
+    </div>
 @endsection

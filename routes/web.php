@@ -51,6 +51,14 @@ Route::get('/', function () {
     Route::get('/admin/companies/{company}', 'CompanyController@show')->name('companies.show');
     Route::delete('/admin/companies/{company}', 'CompanyController@destroy')->name('companies.destroy');
 
+    Route::get('/admin/departments', 'DepartmentController@index')->name('departments.index');
+    Route::get('/admin/departments/create', 'DepartmentController@create')->name('departments.create');
+    Route::post('/admin/departments', 'DepartmentController@store')->name('departments.store');
+    Route::patch('/admin/departments/{department}', 'DepartmentController@update')->name('departments.update');
+    Route::get('/admin/departments/{department}/edit', 'DepartmentController@edit')->name('departments.edit');
+//    Route::get('/admin/users/{user}', 'UserController@show')->name('users.show');
+    Route::delete('/admin/departments/{department}', 'DepartmentController@destroy')->name('departments.destroy');
+
 
 
 

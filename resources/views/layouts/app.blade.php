@@ -47,8 +47,12 @@
                 </div>
             </div>
         </nav>
-
+        <div class="container mx-auto items-center bg-white border border-2 rounded shadow-md">
+                <div class="md:flex p-6">
         @yield('content')
+                </div>
+
+        </div>
     </div>
 
     <!-- Scripts -->
