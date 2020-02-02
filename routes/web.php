@@ -56,9 +56,16 @@ Route::get('/', function () {
     Route::post('/admin/departments', 'DepartmentController@store')->name('departments.store');
     Route::patch('/admin/departments/{department}', 'DepartmentController@update')->name('departments.update');
     Route::get('/admin/departments/{department}/edit', 'DepartmentController@edit')->name('departments.edit');
-//    Route::get('/admin/users/{user}', 'UserController@show')->name('users.show');
+//    Route::get('/admin/departments/{department}', 'DepartmentController@show')->name('departments.show');
     Route::delete('/admin/departments/{department}', 'DepartmentController@destroy')->name('departments.destroy');
 
+//    Route::get('/admin/employees', 'EmployeeController@index')->name('employees.index');
+    Route::get('/admin/employees/create', 'EmployeeController@create')->name('employees.create');
+    Route::post('/admin/employees', 'EmployeeController@store')->name('employees.store');
+    Route::patch('/admin/employees/{employee}', 'EmployeeController@update')->name('employees.update');
+    Route::get('/admin/employees/{employee}/edit', 'EmployeeController@edit')->name('employees.edit');
+//    Route::get('/admin/employees/{employee}', 'EmployeeController@show')->name('employees.show');
+    Route::delete('/admin/employees/{employee}', 'EmployeeController@destroy')->name('employees.destroy');
 
 
 

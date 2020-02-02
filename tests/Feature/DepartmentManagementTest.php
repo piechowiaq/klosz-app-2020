@@ -17,15 +17,15 @@ class DepartmentManagementTest extends TestCase
     {
        $this->get('/admin/departments/create')->assertRedirect('login');
 
-        $user = factory(Department::class)->create();
+        $department = factory(Department::class)->create();
 
-        $this->post('/admin/departments', $user->toArray())->assertRedirect('login');
+        $this->post('/admin/departments', $department->toArray())->assertRedirect('login');
 
-        $this->patch($user->path())->assertRedirect('/login');
+        $this->patch($department->path())->assertRedirect('/login');
 
-        $this->delete($user->path())->assertRedirect('/login');
+        $this->delete($department->path())->assertRedirect('/login');
 
-        $this->get($user->path().'/edit')->assertRedirect('/login');
+        $this->get($department->path().'/edit')->assertRedirect('/login');
 
     }
 
