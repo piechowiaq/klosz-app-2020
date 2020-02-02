@@ -75,7 +75,13 @@ Route::get('/', function () {
 //    Route::get('/admin/positions/{position}', 'PositionController@show');
     Route::delete('/admin/positions/{position}', 'PositionController@destroy');
 
-
+//    Route::get('/admin/trainings', 'TrainingController@index');
+    Route::get('/admin/trainings/create', 'TrainingController@create');
+    Route::post('/admin/trainings', 'TrainingController@store');
+    Route::patch('/admin/trainings/{training}', 'TrainingController@update');
+    Route::get('/admin/trainings/{training}/edit', 'TrainingController@edit');
+//    Route::get('/admin/trainings/{training}', 'TrainingController@show');
+    Route::delete('/admin/trainings/{training}', 'TrainingController@destroy');
 
 
 
