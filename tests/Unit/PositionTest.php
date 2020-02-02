@@ -12,20 +12,6 @@ use Tests\TestCase;
 class PositionTest extends TestCase
 {
     use RefreshDatabase;
-    /** @test */
-    public function a_position_belongs_to_many_departments()
-    {
-        $position = factory(Position::class)->create();
-
-        $department = factory(Department::class)->create();
-
-        $position->departments()->sync($department);
-
-        $this->assertDatabaseHas('department_position', [
-            'department_id' => $department->id,
-            'position_id' => $position->id
-        ]);
-    }
 
     /** @test */
     public function an_position_belongs_to_many_employees()
@@ -64,4 +50,14 @@ class PositionTest extends TestCase
 
         $this->assertEquals("/admin/employees/{$employee->id}", $employee->path());
     }
+
+    /** @test */
+    public function a_position_has_a_department()
+    {
+        $department = factory(Department::class)->create();
+        $position = factory(Position::class)->create(['department_id' => $department->id]);
+
+        $this->assertEquals($position->department->id, $department->id);
+    }
+
 }

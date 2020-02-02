@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Department;
 use App\Employee;
+use App\Position;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -23,6 +24,17 @@ class DepartmentTest extends TestCase
             'department_id' => $department->id,
             'employee_id' => $employee->id
         ]);
+    }
+
+    /** @test */
+    public function a_department_has_many_positions()
+    {
+        $department = factory(Department::class)->create();
+
+        $position = factory(Position::class)->create(['department_id'=>$department->id]);
+
+        $this->assertTrue($department->positions->contains($position));
+
     }
 
     /** @test */

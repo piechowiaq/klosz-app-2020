@@ -103,6 +103,7 @@ class PositionController extends Controller
     {
         return request()->validate([
             'name'=> 'sometimes|required',
+            'department_id'=> 'sometimes|required',
 
         ]);
     }

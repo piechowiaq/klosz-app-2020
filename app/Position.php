@@ -13,9 +13,9 @@ class Position extends Model
         return "/admin/positions/{$this->id}";
     }
 
-    public function departments()
+    public function department()
     {
-        return $this->belongsToMany(Department::class);
+        return $this->belongsTo(Department::class);
     }
 
     public function trainings()

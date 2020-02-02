@@ -20,6 +20,6 @@ class Department extends Model
 
     public function positions()
     {
-        return $this->belongsToMany(Position::class);
+        return $this->hasMany(Position::class);
     }
 }
