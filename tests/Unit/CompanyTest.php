@@ -29,7 +29,7 @@ class CompanyTest extends TestCase
     }
 
     /** @test */
-    public function a_comapny_belongs_to_many_users()
+    public function a_company_belongs_to_many_users()
     {
         $user = factory(User::class)->create();
         $company = factory(Company::class)->create();

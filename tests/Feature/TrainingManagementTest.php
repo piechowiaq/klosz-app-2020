@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Department;
+use App\Position;
 use App\Training;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -59,26 +61,47 @@ class TrainingManagementTest extends TestCase
 
     }
 
-
-
     /** @test */
     public function a_training_can_be_created()
     {
+        $position = factory(Position::class)->create();
+
         $this->signIn();
 
         $this->get('/admin/trainings/create')->assertStatus(403);
 
         $this->signInSuperAdmin();
 
-        $response = $this->post('/admin/trainings', $attributes = factory(Training::class)->raw());
+        $response = $this->post('/admin/trainings', $attributes = factory(Training::class)->make()->positions()->attach($position));
+
+        $training = Training::first();
+
+        $this->assertDatabaseHas('position_training', [
+            'position_id' => $position->id,
+            'training_id' => $training->id
+        ]);
 
         $training = Training::all();
 
         $this->assertCount(1, $training);
 
-        $training = Training::where('id', 1)->first();
-
         $response->assertRedirect($training->path());
+
+//        $this->signIn();
+//
+//        $this->get('/admin/trainings/create')->assertStatus(403);
+//
+//        $this->signInSuperAdmin();
+//
+//        $response = $this->post('/admin/trainings', $attributes = factory(Training::class)->raw());
+//
+//        $training = Training::all();
+//
+//        $this->assertCount(1, $training);
+//
+//        $training = Training::where('id', 1)->first();
+//
+//        $response->assertRedirect($training->path());
 
     }
 

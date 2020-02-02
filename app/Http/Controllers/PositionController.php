@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePositionRequest;
+use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
 use Illuminate\Http\Request;
 
@@ -37,11 +39,11 @@ class PositionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePositionRequest $request)
     {
-        $this->authorize('update');
+        //$this->authorize('update');
 
-        $position = Position::create($this->validateRequest());
+        $position = Position::create($request->validated());
 
         return redirect($position->path());
     }
@@ -75,11 +77,11 @@ class PositionController extends Controller
      * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Position $position)
+    public function update(UpdatePositionRequest $request, Position $position)
     {
-//        $this->authorize('update');
+        //$this->authorize('update');
 
-        $position->update($this->validateRequest());
+        $position->update($request->validated());
 
         return redirect($position->path());
     }
@@ -99,12 +101,4 @@ class PositionController extends Controller
         return redirect('admin/positions');
     }
 
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'name'=> 'sometimes|required',
-            'department_id'=> 'sometimes|required',
-
-        ]);
-    }
 }

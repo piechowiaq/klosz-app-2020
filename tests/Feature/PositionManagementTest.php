@@ -58,6 +58,8 @@ class PositionManagementTest extends TestCase
     /** @test */
     public function a_position_can_be_updated()
     {
+        $this->withoutExceptionHandling();
+
         $this->signInSuperAdmin();
 
         $this->post('/admin/positions', $attributes = factory(Position::class)->raw());
