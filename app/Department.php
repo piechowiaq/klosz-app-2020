@@ -12,4 +12,14 @@ class Department extends Model
     {
         return "/admin/departments/{$this->id}";
     }
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class);
+    }
+
+    public function positions()
+    {
+        return $this->belongsToMany(Position::class);
+    }
 }

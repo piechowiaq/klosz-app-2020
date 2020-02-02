@@ -3,12 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TrainingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TrainingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/DepartmentManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/DepartmentManagementTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/EmployeeManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/EmployeeManagementTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/TrainingManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/TrainingManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Department.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Department.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Employee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Position.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Position.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/CompanyTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/CompanyTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,7 +208,7 @@
       <workItem from="1579027664756" duration="10027000" />
       <workItem from="1579105027810" duration="106470000" />
       <workItem from="1579892063471" duration="615000" />
-      <workItem from="1580570258715" duration="21067000" />
+      <workItem from="1580570258715" duration="25503000" />
     </task>
     <servers />
   </component>

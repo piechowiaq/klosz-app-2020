@@ -15,7 +15,7 @@ class CompanyTest extends TestCase
     /** @test */
     public function a_company_has_many_users()
     {
-        $company = factory('App\Company')->create();
+        $company = factory(Company::class)->create();
 
         $this->assertInstanceOf(Collection::class, $company->users);
     }

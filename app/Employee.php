@@ -12,4 +12,19 @@ class Employee extends Model
     {
         return "/admin/employees/{$this->id}";
     }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class);
+    }
+
+    public function positions()
+    {
+        return $this->belongsToMany(Position::class);
+    }
+
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class);
+    }
 }

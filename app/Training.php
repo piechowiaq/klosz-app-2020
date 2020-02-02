@@ -12,4 +12,19 @@ class Training extends Model
     {
         return "/admin/trainings/{$this->id}";
     }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class);
+    }
+
+    public function positions()
+    {
+        return $this->belongsToMany(Position::class);
+    }
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class);
+    }
 }
