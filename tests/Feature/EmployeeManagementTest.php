@@ -26,6 +26,10 @@ class EmployeeManagementTest extends TestCase
 
         $this->get($employee->path().'/edit')->assertRedirect('/login');
 
+        $this->get('/admin/employees')->assertRedirect('/login');
+
+        $this->get($employee->path())->assertRedirect('/login');
+
     }
 
     /** @test */

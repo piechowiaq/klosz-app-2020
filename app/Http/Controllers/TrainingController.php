@@ -18,7 +18,7 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('update');
     }
 
     /**
@@ -39,7 +39,7 @@ class TrainingController extends Controller
      */
     public function store(Request $request)
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $training = Training::create($this->validateRequest());
 
@@ -54,7 +54,7 @@ class TrainingController extends Controller
      */
     public function show(Training $training)
     {
-        //
+        $this->authorize('update');
     }
 
     /**
@@ -65,7 +65,7 @@ class TrainingController extends Controller
      */
     public function edit(Training $training)
     {
-        //
+        $this->authorize('update');
     }
 
     /**
@@ -77,7 +77,7 @@ class TrainingController extends Controller
      */
     public function update(Request $request, Training $training)
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $training->update($this->validateRequest());
 
@@ -92,7 +92,7 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $training->delete();
 

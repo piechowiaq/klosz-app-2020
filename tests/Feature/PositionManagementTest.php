@@ -26,6 +26,10 @@ class PositionManagementTest extends TestCase
 
         $this->get($position->path().'/edit')->assertRedirect('/login');
 
+        $this->get('/admin/positions')->assertRedirect('/login');
+
+        $this->get($position->path())->assertRedirect('/login');
+
     }
 
     /** @test */

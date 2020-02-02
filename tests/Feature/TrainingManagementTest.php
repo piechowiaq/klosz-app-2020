@@ -27,7 +27,39 @@ class TrainingManagementTest extends TestCase
 
         $this->get($training->path().'/edit')->assertRedirect('/login');
 
+        $this->get('/admin/trainings')->assertRedirect('/login');
+
+        $this->get($training->path())->assertRedirect('/login');
+
     }
+
+    /** @test */
+    public function only_authorized_user_can_manage_trainings()
+    {
+        $training = factory(Training::class)->create();
+
+        $this->signIn();
+
+        $this->get($training->path().'/edit')->assertStatus(403);
+
+        $this->get('/admin/trainings/create')->assertStatus(403);
+
+        $this->get('/admin/trainings')->assertStatus(403);
+
+        $this->get('/admin/trainings/'.$training->id)->assertStatus(403);
+
+        $this->post('/admin/trainings', $attributes = factory(Training::class)->raw())->assertStatus(403);
+
+        $this->patch($training->path(), $attributes = [
+            'name'=> 'New Name',
+        ])->assertStatus(403);
+
+        $this->delete($training->path())->assertStatus(403);
+
+
+    }
+
+
 
     /** @test */
     public function a_training_can_be_created()

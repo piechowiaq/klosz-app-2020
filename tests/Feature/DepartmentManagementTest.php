@@ -27,6 +27,10 @@ class DepartmentManagementTest extends TestCase
 
         $this->get($department->path().'/edit')->assertRedirect('/login');
 
+        $this->get('/admin/departments')->assertRedirect('/login');
+
+        $this->get($department->path())->assertRedirect('/login');
+
     }
 
     /** @test */
