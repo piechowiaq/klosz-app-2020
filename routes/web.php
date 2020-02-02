@@ -67,6 +67,13 @@ Route::get('/', function () {
 //    Route::get('/admin/employees/{employee}', 'EmployeeController@show')->name('employees.show');
     Route::delete('/admin/employees/{employee}', 'EmployeeController@destroy')->name('employees.destroy');
 
+//    Route::get('/admin/positions', 'PositionController@index');
+    Route::get('/admin/positions/create', 'PositionController@create');
+    Route::post('/admin/positions', 'PositionController@store');
+    Route::patch('/admin/positions/{position}', 'PositionController@update');
+    Route::get('/admin/positions/{position}/edit', 'PositionController@edit');
+//    Route::get('/admin/positions/{position}', 'PositionController@show');
+    Route::delete('/admin/positions/{position}', 'PositionController@destroy');
 
 
 
