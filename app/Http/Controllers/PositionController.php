@@ -20,7 +20,11 @@ class PositionController extends Controller
      */
     public function index()
     {
-        //
+//        $this->authorize('update');
+
+        $positions = Position::all();
+
+        return view('admin.positions.index', compact('positions'));
     }
 
     /**

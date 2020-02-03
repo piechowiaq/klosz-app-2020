@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/departments/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/positions/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/trainings/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DepartmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DepartmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PositionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PositionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateUserRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateUserRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/EmployeesTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/EmployeesTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/nav.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/TrainingManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/TrainingManagementTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/CompanyTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/CompanyTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -137,21 +140,24 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/trainings" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\companies" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\roles" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\layouts" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\companies" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views" />
       <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\trainings" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\positions" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\departments" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\companies" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\roles" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -210,7 +216,8 @@
       <workItem from="1579027664756" duration="10027000" />
       <workItem from="1579105027810" duration="106470000" />
       <workItem from="1579892063471" duration="615000" />
-      <workItem from="1580570258715" duration="33891000" />
+      <workItem from="1580570258715" duration="33959000" />
+      <workItem from="1580752661059" duration="5859000" />
     </task>
     <servers />
   </component>

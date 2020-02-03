@@ -9,7 +9,7 @@
 
     <div class="">
 
-        <div> <h1>Create Comapany</h1></div>
+        <div> <h1>Create Company</h1></div>
 
         <div>
 

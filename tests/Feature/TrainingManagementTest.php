@@ -16,7 +16,6 @@ class TrainingManagementTest extends TestCase
     /** @test */
     public function guests_cannot_manage_trainings()
     {
-
         $this->get('/admin/trainings/create')->assertRedirect('login');
 
         $training = factory(Training::class)->create();
@@ -72,37 +71,22 @@ class TrainingManagementTest extends TestCase
 
         $this->signInSuperAdmin();
 
-        $response = $this->post('/admin/trainings', $attributes = factory(Training::class)->make()->positions()->attach($position));
+        $response = $this->post('/admin/trainings', $attributes = factory(Training::class)->raw());
+
+        $training = Training::all();
+
+        $this->assertCount(1, $training);
 
         $training = Training::first();
+
+        $training->positions()->attach($position);
 
         $this->assertDatabaseHas('position_training', [
             'position_id' => $position->id,
             'training_id' => $training->id
         ]);
 
-        $training = Training::all();
-
-        $this->assertCount(1, $training);
-
         $response->assertRedirect($training->path());
-
-//        $this->signIn();
-//
-//        $this->get('/admin/trainings/create')->assertStatus(403);
-//
-//        $this->signInSuperAdmin();
-//
-//        $response = $this->post('/admin/trainings', $attributes = factory(Training::class)->raw());
-//
-//        $training = Training::all();
-//
-//        $this->assertCount(1, $training);
-//
-//        $training = Training::where('id', 1)->first();
-//
-//        $response->assertRedirect($training->path());
-
     }
 
     /** @test */

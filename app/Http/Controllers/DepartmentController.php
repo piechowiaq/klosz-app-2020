@@ -20,9 +20,9 @@ class DepartmentController extends Controller
     {
 //        $this->authorize('update');
 
-//        $departments = Department::all();
+        $departments = Department::all();
 
-//        return view('admin.departments.index', compact('departments'));
+        return view('admin.departments.index', compact('departments'));
     }
 
     /**
