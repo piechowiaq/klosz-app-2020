@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
@@ -35,6 +36,12 @@ class PositionController extends Controller
     public function create()
     {
         $this->authorize('update');
+
+        $position = new Position();
+
+        $departments = Department::all();
+//
+        return view('admin.positions.create', compact( 'position', 'departments' ));
     }
 
     /**
@@ -60,7 +67,7 @@ class PositionController extends Controller
      */
     public function show(Position $position)
     {
-        //
+        return view('admin.positions.show', compact('position'));
     }
 
     /**
@@ -71,7 +78,9 @@ class PositionController extends Controller
      */
     public function edit(Position $position)
     {
-        //
+        $departments = Department::all();
+
+        return view('admin.positions.edit', compact('position', 'departments'));
     }
 
     /**

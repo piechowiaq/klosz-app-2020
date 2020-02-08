@@ -16,6 +16,8 @@ class CreateTrainingsTable extends Migration
         Schema::create('trainings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('description')->nullable();
+            $table->integer('valid_for')->nullable();
             $table->timestamps();
         });
     }

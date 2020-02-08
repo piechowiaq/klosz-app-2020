@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTrainingRequest;
+use App\Http\Requests\UpdateTrainingRequest;
+use App\Position;
 use App\Training;
 use Illuminate\Http\Request;
 
@@ -33,6 +36,12 @@ class TrainingController extends Controller
     public function create()
     {
         $this->authorize('update');
+
+        $training = new Training();
+
+        $positions = Position::all();
+//
+        return view('admin.trainings.create', compact( 'training', 'positions' ));
     }
 
     /**
@@ -41,11 +50,15 @@ class TrainingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTrainingRequest $request)
     {
         $this->authorize('update');
 
-        $training = Training::create($this->validateRequest());
+        $training = new Training(request(['name', 'description', 'valid_for']));
+
+        $training->save();
+
+        $training->positions()->sync(request('position_id'));
 
         return redirect($training->path());
     }
@@ -59,6 +72,8 @@ class TrainingController extends Controller
     public function show(Training $training)
     {
         $this->authorize('update');
+
+        return view('admin.trainings.show', compact('training'));
     }
 
     /**
@@ -70,6 +85,10 @@ class TrainingController extends Controller
     public function edit(Training $training)
     {
         $this->authorize('update');
+
+        $positions = Position::all();
+
+        return view('admin.trainings.edit', compact('training', 'positions'));
     }
 
     /**
@@ -79,11 +98,17 @@ class TrainingController extends Controller
      * @param  \App\Training  $training
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Training $training)
+    public function update(UpdateTrainingRequest $request, Training $training)
     {
         $this->authorize('update');
 
-        $training->update($this->validateRequest());
+        $this->authorize('update');
+
+        $training->update(request(['name', 'description', 'valid_for']));
+
+        $training->save();
+
+        $training->positions()->sync(request('position_id'));
 
         return redirect($training->path());
     }
@@ -107,6 +132,8 @@ class TrainingController extends Controller
     {
         return request()->validate([
             'name'=> 'sometimes|required',
+            'description' => 'required|min:3',
+            'valid_for'=> 'required',
 
         ]);
     }

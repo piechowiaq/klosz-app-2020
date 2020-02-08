@@ -34,9 +34,9 @@ class DepartmentController extends Controller
     {
         $this->authorize('update');
 //
-//        $department = new Department();
+        $department = new Department();
 //
-//        return view('admin.departments.create', compact( 'department' ));
+        return view('admin.departments.create', compact( 'department' ));
     }
 
     /**
@@ -62,7 +62,7 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+        return view('admin.departments.show', compact('department'));
     }
 
     /**
@@ -73,7 +73,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        return view('admin.departments.edit', compact('department'));
     }
 
     /**
