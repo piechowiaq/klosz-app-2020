@@ -16,7 +16,9 @@
         <div class="md:flex border rounded shadow mb-1">
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
-                {{ $user->name}} {{ $user->surname}}
+
+                <a href="{{route('users.show', ['user'=>$user])}}">{{$user->full_name}}</a>
+
             </div>
 
             <div class="flex  justify-center md:justify-end md:w-1/6 ">

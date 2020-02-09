@@ -22,4 +22,9 @@ class Department extends Model
     {
         return $this->hasMany(Position::class);
     }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class);
+    }
 }

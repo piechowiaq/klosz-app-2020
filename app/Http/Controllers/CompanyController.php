@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Department;
+use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -28,14 +31,20 @@ class CompanyController extends Controller
 
         $company = new Company();
 
-        return view('admin.companies.create', compact( 'company' ));
+        $departments = Department::all();
+
+        return view('admin.companies.create', compact( 'company' , 'departments'));
     }
 
-    public function store()
+    public function store(StoreCompanyRequest $request)
     {
         $this->authorize('update');
 
-        Company::create($this->validateRequest());
+        $company = new Company(request(['name']));
+
+        $company->save();
+
+        $company->departments()->sync(request('department_id'));
 
         return redirect('admin/companies');
     }
@@ -52,14 +61,18 @@ class CompanyController extends Controller
 
         $this->authorize('update');
 
-        return view('admin.companies.edit', compact( 'company'));
+        $departments = Department::all();
+
+        return view('admin.companies.edit', compact( 'company', 'departments'));
     }
 
-    public function update(Company $company)
+    public function update(UpdateCompanyRequest $request,Company $company)
     {
         $this->authorize('update');
 
-        $company->update($this->validateRequest());
+        $company->update(request(['name']));
+
+        $company->departments()->sync(request('department_id'));
 
         return redirect($company->path());
     }

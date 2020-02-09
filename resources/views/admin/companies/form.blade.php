@@ -3,13 +3,14 @@
     <input type="text" name="name" value="{{old('name') ?? $company->name}}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('name') ? 'is-invalid' : '' }}" required>
 </div>
 
-{{--<div class="form-group">--}}
-{{--    <label for="active">Status pracownika:</label>--}}
-{{--    <select name="active" id="active" class="form-control  {{ $errors->has('active') ? 'is-invalid' : '' }}" required>--}}
-{{--        <option value="" disabled>Wybierz status pracownika</option>--}}
-{{--        <option value="1" {{$employee->active == 1 ? 'selected' : ''}}>Aktywny</option>--}}
-{{--        <option value="0" {{$employee->active == 0 ? 'selected' : ''}}>Nieaktywny</option>--}}
-{{--    </select>--}}
-{{--</div>--}}
+<div>
+    <label for="department_id" class="block mt-2 py-2">Dział:</label>
+    @foreach ($departments as $department)
+        <ol>
+            <input type="checkbox" name="department_id[]" id="department_id" class="mr-2 leading-tight {{ $errors->has('department_id') ? 'is-invalid' : '' }}" multiple="multiple" value="{{$department->id}}" {{in_array($department->id, old('department_id') ?: []) ? 'checked': '' || in_array($department->id, $company->departments()->pluck('department_id')->toArray() ) ? 'checked': '' }}>
+            <label  >{{$department->name}}</label>
+        </ol>
+    @endforeach
+</div>
 
 @csrf

@@ -13,7 +13,8 @@
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
 
-                {{ $position->name}}
+                <a href="{{route('positions.show', ['position'=>$position])}}"> {{ $position->name}}</a>
+
 
             </div>
 

@@ -13,6 +13,11 @@ class Company extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class);
+    }
+
     public function path()
     {
         return "/admin/companies/{$this->id}";

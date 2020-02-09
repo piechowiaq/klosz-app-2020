@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Position;
-use App\Department;
-
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePositionRequest extends FormRequest
+class StoreCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +24,7 @@ class StorePositionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=> 'required|unique:positions,name|sometimes',
+            'name'=> 'required|unique:companies,name|sometimes',
             'department_id' => 'exists:departments,id|required|sometimes',
         ];
     }

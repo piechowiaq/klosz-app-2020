@@ -9,6 +9,6 @@ $factory->define(\App\Training::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'description' => $faker->name,
-        'valid_for' => $faker->name,
+        'valid_for' => $faker->numberBetween(0,24),
     ];
 });

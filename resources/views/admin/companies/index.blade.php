@@ -13,7 +13,8 @@
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
 
-                {{ $company->name}}
+                <a href="{{route('companies.show', ['company'=>$company])}}">{{ $company->name}}</a>
+
 
             </div>
 

@@ -25,7 +25,7 @@ class UpdatePositionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','sometimes', Rule::unique('positions', 'name')->ignore($this->name)],
+            'name' => ['required','sometimes', Rule::unique('positions', 'name')->ignore($this->position)],
             'department_id' => 'exists:departments,id|required|sometimes',
         ];
     }

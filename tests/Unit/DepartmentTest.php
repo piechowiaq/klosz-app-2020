@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Company;
 use App\Department;
 use App\Employee;
 use App\Position;
@@ -43,5 +44,20 @@ class DepartmentTest extends TestCase
         $department = factory(Department::class)->create();
 
         $this->assertEquals("/admin/departments/{$department->id}", $department->path());
+    }
+
+    /** @test */
+    public function a_department_belongs_to_many_companies()
+    {
+        $department = factory(Department::class)->create();
+
+        $company = factory(Company::class)->create();
+
+        $department->companies()->sync($company);
+
+        $this->assertDatabaseHas('company_department', [
+            'company_id' => $company->id,
+            'department_id' => $department->id
+        ]);
     }
 }

@@ -15,8 +15,17 @@
             </div>
         @endforeach
     </div>
-
     <hr>
+        <div>
+            @foreach ($company->departments as $department)
+                <div class="block mt-2 py-2">
+                    {{ $department->name}}
+                </div>
+            @endforeach
+        </div>
+
+
+
     </div>
 {{--    <div>--}}
 {{--        @foreach ($user->companies as $company)--}}

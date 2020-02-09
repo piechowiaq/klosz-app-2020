@@ -102,8 +102,6 @@ class TrainingController extends Controller
     {
         $this->authorize('update');
 
-        $this->authorize('update');
-
         $training->update(request(['name', 'description', 'valid_for']));
 
         $training->save();

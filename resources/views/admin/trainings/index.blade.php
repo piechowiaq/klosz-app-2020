@@ -17,7 +17,7 @@
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
 
-                {{ $training->name}}
+                <a href="{{route('trainings.show', ['training'=>$training])}}"> {{ $training->name}}</a>
 
             </div>
 

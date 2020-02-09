@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Position;
-use App\Department;
-
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StorePositionRequest extends FormRequest
+class UpdateCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +25,9 @@ class StorePositionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=> 'required|unique:positions,name|sometimes',
+            'name' => ['required','sometimes', Rule::unique('companies', 'name')->ignore($this->company)],
             'department_id' => 'exists:departments,id|required|sometimes',
+
         ];
     }
 }
