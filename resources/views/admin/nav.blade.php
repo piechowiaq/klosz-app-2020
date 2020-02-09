@@ -4,22 +4,25 @@
     </div>
     <ul class="">
         <li class="md:mr-6">
-            <a class="text-indigo-500 hover:text-red-800" href="{{ route('users.index') }}">Users</a>
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.users.index') }}">Users</a>
         </li>
         <li class="md:mr-6 mt-6">
-            <a class="text-indigo-500 hover:text-red-800" href="{{ route('roles.index') }}">Roles</a>
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.roles.index') }}">Roles</a>
         </li>
         <li class="md:mr-6 mt-6">
-            <a class="text-indigo-500 hover:text-red-800" href="{{ route('companies.index') }}">Companies</a>
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.companies.index') }}">Companies</a>
         </li>
         <li class="md:mr-6 mt-6">
-            <a class="text-indigo-500 hover:text-red-800" href="{{ route('departments.index') }}">Departments</a>
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.departments.index') }}">Departments</a>
         </li>
         <li class="md:mr-6 mt-6">
-            <a class="text-indigo-500 hover:text-red-800" href="{{ route('positions.index') }}">Positions</a>
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.positions.index') }}">Positions</a>
         </li>
         <li class="md:mr-6 mt-6">
-            <a class="text-indigo-500 hover:text-red-800" href="{{ route('trainings.index') }}">Trainings</a>
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.trainings.index') }}">Trainings</a>
+        </li>
+        <li class="md:mr-6 mt-6">
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.employees.index') }}">Employees</a>
         </li>
     </ul>
 </div>

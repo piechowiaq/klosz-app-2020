@@ -9,7 +9,7 @@
 
 
     <div>
-        <form action="{{route('departments.update', ['department' => $department])}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('admin.departments.update', ['department' => $department])}}" method="POST" enctype="multipart/form-data">
 
             @method('PATCH')
 

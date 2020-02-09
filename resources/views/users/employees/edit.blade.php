@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Companies')
 @section('content')
-    @include('admin.nav')
+    @include('users.nav')
     <div class="md:w-5/6">
     <div>
         <div> <h1>Pracownicy</h1></div>
@@ -9,7 +9,7 @@
 
 
     <div>
-        <form action="{{route('admin.employees.update', ['employee' => $employee])}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('employees.update', ['employee' => $employee])}}" method="POST" enctype="multipart/form-data">
 
             @method('PATCH')
 

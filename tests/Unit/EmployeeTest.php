@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Company;
 use App\Department;
 use App\Employee;
 use App\Position;
@@ -73,4 +74,16 @@ class EmployeeTest extends TestCase
         $this->assertEquals($employee->name.' '.$employee->surname,  $employee->getFullNameAttribute());
 
     }
+
+    /** @test */
+    public function an_employee_has_a_company()
+    {
+        $company = factory(Company::class)->create();
+        $employee = factory(Employee::class)->create(['company_id' => $company->id]);
+
+        $this->assertEquals($employee->company->id, $company->id);
+    }
+
+
+
 }

@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Company;
 use App\Employee;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -22,7 +26,11 @@ class EmployeeController extends Controller
     public function index()
     {
 //        $this->authorize('update');
-    }
+
+        $employees = Employee::all();
+
+        return view('admin.employees.index', compact('employees'));
+      }
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +41,13 @@ class EmployeeController extends Controller
     {
         $this->authorize('update');
 
-//        $employee = new Employee();
+        $positions = Position::all();
+
+        $companies = Company::all();
+
+        $employee = new Employee();
+
+        return view('admin.employees.create', compact( 'positions', 'companies','employee' ));
     }
 
     /**
@@ -46,23 +60,21 @@ class EmployeeController extends Controller
     {
         $this->authorize('update');
 
-        $employee = Employee::create($request->validated());
+        $employee = new Employee(request(['name', 'surname', 'number', 'company_id']));
+
+        $employee->save();
+
+
+        $employee->positions()->sync(request('position_id'));
+
+        foreach ($employee->positions as $position) {
+            foreach ($position->trainings as $training){
+
+                $employee->trainings()->sync($training, false);
+
+            }}
 
         return redirect($employee->path());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     /**
@@ -73,7 +85,10 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+
+        //$this->authorize('update');
+
+        return view('admin.employees.show', compact('employee'));
     }
 
     /**
@@ -85,6 +100,13 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
 
+//        $this->authorize('update');
+
+        $positions = Position::all();
+
+        $companies = Company::all();
+
+        return view ( 'admin.employees.edit', compact('employee', 'companies', 'positions'));
     }
 
     /**
@@ -98,9 +120,21 @@ class EmployeeController extends Controller
     {
         $this->authorize('update');
 
-        $employee->update($request->validated());
+        $employee->update(request(['name', 'surname', 'number', 'company_id']));
+
+        $employee->save();
+
+        $employee->positions()->sync(request('position_id'));
+
+        foreach ($employee->positions as $position) {
+            foreach ($position->trainings as $training){
+
+                $employee->trainings()->sync($training, false);
+
+            }}
 
         return redirect($employee->path());
+
     }
 
     /**

@@ -23,4 +23,9 @@ class Company extends Model
         return "/admin/companies/{$this->id}";
     }
 
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
 }

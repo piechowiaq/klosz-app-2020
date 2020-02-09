@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 
-Route::prefix('admin')->group(function () {
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
@@ -30,6 +30,12 @@ Route::prefix('admin')->group(function () {
     Route::resource('trainings', 'TrainingController');
 
     });
+
+Route::resource('employees', 'EmployeeController');
+
+
+
+
 
 Auth::routes();
 

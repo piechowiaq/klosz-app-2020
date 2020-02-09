@@ -32,4 +32,9 @@ class Employee extends Model
     {
         return $this->name.' '.$this->surname;
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

@@ -11,7 +11,7 @@
 
         <div class="">
 
-            <form action="{{route('users.store')}}" method="POST">
+            <form action="{{route('admin.users.store')}}" method="POST">
 
                 @include('admin.users.form')
 

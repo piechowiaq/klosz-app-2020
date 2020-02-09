@@ -13,7 +13,7 @@
 
         <div>
 
-            <form action="{{route('departments.store')}}" method="POST">
+            <form action="{{route('admin.departments.store')}}" method="POST">
 
                 @include('admin.departments.form')
 

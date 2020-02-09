@@ -13,7 +13,7 @@
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
 
-                <a href="{{route('employees.show', ['employee'=>$employee])}}">{{ $employee->full_name}}</a>
+                <a href="{{route('admin.employees.show', ['employee'=>$employee])}}">{{ $employee->full_name}}</a>
 
 
             </div>
@@ -21,12 +21,12 @@
             <div class="flex  justify-center md:justify-end md:w-1/6 ">
 
                 <div class=" px-2 bg-transparent hover:bg-blue-500 text-black-700 hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
-                    <a href="{{route('employees.edit', ['employee'=> $employee])}}" class="">Edytuj</a>
+                    <a href="{{route('admin.employees.edit', ['employee'=> $employee])}}" class="">Edytuj</a>
                 </div>
 
                 <div class="px-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
 
-                    <form action="{{route('employees.destroy', ['employee'=> $employee])}}" method="POST">
+                    <form action="{{route('admin.employees.destroy', ['employee'=> $employee])}}" method="POST">
 
                         @method('DELETE')
 

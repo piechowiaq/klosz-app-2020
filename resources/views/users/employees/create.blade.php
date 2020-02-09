@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @include('admin.nav')
+    @include('users.nav')
 
 
     <div class="md:w-5/6">
@@ -13,7 +13,7 @@
 
         <div>
 
-            <form action="{{route('admin.employees.store')}}" method="POST">
+            <form action="{{route('employees.store')}}" method="POST">
 
                 @include('admin.employees.form')
 
