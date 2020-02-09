@@ -27,4 +27,9 @@ class Employee extends Model
     {
         return $this->belongsToMany(Training::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->name.' '.$this->surname;
+    }
 }

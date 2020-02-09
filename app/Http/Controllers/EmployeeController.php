@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -40,13 +42,27 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
         $this->authorize('update');
 
-        $employee = Employee::create($this->validateRequest());
+        $employee = Employee::create($request->validated());
 
         return redirect($employee->path());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -78,11 +94,11 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
         $this->authorize('update');
 
-        $employee->update($this->validateRequest());
+        $employee->update($request->validated());
 
         return redirect($employee->path());
     }
@@ -103,11 +119,4 @@ class EmployeeController extends Controller
 
     }
 
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'name'=> 'sometimes|required',
-
-        ]);
-    }
 }

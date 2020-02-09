@@ -56,6 +56,8 @@ class EmployeeManagementTest extends TestCase
     /** @test */
     public function a_employee_can_be_updated()
     {
+        $this->withoutExceptionHandling();
+
         $this->signInSuperAdmin();
 
         $this->post('/admin/employees', $attributes = factory(Employee::class)->raw());

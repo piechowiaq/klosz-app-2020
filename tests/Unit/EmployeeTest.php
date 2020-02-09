@@ -64,4 +64,13 @@ class EmployeeTest extends TestCase
 
         $this->assertEquals("/admin/employees/{$employee->id}", $employee->path());
     }
+
+    /** @test */
+    public function a_user_getFullNameAttribute_works()
+    {
+        $employee = factory(Employee::class)->create();
+
+        $this->assertEquals($employee->name.' '.$employee->surname,  $employee->getFullNameAttribute());
+
+    }
 }
