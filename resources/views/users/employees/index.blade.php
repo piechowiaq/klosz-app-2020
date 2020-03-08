@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('.users.nav')
+    @include('users.nav')
     <div class="md:w-5/6">
     <div class=" py-6 m-2 md:py-2">
-        <a href="{{route('employees.create')}}" class="rounded border text-indigo-500 p-2 bg-transparent" >PAPA Create Employee</a>
+        <a href="" class="rounded border text-indigo-500 p-2 bg-transparent" >PAPA Create Employee</a>
     </div>
 
     @foreach ($employees as $employee)
@@ -13,7 +13,7 @@
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
 
-                <a href="{{route('employees.show', ['employee'=>$employee])}}">{{ $employee->full_name}}</a>
+                <a href="">{{ $employee->full_name}}</a>
 
 
             </div>
@@ -21,12 +21,12 @@
             <div class="flex  justify-center md:justify-end md:w-1/6 ">
 
                 <div class=" px-2 bg-transparent hover:bg-blue-500 text-black-700 hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
-                    <a href="{{route('employees.edit', ['employee'=> $employee])}}" class="">Edytuj</a>
+                    <a href="{{route('users.employees.edit', ['employee'=> $employee])}}" class="">Edytuj</a>
                 </div>
 
                 <div class="px-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
 
-                    <form action="{{route('employees.destroy', ['employee'=> $employee])}}" method="POST">
+                    <form action="" method="POST">
 
                         @method('DELETE')
 

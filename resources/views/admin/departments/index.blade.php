@@ -15,7 +15,6 @@
 
                 <a href="{{route('admin.departments.show', ['department'=>$department])}}"> {{ $department->name}}</a>
 
-
             </div>
 
             <div class="flex  justify-center md:justify-end md:w-1/6 ">

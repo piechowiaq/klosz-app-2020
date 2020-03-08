@@ -7,7 +7,7 @@
 
     <div class=" py-6 m-2 md:py-2">
 
-        <a href="{{route('users.create')}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Create User</a>
+        <a href="{{route('admin.users.create')}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Create User</a>
 
     </div>
 

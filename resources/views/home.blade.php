@@ -17,9 +17,22 @@
                 </div>
 
                 <div class="w-full p-6">
-                    <p class="text-gray-700">
-                        You are logged in!
-                    </p>
+                    @foreach ($user->companies as $company)
+
+                        <div class="md:flex border rounded shadow mb-1">
+
+                            <div class="m-2 p-2 py-2 md:w-5/6 ">
+
+                                <a href="{{route('company', ['company'=>$company->id])}}">{{ $company->name}}</a>
+
+
+                            </div>
+
+
+
+                        </div>
+
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
 
 
 
-    @include('users.nav')
+
     <div class="md:w-5/6">
         <h1 class="text-gray-600 text-center font-light tracking-wider text-5xl mb-6">
             {{ config('app.name', 'Klosz') }}

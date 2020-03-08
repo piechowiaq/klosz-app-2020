@@ -31,7 +31,14 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     });
 
-Route::resource('employees', 'EmployeeController');
+Route::name('users.')->group(function () {
+
+      Route::resource('employees', 'EmployeeController');
+
+
+});
+
+//Route::resource('companies/{company}/employees', 'User\EmployeeController');
 
 
 
@@ -39,7 +46,9 @@ Route::resource('employees', 'EmployeeController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@company')->name('home');
+Route::get('/companies/{company}', 'HomeController@index')->name('company');
+Route::get('/companies/{company}/employees', 'HomeController@employees')->name('employees');
 
 
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
+use App\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,8 +24,26 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function company()
     {
-        return view('home');
+        $user = Auth::user();
+
+        return view('home', compact('user'));
+    }
+
+    public function index($id)
+    {
+        $company = Company::findOrFail($id);
+
+        return view('company', compact('company'));
+    }
+
+    public function employees($id)
+    {
+        $company = Company::findOrFail($id);
+
+        $employees = Employee::where('company_id', $id)->get();
+
+        return view('users.employees.index', compact('employees', 'company'));
     }
 }
