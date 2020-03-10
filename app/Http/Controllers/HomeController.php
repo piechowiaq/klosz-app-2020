@@ -44,6 +44,6 @@ class HomeController extends Controller
 
         $employees = Employee::where('company_id', $id)->get();
 
-        return view('users.employees.index', compact('employees', 'company'));
+        return view('user.employees.index', compact('employees', 'company'));
     }
 }
