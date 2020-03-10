@@ -31,7 +31,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     });
 
-Route::name('users.')->group(function () {
+Route::namespace('User')->prefix('user')->name('users.')->group(function () {
 
       Route::resource('employees', 'EmployeeController');
 
