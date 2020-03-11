@@ -38,12 +38,5 @@ class HomeController extends Controller
         return view('company', compact('company'));
     }
 
-    public function employees($id)
-    {
-        $company = Company::findOrFail($id);
 
-        $employees = Employee::where('company_id', $id)->get();
-
-        return view('user.employees.index', compact('employees', 'company'));
-    }
 }

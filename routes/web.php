@@ -31,14 +31,14 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     });
 
-Route::namespace('User')->prefix('user')->name('user.')->group(function () {
+Route::namespace('User')->name('user.')->group(function () {
 
-      Route::resource('employees', 'EmployeeController');
+      Route::resource('/companies/{company}/employees', 'EmployeeController');
 
 
 });
 
-//Route::resource('companies/{company}/employees', 'User\EmployeeController');
+
 
 
 
@@ -48,7 +48,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@company')->name('home');
 Route::get('/companies/{company}', 'HomeController@index')->name('company');
-Route::get('/companies/{company}/employees', 'HomeController@employees')->name('employees');
+
 
 
 

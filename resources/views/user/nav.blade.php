@@ -5,7 +5,7 @@
     <ul class="">
         <li class="md:mr-6 mt-6">
 
-            <a class="text-indigo-500 hover:text-red-800" href="{{ route('employees', ['company'=>$company->id ?? 'company'] ) }}">Employees</a>
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('user.employees.index', ['company'=>$company->id ?? 'company'] ) }}">Employees</a>
         </li>
     </ul>
 </div>

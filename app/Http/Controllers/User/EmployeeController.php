@@ -21,17 +21,30 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
 //        $this->authorize('update');
-        $company = auth()->user()->companies()->first();
 
 
-        $employees = Employee::where('company_id', $company->id )->get();
 
-        return view('users.employees.index', compact('employees'));
+        $company = Company::findOrFail($id);
+
+        $employees = Employee::where('company_id', $id)->get();
+
+        return view('user.employees.index', compact('employees', 'company'));
+
+
+
+
+//        $company = auth()->user()->companies()->first();
+//
+//
+//        $employees = Employee::where('company_id', $company->id )->get();
+//
+//        return view('user.employees.index', compact('employees'));
       }
 
     /**
@@ -49,7 +62,7 @@ class EmployeeController extends Controller
 
         $employee = new Employee();
 
-        return view('users.employees.create', compact( 'positions', 'companies','employee' ));
+        return view('user.employees.create', compact( 'positions', 'companies','employee' ));
     }
 
     /**
@@ -90,7 +103,7 @@ class EmployeeController extends Controller
 
         //$this->authorize('update');
 
-        return view('users.employees.show', compact('employee'));
+        return view('user.employees.show', compact('employee'));
     }
 
     /**
@@ -108,7 +121,7 @@ class EmployeeController extends Controller
 
         $companies = Company::all();
 
-        return view ( 'users.employees.edit', compact('employee', 'companies', 'positions'));
+        return view ( 'user.employees.edit', compact('employee', 'companies', 'positions'));
     }
 
     /**

@@ -17,6 +17,8 @@
                 </div>
 
                 <div class="w-full p-6">
+
+
                     @foreach ($user->companies as $company)
 
                         <div class="md:flex border rounded shadow mb-1">
