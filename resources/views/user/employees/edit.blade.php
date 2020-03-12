@@ -9,7 +9,7 @@
 
 
     <div>
-        <form action="{{route('user.employees.update', ['employee' => $employee])}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('user.employees.update', ['company'=>$company->id, 'employee' => $employee])}}" method="POST" enctype="multipart/form-data">
 
             @method('PATCH')
 

@@ -41,9 +41,6 @@ class UserEmployeeManagementTest extends TestCase
     /** @test */
     public function a_employee_can_be_created()
     {
-
-
-
         $this->signIn();
 
         $response = $this->post('/companies/1/employees', $attributes = factory(Employee::class)->raw([
@@ -59,4 +56,33 @@ class UserEmployeeManagementTest extends TestCase
         $response->assertRedirect($employee->userpath(1));
 
     }
+
+    /** @test */
+    public function a_employee_can_be_updated()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signIn();
+
+        $response = $this->post('/companies/1/employees', $attributes = factory(Employee::class)->raw([
+            'company_id' => 1,
+        ]));
+
+        $employee = Employee::first();
+
+        $response = $this->patch($employee->userpath(1), $attributes = [
+            'name'=> 'New Name',
+        ]);
+
+        $this->get($employee->userpath(1).'/edit')->assertOk();
+
+        $this->assertDatabaseHas('employees', $attributes);
+
+        $response->assertRedirect($employee->fresh()->userpath(1));
+    }
+
+
+
+
+
 }

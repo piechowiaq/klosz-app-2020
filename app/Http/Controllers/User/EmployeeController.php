@@ -119,16 +119,16 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($companyId, Employee $employee)
     {
 
 //        $this->authorize('update');
 
         $positions = Position::all();
 
-        $companies = Company::all();
+        $company = Company::findOrFail($companyId);
 
-        return view ( 'user.employees.edit', compact('employee', 'companies', 'positions'));
+        return view ( 'user.employees.edit', compact('employee', 'company', 'positions'));
     }
 
     /**
@@ -138,9 +138,9 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEmployeeRequest $request, Employee $employee)
+    public function update(UpdateEmployeeRequest $request, $companyId, Employee $employee)
     {
-        $this->authorize('update');
+        //$this->authorize('update');
 
         $employee->update(request(['name', 'surname', 'number', 'company_id']));
 
@@ -155,7 +155,7 @@ class EmployeeController extends Controller
 
             }}
 
-        return redirect($employee->path());
+        return redirect($employee->userpath($companyId));
 
     }
 
