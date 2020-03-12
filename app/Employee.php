@@ -13,6 +13,11 @@ class Employee extends Model
         return "/admin/employees/{$this->id}";
     }
 
+    public function userpath($company)
+    {
+        return "/companies/$company/employees/{$this->id}";
+    }
+
     public function departments()
     {
         return $this->belongsToMany(Department::class);

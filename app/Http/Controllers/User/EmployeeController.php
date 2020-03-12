@@ -50,32 +50,38 @@ class EmployeeController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($companyId)
     {
-        $this->authorize('update');
+        //$this->authorize('update');
 
         $positions = Position::all();
 
-        $companies = Company::all();
+        $company = Company::findOrFail($companyId);
 
         $employee = new Employee();
 
-        return view('user.employees.create', compact( 'positions', 'companies','employee' ));
+        return view('user.employees.create', compact( 'positions', 'company','employee' ));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreEmployeeRequest $request
+     * @param $company
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreEmployeeRequest $request)
+    public function store(StoreEmployeeRequest $request, $companyId)
     {
-        $this->authorize('update');
+        //$this->authorize('update');
 
-        $employee = new Employee(request(['name', 'surname', 'number', 'company_id']));
+
+
+        $employee = new Employee(request(['name', 'surname', 'number']));
+
+        $employee->company_id = $companyId;
 
         $employee->save();
 
@@ -89,16 +95,17 @@ class EmployeeController extends Controller
 
             }}
 
-        return redirect($employee->path());
+        return redirect($employee->userpath($companyId));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Employee  $employee
+     * @param \App\Employee $employee
+     * @param $company
      * @return \Illuminate\Http\Response
      */
-    public function show(Employee $employee)
+    public function show($companyId, Employee $employee)
     {
 
         //$this->authorize('update');
@@ -112,16 +119,16 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($companyId, Employee $employee)
     {
 
 //        $this->authorize('update');
 
         $positions = Position::all();
 
-        $companies = Company::all();
 
-        return view ( 'user.employees.edit', compact('employee', 'companies', 'positions'));
+
+        return view ( 'user.employees.edit', compact('employee', 'positions'));
     }
 
     /**
