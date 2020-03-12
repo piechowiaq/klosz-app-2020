@@ -4,7 +4,7 @@
     @include('user.nav')
     <div class="md:w-5/6">
     <div class=" py-6 m-2 md:py-2">
-        <a href="{{route('user.employees.create', ['company'=>$company->id])}}" class="rounded border text-indigo-500 p-2 bg-transparent" >PAPA Create Employee</a>
+        <a href="{{route('user.employees.create', ['company'=>$company])}}" class="rounded border text-indigo-500 p-2 bg-transparent" >PAPA Create Employee</a>
     </div>
 
     @foreach ($employees as $employee)

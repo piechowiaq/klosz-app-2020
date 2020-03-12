@@ -24,15 +24,15 @@ class EmployeeController extends Controller
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($companyId)
     {
 //        $this->authorize('update');
 
 
 
-        $company = Company::findOrFail($id);
+        $company = Company::findOrFail($companyId);
 
-        $employees = Employee::where('company_id', $id)->get();
+        $employees = Employee::where('company_id', $companyId)->get();
 
         return view('user.employees.index', compact('employees', 'company'));
 
@@ -119,16 +119,16 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit($companyId, Employee $employee)
+    public function edit(Employee $employee)
     {
 
 //        $this->authorize('update');
 
         $positions = Position::all();
 
+        $companies = Company::all();
 
-
-        return view ( 'user.employees.edit', compact('employee', 'positions'));
+        return view ( 'user.employees.edit', compact('employee', 'companies', 'positions'));
     }
 
     /**
