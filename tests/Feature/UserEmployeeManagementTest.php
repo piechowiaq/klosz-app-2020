@@ -60,8 +60,6 @@ class UserEmployeeManagementTest extends TestCase
     /** @test */
     public function a_employee_can_be_updated()
     {
-        $this->withoutExceptionHandling();
-
         $this->signIn();
 
         $response = $this->post('/companies/1/employees', $attributes = factory(Employee::class)->raw([
@@ -79,6 +77,21 @@ class UserEmployeeManagementTest extends TestCase
         $this->assertDatabaseHas('employees', $attributes);
 
         $response->assertRedirect($employee->fresh()->userpath(1));
+    }
+
+    /** @test */
+    public function user_cannot_access_other_companies_employees()
+    {
+        $this->signIn();
+
+        $response = $this->get('/companies/1/employees');
+
+        $response->assertOk();
+
+        $response = $this->get('/companies/2/employees');
+
+        $response->assertRedirect('home');
+
     }
 
 

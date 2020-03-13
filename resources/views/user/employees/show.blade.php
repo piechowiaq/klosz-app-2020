@@ -23,7 +23,14 @@
                 </div>
             @endforeach
         </div>
-
+    <hr>
+        <div>
+            @foreach ($employee->trainings as $training)
+                <div class="block mt-2 py-2">
+                    {{ $training->name}}
+                </div>
+            @endforeach
+        </div>
 
 
     </div>

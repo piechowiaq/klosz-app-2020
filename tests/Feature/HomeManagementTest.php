@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\UserAuthenticate;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -25,13 +27,7 @@ class HomeManagementTest extends TestCase
 
         $response->assertViewIs('home');
 
-//        $response->assertSee();
-
-
-
-
-
-
-
     }
+
+
 }

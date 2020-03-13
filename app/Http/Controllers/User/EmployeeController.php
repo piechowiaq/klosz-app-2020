@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Position;
+use App\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,13 +16,13 @@ class EmployeeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'auth.user']);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @param $id
+     * @param $companyId
      * @return \Illuminate\Http\Response
      */
     public function index($companyId)
@@ -110,7 +111,11 @@ class EmployeeController extends Controller
 
         //$this->authorize('update');
 
-        return view('user.employees.show', compact('employee'));
+        $company = Company::findOrFail($companyId);
+
+        $trainings = Training::all();
+
+        return view('user.employees.show', compact('employee', 'company', 'trainings'));
     }
 
     /**
@@ -158,6 +163,11 @@ class EmployeeController extends Controller
         return redirect($employee->userpath($companyId));
 
     }
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.

@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Company;
 use App\Role;
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -13,6 +14,10 @@ abstract class TestCase extends BaseTestCase
     protected function signIn($user = null)
     {
         $user = $user ?: factory(User::class)->create();
+
+        $company = factory(Company::class)->create();
+
+        $user->companies()->save($company);
 
         $this->actingAs($user);
 
