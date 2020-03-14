@@ -39,8 +39,6 @@ class PositionManagementTest extends TestCase
 
         $this->get('/admin/positions/create')->assertStatus(403);
 
-        $this->withoutExceptionHandling();
-
         $this->signInSuperAdmin();
 
         $response = $this->post('/admin/positions', $attributes = factory(Position::class)->raw());

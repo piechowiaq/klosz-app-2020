@@ -33,8 +33,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
 Route::namespace('User')->name('user.')->group(function () {
 
-      Route::resource('/companies/{company}/employees', 'EmployeeController');
-
+    Route::resource('/companies/{company}/employees', 'EmployeeController');
 
 });
 

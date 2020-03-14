@@ -27,7 +27,7 @@ class StoreUserEmployeeRequest extends FormRequest
             'name'=> 'sometimes|required',
             'surname'=> 'sometimes|required',
             'number'=> 'required|unique:employees,number|sometimes',
-            'company_id'=> 'exist:companies,id|required|sometimes',
+            //'company_id'=> 'exist:companies,id|required|sometimes',
             'position_id'=> 'exists:positions,id|required|sometimes',
         ];
     }

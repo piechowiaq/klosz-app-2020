@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Company;
 use App\Department;
 use App\Employee;
 use App\Position;
@@ -59,5 +60,7 @@ class PositionTest extends TestCase
 
         $this->assertEquals($position->department->id, $department->id);
     }
+
+
 
 }

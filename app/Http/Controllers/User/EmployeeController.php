@@ -6,11 +6,14 @@ use App\Company;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Position;
 use App\Training;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -29,24 +32,13 @@ class EmployeeController extends Controller
     {
 //        $this->authorize('update');
 
-
-
         $company = Company::findOrFail($companyId);
 
         $employees = Employee::where('company_id', $companyId)->get();
 
         return view('user.employees.index', compact('employees', 'company'));
 
-
-
-
-//        $company = auth()->user()->companies()->first();
-//
-//
-//        $employees = Employee::where('company_id', $company->id )->get();
-//
-//        return view('user.employees.index', compact('employees'));
-      }
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -56,15 +48,17 @@ class EmployeeController extends Controller
      */
     public function create($companyId)
     {
-        //$this->authorize('update');
-
-        $positions = Position::all();
+        $employee = new Employee();
 
         $company = Company::findOrFail($companyId);
 
-        $employee = new Employee();
+        $positions = array();
 
-        return view('user.employees.create', compact( 'positions', 'company','employee' ));
+        foreach ($company->positions as $position) {
+            $positions[] = $position;
+        }
+
+        return view('user.employees.create', compact( 'positions', 'employee', 'company'));
     }
 
     /**
@@ -74,11 +68,9 @@ class EmployeeController extends Controller
      * @param $company
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreEmployeeRequest $request, $companyId)
+    public function store(StoreUserEmployeeRequest $request, $companyId)
     {
         //$this->authorize('update');
-
-
 
         $employee = new Employee(request(['name', 'surname', 'number']));
 
@@ -86,15 +78,7 @@ class EmployeeController extends Controller
 
         $employee->save();
 
-
         $employee->positions()->sync(request('position_id'));
-
-        foreach ($employee->positions as $position) {
-            foreach ($position->trainings as $training){
-
-                $employee->trainings()->sync($training, false);
-
-            }}
 
         return redirect($employee->userpath($companyId));
     }

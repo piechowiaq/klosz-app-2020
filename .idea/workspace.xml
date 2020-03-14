@@ -3,14 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/EmployeeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/HomeManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/HomeManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserEmployeeRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreUserEmployeeRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Position.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Position.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/UserEmployeeManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserEmployeeManagementTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/TestCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/TestCase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/CompanyTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/CompanyTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/PositionTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/PositionTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -139,7 +142,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Controllers/User" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../klosz-project" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
@@ -220,7 +223,7 @@
       <workItem from="1581142742355" duration="24543000" />
       <workItem from="1581269516778" duration="2515000" />
       <workItem from="1583945942420" duration="13455000" />
-      <workItem from="1584076620315" duration="6903000" />
+      <workItem from="1584076620315" duration="45280000" />
     </task>
     <servers />
   </component>
@@ -239,16 +242,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/routes/web.php</url>
-          <line>27</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

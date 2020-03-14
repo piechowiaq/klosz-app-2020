@@ -25,21 +25,11 @@ class UserEmployeeManagementTest extends TestCase
         $employee = factory(Employee::class)->create();
 
         $this->post('/companies/{company}/employees', $employee->toArray())->assertRedirect('login');
-//
-//        $this->patch($employee->path())->assertRedirect('/login');
-//
-//        $this->delete($employee->path())->assertRedirect('/login');
-//
-//        $this->get($employee->path().'/edit')->assertRedirect('/login');
-//
-//        $this->get('/admin/employees')->assertRedirect('/login');
-//
-//        $this->get($employee->path())->assertRedirect('/login');
 
     }
 
     /** @test */
-    public function a_employee_can_be_created()
+    public function an_employee_can_be_created()
     {
         $this->signIn();
 

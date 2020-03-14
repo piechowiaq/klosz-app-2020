@@ -7,6 +7,7 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Position;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -46,6 +47,14 @@ class CompanyController extends Controller
         $company->save();
 
         $company->departments()->sync(request('department_id'));
+
+        $positions= Position::whereIn('department_id',request('department_id'))->get();
+
+        foreach ($positions as $position){
+
+            $position->companies()->sync($company, false);
+
+        }
 
         return redirect('admin/companies');
     }

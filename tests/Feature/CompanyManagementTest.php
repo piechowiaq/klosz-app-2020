@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Company;
+use App\Department;
+use App\Position;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -71,6 +73,21 @@ class CompanyManagementTest extends TestCase
         $response = $this->post('/admin/companies', array_merge($attributes = factory(Company::class)->raw(), ['name' => '']));
 
         $response->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    public function a_company_is_attached_to_positions_departments_when_created()
+    {
+        $department = factory(Department::class)->create();
+
+        $companies = factory(Company::class, 3)
+            ->create()
+            ->each(function($company) use ($department) {
+                $company->positions()->save(factory(Position::class)->make(['department_id' => $department->id]));
+            });
+
+        $this->assertCount(3, $companies);
+        $this->assertCount(3, Position::all());
     }
 
 }
