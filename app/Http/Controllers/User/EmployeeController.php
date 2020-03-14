@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Http\Requests\UpdateUserEmployeeRequest;
 use App\Position;
 use App\Training;
 use Illuminate\Database\Eloquent\Collection;
@@ -38,7 +39,7 @@ class EmployeeController extends Controller
 
         return view('user.employees.index', compact('employees', 'company'));
 
-     }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -57,6 +58,8 @@ class EmployeeController extends Controller
         foreach ($company->positions as $position) {
             $positions[] = $position;
         }
+
+
 
         return view('user.employees.create', compact( 'positions', 'employee', 'company'));
     }
@@ -80,6 +83,13 @@ class EmployeeController extends Controller
 
         $employee->positions()->sync(request('position_id'));
 
+
+        foreach ($employee->positions as $position) {
+            $employee->departments()->sync($position->department_id,false);
+            foreach ($position->trainings as $training){
+                $employee->trainings()->sync($training, false);
+            }}
+
         return redirect($employee->userpath($companyId));
     }
 
@@ -92,14 +102,15 @@ class EmployeeController extends Controller
      */
     public function show($companyId, Employee $employee)
     {
-
         //$this->authorize('update');
+
+
 
         $company = Company::findOrFail($companyId);
 
         $trainings = Training::all();
 
-        return view('user.employees.show', compact('employee', 'company', 'trainings'));
+        return view('user.employees.show', compact('employee', 'company'));
     }
 
     /**
@@ -127,38 +138,28 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEmployeeRequest $request, $companyId, Employee $employee)
+    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee)
     {
         //$this->authorize('update');
 
-        $employee->update(request(['name', 'surname', 'number', 'company_id']));
+        $employee->update(request(['name', 'surname', 'number']));
+
+        $employee->company_id = $companyId;
 
         $employee->save();
 
         $employee->positions()->sync(request('position_id'));
 
         foreach ($employee->positions as $position) {
+            $employee->departments()->sync($position->department_id,false);
             foreach ($position->trainings as $training){
-
                 $employee->trainings()->sync($training, false);
-
             }}
 
         return redirect($employee->userpath($companyId));
 
     }
 
-
-
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
 
 
 }

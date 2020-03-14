@@ -18,8 +18,6 @@ class UserAuthenticate
     public function handle($request, Closure $next)
     {
 
-
-
         $companies = Auth::user()->companies()->get();
 
         foreach ($companies as $company){
@@ -27,7 +25,6 @@ class UserAuthenticate
             if ($company->id == $request->route('company') ){
                 return $next($request);
             }
-
         };
 
         return redirect('home');
