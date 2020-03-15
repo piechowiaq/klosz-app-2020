@@ -27,6 +27,6 @@ class UserAuthenticate
             }
         };
 
-        return redirect('home');
+        return redirect('/login');
     }
 }

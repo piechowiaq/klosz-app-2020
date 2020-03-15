@@ -15,9 +15,9 @@ abstract class TestCase extends BaseTestCase
     {
         $user = $user ?: factory(User::class)->create();
 
-        $company = factory(Company::class)->create();
-
-        $user->companies()->save($company);
+//        $company = factory(Company::class)->create();
+//
+//        $user->companies()->save($company);
 
         $this->actingAs($user);
 
@@ -33,6 +33,63 @@ abstract class TestCase extends BaseTestCase
             ]);
 
         $user->roles()->save($role);
+
+        $this->actingAs($user);
+
+        return $user;
+    }
+
+    protected function signInUser($user = null)
+    {
+        $user = $user ?: factory(User::class)->create();
+
+        $company = factory(Company::class)->create();
+
+        $role = factory(Role::class)->create([
+            'name' => 'User'
+        ]);
+
+        $user->roles()->save($role);
+
+        $user->companies()->save($company);
+
+        $this->actingAs($user);
+
+        return $user;
+    }
+
+    protected function signInManager($user = null)
+    {
+        $user = $user ?: factory(User::class)->create();
+
+        $company = factory(Company::class)->create();
+
+        $role = factory(Role::class)->create([
+            'name' => 'Manager'
+        ]);
+
+        $user->roles()->save($role);
+
+        $user->companies()->save($company);
+
+        $this->actingAs($user);
+
+        return $user;
+    }
+
+    protected function signInAdmin($user = null)
+    {
+        $user = $user ?: factory(User::class)->create();
+
+        $company = factory(Company::class)->create();
+
+        $role = factory(Role::class)->create([
+            'name' => 'Admin'
+        ]);
+
+        $user->roles()->save($role);
+
+        $user->companies()->save($company);
 
         $this->actingAs($user);
 

@@ -5,9 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Company;
 use App\Employee;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\StoreUserEmployeeRequest;
-use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
 use App\Position;
 use App\Training;
@@ -29,7 +27,7 @@ class EmployeeController extends Controller
      * @param $companyId
      * @return \Illuminate\Http\Response
      */
-    public function index($companyId)
+    public function index($companyId, Employee $employee)
     {
 //        $this->authorize('update');
 
@@ -37,7 +35,7 @@ class EmployeeController extends Controller
 
         $employees = Employee::where('company_id', $companyId)->get();
 
-        return view('user.employees.index', compact('employees', 'company'));
+        return view('user.employees.index', compact('employees', 'company', 'employee'));
 
     }
 
@@ -47,8 +45,10 @@ class EmployeeController extends Controller
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function create($companyId)
+    public function create($companyId, Employee $employee)
     {
+        $this->authorize('update', $employee);
+
         $employee = new Employee();
 
         $company = Company::findOrFail($companyId);
@@ -67,13 +67,15 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreEmployeeRequest $request
-     * @param $company
+     * @param StoreUserEmployeeRequest $request
+     * @param $companyId
+     * @param Employee $employee
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(StoreUserEmployeeRequest $request, $companyId)
+    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee)
     {
-        //$this->authorize('update');
+        $this->authorize('update', $employee);
 
         $employee = new Employee(request(['name', 'surname', 'number']));
 
@@ -102,7 +104,7 @@ class EmployeeController extends Controller
      */
     public function show($companyId, Employee $employee)
     {
-        //$this->authorize('update');
+
 
 
 
@@ -122,7 +124,7 @@ class EmployeeController extends Controller
     public function edit($companyId, Employee $employee)
     {
 
-//        $this->authorize('update');
+        $this->authorize('update', $employee);
 
         $positions = Position::all();
 
@@ -140,7 +142,7 @@ class EmployeeController extends Controller
      */
     public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee)
     {
-        //$this->authorize('update');
+        $this->authorize('update', $employee);
 
         $employee->update(request(['name', 'surname', 'number']));
 

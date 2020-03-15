@@ -81,8 +81,11 @@ class CompanyController extends Controller
         $this->authorize('update');
 
         $company->update(request(['name']));
+        
 
         $company->departments()->sync(request('department_id'));
+
+
 
         return redirect($company->path());
     }

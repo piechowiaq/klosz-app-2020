@@ -68,10 +68,9 @@ class EmployeeController extends Controller
         $employee->positions()->sync(request('position_id'));
 
         foreach ($employee->positions as $position) {
+            $employee->departments()->sync($position->department_id,false);
             foreach ($position->trainings as $training){
-
                 $employee->trainings()->sync($training, false);
-
             }}
 
         return redirect($employee->path());
@@ -127,10 +126,9 @@ class EmployeeController extends Controller
         $employee->positions()->sync(request('position_id'));
 
         foreach ($employee->positions as $position) {
+            $employee->departments()->sync($position->department_id,false);
             foreach ($position->trainings as $training){
-
                 $employee->trainings()->sync($training, false);
-
             }}
 
         return redirect($employee->path());

@@ -61,6 +61,12 @@ class TrainingController extends Controller
 
         $training->positions()->sync(request('position_id'));
 
+        foreach ($training->positions as $position) {
+            $training->departments()->sync($position->department_id,false);
+            foreach ($position->employees as $employee){
+                $training->employees()->sync($employee, false);
+            }}
+
         return redirect($training->path());
     }
 
@@ -108,6 +114,12 @@ class TrainingController extends Controller
         $training->save();
 
         $training->positions()->sync(request('position_id'));
+
+        foreach ($training->positions as $position) {
+            $training->departments()->sync($position->department_id,false);
+            foreach ($position->employees as $employee){
+                $training->employees()->sync($employee, false);
+            }}
 
         return redirect($training->path());
     }
