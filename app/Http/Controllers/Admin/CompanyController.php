@@ -56,7 +56,7 @@ class CompanyController extends Controller
 
         }
 
-        return redirect('admin/companies');
+        return view('admin/companies');
     }
 
     public function show(Company $company)
@@ -81,7 +81,7 @@ class CompanyController extends Controller
         $this->authorize('update');
 
         $company->update(request(['name']));
-        
+
 
         $company->departments()->sync(request('department_id'));
 
