@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="" />
+    <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/EmployeeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +174,7 @@
       <TestRunner class="Tests\Feature\RoleManagementTest" file="$PROJECT_DIR$/tests/Feature/RoleManagementTest.php" method="a_role_can_be_created" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="RoleManagementTest.a_role_can_be_updated" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+    <configuration name="RoleManagementTest.a_role_can_be_updated" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner class="Tests\Feature\RoleManagementTest" file="$PROJECT_DIR$/tests/Feature/RoleManagementTest.php" method="a_role_can_be_updated" scope="Method" />
       <method v="2" />
     </configuration>
@@ -182,7 +186,6 @@
       <list>
         <item itemvalue="PHPUnit.RoleManagementTest.a_role_can_be_created" />
         <item itemvalue="PHPUnit.RoleManagementTest" />
-        <item itemvalue="PHPUnit.RoleManagementTest.a_role_can_be_updated" />
       </list>
     </recent_temporary>
   </component>
@@ -212,6 +215,7 @@
       <workItem from="1583945942420" duration="13455000" />
       <workItem from="1584076620315" duration="53219000" />
       <workItem from="1584266094547" duration="14211000" />
+      <workItem from="1584383619802" duration="5627000" />
     </task>
     <servers />
   </component>

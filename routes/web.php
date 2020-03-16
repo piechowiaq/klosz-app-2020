@@ -28,6 +28,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('employees', 'EmployeeController');
     Route::resource('positions', 'PositionController');
     Route::resource('trainings', 'TrainingController');
+    Route::resource('certificates', 'CertificateController');
 
     });
 
