@@ -49,7 +49,7 @@ class CertificateController extends Controller
     {
         $this->authorize('update');
 
-        $certificate = new Certificate(request(['training_id']));
+        $certificate = new Certificate(request(['training_id', 'company_id']));
 
 
         $certificate->save();
@@ -93,7 +93,7 @@ class CertificateController extends Controller
     {
         $this->authorize('update');
 
-        $certificate->update(request(['training_id']));
+        $certificate->update(request(['training_id','company_id']));
 
         $certificate->save();
 

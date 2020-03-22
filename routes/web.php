@@ -35,6 +35,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 Route::namespace('User')->name('user.')->group(function () {
 
     Route::resource('/companies/{company}/employees', 'EmployeeController')->except(['destroy']);
+    Route::resource('/{company}/certificates', 'CertificateController');
 
 });
 

@@ -17,6 +17,8 @@ class CreateCertificatesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('training_id');
             $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

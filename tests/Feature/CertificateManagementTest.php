@@ -63,7 +63,6 @@ class CertificateManagementTest extends TestCase
     public function a_certificate_can_be_created()
     {
 
-
        $this->signIn();
 
         $this->post('/admin/certificates', $attributes = factory(Certificate::class)->raw());
@@ -88,11 +87,9 @@ class CertificateManagementTest extends TestCase
 
     }
 
-    /** @test */
+
     public function a_certificate_cannot_be_updated_by_no_super_admin()
     {
-       // $this->withoutExceptionHandling();
-
         $training = factory(Training::class)->create();
 
         $certificate = factory(Certificate::class)->create();
@@ -104,13 +101,10 @@ class CertificateManagementTest extends TestCase
             'training_id'=> '2',
         ])->assertStatus(403);
 
-        $attributes = [
-            'training_id'=> '1',
-        ];
 
-        $this->assertDatabaseHas('certificates',
-            $attributes
-        );
+        $this->assertDatabaseHas('certificates', [
+            'training_id'=> '1'
+        ]);
     }
 
     /** @test */
@@ -178,7 +172,6 @@ class CertificateManagementTest extends TestCase
 
         $certificate = factory(Certificate::class)->make([
             'training_id' => null,
-
         ]);
 
         $response = $this->post('/admin/certificates', $certificate->toArray())->assertSessionHasErrors(('training_id'));

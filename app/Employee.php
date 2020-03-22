@@ -42,4 +42,9 @@ class Employee extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function certificates()
+    {
+        return $this->belongsToMany(Certificate::class);
+    }
 }
