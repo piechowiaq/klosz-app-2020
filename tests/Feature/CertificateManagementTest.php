@@ -15,6 +15,9 @@ class CertificateManagementTest extends TestCase
     /** @test */
     public function guests_cannot_manage_certificates()
     {
+
+
+
         $this->get('/admin/certificates/create')->assertRedirect('login');
 
         $certificate = factory(Certificate::class)->create();
@@ -32,6 +35,29 @@ class CertificateManagementTest extends TestCase
         $this->get($certificate->path())->assertRedirect('/login');
 
     }
+    /** @test */
+    public function certificates_cannot_be_managed_by_non_super_admin()
+    {
+        $this->signIn();
+
+        $this->get('/admin/certificates/create')->assertStatus(403);
+
+        $certificate = factory(Certificate::class)->create();
+
+        $this->post('/admin/certificates', $certificate->toArray())->assertStatus(403);
+
+        $this->patch($certificate->path())->assertStatus(403);
+
+        $this->delete($certificate->path())->assertStatus(403);
+
+        $this->get($certificate->path().'/edit')->assertStatus(403);
+
+        $this->get('/admin/certificates')->assertStatus(403);
+
+        $this->get($certificate->path())->assertStatus(403);
+
+    }
+
 
     /** @test */
     public function a_certificate_can_be_created()
@@ -40,9 +66,7 @@ class CertificateManagementTest extends TestCase
 
        $this->signIn();
 
-        $this->get('/admin/certificates/create')->assertStatus(403);
-
-        $response = $this->post('/admin/certificates', $attributes = factory(Certificate::class)->raw());
+        $this->post('/admin/certificates', $attributes = factory(Certificate::class)->raw());
 
         $certificate = Certificate::all();
 
@@ -65,9 +89,9 @@ class CertificateManagementTest extends TestCase
     }
 
     /** @test */
-    public function a_employee_can_be_updated()
+    public function a_certificate_cannot_be_updated_by_no_super_admin()
     {
-        //$this->withoutExceptionHandling();
+       // $this->withoutExceptionHandling();
 
         $training = factory(Training::class)->create();
 
@@ -76,20 +100,25 @@ class CertificateManagementTest extends TestCase
 
         $this->signIn();
 
-        $this->get('/admin/certificates/create')->assertStatus(403);
+        $this->patch($certificate->path(), $attributes = [
+            'training_id'=> '2',
+        ])->assertStatus(403);
 
+        $attributes = [
+            'training_id'=> '1',
+        ];
 
-        $response = $this->patch($certificate->path(), $attributes = [
-            'training_id'=> 2,
-        ]);
+        $this->assertDatabaseHas('certificates',
+            $attributes
+        );
+    }
 
-        $this->get($certificate->path().'/edit')->assertStatus(403);
+    /** @test */
+    public function a_certificate_can_be_updated()
+    {
+       $this->withoutExceptionHandling();
 
-        $this->assertDatabaseHas('certificates', $attributes = [
-            'training_id'=> 1,
-        ]);
-
-
+        $training = factory(Training::class)->create();
 
         $this->signInSuperAdmin();
 
@@ -110,33 +139,57 @@ class CertificateManagementTest extends TestCase
         $response->assertRedirect($certificate->fresh()->path());
     }
 
-
-    public function a_employee_can_be_deleted()
+    /** @test */
+    public function a_cerificate_cannot_be_deleted_by_no_super_admin()
     {
-        $this->signInSuperAdmin();
+        $certificate = factory(Certificate::class)->create();
 
-        $this->post('/admin/employees', $attributes = factory(Employee::class)->raw());
+        $this->signIn();
 
-        $employee = Employee::first();
+        $response = $this->delete($certificate->path());
 
-        $this->assertCount(1, Employee::all());
-
-        $response = $this->delete($employee->path());
-
-        $this->assertCount(0, Employee::all());
-
-        $response->assertRedirect('/admin/employees');
-
+        $this->assertCount(1, Certificate::all());
     }
 
 
-    public function a_employee_name_is_required()
+    /** @test */
+    public function a_certificate_can_be_deleted()
     {
         $this->signInSuperAdmin();
 
-        $response = $this->post('/admin/employees', array_merge($attributes = factory(Employee::class)->raw(), ['name' => '']));
+        $this->post('/admin/certificates', $attributes = factory(Certificate::class)->raw());
 
-        $response->assertSessionHasErrors('name');
+        $certificate = Certificate::first();
+
+        $this->assertCount(1, Certificate::all());
+
+        $response = $this->delete($certificate->path());
+
+        $this->assertCount(0, Certificate::all());
+
+        $response->assertRedirect('/admin/certificates');
+
+    }
+
+    /** @test */
+    public function a_certificate_name_is_required()
+    {
+        $this->signInSuperAdmin();
+
+        $certificate = factory(Certificate::class)->make([
+            'training_id' => null,
+
+        ]);
+
+        $response = $this->post('/admin/certificates', $certificate->toArray())->assertSessionHasErrors(('training_id'));
+
+        $this->assertEquals(0, Certificate::count());
+
+
+
+//        $response = $this->post('/admin/certificates', array_merge($attributes = factory(Certificate::class)->raw(), ['training_id' => '']));
+//
+//        $response->assertSessionHasErrors('training_id');
     }
 
 }

@@ -4,9 +4,6 @@
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CertificateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CertificateController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/CertificateFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CertificateFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/TrainingFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/TrainingFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/CertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CertificateManagementTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -218,7 +215,7 @@
       <workItem from="1583945942420" duration="13455000" />
       <workItem from="1584076620315" duration="53219000" />
       <workItem from="1584266094547" duration="14211000" />
-      <workItem from="1584383619802" duration="10937000" />
+      <workItem from="1584383619802" duration="15826000" />
     </task>
     <servers />
   </component>

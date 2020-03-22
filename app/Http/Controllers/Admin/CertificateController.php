@@ -24,7 +24,7 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('update');
     }
 
     /**
@@ -49,7 +49,8 @@ class CertificateController extends Controller
     {
         $this->authorize('update');
 
-        $certificate = new Certificate($request->validated());
+        $certificate = new Certificate(request(['training_id']));
+
 
         $certificate->save();
 
@@ -65,7 +66,7 @@ class CertificateController extends Controller
      */
     public function show(Certificate $certificate)
     {
-        //
+        $this->authorize('update');
     }
 
     /**
@@ -92,7 +93,9 @@ class CertificateController extends Controller
     {
         $this->authorize('update');
 
-        $certificate->update($request->validated());
+        $certificate->update(request(['training_id']));
+
+        $certificate->save();
 
         return redirect($certificate->path());
     }
@@ -106,6 +109,10 @@ class CertificateController extends Controller
      */
     public function destroy(Certificate $certificate)
     {
-       //
+        $this->authorize('update');
+
+        $certificate->delete();
+
+        return redirect('admin/certificates');
     }
 }
