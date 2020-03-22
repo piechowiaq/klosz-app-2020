@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Certificate;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCertificateRequest;
+use App\Http\Requests\UpdateCertificateRequest;
 use Illuminate\Http\Request;
 
 
@@ -43,11 +45,11 @@ class CertificateController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(StoreCertificateRequest $request)
     {
         $this->authorize('update');
 
-        $certificate = new Certificate;
+        $certificate = new Certificate($request->validated());
 
         $certificate->save();
 
@@ -75,7 +77,7 @@ class CertificateController extends Controller
      */
     public function edit(Certificate $certificate)
     {
-        //
+        $this->authorize('update');
     }
 
     /**
@@ -86,9 +88,13 @@ class CertificateController extends Controller
      * @return \Illuminate\Http\Response
      * @throws AuthorizationException
      */
-    public function update(Request $request, Certificate $certificate)
+    public function update(UpdateCertificateRequest $request, Certificate $certificate)
     {
-        //
+        $this->authorize('update');
+
+        $certificate->update($request->validated());
+
+        return redirect($certificate->path());
     }
 
     /**

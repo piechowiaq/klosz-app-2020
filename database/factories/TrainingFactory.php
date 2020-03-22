@@ -5,7 +5,7 @@
 use App\Training;
 use Faker\Generator as Faker;
 
-$factory->define(\App\Training::class, function (Faker $faker) {
+$factory->define(Training::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'description' => $faker->name,

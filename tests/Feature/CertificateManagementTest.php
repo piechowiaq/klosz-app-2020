@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Certificate;
+use App\Training;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -36,7 +37,8 @@ class CertificateManagementTest extends TestCase
     public function a_certificate_can_be_created()
     {
 
-        $this->signIn();
+
+       $this->signIn();
 
         $this->get('/admin/certificates/create')->assertStatus(403);
 
@@ -62,26 +64,50 @@ class CertificateManagementTest extends TestCase
 
     }
 
-
+    /** @test */
     public function a_employee_can_be_updated()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
+
+        $training = factory(Training::class)->create();
+
+        $certificate = factory(Certificate::class)->create();
+
+
+        $this->signIn();
+
+        $this->get('/admin/certificates/create')->assertStatus(403);
+
+
+        $response = $this->patch($certificate->path(), $attributes = [
+            'training_id'=> 2,
+        ]);
+
+        $this->get($certificate->path().'/edit')->assertStatus(403);
+
+        $this->assertDatabaseHas('certificates', $attributes = [
+            'training_id'=> 1,
+        ]);
+
+
 
         $this->signInSuperAdmin();
 
-        $this->post('/admin/employees', $attributes = factory(Employee::class)->raw());
+        $this->get('/admin/certificates/create')->assertOk();
 
-        $employee = Employee::first();
+        $response = $this->post('/admin/certificates', $attributes = factory(Certificate::class)->raw());
 
-        $response = $this->patch($employee->path(), $attributes = [
-            'name'=> 'New Name',
+        $certificate = Certificate::first();
+
+        $response = $this->patch($certificate->path(), $attributes = [
+            'training_id'=> 2,
         ]);
 
-        $this->get($employee->path().'/edit')->assertOk();
+        $this->get($certificate->path().'/edit')->assertOk();
 
-        $this->assertDatabaseHas('employees', $attributes);
+        $this->assertDatabaseHas('certificates', $attributes);
 
-        $response->assertRedirect($employee->fresh()->path());
+        $response->assertRedirect($certificate->fresh()->path());
     }
 
 
