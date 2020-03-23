@@ -27,4 +27,9 @@ class Department extends Model
     {
         return $this->belongsToMany(Company::class);
     }
+
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class);
+    }
 }

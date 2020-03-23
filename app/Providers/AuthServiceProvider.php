@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Certificate;
 use App\Employee;
 use App\Policies\EmployeePolicy;
+use App\Policies\CertificatePolicy;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Auth\Access\Gate;
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
 
         Employee::class => EmployeePolicy::class,
+        Certificate::class => CertificatePolicy::class,
 
     ];
 

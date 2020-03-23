@@ -88,24 +88,17 @@ class CertificateManagementTest extends TestCase
     }
 
 
+
+    /** @test */
     public function a_certificate_cannot_be_updated_by_no_super_admin()
     {
-        $training = factory(Training::class)->create();
+        $this->signIn();
 
         $certificate = factory(Certificate::class)->create();
 
-
-        $this->signIn();
-
-        $this->patch($certificate->path(), $attributes = [
-            'training_id'=> '2',
-        ])->assertStatus(403);
-
-
-        $this->assertDatabaseHas('certificates', [
-            'training_id'=> '1'
-        ]);
+        $this->patch( $certificate->path())->assertStatus(403);
     }
+
 
     /** @test */
     public function a_certificate_can_be_updated()
@@ -168,13 +161,15 @@ class CertificateManagementTest extends TestCase
     /** @test */
     public function a_certificate_name_is_required()
     {
+
+
         $this->signInSuperAdmin();
 
         $certificate = factory(Certificate::class)->make([
             'training_id' => null,
-        ]);
+         ]);
 
-        $response = $this->post('/admin/certificates', $certificate->toArray())->assertSessionHasErrors(('training_id'));
+        $response = $this->post('/admin/certificates', $certificate->toArray())->assertSessionHasErrors('training_id');
 
         $this->assertEquals(0, Certificate::count());
 

@@ -56,4 +56,31 @@ class UserCertificateManagementTest extends TestCase
         $this->get($certificate->userpath(1))->assertRedirect('/login');
 
     }
+
+    /** @test */
+    public function a_certificate_can_be_created()
+    {
+        $this->signInUser();
+
+        $this->post('/{company}/certificates', $attributes = factory(Certificate::class)->raw());
+
+        $certificate = Certificate::all();
+
+        $this->assertCount(0, $certificate);
+
+        $this->signInSuperAdmin();
+
+        $this->get('/admin/certificates/create')->assertOk();
+
+        $response = $this->post('/admin/certificates', $attributes = factory(Certificate::class)->raw());
+
+        $certificate = Certificate::all();
+
+        $this->assertCount(1, $certificate);
+
+        $certificate = Certificate::where('id', 1)->first();
+
+        $response->assertRedirect($certificate->path());
+
+    }
 }
