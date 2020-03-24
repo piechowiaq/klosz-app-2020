@@ -3,14 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Department.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Department.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserEmployeeRequest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Policies/EmployeePolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/EmployeePolicy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Certificate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Certificate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CertificateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CertificateController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreCertificateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateCertificateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/CertificateFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CertificateFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/CertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CertificateManagementTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -139,7 +138,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/user/trainings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
@@ -222,7 +221,8 @@
       <workItem from="1584076620315" duration="53219000" />
       <workItem from="1584266094547" duration="14211000" />
       <workItem from="1584383619802" duration="22091000" />
-      <workItem from="1584972135017" duration="7559000" />
+      <workItem from="1584972135017" duration="12092000" />
+      <workItem from="1585068588811" duration="295000" />
     </task>
     <servers />
   </component>

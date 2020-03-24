@@ -13,6 +13,8 @@ $factory->define(Certificate::class, function (Faker $faker) {
     return [
         'training_id' => $faker->randomElement($training),
         'company_id' => $faker->randomElement($company),
+        'training_date' => $faker->date(),
+        'expiry_date' => $faker->date(),
 
     ];
 });

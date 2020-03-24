@@ -6,6 +6,8 @@ use App\Certificate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
+use App\Training;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
@@ -49,8 +51,11 @@ class CertificateController extends Controller
     {
         $this->authorize('update');
 
-        $certificate = new Certificate(request(['training_id', 'company_id']));
+        $expiry_date = Carbon::create(request('training_date'))->addMonths( Training::where('id', request('training_id'))->first()->valid_for)->toDateString();
 
+        $certificate = new Certificate(request(['training_id', 'company_id', 'training_date']));
+
+        $certificate->expiry_date = $expiry_date;
 
         $certificate->save();
 
@@ -93,7 +98,11 @@ class CertificateController extends Controller
     {
         $this->authorize('update');
 
-        $certificate->update(request(['training_id','company_id']));
+        $expiry_date = Carbon::create(request('training_date'))->addMonths( Training::where('id', request('training_id'))->first()->valid_for)->toDateString();
+
+        $certificate->update(request(['training_id','company_id','training_date']));
+
+        $certificate->expiry_date = $expiry_date;
 
         $certificate->save();
 

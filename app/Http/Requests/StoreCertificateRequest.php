@@ -26,7 +26,8 @@ class StoreCertificateRequest extends FormRequest
         return [
             'training_id' => 'exists:trainings,id|required|sometimes',
             'company_id' => 'exists:companies,id|required|sometimes',
-
+            'training_date' => 'date|before:tomorrow|required|sometimes',
+            'expiry_date' => 'date|required|sometimes',
 
         ];
     }

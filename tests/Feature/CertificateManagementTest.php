@@ -62,8 +62,7 @@ class CertificateManagementTest extends TestCase
     /** @test */
     public function a_certificate_can_be_created()
     {
-
-       $this->signIn();
+        $this->signIn();
 
         $this->post('/admin/certificates', $attributes = factory(Certificate::class)->raw());
 

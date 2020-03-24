@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Certificate extends Model
 {
     protected $guarded = [];
+    /**
+     * @var string
+     */
 
     public function path()
     {
