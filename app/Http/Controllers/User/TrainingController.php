@@ -20,13 +20,15 @@ class TrainingController extends Controller
     {
         $company = Company::findOrFail($companyId);
 
-        $trainings = array();
+        $collection = collect();
 
-        foreach ($company->departments as $department) {
-            foreach ($department->trainings as $training) {
-                $trainings[] = $training;
+        foreach ($company->positions as $position) {
+            foreach ($position->trainings as $training) {
+                $collection[] = $training;
             }
         }
+
+        $trainings = $collection->unique('name');
 
         return view('user.trainings.index', compact('trainings', 'company', 'certificate'));
     }

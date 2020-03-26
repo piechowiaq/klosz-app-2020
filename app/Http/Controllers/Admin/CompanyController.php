@@ -48,7 +48,7 @@ class CompanyController extends Controller
 
         $company->departments()->sync(request('department_id'));
 
-        $positions= Position::whereIn('department_id',request('department_id'))->get();
+        $positions= Position::where('department_id',request('department_id'))->get();
 
         foreach ($positions as $position){
 
@@ -56,7 +56,7 @@ class CompanyController extends Controller
 
         }
 
-        return view('admin/companies');
+        return redirect($company->path());
     }
 
     public function show(Company $company)
@@ -76,7 +76,7 @@ class CompanyController extends Controller
         return view('admin.companies.edit', compact( 'company', 'departments'));
     }
 
-    public function update(UpdateCompanyRequest $request,Company $company)
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
         $this->authorize('update');
 
@@ -85,7 +85,12 @@ class CompanyController extends Controller
 
         $company->departments()->sync(request('department_id'));
 
+        $positions= Position::where('department_id',request('department_id'))->get();
 
+        foreach ($positions as $position){
+
+            $position->companies()->sync($company, false);
+        }
 
         return redirect($company->path());
     }

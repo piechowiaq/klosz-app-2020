@@ -29,7 +29,7 @@ class EmployeeController extends Controller
      */
     public function index($companyId, Employee $employee)
     {
-//        $this->authorize('update');
+
 
         $company = Company::findOrFail($companyId);
 
@@ -110,7 +110,7 @@ class EmployeeController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        $trainings = Training::all();
+
 
         return view('user.employees.show', compact('employee', 'company'));
     }

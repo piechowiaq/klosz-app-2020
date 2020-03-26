@@ -2,14 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/certificates/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/certificates/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/certificates/form.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/certificates/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/certificates/show.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user/certificates/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user/certificates/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user/certificates/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Certificate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Certificate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CertificateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CertificateController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/EmployeeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreCertificateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateCertificateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/CertificateFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CertificateFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/CertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CertificateManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -138,17 +150,17 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/user" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\user\trainings" />
       <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\User" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\users" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\users\employees" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\trainings" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
@@ -222,7 +234,8 @@
       <workItem from="1584266094547" duration="14211000" />
       <workItem from="1584383619802" duration="22091000" />
       <workItem from="1584972135017" duration="12092000" />
-      <workItem from="1585068588811" duration="295000" />
+      <workItem from="1585068588811" duration="4549000" />
+      <workItem from="1585231255442" duration="11030000" />
     </task>
     <servers />
   </component>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Certificate;
+use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
@@ -27,6 +28,10 @@ class CertificateController extends Controller
     public function index()
     {
         $this->authorize('update');
+
+        $certificates = Certificate::all();
+
+        return view('admin.certificates.index', compact('certificates'));
     }
 
     /**
@@ -38,6 +43,14 @@ class CertificateController extends Controller
     public function create()
     {
         $this->authorize('update');
+
+        $certificate = new Certificate();
+
+        $companies = Company::all();
+
+        $trainings = Training::all();
+
+        return view('admin.certificates.create', compact( 'certificate' , 'trainings', 'companies'));
     }
 
     /**
@@ -72,6 +85,8 @@ class CertificateController extends Controller
     public function show(Certificate $certificate)
     {
         $this->authorize('update');
+
+        return view('admin.certificates.show', compact('certificate'));
     }
 
     /**

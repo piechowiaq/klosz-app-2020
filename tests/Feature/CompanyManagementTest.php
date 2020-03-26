@@ -29,6 +29,8 @@ class CompanyManagementTest extends TestCase
     /** @test */
     public function a_company_can_be_updated()
     {
+        $this->withoutExceptionHandling();
+
         $this->signInSuperAdmin();
 
         $this->post('/admin/companies', $attributes = factory(Company::class)->raw());
