@@ -17,6 +17,15 @@
 
 </div>
 
+<div>
+    <label for="employee_id">Funkcja:</label>
+    <select name="employee_id[]" id="employee_id" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('employee_id') ? 'is-invalid' : '' }}" multiple="multiple" >
+        @foreach ($employees as $employee)
+            <option value="{{$employee->id}}"{{in_array($employee->id, old('employee_id') ?: []) ? 'selected': '' || in_array($employee->id, $certificate->employees()->pluck('employee_id')->toArray() ) ? 'selected': '' }} >{{$employee->full_name}}</option>
+        @endforeach
+    </select>
+</div>
+
 
 
 

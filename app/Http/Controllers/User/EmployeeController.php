@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Certificate;
 use App\Company;
 use App\Employee;
 use App\Http\Controllers\Controller;
@@ -105,11 +106,7 @@ class EmployeeController extends Controller
     public function show($companyId, Employee $employee)
     {
 
-
-
-
         $company = Company::findOrFail($companyId);
-
 
 
         return view('user.employees.show', compact('employee', 'company'));

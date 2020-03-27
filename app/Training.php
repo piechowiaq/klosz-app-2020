@@ -27,4 +27,9 @@ class Training extends Model
     {
         return $this->belongsToMany(Employee::class);
     }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

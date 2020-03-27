@@ -52,7 +52,14 @@ class CertificateController extends Controller
 
         $trainings = $collection->unique('name');
 
-        return view('user.certificates.create', compact( 'trainings', 'certificate', 'company'));
+        $employees = collect();
+
+        foreach ($company->employees as $employee) {
+
+                  $employees[] = $employee;
+        }
+
+        return view('user.certificates.create', compact( 'trainings', 'certificate', 'company', 'employees'));
     }
 
     /**
@@ -76,6 +83,8 @@ class CertificateController extends Controller
         $certificate->expiry_date = $expiry_date;
 
         $certificate->save();
+
+        $certificate->employees()->sync(request('employee_id'));
 
         return redirect($certificate->userpath($companyId));
     }

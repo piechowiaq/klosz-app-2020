@@ -28,6 +28,7 @@ class UpdateUserCertificateRequest extends FormRequest
             'company_id' => 'exists:companies,id|required|sometimes',
             'training_date' => 'before:tomorrow|required|sometimes',
             'expiry_date' => 'required|sometimes',
+            'employee_id' => 'exists:employees,id|required|sometimes',
 
         ];
     }

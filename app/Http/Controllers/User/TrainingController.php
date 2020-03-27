@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Certificate;
 use App\Company;
+use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Training;
 
@@ -39,9 +40,11 @@ class TrainingController extends Controller
      * @param  \App\Training  $training
      * @return \Illuminate\Http\Response
      */
-    public function show(Training $training)
+    public function show($companyId, Training $training)
     {
-        //
+        $company = Company::findOrFail($companyId);
+
+               return view('user.trainings.show', compact('training', 'company'));
     }
 
 

@@ -30,4 +30,11 @@ class Certificate extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class);
+    }
+
+
 }
