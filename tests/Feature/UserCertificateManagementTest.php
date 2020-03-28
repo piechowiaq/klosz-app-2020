@@ -25,7 +25,7 @@ class UserCertificateManagementTest extends TestCase
 
         $this->patch($certificate->userpath(1))->assertRedirect('/login');
 
-        $this->delete($certificate->userpath(1))->assertRedirect('/login');
+        $this->delete($certificate->userpath(1))->assertStatus(405);
 
         $this->get($certificate->userpath(1).'/edit')->assertRedirect('/login');
 
@@ -47,7 +47,7 @@ class UserCertificateManagementTest extends TestCase
 
         $this->patch($certificate->userpath(1))->assertRedirect('/login');
 
-        $this->delete($certificate->userpath(1))->assertRedirect('/login');
+        $this->delete($certificate->userpath(1))->assertStatus(405);;
 
         $this->get($certificate->userpath(1).'/edit')->assertRedirect('/login');
 

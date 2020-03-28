@@ -19,11 +19,11 @@ class HomeManagementTest extends TestCase
     /** @test */
     public function only_signed_user_can_access_home_page()
     {
-        $this->get('/home')->assertRedirect('login');
+        $this->get('/')->assertRedirect('login');
 
         $this->signIn();
 
-        $response = $this->get('/home')->assertOk();
+        $response = $this->get('/')->assertOk();
 
         $response->assertViewIs('home');
 

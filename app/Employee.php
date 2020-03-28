@@ -15,7 +15,7 @@ class Employee extends Model
 
     public function userpath($companyId)
     {
-        return "/companies/$companyId/employees/{$this->id}";
+        return "/$companyId/employees/{$this->id}";
     }
 
     public function departments()

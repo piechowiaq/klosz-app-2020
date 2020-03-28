@@ -42,9 +42,11 @@ class TrainingController extends Controller
      */
     public function show($companyId, Training $training)
     {
+        //$this->authorize('update', $training);
+
         $company = Company::findOrFail($companyId);
 
-               return view('user.trainings.show', compact('training', 'company'));
+        return view('user.trainings.show', compact('training', 'company'));
     }
 
 

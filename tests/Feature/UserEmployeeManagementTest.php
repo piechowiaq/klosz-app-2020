@@ -16,11 +16,11 @@ class UserEmployeeManagementTest extends TestCase
     /** @test */
     public function guests_cannot_manage_employees()
     {
-        $this->get('/companies/{company}/employees/create')->assertRedirect('/login');
+        $this->get('/{company}/employees/create')->assertRedirect('/login');
 
         $employee = factory(Employee::class)->create();
 
-        $this->post('/companies/{company}/employees', $employee->toArray())->assertRedirect('/login');
+        $this->post('/{company}/employees', $employee->toArray())->assertRedirect('/login');
 
         $this->patch($employee->userpath(1))->assertRedirect('/login');
 
@@ -28,7 +28,7 @@ class UserEmployeeManagementTest extends TestCase
 
         $this->get($employee->userpath(1).'/edit')->assertRedirect('/login');
 
-        $this->get('/companies/{company}/employees')->assertRedirect('/login');
+        $this->get('/{company}/employees')->assertRedirect('/login');
 
         $this->get($employee->userpath(1))->assertRedirect('/login');
 
@@ -38,11 +38,11 @@ class UserEmployeeManagementTest extends TestCase
     {
         $this->signIn();
 
-        $this->get('/companies/{company}/employees/create')->assertRedirect('/login');
+        $this->get('/{company}/employees/create')->assertRedirect('/login');
 
         $employee = factory(Employee::class)->create();
 
-        $this->post('/companies/{company}/employees', $employee->toArray())->assertRedirect('/login');
+        $this->post('/{company}/employees', $employee->toArray())->assertRedirect('/login');
 
         $this->patch($employee->userpath(1))->assertRedirect('/login');
 
@@ -50,7 +50,7 @@ class UserEmployeeManagementTest extends TestCase
 
         $this->get($employee->userpath(1).'/edit')->assertRedirect('/login');
 
-        $this->get('/companies/{company}/employees')->assertRedirect('/login');
+        $this->get('/{company}/employees')->assertRedirect('/login');
 
         $this->get($employee->userpath(1))->assertRedirect('/login');
 
@@ -61,11 +61,11 @@ class UserEmployeeManagementTest extends TestCase
     {
         $this->signInUser();
 
-        $response = $this->get('/companies/1/employees');
+        $response = $this->get('/1/employees');
 
         $response->assertOk();
 
-        $response = $this->get('/companies/2/employees');
+        $response = $this->get('/2/employees');
 
         $response->assertRedirect('/login');
 
@@ -81,7 +81,7 @@ class UserEmployeeManagementTest extends TestCase
 
         $this->signInManager();
 
-        $response = $this->post('/companies/1/employees', $attributes = factory(Employee::class)->raw([
+        $response = $this->post('/1/employees', $attributes = factory(Employee::class)->raw([
             'company_id' => 1,
         ]));
 
@@ -102,7 +102,7 @@ class UserEmployeeManagementTest extends TestCase
 
         $this->signInManager();
 
-        $response = $this->post('/companies/1/employees', $attributes = factory(Employee::class)->raw([
+        $response = $this->post('/1/employees', $attributes = factory(Employee::class)->raw([
             'company_id' => 1,
         ]));
 

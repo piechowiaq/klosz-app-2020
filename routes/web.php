@@ -13,11 +13,10 @@
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/', 'HomeController@company')->name('home');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
@@ -34,22 +33,16 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
 Route::namespace('User')->name('user.')->group(function () {
 
-    Route::resource('/companies/{company}/employees', 'EmployeeController')->except(['destroy']);
-    Route::resource('/{company}/certificates', 'CertificateController');
+    Route::resource('/{company}/employees', 'EmployeeController')->except(['destroy']);
+    Route::resource('/{company}/certificates', 'CertificateController')->except(['destroy']);
     Route::resource('/{company}/trainings', 'TrainingController')->only(['index', 'show']);
 
 });
 
-
-
-
-
-
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@company')->name('home');
-Route::get('/companies/{company}', 'HomeController@index')->name('company');
+
+Route::get('/{company}', 'HomeController@index')->name('user.home');
 
 
 

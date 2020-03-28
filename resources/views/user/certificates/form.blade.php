@@ -2,7 +2,7 @@
 
 <div>
     <label for="training_id" class="block mt-2 py-2">Training:</label>
-    <select name="training_id" id="training_id">
+    <select name="training_id" id="training_id" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('employee_id') ? 'is-invalid' : '' }}" >
         @foreach ($trainings as $training)
             <option value="{{$training->id}}" {{$certificate->training_id == $training->id ? 'selected' : ''}}>{{$training->name}}</option>
         @endforeach

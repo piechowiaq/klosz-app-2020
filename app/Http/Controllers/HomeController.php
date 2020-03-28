@@ -6,6 +6,7 @@ use App\Company;
 use App\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -22,22 +23,41 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function company()
     {
         $user = Auth::user();
 
+        if($user->companies()->count() == 1){
 
+            $company = $user->companies()->first();
 
-        return view('home', compact('user'));
+            $companyId = $company->id;
+
+//            return view('user.home', compact('company'));
+
+            return Redirect::action('HomeController@index', $companyId);
+
+        }
+        else if($user->isSuperAdmin()){
+
+            return Redirect::action('AdminController@index');
+
+        }
+        else {
+
+            return view('home', compact('user'));
+
+        }
+
     }
 
-    public function index($id)
+    public function index($companyId)
     {
-        $company = Company::findOrFail($id);
+        $company = Company::findOrFail($companyId);
 
-        return view('company', compact('company'));
+        return view('user.home', compact('company'));
     }
 
 
