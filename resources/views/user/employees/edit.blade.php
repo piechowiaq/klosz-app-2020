@@ -4,9 +4,9 @@
     @include('user.nav')
     <div class="md:w-5/6">
     <div>
-        <div> <h1>Pracownicy</h1></div>
+        <div> <h1 class="text-lg font-semibold pb-2">Edytuj Pracownika</h1></div>
     </div>
-
+        <hr>
 
     <div>
         <form action="{{route('user.employees.update', ['company'=>$company->id, 'employee' => $employee])}}" method="POST" enctype="multipart/form-data">

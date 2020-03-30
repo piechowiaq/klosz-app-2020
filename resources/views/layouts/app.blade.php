@@ -16,14 +16,18 @@
 </head>
 <body class=" h-screen antialiased leading-none">
     <div id="app">
-        <nav class="bg-indigo-500 shadow mb-8 py-6">
+        <nav class="bg-indigo-500 shadow mb-4 py-2">
             <div class="container mx-auto px-6 md:px-0">
                 <div class="flex items-center justify-between text-yellow-500">
                     <div class="mr-6">
                         <a href="{{ url('/') }}" class="text-lg font-semibold text-yellow-500 no-underline">
                             {{ config('app.name', 'Klosz') }}
-                        </a>
+
+
+                        </a><img src="{{ asset('/png/logo.png') }}"  class=" ml-4 h-16 w-16 inline" alt="Logo">
                     </div>
+
+                    <div></div>
                     <div class="text-right text-center ">
                         @guest
                             <a class="no-underline hover:underline  text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>

@@ -48,7 +48,15 @@ class CompanyController extends Controller
 
         $company->departments()->sync(request('department_id'));
 
-        $positions= Position::where('department_id',request('department_id'))->get();
+        $departmentsId = array();
+
+        foreach ($company->departments as $department){
+
+            $departmentsId[] = $department->id;
+        }
+
+
+        $positions= Position::whereIn('department_id', $departmentsId)->get();
 
         foreach ($positions as $position){
 
@@ -85,7 +93,15 @@ class CompanyController extends Controller
 
         $company->departments()->sync(request('department_id'));
 
-        $positions= Position::where('department_id',request('department_id'))->get();
+        $departmentsId = array();
+        foreach ($company->departments as $department){
+
+            $departmentsId[] = $department->id;
+        }
+
+
+
+        $positions= Position::whereIn('department_id',$departmentsId)->get();
 
         foreach ($positions as $position){
 

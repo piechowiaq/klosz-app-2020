@@ -14,10 +14,17 @@
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
 
-                <a href="{{route('user.trainings.show', ['training'=> $training, 'company'=>$company->id])}}">{{ $training->name}} </a>
+                <a href="{{route('user.trainings.show', ['training'=> $training, 'company'=>$company->id])}}">{{ $training->name}}
+                    {{$training->employees()->whereHas('certificates', function($q) use ($training) {
+                                    $q->where('expiry_date', '>', \Carbon\Carbon::now())
+                                      ->where('training_id', $training->id);
+                                      }
+                                      )->count()
 
-
+               }}
+                </a>
             </div>
+
 
         </div>
 

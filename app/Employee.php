@@ -47,4 +47,8 @@ class Employee extends Model
     {
         return $this->belongsToMany(Certificate::class);
     }
+    public function getTrainingsCountAttribute(){
+
+        return $this->trainings()->count();
+    }
 }

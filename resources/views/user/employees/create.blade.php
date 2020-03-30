@@ -9,8 +9,8 @@
 
     <div class="">
 
-        <div> <h1>Create Employee</h1></div>
-
+        <div> <h1 class="text-lg font-semibold pb-2">Dodaj Pracownika</h1></div>
+        <hr>
         <div>
 
             <form action="{{route('user.employees.store', ['company'=>$company->id ?? 'company'])}}" method="POST">

@@ -42,6 +42,7 @@
 
 
         <div>
+
             @foreach ($employee->trainings as $training)
                 <div class="flex content-between flex-wrap" >
 

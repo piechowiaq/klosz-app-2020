@@ -5,7 +5,7 @@
     @include('user.nav')
     <div class="md:w-5/6">
         <div class="block font-semibold ">
-            <h1 class="text-lg block pb-2 ">{{$training->name}} </h1>
+            <h1 class="text-lg block pb-2 ">{{$training->name}}</h1>
         </div>
         <hr>
 
