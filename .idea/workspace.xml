@@ -3,19 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Employee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/trainings/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/trainings/show.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -229,7 +217,7 @@
       <workItem from="1584383619802" duration="22091000" />
       <workItem from="1584972135017" duration="12092000" />
       <workItem from="1585068588811" duration="4549000" />
-      <workItem from="1585231255442" duration="97686000" />
+      <workItem from="1585231255442" duration="99368000" />
     </task>
     <servers />
   </component>
