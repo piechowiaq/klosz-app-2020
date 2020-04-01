@@ -15,10 +15,10 @@
                         <a href="{{route('user.trainings.show', ['training'=> $training, 'company'=>$company->id])}}">{{ $training->name}}</a>
                     </div>
                     <div class="m-2 p-2 py-2 md:w-1/12">
-                        {{round($training->employees()->whereHas('certificates', function($q) use ($training) {
+                        {{ $training->employees->count()== 0 ? : (round($training->employees()->whereHas('certificates', function($q) use ($training) {
                                                          $q->where('expiry_date', '>', \Carbon\Carbon::now())
                                                            ->where('training_id', $training->id);
-                                                           })->count()/$training->employees()->count()*100)}} %
+                                                           })->count()/$training->employees()->count()*100))}} %
                     </div>
 
                  </div>
