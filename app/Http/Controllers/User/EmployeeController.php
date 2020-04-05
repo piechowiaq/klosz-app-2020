@@ -54,13 +54,7 @@ class EmployeeController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        $positions = array();
-
-        foreach ($company->positions as $position) {
-            $positions[] = $position;
-        }
-
-
+        $positions = $company->positions;
 
         return view('user.employees.create', compact( 'positions', 'employee', 'company'));
     }

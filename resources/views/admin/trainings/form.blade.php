@@ -1,6 +1,6 @@
 <div>
     <label for="name" class="block mt-2 py-2">Nazwa Szkolenia:</label>
-    <input type="text" name="name" value="{{old('name') ?? $training->name}}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('name') ? 'is-invalid' : '' }}" required>
+    <input type="text" name="name" value="{{old('name',  $training->name) }}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('name') ? 'is-invalid' : '' }}" required>
 </div>
 
 {{--<div class="form-group">--}}
@@ -27,7 +27,7 @@
     <label for="position_id">Funkcja:</label>
     <select name="position_id[]" id="position_id" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('position_id') ? 'is-invalid' : '' }}" multiple="multiple" >
         @foreach ($positions as $position)
-            <option value="{{$position->id}}"{{in_array($position->id, old('position_id') ?: []) ? 'selected': '' || in_array($position->id, $training->positions()->pluck('position_id')->toArray() ) ? 'selected': '' }} >{{$position->name}}</option>
+            <option value="{{$position->id}}"{{(in_array($position->id, $training->positions()->pluck('position_id')->toArray() ) ? 'selected': '')||in_array($position->id, old('position_id') ?: []) ? 'selected': ''  }} >{{$position->name}}</option>
         @endforeach
     </select>
 </div>

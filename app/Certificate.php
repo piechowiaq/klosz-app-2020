@@ -36,5 +36,10 @@ class Certificate extends Model
         return $this->belongsToMany(Employee::class);
     }
 
+    public function scopeLatest($query)
+    {
+        return $query->orderBy('created_at', 'desc')->first();
+    }
+
 
 }

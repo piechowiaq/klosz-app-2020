@@ -48,21 +48,16 @@ class CompanyController extends Controller
 
         $company->departments()->sync(request('department_id'));
 
-        $departmentsId = array();
+        $departmentsId =  $company->departments->map(function($department){
+            return $department->id;
+        });
 
-        foreach ($company->departments as $department){
-
-            $departmentsId[] = $department->id;
-        }
-
-
-        $positions= Position::whereIn('department_id', $departmentsId)->get();
-
-        foreach ($positions as $position){
-
+        Position::whereIn('department_id', $departmentsId)
+                            ->get()
+                            ->map(function($position) use ($company)
+        {
             $position->companies()->sync($company, false);
-
-        }
+        });
 
         return redirect($company->path());
     }
@@ -93,20 +88,16 @@ class CompanyController extends Controller
 
         $company->departments()->sync(request('department_id'));
 
-        $departmentsId = array();
-        foreach ($company->departments as $department){
+        $departmentsId =  $company->departments->map(function($department){
+            return $department->id;
+        });
 
-            $departmentsId[] = $department->id;
-        }
-
-
-
-        $positions= Position::whereIn('department_id',$departmentsId)->get();
-
-        foreach ($positions as $position){
-
-            $position->companies()->sync($company, false);
-        }
+        Position::whereIn('department_id', $departmentsId)
+            ->get()
+            ->map(function($position) use ($company)
+            {
+                $position->companies()->sync($company, false);
+            });
 
         return redirect($company->path());
     }
@@ -118,14 +109,6 @@ class CompanyController extends Controller
         $company->delete();
 
         return redirect('admin/companies');
-    }
-
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'name'=> 'sometimes|required',
-
-        ]);
     }
 
 }

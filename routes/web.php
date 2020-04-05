@@ -11,6 +11,7 @@
 |
 */
 
+use App\Company;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -28,6 +29,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('positions', 'PositionController');
     Route::resource('trainings', 'TrainingController');
     Route::resource('certificates', 'CertificateController');
+    Route::resource('registries', 'RegistryController');
 
     });
 
@@ -43,6 +45,9 @@ Auth::routes();
 
 
 Route::get('/{company}', 'HomeController@index')->name('user.home');
+
+
+
 
 
 

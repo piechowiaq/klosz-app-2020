@@ -92,7 +92,7 @@ class TrainingManagementTest extends TestCase
     /** @test */
     public function a_training_can_be_updated()
     {
-//        $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $this->signInSuperAdmin();
 

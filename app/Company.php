@@ -33,4 +33,8 @@ class Company extends Model
         return $this->belongsToMany(Position::class);
     }
 
+    public function registries()
+    {
+        return $this->belongsToMany(Registry::class);
+    }
 }

@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Company;
 use App\Department;
 use App\Position;
+use App\Registry;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -44,6 +45,7 @@ class CompanyTest extends TestCase
         ]);
     }
 
+
     /** @test */
     public function a_company_belongs_to_many_positions()
     {
@@ -67,6 +69,20 @@ class CompanyTest extends TestCase
         $this->assertDatabaseHas('company_department', [
             'company_id' => $company->id,
             'department_id' => $department->id
+        ]);
+    }
+
+    /** @test */
+    public function a_company_has_many_registries()
+    {
+        $registry = factory(Registry::class)->create();
+        $company = factory(Company::class)->create();
+
+        $company->registries()->sync($registry);
+
+        $this->assertDatabaseHas('company_registry', [
+            'company_id' => $company->id,
+            'registry_id' => $registry->id
         ]);
     }
 }

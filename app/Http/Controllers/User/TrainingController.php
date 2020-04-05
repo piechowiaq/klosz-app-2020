@@ -8,6 +8,7 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Training;
 use Carbon\Carbon;
+use function GuzzleHttp\Promise\all;
 
 class TrainingController extends Controller
 {
@@ -20,74 +21,13 @@ class TrainingController extends Controller
      */
     public function index($companyId, Certificate $certificate)
     {
-        $company = Company::findOrFail($companyId);
+        $company = Company::findOrfail($companyId);
 
-        $trainings = collect();
-        $certificates = collect();
+        $companyTrainings =  $company->positions->flatMap(function($position){
+            return $position->trainings;
+        })->unique('id');
 
-        foreach ($company->positions as $position) {
-            foreach ($position->trainings as $training) {
-                $trainings[] = $training;
-//               dd($training->employees = \App\Employee::with('trainings')->whereHas('certificates', function($q) use ($training) {
-//                                    $q->where('expiry_date', '>', \Carbon\Carbon::now())
-//                                      ->where('training_id', $training->id);
-//                                      }
-//                                      )->count());
-
-
-
-            }
-        }
-
-       $trainings=$trainings->unique('id');
-
-//        dd($trainings->employees);
-//
-//        foreach ($trainings as $training) {
-//            foreach ($training->certificates as $certificate) {
-//                $certificates[] = $certificate->where('training_id', $training->id)
-//                    ->where('expiry_date', '>', Carbon::now())
-//                    ->get();
-//            }
-//        }
-//
-//        dd($certificates);
-
-
-
-
-
-
-//        foreach ($trainings as $training) {
-//            foreach ($training->employees as $employee) {
-//                foreach ($employee->certificates as $certificate) {
-//
-//                   dd( $certificate->where('training_id', $training->id)
-//                        ->where('expiry_date', '>', Carbon::now())
-//                        ->get());
-//                }
-//            }
-//        }
-//        dd($amount->where('training_id', 3));
-//        $count = collect();
-//        foreach ($trainings as $training){
-////            foreach ($training->employees as $employee){
-//                foreach ($employee->certificates as $certificate) {
-//                    $count[] = $certificate;
-//                }}
-//
-//            $number =  $count ->where('training_id', $training->id)
-//                               ->where('created_at', $training->id)
-//                              ->where('expiry_date', >', Carbon::now())
-//                              ->where;
-//
-//
-//
-//        }
-
-
-
-        return view('user.trainings.index', compact('trainings', 'company', 'certificate'));
+        return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate'));
     }
 
     /**
@@ -98,7 +38,21 @@ class TrainingController extends Controller
      */
     public function show($companyId, Training $training)
     {
+
+
+
+
         //$this->authorize('update', $training);
+
+ //       $validCertifiactes = $certificates->filter(function ($cetificate){
+//            return $certificate->expiry_date > Carbon::now();
+//        });
+//
+//        foreach ($validCertifiactes as $certificate){
+//$
+//
+//
+//        }
 //        $collection = collect();
 //        foreach ($training->employees as $employee){
 //            foreach ($employee->certificates as $certificate) {
