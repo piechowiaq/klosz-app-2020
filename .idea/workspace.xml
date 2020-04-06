@@ -3,26 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Certificate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Certificate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Employee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/EmployeeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Training.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Training.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/companies/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/companies/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/departments/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/departments/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/employees/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/employees/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/positions/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/positions/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/trainings/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/trainings/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/TrainingFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/TrainingFactory.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/TrainingManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/TrainingManagementTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/CompanyTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/CompanyTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/TrainingTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/TrainingTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -163,19 +146,19 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\Admin" />
-      <recent name="D:\xampp\htdocs\klosz-group\public\png" />
-      <recent name="D:\xampp\htdocs\klosz-group\storage\app\public" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\user\trainings" />
       <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\User" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\users" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\User" />
+      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\Admin" />
+      <recent name="D:\xampp\htdocs\klosz-group\public\png" />
+      <recent name="D:\xampp\htdocs\klosz-group\storage\app\public" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -248,7 +231,8 @@
       <workItem from="1585743845630" duration="603000" />
       <workItem from="1585760078699" duration="1083000" />
       <workItem from="1585761539106" duration="819000" />
-      <workItem from="1585845631791" duration="46807000" />
+      <workItem from="1585845631791" duration="47636000" />
+      <workItem from="1586160486147" duration="6329000" />
     </task>
     <servers />
   </component>

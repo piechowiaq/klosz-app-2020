@@ -45,15 +45,11 @@ class TrainingTest extends TestCase
     /** @test */
     public function a_training_belongs_to_many_positions()
     {
-        $position = factory(Position::class)->create();
-
         $training = factory(Training::class)->create();
-
-        $training->positions()->sync($position);
 
         $this->assertDatabaseHas('position_training', [
             'training_id' => $training->id,
-            'position_id' => $position->id
+            'position_id' => $training->positions->first()->id
         ]);
     }
 
