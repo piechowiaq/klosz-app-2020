@@ -17,9 +17,9 @@ class RegistryManagementTest extends TestCase
 
         $this->get('/admin/registries/create')->assertRedirect('login');
 
-        $registry = factory(Registry::class)->create();
-
         $this->post('/admin/registries', factory(Registry::class)->raw())->assertRedirect('login');
+
+        $registry = factory(Registry::class)->create();
 
         $this->get($registry->path())->assertRedirect('/login');
 
@@ -40,9 +40,9 @@ class RegistryManagementTest extends TestCase
 
         $this->get('/admin/registries/create')->assertStatus(403);
 
-        $registry = factory(Registry::class)->create();
-
         $this->post('/admin/registries', factory(Registry::class)->raw())->assertStatus(403);
+
+        $registry = factory(Registry::class)->create();
 
         $this->get($registry->path())->assertStatus(403);
 
@@ -54,7 +54,7 @@ class RegistryManagementTest extends TestCase
     }
 
     /** @test */
-    public function only_SuperAdmin_can_get_registries_routes()
+    public function only_SuperAdmin_can_access_get_registries_routes()
     {
         $this->signInSuperAdmin();
 

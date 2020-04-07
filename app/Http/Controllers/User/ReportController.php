@@ -25,31 +25,39 @@ class ReportController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Report $report
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function create()
+    public function create(Report $report)
     {
-        //
+        $this->authorize('update', $report);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Report $report
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(Request $request, Report $report)
     {
-        //
+        $this->authorize('update', $report);
+
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
+     * @param $companyId
+     * @param \App\Report $report
+     * @return void
      */
-    public function show(Report $report)
+    public function show($companyId, Report $report)
     {
         //
     }

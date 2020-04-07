@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/TrainingFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/TrainingFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/TrainingTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/TrainingTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/RegistryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/RegistryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Report.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Report.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/ReportFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ReportFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/RegistryManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/RegistryManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -232,7 +236,7 @@
       <workItem from="1585760078699" duration="1083000" />
       <workItem from="1585761539106" duration="819000" />
       <workItem from="1585845631791" duration="47636000" />
-      <workItem from="1586160486147" duration="6329000" />
+      <workItem from="1586160486147" duration="11933000" />
     </task>
     <servers />
   </component>

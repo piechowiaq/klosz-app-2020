@@ -56,8 +56,9 @@ class RegistryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Registry  $registry
+     * @param \App\Registry $registry
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Registry $registry)
     {

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Report;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,15 +14,76 @@ class UserReportManagementTest extends TestCase
     /** @test */
     public function guests_cannot_manage_reports()
     {
-        $this->withoutExceptionHandling();
-
         $this->get('/{company}/reports/create')->assertRedirect('/login');
-
-        $report = factory(Report::class)->create();
 
         $this->post('/{company}/reports', factory(Report::class)->raw())->assertRedirect('login');
 
-        $this->get($report->path())->assertRedirect('/login');
+        $report = factory(Report::class)->create();
 
+        $this->get($report->userpath(1))->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function authorised_users_cannot_manage_reports_of_other_companies()
+    {
+        $this->signInUser();
+
+        $this->get('/2/reports/create')->assertRedirect('/login');
+
+        $this->post('/2/reports', factory(Report::class)->raw())->assertRedirect('login');
+
+        $report = factory(Report::class)->create();
+
+        $this->get($report->userpath(2))->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function a_report_cannot_be_created_by_signInUser()
+    {
+        $this->signInUser();
+
+        $this->get('/1/reports/create')->assertStatus(403);
+
+        $this->post('/1/reports', factory(Report::class)->raw())->assertStatus(403);
+
+        $this->assertCount(0, Report::all());
+    }
+
+    /** @test */
+    public function signInUser_can_access_reports_show_route_of_their_company()
+    {
+        $this->signInUser();
+
+        $report = factory(Report::class)->create();
+
+        $this->get($report->userpath(1))->assertOk();
+    }
+
+    /** @test */
+    public function signInManager_can_access_get_reports_routes_of_their_company()
+    {
+        $this->signInManager();
+
+        $this->get('/1/reports/create')->assertOk();
+
+        $report = factory(Report::class)->create();
+
+        $this->get($report->userpath(1))->assertOk();
+    }
+
+    /** @test */
+    public function a_report_can_be_created_by_signInManager()
+    {
+//        $this->withoutExceptionHandling();
+
+        $this->signInManager();
+
+        $response = $this->post('/1/reports', factory(Report::class)->raw());
+
+        $this->assertCount(1, Report::all());
+
+        $report = Report::first();
+
+        $response->assertRedirect($report->userpath());
     }
 }

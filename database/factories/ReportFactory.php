@@ -9,14 +9,11 @@ use App\Report;
 use Faker\Generator as Faker;
 
 $factory->define(Report::class, function (Faker $faker) {
-    $training = factory(Registry::class)->create()->pluck('id')->toArray();
-    $company = factory(Company::class)->create()->pluck('id')->toArray();
 
     return [
-        'registry_id' => $faker->randomElement($training),
-        'company_id' => $faker->randomElement($company),
+        'registry_id' => factory(Registry::class),
+        'company_id' => factory(Company::class),
         'report_date' => $faker->date(),
         'expiry_date' => $faker->date(),
-
     ];
 });
