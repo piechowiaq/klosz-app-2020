@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Report;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserReportManagementTest extends TestCase
@@ -72,9 +71,21 @@ class UserReportManagementTest extends TestCase
     }
 
     /** @test */
+    public function signInAdmin_can_access_get_reports_routes_of_their_company()
+    {
+        $this->signInAdmin();
+
+        $this->get('/1/reports/create')->assertOk();
+
+        $report = factory(Report::class)->create();
+
+        $this->get($report->userpath(1))->assertOk();
+    }
+
+    /** @test */
     public function a_report_can_be_created_by_signInManager()
     {
-//        $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $this->signInManager();
 
@@ -84,6 +95,54 @@ class UserReportManagementTest extends TestCase
 
         $report = Report::first();
 
-        $response->assertRedirect($report->userpath());
+        $response->assertRedirect($report->userpath(1));
+    }
+
+    /** @test */
+    public function a_report_can_be_created_by_signInAdmin()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        $response = $this->post('/1/reports', factory(Report::class)->raw());
+
+        $this->assertCount(1, Report::all());
+
+        $report = Report::first();
+
+        $response->assertRedirect($report->userpath(1));
+    }
+
+    /** @test */
+    public function a_report_requires_a_registry_id()
+    {
+        $this->signInManager();
+
+        $this->post('/1/reports', factory(Report::class)->raw(['registry_id' => '']))->assertSessionHasErrors('registry_id');
+    }
+
+    /** @test */
+    public function a_report_requires_a_company_id()
+    {
+        $this->signInManager();
+
+        $this->post('/1/reports', factory(Report::class)->raw(['company_id' => '']))->assertSessionHasErrors('company_id');
+    }
+
+    /** @test */
+    public function a_report_requires_a_report_date()
+    {
+        $this->signInManager();
+
+        $this->post('/1/reports', factory(Report::class)->raw(['report_date' => '']))->assertSessionHasErrors('report_date');
+    }
+
+    /** @test */
+    public function a_report_requires_an_expiry_date()
+    {
+        $this->signInManager();
+
+        $this->post('/1/reports', factory(Report::class)->raw(['expiry_date' => '']))->assertSessionHasErrors('expiry_date');
     }
 }

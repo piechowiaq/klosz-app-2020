@@ -19,7 +19,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $departments = Department::all();
 
@@ -63,6 +63,8 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
+        $this->authorize('update');
+
         return view('admin.departments.show', compact('department'));
     }
 

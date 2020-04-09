@@ -9,11 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
 use App\Position;
-use App\Training;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
 
 class EmployeeController extends Controller
 {
@@ -30,7 +26,7 @@ class EmployeeController extends Controller
      */
     public function index($companyId, Employee $employee)
     {
-
+        $this->authorize('view', $employee);
 
         $company = Company::findOrFail($companyId);
 

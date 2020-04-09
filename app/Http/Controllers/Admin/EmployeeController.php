@@ -25,7 +25,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $employees = Employee::all();
 
@@ -86,7 +86,7 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
 
-        //$this->authorize('update');
+        $this->authorize('update');
 
         return view('admin.employees.show', compact('employee'));
     }
@@ -100,7 +100,7 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
 
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $positions = Position::all();
 

@@ -53,7 +53,7 @@ class PositionController extends Controller
      */
     public function store(StorePositionRequest $request)
     {
-        //$this->authorize('update');
+        $this->authorize('update');
 
         $position = Position::create($request->validated());
 
@@ -68,6 +68,8 @@ class PositionController extends Controller
      */
     public function show(Position $position)
     {
+        $this->authorize('update');
+
         return view('admin.positions.show', compact('position'));
     }
 
@@ -79,6 +81,8 @@ class PositionController extends Controller
      */
     public function edit(Position $position)
     {
+        $this->authorize('update');
+
         $departments = Department::all();
 
         return view('admin.positions.edit', compact('position', 'departments'));
@@ -93,7 +97,7 @@ class PositionController extends Controller
      */
     public function update(UpdatePositionRequest $request, Position $position)
     {
-        //$this->authorize('update');
+        $this->authorize('update');
 
         $position->update($request->validated());
 
@@ -108,7 +112,7 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $position->delete();
 

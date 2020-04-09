@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
+use App\Registry;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,9 @@ class CompanyController extends Controller
 
         $departments = Department::all();
 
-        return view('admin.companies.create', compact( 'company' , 'departments'));
+        $registries = Registry::all();
+
+        return view('admin.companies.create', compact( 'company' , 'departments', 'registries'));
     }
 
     public function store(StoreCompanyRequest $request)
@@ -47,6 +50,8 @@ class CompanyController extends Controller
         $company->save();
 
         $company->departments()->sync(request('department_id'));
+
+        $company->registries()->sync(request('registry_id'));
 
         $departmentsId =  $company->departments->map(function($department){
             return $department->id;
@@ -76,7 +81,9 @@ class CompanyController extends Controller
 
         $departments = Department::all();
 
-        return view('admin.companies.edit', compact( 'company', 'departments'));
+        $registries = Registry::all();
+
+        return view('admin.companies.edit', compact( 'company', 'departments','registries'));
     }
 
     public function update(UpdateCompanyRequest $request, Company $company)
@@ -85,8 +92,9 @@ class CompanyController extends Controller
 
         $company->update(request(['name']));
 
-
         $company->departments()->sync(request('department_id'));
+
+        $company->registries()->sync(request('registry_id'));
 
         $departmentsId =  $company->departments->map(function($department){
             return $department->id;

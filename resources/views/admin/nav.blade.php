@@ -27,6 +27,9 @@
         <li class="md:mr-6 mt-6">
             <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.certificates.index') }}">Certificates</a>
         </li>
+        <li class="md:mr-6 mt-6">
+            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.registries.index') }}">Registries</a>
+        </li>
     </ul>
 </div>
 

@@ -12,4 +12,5 @@ class Registry extends Model
     {
         return "/admin/registries/{$this->id}";
     }
+
 }

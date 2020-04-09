@@ -59,6 +59,8 @@ class UserEmployeeManagementTest extends TestCase
     /** @test */
     public function signedInUser_can_only_access_their_company_employees()
     {
+        $this->withoutExceptionHandling();
+
         $this->signInUser();
 
         $response = $this->get('/1/employees');

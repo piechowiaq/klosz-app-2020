@@ -31,7 +31,14 @@ class EmployeePolicy
      */
     public function view(User $user, Employee $employee)
     {
-        //
+        foreach ($user->roles()->get() as $role)
+        {
+            if ($role->name == 'Manager' || $role->name == 'Admin' || $role->name == 'User' )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

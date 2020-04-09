@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Requests\StoreUserReportRequest;
+use App\Registry;
 use App\Report;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -32,22 +35,34 @@ class ReportController extends Controller
     public function create(Report $report)
     {
         $this->authorize('update', $report);
+
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StoreUserReportRequest $request
+     * @param $companyId
      * @param Report $report
      * @return void
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request, Report $report)
+    public function store(StoreUserReportRequest $request, $companyId, Report $report)
     {
         $this->authorize('update', $report);
 
+        //$expiry_date = Carbon::create(request('report_date'))->addMonths( Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
 
+        $report = new Report(request(['registry_id', 'report_date']));
 
+        $report->company_id = $companyId;
+
+        $report->expiry_date = $report->calculateExpiryDate(request('report_date'));
+
+        $report->save();
+
+        return redirect($report->userpath($companyId));
     }
 
     /**

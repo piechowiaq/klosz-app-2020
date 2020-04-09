@@ -5,34 +5,11 @@
     @include('admin.nav')
     <div class="md:w-5/6">
     <div class="block mt-2 py-2">
-        <h1>{{$company->name}} </h1>
+        <h1>{{$registry->name}} </h1>
     </div>
     <hr>
-    <div>
-        @foreach ($company->users as $user)
-            <div class="block mt-2 py-2">
-                {{ $user->full_name}}
-            </div>
-        @endforeach
-    </div>
+
     <hr>
-        <div>
-            @foreach ($company->departments as $department)
-                <div class="block mt-2 py-2">
-                    {{ $department->name}}
-                </div>
-            @endforeach
-        </div>
-        <hr>
-        <div>
-            @foreach ($company->departments as $department)
-                <div class="block mt-2 py-2">
-                    {{ $department->name}}
-                </div>
-            @endforeach
-        </div>
-
-
 
     </div>
 {{--    <div>--}}

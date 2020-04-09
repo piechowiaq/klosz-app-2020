@@ -13,4 +13,14 @@
     @endforeach
 </div>
 
+<div>
+    <label for="registry_id" class="block mt-2 py-2">Rejestr:</label>
+    @foreach ($registries as $registry)
+        <ol>
+            <input type="checkbox" name="registry_id[]" id="registry_id" class="mr-2 leading-tight {{ $errors->has('registry_id') ? 'is-invalid' : '' }}" multiple="multiple" value="{{$registry->id}}" {{(in_array($registry->id, $company->registries()->pluck('registry_id')->toArray() ) ? 'checked': '' )|| in_array($registry->id, old('registry_id') ?: []) ? 'checked': ''  }}>
+            <label  >{{$registry->name}}</label>
+        </ol>
+    @endforeach
+</div>
+
 @csrf

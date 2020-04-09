@@ -23,6 +23,10 @@ class RegistryController extends Controller
     public function index()
     {
         $this->authorize('update');
+
+        $registries = Registry::all();
+
+        return view('admin.registries.index', compact('registries'));
     }
 
     /**
@@ -33,6 +37,10 @@ class RegistryController extends Controller
     public function create()
     {
         $this->authorize('update');
+
+        $registry = new Registry();
+
+        return view('admin.registries.create', compact( 'registry' ));
     }
 
     /**
@@ -63,6 +71,8 @@ class RegistryController extends Controller
     public function show(Registry $registry)
     {
         $this->authorize('update');
+
+        return view('admin.registries.show', compact('registry'));
     }
 
     /**
