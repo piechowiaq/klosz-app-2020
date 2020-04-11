@@ -13,4 +13,13 @@ class Registry extends Model
         return "/admin/registries/{$this->id}";
     }
 
+    public function userpath($companyId)
+    {
+        return "/$companyId/registries/{$this->id}";
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Company;
 use App\Http\Requests\StoreUserReportRequest;
 use App\Registry;
 use App\Report;
@@ -32,10 +33,15 @@ class ReportController extends Controller
      * @return void
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function create(Report $report)
+    public function create($companyId, Report $report)
     {
         $this->authorize('update', $report);
 
+        $report = new Report();
+
+        $company = Company::findOrFail($companyId);
+
+        return view('user.reports.create', compact( 'report', 'company'));
 
     }
 
@@ -74,7 +80,11 @@ class ReportController extends Controller
      */
     public function show($companyId, Report $report)
     {
-        //
+        $company = Company::findOrFail($companyId);
+
+
+
+        return view('user.reports.show', compact('report', 'company'));
     }
 
     /**

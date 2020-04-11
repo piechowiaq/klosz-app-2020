@@ -11,7 +11,7 @@ class EmployeesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Employee::class, 10)->create()->each(function ($employee) {
+        factory(App\Employee::class, 3)->create()->each(function ($employee) {
 
             $employee->departments()->save(factory(App\Department::class)->make());
             $employee->positions()->save(factory(App\Position::class)->make());
@@ -19,14 +19,14 @@ class EmployeesTableSeeder extends Seeder
 
         });
 
-        factory(App\Training::class, 10)->create()->each(function ($training) {
+        factory(App\Training::class, 3)->create()->each(function ($training) {
 
             $training->departments()->save(factory(App\Department::class)->make());
             $training->positions()->save(factory(App\Position::class)->make());
 
         });
 
-        factory(App\Department::class, 10)->create()->each(function ($department) {
+        factory(App\Department::class, 3)->create()->each(function ($department) {
 
             $department->positions()->save(factory(App\Position::class)->make());
 

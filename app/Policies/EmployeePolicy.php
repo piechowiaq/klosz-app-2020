@@ -33,7 +33,7 @@ class EmployeePolicy
     {
         foreach ($user->roles()->get() as $role)
         {
-            if ($role->name == 'Manager' || $role->name == 'Admin' || $role->name == 'User' )
+            if ($role->name == 'SuperAdmin' || $role->name == 'Admin' || $role->name == 'Manager' || $role->name == 'User' )
             {
                 return true;
             }
@@ -63,7 +63,7 @@ class EmployeePolicy
     {
         foreach ($user->roles()->get() as $role)
         {
-            if ($role->name == 'Manager' || $role->name == 'Admin' )
+            if ($role->name == 'SuperAdmin' || $role->name == 'Admin' || $role->name == 'Manager')
             {
                 return true;
             }

@@ -12,6 +12,10 @@ use function GuzzleHttp\Promise\all;
 
 class TrainingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'auth.user']);
+    }
     /**
      * Display a listing of the resource.
      *

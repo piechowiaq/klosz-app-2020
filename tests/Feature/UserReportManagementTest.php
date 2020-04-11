@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Registry;
 use App\Report;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -114,6 +115,7 @@ class UserReportManagementTest extends TestCase
         $response->assertRedirect($report->userpath(1));
     }
 
+    
     /** @test */
     public function a_report_requires_a_registry_id()
     {

@@ -7,6 +7,9 @@
         <div class="block font-semibold ">
             <h1 class="text-lg block pb-2 ">{{$training->name}}</h1>
         </div>
+        <div class="w-4/6  block mt-2 py-2">
+            <a href="{{route('user.certificates.index', ['training'=> $training, 'company'=>$company->id])}}">History</a>
+        </div>
         <hr>
 
         <hr>
@@ -17,6 +20,7 @@
                     <div class="w-4/6  block mt-2 py-2">
                         {{ $employee->full_name}}
                     </div>
+
 
                     @foreach ($employee->certificates->where('training_id', $training->id)->sortByDesc('training_date') as $certificate)
 
