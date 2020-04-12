@@ -32,7 +32,7 @@ class Report extends Model
 //        return $this->attributes['expiry_date'] = Carbon::create(request('report_date'))->addMonths( Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
 //    }
 
-    public function calculateExpiryDate($report){
+    public function calculateExpiryDate($report_date){
 
         return Carbon::create(request('report_date'))->addMonths( Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
     }

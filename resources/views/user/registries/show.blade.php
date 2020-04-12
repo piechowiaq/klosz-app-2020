@@ -3,45 +3,43 @@
 @section('content')
 
     @include('user.nav')
+
     <div class="md:w-5/6">
-    <div class="block mt-2 py-2">
-        <h1>{{$registry->name}} </h1>
+        <div class="block font-semibold ">
+            <h1 class="text-lg block pb-2 ">{{$registry->name}}</h1>
+        </div>
+        <div>
+            @foreach ($registry->reports as $report)
+                <div class="md:flex border  mb-1">
+                    <div class="m-2 p-2 py-2 md:w-4/6 ">
+                        {{$report->report_date}}
+                    </div>
+                    <div class="flex  justify-center md:justify-end md:w-1/6 ">
+                        @can('update', $report)
+                            <div class=" px-2 bg-transparent hover:bg-indigo-500 hover:text-yellow-500 text-indigo-500 hover:border-transparent  m-2 py-2 ">
+                                <a href="{{route('user.reports.edit', ['report'=> $report, 'company'=>$company->id])}}" class="">Edytuj</a>
+                            </div>
+                        @endcan
+                    </div>
+                    <div class="flex  justify-center md:justify-end md:w-1/6 ">
+                        @can('update', $report)
+                            <div class=" px-2 bg-transparent hover:bg-indigo-500 hover:text-yellow-500 text-indigo-500 hover:border-transparent  m-2 py-2 ">
+                                <form action="{{route('user.reports.destroy', ['report'=> $report, 'company'=>$company->id])}}" method="POST">
+
+                                    @method('DELETE')
+
+                                    @csrf
+
+                                    <button type="submit" class="">Usuń</button>
+
+                                </form>
+                            </div>
+                        @endcan
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
-    <hr>
-        @foreach ($registry->reports as $report)
-        <div class="block mt-2 py-2">
-            <h1>{{$report->report_date}} </h1>
-        </div>
-
-        <div class="block mt-2 py-2">
-            <h1>{{$report->expiry_date}} </h1>
-        </div>
-
-            <div class="flex  justify-center md:justify-end md:w-1/6 ">
-                @can('update', $report)
-                    <div class=" px-2 bg-transparent hover:bg-indigo-500 hover:text-yellow-500 text-indigo-500 hover:border-transparent  m-2 py-2 ">
-                        <a href="{{route('user.reports.edit', ['report'=> $report, 'company'=>$company->id])}}" class="">Edytuj</a>
-                    </div>
-
-
-
-
-
-                        <div class=" px-2 bg-transparent hover:bg-indigo-500 hover:text-yellow-500 text-indigo-500 hover:border-transparent  m-2 py-2 ">
-
-                            <form action="{{route('user.reports.destroy', ['report'=> $report, 'company'=>$company->id])}}" method="POST">
-
-                                @method('DELETE')
-
-                                @csrf
-
-                                <button type="submit" class="">Usuń</button>
-
-                            </form>
-
-
-
-                    </div>
 
 
 
@@ -52,15 +50,19 @@
 
 
 
-                @endcan
-            </div>
-            <hr>
 
 
 
 
 
-        @endforeach
+
+
+
+
+
+
+
+
 
 {{--    <div>--}}
 {{--        @foreach ($certificate->training as $training)--}}

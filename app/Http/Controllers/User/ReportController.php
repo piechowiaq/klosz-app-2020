@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Company;
 use App\Http\Requests\StoreUserReportRequest;
+use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
 use App\Http\Controllers\Controller;
@@ -93,9 +94,11 @@ class ReportController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function edit(Report $report)
+    public function edit($companyId, Report $report)
     {
-        //
+        $company = Company::findOrFail($companyId);
+
+        return view('user.reports.edit', compact('report', 'company'));
     }
 
     /**
@@ -105,9 +108,21 @@ class ReportController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Report $report)
+    public function update(UpdateUserReportRequest $request, $companyId, Report $report)
     {
-        //
+        $company = Company::findOrfail($companyId);
+
+        $report->update(request(['registry_id', 'report_date']));
+
+        $report->company_id = $companyId;
+
+        $report->expiry_date = Carbon::create(request('report_date'))->addMonths(Registry::where('id', $report->registry_id)->first()->valid_for)->toDateString();
+
+        $report->save();
+
+        $registry = Registry::where('id', $report->registry_id)->first();
+
+        return redirect($registry->userpath($companyId));
     }
 
     /**
@@ -116,8 +131,13 @@ class ReportController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Report $report)
+    public function destroy($companyId, Report $report)
     {
-        //
+//        $this->authorize('update');
+        $registry = Registry::where('id', $report->registry_id)->first();
+
+        $report->delete();
+
+        return redirect($registry->userpath($companyId));
     }
 }

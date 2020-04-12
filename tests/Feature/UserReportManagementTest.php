@@ -115,7 +115,48 @@ class UserReportManagementTest extends TestCase
         $response->assertRedirect($report->userpath(1));
     }
 
-    
+    /** @test */
+    public function a_report_can_be_edited_by_signInAdmin()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        $report = factory(Report::class)->create();
+
+        $this->get($report->userpath(1).'/edit')->assertOk();
+
+        $response = $this->patch($report->userpath(1), $attributes = [
+            'report_date'=> '1984-08-03',
+        ]);
+
+        $this->assertDatabaseHas('reports', $attributes);
+
+        $registry = Registry::where('id', $report->registry_id)->first();
+
+        $response->assertRedirect($registry->userpath(1));
+
+    }
+
+    /** @test */
+    public function a_report_can_be_destroyed_by_signInAdmin()
+    {
+//        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        $report = factory(Report::class)->create();
+
+        $registry = Registry::where('id', $report->registry_id)->first();
+
+        $response = $this->delete($report->userpath(1));
+
+        $this->assertCount(0, Report::all());
+
+        $response->assertRedirect($registry->userpath(1));
+
+    }
+
     /** @test */
     public function a_report_requires_a_registry_id()
     {
