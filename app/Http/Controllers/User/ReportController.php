@@ -133,7 +133,7 @@ class ReportController extends Controller
      */
     public function destroy($companyId, Report $report)
     {
-//        $this->authorize('update');
+
         $registry = Registry::where('id', $report->registry_id)->first();
 
         $report->delete();

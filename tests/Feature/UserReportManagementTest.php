@@ -141,8 +141,6 @@ class UserReportManagementTest extends TestCase
     /** @test */
     public function a_report_can_be_destroyed_by_signInAdmin()
     {
-//        $this->withoutExceptionHandling();
-
         $this->signInAdmin();
 
         $report = factory(Report::class)->create();

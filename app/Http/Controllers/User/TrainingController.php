@@ -16,16 +16,20 @@ class TrainingController extends Controller
     {
         $this->middleware(['auth', 'auth.user']);
     }
+
     /**
      * Display a listing of the resource.
      *
      * @param $companyId
+     * @param $trainingId
      * @param Certificate $certificate
      * @return \Illuminate\Http\Response
      */
     public function index($companyId, Certificate $certificate)
     {
         $company = Company::findOrfail($companyId);
+
+
 
         $companyTrainings =  $company->positions->flatMap(function($position){
             return $position->trainings;

@@ -22,9 +22,12 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($companyId, $trainingId)
     {
-        //
+        $company =  Company::findOrfail($companyId);
+        $training = Training::findOrfail($trainingId);
+
+        return view('user.certificates.index', compact('training', 'company'));
     }
 
     /**
@@ -86,7 +89,9 @@ class CertificateController extends Controller
 
         $certificate->employees()->sync(request('employee_id'));
 
-        return redirect($certificate->userpath($companyId));
+        $trainingId = $certificate->training_id;
+
+        return redirect($certificate->userpath($companyId, $trainingId));
     }
 
     /**
@@ -95,13 +100,15 @@ class CertificateController extends Controller
      * @param  \App\Certificate  $certificate
      * @return \Illuminate\Http\Response
      */
-    public function show($companyId, Certificate $certificate)
+    public function show($companyId, $trainingId, Certificate $certificate)
     {
         $company = Company::findOrFail($companyId);
 
+        $training = Training::where($trainingId, $certificate->training_id);
 
 
-        return view('user.certificates.show', compact('certificate', 'company'));
+
+        return view('user.certificates.show', compact('certificate', 'company','training'));
     }
 
     /**
@@ -111,7 +118,7 @@ class CertificateController extends Controller
      * @param $companyId
      * @return void
      */
-    public function edit( $companyId, Certificate $certificate)
+    public function edit($companyId, $trainingId, Certificate $certificate)
     {
         $this->authorize('update', $certificate);
     }
@@ -124,7 +131,7 @@ class CertificateController extends Controller
      * @param \App\Certificate $certificate
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserCertificateRequest $request, $companyId, Certificate $certificate)
+    public function update(UpdateUserCertificateRequest $request, $companyId, $trainingId, Certificate $certificate)
     {
         $this->authorize('update', $certificate);
 
@@ -138,7 +145,9 @@ class CertificateController extends Controller
 
         $certificate->save();
 
-        return redirect($certificate->userpath($companyId));
+        $trainingId = $certificate->training_id;
+
+        return redirect($certificate->userpath($companyId, $trainingId));
     }
 
     /**

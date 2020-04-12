@@ -36,9 +36,17 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 Route::namespace('User')->name('user.')->group(function () {
 
     Route::resource('/{company}/employees', 'EmployeeController')->except(['destroy']);
-    Route::resource('/{company}/certificates', 'CertificateController')->except(['destroy']);
+
+    Route::get('/{company}/trainings/{training}/certificates', 'CertificateController@index')->name('certificates.index');
+    Route::get('/{company}/certificates/create', 'CertificateController@create')->name('certificates.create');
+    Route::post('/{company}/certificates', 'CertificateController@store')->name('certificates.store');
+    Route::get('/{company}/trainings/{training}/certificates/{certificate}', 'CertificateController@show')->name('certificates.show');
+    Route::get('/{company}/trainings/{training}/certificates/{certificate}/edit', 'CertificateController@edit')->name('certificates.edit');
+    Route::patch('/{company}/trainings/{training}/certificates/{certificate}', 'CertificateController@update')->name('certificates.update');
+    Route::delete('/{company}/trainings/{training}/certificates/{certificate}', 'CertificateController@destroy')->name('certificates.destroy');
+
+//    Route::resource('/{company}/certificates', 'CertificateController')->except(['index']);
     Route::resource('/{company}/trainings', 'TrainingController')->only(['index', 'show']);
-//    Route::resource('/{company}/trainings/{training}/certificates', 'CertificateController');
     Route::resource('/{company}/reports', 'ReportController');
     Route::resource('/{company}/registries', 'RegistryController')->only(['index', 'show']);
 

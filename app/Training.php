@@ -14,6 +14,11 @@ class Training extends Model
         return "/admin/trainings/{$this->id}";
     }
 
+    public function userpath($companyId)
+    {
+        return "/$companyId/trainings/{$this->id}";
+    }
+
     public function departments()
     {
         return $this->belongsToMany(Department::class);

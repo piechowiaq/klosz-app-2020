@@ -15,7 +15,7 @@ class UserCertificateManagementTest extends TestCase
     /** @test */
     public function guests_cannot_manage_certificates()
     {
-        //$this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
 
         $this->get('/{company}/certificates/create')->assertRedirect('/login');
 
@@ -23,15 +23,15 @@ class UserCertificateManagementTest extends TestCase
 
         $this->post('/{company}/certificates', $certificate->toArray())->assertRedirect('/login');
 
-        $this->patch($certificate->userpath(1))->assertRedirect('/login');
+        $this->patch($certificate->userpath(1, 1))->assertRedirect('/login');
 
-        $this->delete($certificate->userpath(1))->assertStatus(405);
+        $this->delete($certificate->userpath(1, 1))->assertRedirect('/login');
 
-        $this->get($certificate->userpath(1).'/edit')->assertRedirect('/login');
+        $this->get($certificate->userpath(1, 1).'/edit')->assertRedirect('/login');
 
-        $this->get('/{company}/certificates')->assertRedirect('/login');
+        $this->get('/{company}/trainings/{training}/certificates')->assertRedirect('/login');
 
-        $this->get($certificate->userpath(1))->assertRedirect('/login');
+        $this->get($certificate->userpath(1, 1))->assertRedirect('/login');
     }
 
     /** @test */
@@ -45,15 +45,15 @@ class UserCertificateManagementTest extends TestCase
 
         $this->post('/{company}/certificates', $certificate->toArray())->assertRedirect('/login');
 
-        $this->patch($certificate->userpath(1))->assertRedirect('/login');
+        $this->patch($certificate->userpath(1, 1))->assertRedirect('/login');
 
-        $this->delete($certificate->userpath(1))->assertStatus(405);;
+        $this->delete($certificate->userpath(1, 1))->assertRedirect('/login');
 
-        $this->get($certificate->userpath(1).'/edit')->assertRedirect('/login');
+        $this->get($certificate->userpath(1, 1).'/edit')->assertRedirect('/login');
 
-        $this->get('/{company}/certificates')->assertRedirect('/login');
+        $this->get('/{company}/trainings/{training}/certificates')->assertRedirect('/login');
 
-        $this->get($certificate->userpath(1))->assertRedirect('/login');
+        $this->get($certificate->userpath(1, 1))->assertRedirect('/login');
 
     }
 
@@ -62,13 +62,13 @@ class UserCertificateManagementTest extends TestCase
     {
         $this->signInUser();
 
-        $response = $this->get('/1/certificates');
+        factory(Training::class)->create();
 
-        $response->assertOk();
+        $this->get('/1/trainings/1/certificates')->assertOk();
 
         $this->get('/1/certificates/create')->assertStatus(403);
 
-        $response = $this->get('/2/certificates');
+        $response = $this->get('/2/trainings/1/certificates');
 
         $response->assertRedirect('/login');
 
@@ -77,7 +77,7 @@ class UserCertificateManagementTest extends TestCase
     /** @test */
     public function a_certificate_can_be_created_by_signedInManager()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
 
         $this->signInManager();
 
@@ -91,7 +91,11 @@ class UserCertificateManagementTest extends TestCase
 
         $certificate = Certificate::where('id', 1)->first();
 
-        $response->assertRedirect($certificate->userpath(1));
+
+
+        $response->assertRedirect('/1/trainings/1/certificates/1');
+
+//        $response->assertSee('Lalka');
 
     }
 
@@ -128,15 +132,15 @@ class UserCertificateManagementTest extends TestCase
 
         $training = factory(Training::class)->create();
 
-        $response = $this->patch($certificate->userpath(1), $attributes = [
+        $this->get($certificate->userpath(1, 1).'/edit')->assertOk();
+
+        $response = $this->patch($certificate->userpath(1, 1), $attributes = [
             'training_id'=> 2,
         ]);
 
-        $this->get($certificate->userpath(1).'/edit')->assertOk();
-
         $this->assertDatabaseHas('certificates', $attributes);
 
-        $response->assertRedirect($certificate->fresh()->userpath(1));
+        $response->assertRedirect($certificate->fresh()->userpath(1, 2));
     }
 
     /** @test */
@@ -148,16 +152,32 @@ class UserCertificateManagementTest extends TestCase
 
         $training = factory(Training::class)->create();
 
-        $response = $this->patch($certificate->userpath(1), $attributes = [
+        $this->get($certificate->userpath(1, 1).'/edit')->assertStatus(403);
+
+        $response = $this->patch($certificate->userpath(1, 1), $attributes = [
             'training_id'=> 2,
         ]);
 
-        $this->get($certificate->userpath(1).'/edit')->assertStatus(403);
-
         $this->assertDatabaseMissing('certificates', $attributes);
 
-
         $response->assertStatus(403);
+
+    }
+
+    /** @test */
+    public function signedInAdmin_can_only_access_their_company_certificates_testing_routes()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        $training = factory(Training::class)->create();
+
+        $this->get($training->userpath(1))->assertOk();
+
+        $this->get('/1/trainings/1/certificates')->assertOk();;
+
+        $this->get('/2/trainings/1/certificates')->assertRedirect('/login');
 
     }
 
