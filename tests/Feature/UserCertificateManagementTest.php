@@ -182,5 +182,55 @@ class UserCertificateManagementTest extends TestCase
     }
 
 
+    public function a_report_can_be_edited_by_signInAdmin()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        $report = factory(Report::class)->create();
+
+        $this->get($report->userpath(1).'/edit')->assertOk();
+
+        $response = $this->patch($report->userpath(1), $attributes = [
+            'report_date'=> '1984-08-03',
+        ]);
+
+        $this->assertDatabaseHas('reports', $attributes);
+
+        $registry = Registry::where('id', $report->registry_id)->first();
+
+        $response->assertRedirect($registry->userpath(1));
+
+    }
+
+    /** @test */
+    public function a_certificate_can_be_destroyed_by_signInAdmin()
+    {
+
+        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        $certificate = factory(Certificate::class)->create();
+
+        $certificate = Certificate::all()->first();
+
+
+
+        $response = $this->delete($certificate->userpath(1,1));
+
+        $this->assertCount(0, Certificate::all());
+
+        $response->assertRedirect('/1/trainings/1/certificates');
+
+
+
+    }
+
+
+
+
+
 
 }

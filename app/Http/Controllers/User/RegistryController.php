@@ -35,11 +35,11 @@ class RegistryController extends Controller
      * @param  \App\Registry  $registry
      * @return \Illuminate\Http\Response
      */
-    public function show($companyId, Registry $registry)
+    public function show($companyId, Registry $registry, Report $report)
     {
         $company = Company::findOrFail($companyId);
 
-        return view('user.registries.show', compact('registry', 'company'));
+        return view('user.registries.show', compact('registry', 'company', 'report'));
     }
 
 }

@@ -156,8 +156,16 @@ class CertificateController extends Controller
      * @param  \App\Certificate  $certificate
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Certificate $certificate)
+    public function destroy($companyId, $trainingId, Certificate $certificate)
     {
-        //
+        $company =  Company::findOrfail($companyId);
+
+        $training = Training::findOrfail($trainingId);
+
+        $certificate->delete();
+
+        return redirect()->route('user.certificates.index', [$companyId, $trainingId]);
+
+
     }
 }

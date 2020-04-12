@@ -48,7 +48,7 @@ Route::namespace('User')->name('user.')->group(function () {
 //    Route::resource('/{company}/certificates', 'CertificateController')->except(['index']);
     Route::resource('/{company}/trainings', 'TrainingController')->only(['index', 'show']);
     Route::resource('/{company}/reports', 'ReportController');
-    Route::resource('/{company}/registries', 'RegistryController')->only(['index', 'show']);
+    Route::resource('/{company}/registries', 'RegistryController');
 
 });
 
