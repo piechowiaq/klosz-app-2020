@@ -9,11 +9,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
 use App\Position;
+use Illuminate\Support\Facades\Auth;
 
 
 class EmployeeController extends Controller
 {
-    public function __construct()
+
+       public function __construct()
     {
         $this->middleware(['auth', 'auth.user']);
     }

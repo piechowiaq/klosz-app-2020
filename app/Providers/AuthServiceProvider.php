@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Certificate;
 use App\Employee;
+
 use App\Policies\EmployeePolicy;
 use App\Policies\CertificatePolicy;
 use App\Policies\ReportPolicy;
+use App\Policies\UserPolicy;
 use App\Report;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -24,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Employee::class => EmployeePolicy::class,
         Certificate::class => CertificatePolicy::class,
         Report::class => ReportPolicy::class,
+        User::class => UserPolicy::class,
 
     ];
 

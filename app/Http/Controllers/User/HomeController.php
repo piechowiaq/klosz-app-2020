@@ -59,6 +59,8 @@ class HomeController extends Controller
     {
         $company = Company::findOrFail($companyId);
 
+
+
         return view('user.dashboard', compact('company'));
     }
 
