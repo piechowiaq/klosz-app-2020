@@ -121,6 +121,29 @@ class CertificateController extends Controller
     public function edit($companyId, $trainingId, Certificate $certificate)
     {
         $this->authorize('update', $certificate);
+
+        $company =  Company::findOrfail($companyId);
+
+        $training = Training::findOrfail($trainingId);
+
+        $collection = collect();
+
+        foreach ($company->positions as $position) {
+
+            foreach ($position->trainings as $training){
+                $collection[] = $training;}
+        }
+
+        $trainings = $collection->unique('name');
+
+        $employees = collect();
+
+        foreach ($company->employees as $employee) {
+
+            $employees[] = $employee;
+        }
+
+        return view ( 'user.certificates.edit', compact('company', 'trainings', 'employees','training', 'certificate'));
     }
 
     /**

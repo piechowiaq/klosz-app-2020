@@ -9,7 +9,7 @@
 
 <hr>
     <div>
-        <form action="{{route('user.certificates.update', ['company'=>$company->id, 'certificate' => $certificate])}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('user.certificates.update', ['certificate' => $certificate, 'company'=>$company, 'training'=> $training])}}" method="POST" enctype="multipart/form-data">
 
             @method('PATCH')
 

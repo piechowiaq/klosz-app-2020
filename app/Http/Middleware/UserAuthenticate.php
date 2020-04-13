@@ -17,12 +17,6 @@ class UserAuthenticate
      */
     public function handle($request, Closure $next)
     {
-//        if (Auth::user()->isSuperAdmin()){
-//
-//            return $next($request);
-//        }
-//
-//        else
 
         $companies = Auth::user()->companies()->get();
 

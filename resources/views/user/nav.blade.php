@@ -4,7 +4,7 @@
     </div>
     <ul class="">
         <li class="md:mr-6 mt-6">
-            <a class="text-indigo-500 hover:text-indigo-800" href="{{ url('/') }}" ><svg class="inline mr-4 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-5.6-4.29a9.95 9.95 0 0 1 11.2 0 8 8 0 1 0-11.2 0zm6.12-7.64l3.02-3.02 1.41 1.41-3.02 3.02a2 2 0 1 1-1.41-1.41z"/></svg>Dashboard</a>
+            <a class="text-indigo-500 hover:text-indigo-800" href="{{ route('user.dashboard', ['company'=>$company->id ?? 'company']) }}" ><svg class="inline mr-4 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-5.6-4.29a9.95 9.95 0 0 1 11.2 0 8 8 0 1 0-11.2 0zm6.12-7.64l3.02-3.02 1.41 1.41-3.02 3.02a2 2 0 1 1-1.41-1.41z"/></svg>Dashboard</a>
         </li>
         <li class="md:mr-6 mt-6">
             <a class="text-indigo-500 hover:text-indigo-800" href="{{ route('user.registries.index', ['company'=>$company->id ?? 'company'] ) }}" ><svg class="inline mr-4 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M7.03 2.6a3 3 0 0 1 5.94 0L15 3v1h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4zM5 6H4v12h12V6h-1v1H5V6zm5-2a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>Rejestr</a>

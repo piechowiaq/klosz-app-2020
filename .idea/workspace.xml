@@ -2,11 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/user/dashboard.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CertificateController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/RegistryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/RegistryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/EmployeeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/UserAuthenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/UserAuthenticate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/companies/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/companies/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/users/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/registries/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/CertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CertificateManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/EmployeeManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/EmployeeManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/HomeManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/HomeManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserEmployeeManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserEmployeeManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/TestCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/TestCase.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -148,11 +174,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\User" />
       <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\Admin" />
+      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\User" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
       <recent name="D:\xampp\htdocs\klosz-group\public\png" />
       <recent name="D:\xampp\htdocs\klosz-group\storage\app\public" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\user\reports" />
@@ -236,7 +262,7 @@
       <workItem from="1586160486147" duration="28361000" />
       <workItem from="1586462578680" duration="262000" />
       <workItem from="1586532539236" duration="1087000" />
-      <workItem from="1586543995473" duration="51067000" />
+      <workItem from="1586543995473" duration="68865000" />
     </task>
     <servers />
   </component>

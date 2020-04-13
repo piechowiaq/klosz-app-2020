@@ -96,7 +96,7 @@ class UserReportManagementTest extends TestCase
 
         $report = Report::first();
 
-        $response->assertRedirect($report->userpath(1));
+        $response->assertRedirect('/1/registries');
     }
 
     /** @test */
@@ -112,7 +112,7 @@ class UserReportManagementTest extends TestCase
 
         $report = Report::first();
 
-        $response->assertRedirect($report->userpath(1));
+        $response->assertRedirect('/1/registries');
     }
 
     /** @test */

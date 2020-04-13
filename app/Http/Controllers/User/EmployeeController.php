@@ -83,7 +83,7 @@ class EmployeeController extends Controller
                 $employee->trainings()->sync($training, false);
             }}
 
-        return redirect($employee->userpath($companyId));
+        return redirect()->route('user.employees.index', [$companyId]);
     }
 
     /**
@@ -146,6 +146,14 @@ class EmployeeController extends Controller
             }}
 
         return redirect($employee->userpath($companyId));
+
+    }
+
+    public function destroy($companyId, Employee $employee)
+    {
+        $employee->delete();
+
+        return redirect()->route('user.employees.index', [$companyId]);
 
     }
 

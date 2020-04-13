@@ -37,7 +37,7 @@
                         @else
                             <span class="text-gray-300 text-sm p-3">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
                         @can('update')
-                            <a href="{{ route('admin') }}"
+                            <a href="{{ route('admin.home') }}"
                                class="no-underline hover:underline  text-sm p-3"> Admin
                             </a>
                         @endcan

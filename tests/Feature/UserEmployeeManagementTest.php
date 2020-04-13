@@ -13,7 +13,7 @@ class UserEmployeeManagementTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+
     public function guests_cannot_manage_employees()
     {
         $this->get('/{company}/employees/create')->assertRedirect('/login');
@@ -24,7 +24,7 @@ class UserEmployeeManagementTest extends TestCase
 
         $this->patch($employee->userpath(1))->assertRedirect('/login');
 
-        $this->delete($employee->userpath(1))->assertStatus(405);
+        $this->delete($employee->userpath(1))->assertRedirect('/login');
 
         $this->get($employee->userpath(1).'/edit')->assertRedirect('/login');
 
@@ -33,7 +33,7 @@ class UserEmployeeManagementTest extends TestCase
         $this->get($employee->userpath(1))->assertRedirect('/login');
 
     }
-    /** @test */
+
     public function signIn_user_with_no_company_cannot_manage_employees()
     {
         $this->signIn();
@@ -46,7 +46,7 @@ class UserEmployeeManagementTest extends TestCase
 
         $this->patch($employee->userpath(1))->assertRedirect('/login');
 
-        $this->delete($employee->userpath(1))->assertStatus(405);
+        $this->delete($employee->userpath(1))->assertRedirect('/login');
 
         $this->get($employee->userpath(1).'/edit')->assertRedirect('/login');
 
@@ -56,7 +56,7 @@ class UserEmployeeManagementTest extends TestCase
 
     }
 
-    /** @test */
+
     public function signedInUser_can_only_access_their_company_employees()
     {
         $this->withoutExceptionHandling();
@@ -73,7 +73,7 @@ class UserEmployeeManagementTest extends TestCase
 
     }
 
-    /** @test */
+
     public function an_employee_can_be_created_by_signedInManager()
     {
 
@@ -93,11 +93,11 @@ class UserEmployeeManagementTest extends TestCase
 
         $employee = Employee::where('id', 1)->first();
 
-        $response->assertRedirect($employee->userpath(1));
+        $response->assertRedirect('/1/employees');
 
     }
 
-    /** @test */
+
     public function a_employee_can_be_updated()
     {
         $this->withoutExceptionHandling();
@@ -119,6 +119,39 @@ class UserEmployeeManagementTest extends TestCase
         $this->assertDatabaseHas('employees', $attributes);
 
         $response->assertRedirect($employee->fresh()->userpath(1));
+    }
+
+
+    public function an_employee_can_be_destroyed_by_signInAdmin()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        $employee = factory(Employee::class)->create();
+
+        $response = $this->delete($employee->userpath(1));
+
+        $this->assertCount(0, Employee::all());
+
+        $response->assertRedirect('/1/employees');
+
+    }
+
+    /** @test */
+    public function signedInSuperAdmin_can_only_access_all_companies_employees()
+    {
+        //$this->withoutExceptionHandling();
+
+
+
+        $this->signInSuperAdmin();
+
+        $this->get('/1/employees')->assertOk();
+
+
+
+
     }
 
 

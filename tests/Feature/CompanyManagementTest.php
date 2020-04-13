@@ -22,7 +22,7 @@ class CompanyManagementTest extends TestCase
 
         $company = Company::all();
 
-        $this->assertCount(1, $company);
+        $this->assertCount(2, $company);
 
     }
 
@@ -57,11 +57,11 @@ class CompanyManagementTest extends TestCase
 
         $company = Company::first();
 
-        $this->assertCount(1, Company::all());
+        $this->assertCount(2, Company::all());
 
         $response = $this->delete($company->path());
 
-        $this->assertCount(0, Company::all());
+        $this->assertCount(1, Company::all());
 
         $response->assertRedirect('/admin/companies');
 

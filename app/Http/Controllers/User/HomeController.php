@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Company;
 use App\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth']);
     }
 
     /**
@@ -25,7 +26,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function company()
+    public function home()
     {
         $user = Auth::user();
 
@@ -35,19 +36,19 @@ class HomeController extends Controller
 
             $companyId = $company->id;
 
-//            return view('user.home', compact('company'));
 
-            return Redirect::action('HomeController@index', $companyId);
+
+            return Redirect::action('User\HomeController@index', $companyId);
 
         }
         else if($user->isSuperAdmin()){
 
-            return Redirect::action('AdminController@index');
+            return Redirect::action('Admin\AdminController@index');
 
         }
         else {
 
-            return view('home', compact('user'));
+            return view('user.home', compact('user'));
 
         }
 
@@ -57,7 +58,7 @@ class HomeController extends Controller
     {
         $company = Company::findOrFail($companyId);
 
-        return view('user.home', compact('company'));
+        return view('user.dashboard', compact('company'));
     }
 
 

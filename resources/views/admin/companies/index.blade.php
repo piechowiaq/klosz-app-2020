@@ -13,7 +13,7 @@
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
 
-                <a href="{{route('admin.companies.show', ['company'=>$company])}}">{{ $company->name}}</a>  <a href="{{url('/', ['company'=>$company])}}">Dashborad</a>
+                <a href="{{route('admin.companies.show', ['company'=>$company])}}">{{ $company->name}}</a>  <a href="{{route('user.dashboard', ['company'=>$company])}}">Dashborad</a>
 
 
             </div>

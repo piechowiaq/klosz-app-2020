@@ -69,7 +69,7 @@ class ReportController extends Controller
 
         $report->save();
 
-        return redirect($report->userpath($companyId));
+        return redirect()->route('user.registries.index', [$companyId]);
     }
 
     /**

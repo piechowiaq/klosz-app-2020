@@ -9,23 +9,23 @@
 
     @foreach ($training->certificates as $certificate)
 
-        <div class="md:flex border rounded shadow mb-1">
+        <div class="md:flex border mb-1">
 
             <div class="m-2 p-2 py-2 md:w-5/6 ">
 
-                <a href="{{route('user.certificates.show', ['company'=>$company, 'training'=>$training, 'certificate'=>$certificate])}}">{{ $certificate->training_date}}</a>
+                <a href="{{route('user.certificates.show', ['certificate'=>$certificate,'company'=>$company, 'training'=>$training, ])}}">{{ $certificate->training_date}}</a>
 
             </div>
 
             <div class="flex  justify-center md:justify-end md:w-1/6 ">
 
                 <div class=" px-2 bg-transparent hover:bg-blue-500 text-black-700 hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
-                    <a href="{{route('user.certificates.edit', ['company'=>$company, 'training'=>$training, 'certificate'=>$certificate])}}" class="">Edytuj</a>
+                    <a href="{{route('user.certificates.edit', ['certificate'=>$certificate,'company'=>$company->id, 'training'=>$training, ])}}" class="">Edytuj</a>
                 </div>
 
                 <div class="px-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
 
-                    <form action="{{route('user.certificates.destroy', ['company'=>$company, 'training'=>$training, 'certificate'=>$certificate])}}" method="POST">
+                    <form action="{{route('user.certificates.destroy', ['certificate'=>$certificate, 'company'=>$company, 'training'=>$training, ])}}" method="POST">
 
                         @method('DELETE')
 
