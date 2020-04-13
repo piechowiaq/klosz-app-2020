@@ -15,8 +15,8 @@
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
-Route::get('/', 'WelcomeController@index')->name('welcome');
 
+Route::get('/', 'WelcomeController@index')->name('welcome');
 
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
@@ -36,7 +36,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 Route::namespace('User')->name('user.')->group(function () {
 
     Route::get('/home', 'HomeController@home')->name('home');
-    Route::get('/{company}', 'HomeController@index')->name('dashboard');
+    Route::get('/{company}', 'HomeController@index')->name('dashboard')->middleware('auth.user');
 
     Route::resource('/{company}/employees', 'EmployeeController');
     Route::get('/{company}/trainings/{training}/certificates', 'CertificateController@index')->name('certificates.index');

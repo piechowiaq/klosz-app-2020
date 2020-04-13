@@ -30,12 +30,13 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
+
+
         if($user->companies()->count() == 1){
 
             $company = $user->companies()->first();
 
             $companyId = $company->id;
-
 
 
             return Redirect::action('User\HomeController@index', $companyId);
