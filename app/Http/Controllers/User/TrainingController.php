@@ -30,12 +30,12 @@ class TrainingController extends Controller
         $company = Company::findOrfail($companyId);
 
 
-
         $companyTrainings =  $company->positions->flatMap(function($position){
             return $position->trainings;
         })->unique('id');
 
-        return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate'));
+
+        return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
     }
 
     /**
@@ -46,35 +46,15 @@ class TrainingController extends Controller
      */
     public function show($companyId, Training $training)
     {
-
-
-
-
-        //$this->authorize('update', $training);
-
- //       $validCertifiactes = $certificates->filter(function ($cetificate){
-//            return $certificate->expiry_date > Carbon::now();
-//        });
-//
-//        foreach ($validCertifiactes as $certificate){
-//$
-//
-//
-//        }
-//        $collection = collect();
-//        foreach ($training->employees as $employee){
-//            foreach ($employee->certificates as $certificate) {
-//                $collection[] = $certificate;
-//            }}
-//        dd($collection->where('expiry_date', '>', Carbon::now() )->where('training_id', $training->id)->count());
-//        dd($certificates = $employees->certificates());
-
-//                ->where('training_id', $training->id)->sortByDesc('training_date')->count();
-
-    //$training->certificates()->with('employees')->where('expiry_date','>', Carbon::now());
         $company = Company::findOrFail($companyId);
 
-        return view('user.trainings.show', compact('training', 'company'));
+        $trainingEmployees = $training->employees->filter(function ($employee) use ($companyId) {
+
+         return  $employee->company_id == $companyId;
+
+        });
+
+        return view('user.trainings.show', compact('training', 'company', 'trainingEmployees'));
     }
 
 

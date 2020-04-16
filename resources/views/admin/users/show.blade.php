@@ -9,6 +9,7 @@
             <h1>{{$user->full_name}} </h1>
     </div>
     <hr>
+
     <div>
         @foreach ($user->roles as $role)
             <div class="block mt-2 py-2">
@@ -27,7 +28,8 @@
 
 
         @endforeach
-    </div> </div>
+    </div>
+    </div>
 
 
 

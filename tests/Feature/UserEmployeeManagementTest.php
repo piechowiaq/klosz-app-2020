@@ -144,12 +144,39 @@ class UserEmployeeManagementTest extends TestCase
         //$this->withoutExceptionHandling();
 
 
-
         $this->signInSuperAdmin();
 
         $this->get('/1/employees')->assertOk();
 
 
+
+
+    }
+
+    /** @test */
+    public function a_report_requires_an_expiry_date()
+    {
+
+        $this->signInAdmin();
+
+        $employee = factory(Employee::class)->create(['company_id' => 2, 'number' => 1]);
+
+        $employee = factory(Employee::class)->create(['company_id' => 1, 'number' => 1]);
+
+        $response = $this->post('/1/employees', $attributes = factory(Employee::class)->raw([
+            'company_id' => 1,
+            'number' => 1,
+        ]))->assertSessionHasErrors('number');
+
+        $response = $this->post('/1/employees', $attributes = factory(Employee::class)->raw([
+            'company_id' => 1,
+            'number' => 2,
+        ]))->assertSessionHasNoErrors();
+
+        $response = $this->post('/2/employees', $attributes = factory(Employee::class)->raw([
+            'company_id' => 2,
+            'number' => 2,
+        ]))->assertSessionHasNoErrors();
 
 
     }

@@ -67,11 +67,11 @@ class UserRegistryManagementTest extends TestCase
     {
         $this->signInAdmin();
 
-        $this->get('/2/registries')->assertRedirect('/login');
+        $this->get('/3/registries')->assertRedirect('/login');
 
         $report = factory(Registry::class)->create();
 
-        $this->get($report->userpath(2))->assertRedirect('/login');
+        $this->get($report->userpath(3))->assertRedirect('/login');
 
     }
 

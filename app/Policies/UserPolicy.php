@@ -23,7 +23,7 @@ class UserPolicy
     {
 
         {
-            if ($user->companies()->count() > 1 )
+            if ($user->companies()->count()>1 || $user->isSuperAdmin())
             {
                 return true;
             }

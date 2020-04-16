@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string('surname');
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->integer('number')->nullable()->unique();
+            $table->integer('number')->nullable();
             $table->timestamps();
         });
     }

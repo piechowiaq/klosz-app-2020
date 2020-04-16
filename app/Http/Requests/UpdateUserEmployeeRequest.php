@@ -24,12 +24,17 @@ class UpdateUserEmployeeRequest extends FormRequest
      */
     public function rules()
     {
+        $companyId = $this->route('company');
+
         return [
             'name'=> 'sometimes|required',
             'surname'=> 'sometimes|required',
-            'number'=> ['required','sometimes', Rule::unique('employees', 'number')->ignore($this->employee)],
+//            'number'=> ['required','sometimes', Rule::unique('employees', 'number')->ignore($this->employee)],
+
+            'number'=> 'unique:employees,number,'.$this->employee->number.',number,company_id,'.$companyId,
 //          'company_id'=> 'exists:companies,id|required|sometimes',
             'position_id'=> 'exists:positions,id|required|sometimes',
         ];
     }
 }
+

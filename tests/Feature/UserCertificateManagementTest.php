@@ -177,7 +177,7 @@ class UserCertificateManagementTest extends TestCase
 
         $this->get('/1/trainings/1/certificates')->assertOk();;
 
-        $this->get('/2/trainings/1/certificates')->assertRedirect('/login');
+        $this->get('/3/trainings/1/certificates')->assertRedirect('/login');
 
     }
 

@@ -15,7 +15,7 @@
         <hr>
 
         <div>
-            @foreach ($training->employees as $employee)
+            @foreach ($trainingEmployees as $employee)
                 <div class="flex content-between flex-wrap" >
                     <div class="w-4/6  block mt-2 py-2">
                         {{ $employee->full_name}}

@@ -85,7 +85,7 @@ abstract class TestCase extends BaseTestCase
     {
         $user = $user ?: factory(User::class)->create();
 
-        $company = factory(Company::class)->create();
+        $company = factory(Company::class, 2)->create();
 
         $role = factory(Role::class)->create([
             'name' => 'Admin'
@@ -93,7 +93,7 @@ abstract class TestCase extends BaseTestCase
 
         $user->roles()->save($role);
 
-        $user->companies()->save($company);
+        $user->companies()->attach($company);
 
         $this->actingAs($user);
 

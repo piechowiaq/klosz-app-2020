@@ -10,6 +10,7 @@ use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
 use App\Position;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 
 class EmployeeController extends Controller
@@ -70,14 +71,13 @@ class EmployeeController extends Controller
     {
         $this->authorize('update', $employee);
 
-        $employee = new Employee(request(['name', 'surname', 'number']));
+        $employee = new Employee(request(['name', 'surname', 'number', 'company_id']));
 
         $employee->company_id = $companyId;
 
         $employee->save();
 
         $employee->positions()->sync(request('position_id'));
-
 
         foreach ($employee->positions as $position) {
             $employee->departments()->sync($position->department_id,false);

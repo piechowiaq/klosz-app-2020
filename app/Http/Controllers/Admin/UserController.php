@@ -83,6 +83,7 @@ class UserController extends Controller
     {
         $this->authorize('update');
 
+
         return view('admin.users.show', compact('user'));
     }
 

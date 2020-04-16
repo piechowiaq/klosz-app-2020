@@ -52,9 +52,9 @@ class Employee extends Model
         return $this->trainings()->count();
     }
 
-    public function scopeCertified($query, $training)
+    public function scopeCertified($query, $training, $companyId )
     {
-        return $query->whereHas('certificates', function($q) use ($training) {
+        return $query->where('company_id', $companyId)->whereHas('certificates', function($q) use ($training) {
             $q->where('expiry_date', '>', \Carbon\Carbon::now())
                 ->where('training_id', $training->id);
         })->get();
