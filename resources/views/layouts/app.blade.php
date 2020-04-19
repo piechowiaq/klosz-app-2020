@@ -53,10 +53,11 @@
                 </div>
             </div>
         </nav>
-        <div class="container mx-auto items-center bg-white ">
-                <div class="md:flex">
+
+        <div class="container mx-auto  flex ">
+
         @yield('content')
-                </div>
+
 
         </div>
     </div>
@@ -67,5 +68,9 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
+
+
+    {{ $registryChart->script() }}
 </body>
+
 </html>

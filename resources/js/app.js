@@ -6,7 +6,11 @@
 
 require('./bootstrap');
 
+
 window.Vue = require('vue');
+
+import Chart from 'chart.js';
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,6 +25,10 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+
+
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -29,4 +37,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+
 });

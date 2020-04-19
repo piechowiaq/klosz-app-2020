@@ -1,4 +1,4 @@
-<div class="md:w-1/6">
+<div class="md:w-1/6 ">
     <div class="text-yellow-500 ">
       <h1 class="text-lg font-semibold">Menu</h1>
     </div>

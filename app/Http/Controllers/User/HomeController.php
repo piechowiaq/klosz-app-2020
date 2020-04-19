@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use App\Charts\RegistryChart;
 
 class HomeController extends Controller
 {
@@ -59,9 +60,14 @@ class HomeController extends Controller
     {
         $company = Company::findOrFail($companyId);
 
+        $registryChart = new RegistryChart;
+        $registryChart->labels(['Nieaktulane', 'Aktualne']);
+        $registryChart->dataset('My dataset', 'doughnut', [1, 2]);
+        $registryChart->minimalist(true);
 
 
-        return view('user.dashboard', compact('company'));
+
+        return view('user.dashboard', compact('company', 'registryChart'));
     }
 
 

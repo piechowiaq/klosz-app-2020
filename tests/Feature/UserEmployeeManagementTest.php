@@ -154,32 +154,52 @@ class UserEmployeeManagementTest extends TestCase
     }
 
     /** @test */
-    public function a_report_requires_an_expiry_date()
+    public function employee_has_composite_unique_number_when_edited()
     {
-
         $this->signInAdmin();
 
-        $employee = factory(Employee::class)->create(['company_id' => 2, 'number' => 1]);
+        factory(Employee::class)->create(['company_id' => 2, 'number' => 1]);
 
-        $employee = factory(Employee::class)->create(['company_id' => 1, 'number' => 1]);
+        factory(Employee::class)->create(['company_id' => 1, 'number' => 1]);
 
-        $response = $this->post('/1/employees', $attributes = factory(Employee::class)->raw([
+        $this->post('/1/employees', $attributes = factory(Employee::class)->raw([
             'company_id' => 1,
             'number' => 1,
         ]))->assertSessionHasErrors('number');
 
-        $response = $this->post('/1/employees', $attributes = factory(Employee::class)->raw([
+        $this->post('/1/employees', $attributes = factory(Employee::class)->raw([
             'company_id' => 1,
             'number' => 2,
         ]))->assertSessionHasNoErrors();
 
-        $response = $this->post('/2/employees', $attributes = factory(Employee::class)->raw([
+        $this->post('/2/employees', $attributes = factory(Employee::class)->raw([
             'company_id' => 2,
             'number' => 2,
         ]))->assertSessionHasNoErrors();
 
+      }
+
+      /** @test */
+    public function employee_has_composite_unique_number_when_created()
+    {
+        $this->signInAdmin();
+
+        $employee = factory(Employee::class)->create(['company_id' => 2, 'number' => 1]);
+
+        $this->patch($employee->userpath(2), $attributes = [
+            'number'=> 1,
+        ])->assertSessionHasNoErrors();
+
+        factory(Employee::class)->create(['company_id' => 1, 'number' => 2]);
+
+        $employee = factory(Employee::class)->create(['company_id' => 1, 'number' => 1]);
+
+        $this->patch($employee->userpath(1), $attributes = [
+            'number'=> 2,
+        ])->assertSessionHasErrors('number');
 
     }
+
 
 
 
