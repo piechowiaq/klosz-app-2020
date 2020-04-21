@@ -71,6 +71,8 @@
 
 
     {{ $registryChart->script() }}
+    {{ $trainingChart->script() }}
+
 </body>
 
 </html>

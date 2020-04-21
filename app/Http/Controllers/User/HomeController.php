@@ -4,11 +4,13 @@ namespace App\Http\Controllers\User;
 
 use App\Company;
 use App\Employee;
+use App\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use App\Charts\RegistryChart;
+use App\Charts\TrainingChart;
 
 class HomeController extends Controller
 {
@@ -61,13 +63,34 @@ class HomeController extends Controller
         $company = Company::findOrFail($companyId);
 
         $registryChart = new RegistryChart;
-        $registryChart->labels(['Nieaktulane', 'Aktualne']);
-        $registryChart->dataset('My dataset', 'doughnut', [1, 2]);
-        $registryChart->minimalist(true);
+        $registryChart->dataset('Registry Chart', 'doughnut', [90, 10])->options([
+            'backgroundColor' =>  ['#48BB78'],
+            'borderWidth' =>  0,
+        ]);
+        $registryChart->displayAxes(false);
+        $registryChart->height(150);
+        $registryChart->width(150);
+        $registryChart->options([
+            'circumference' => 1*pi(),
+            'rotation' => 1*pi(),
+        ]);
+
+        $trainingChart = new TrainingChart;
+        $trainingChart->dataset('Registry Chart', 'doughnut', [90, 10])->options([
+            'backgroundColor' =>  ['#48BB78'],
+            'borderWidth' =>  0,
+        ]);
+        $trainingChart->displayAxes(false);
+        $trainingChart->height(150);
+        $trainingChart->width(150);
+        $trainingChart->options([
+            'circumference' => 1*pi(),
+            'rotation' => 1*pi(),
+        ]);
 
 
 
-        return view('user.dashboard', compact('company', 'registryChart'));
+        return view('user.dashboard', compact('company', 'registryChart', 'trainingChart'));
     }
 
 
