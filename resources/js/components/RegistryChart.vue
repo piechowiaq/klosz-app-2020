@@ -8,9 +8,10 @@
                 labels: ['Aktulane szkolenia', 'Nieaktulane szkolnia'],
                 datasets: [
                     {
-                        backgroundColor: ['#9ae6b4','#e2e8f0'],
+                        backgroundColor: ['#FEB2B2','#e2e8f0'],
                         data: [75, 25],
                         borderWidth: 0
+
                     },
 
                 ],

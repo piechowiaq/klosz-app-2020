@@ -8,7 +8,7 @@
         <div class="my-4 ml-4 mr-2 p-4 w-1/2 h-full">
             <div class="flex justify-around h-full">
                 <div class="bg-white w-2/3">
-                    <canvas id="myChart"></canvas>
+                    <canvas id="registryChart"></canvas>
 
                 </div>
                 <div class="bg-indigo-100  text-center leading-loose p-4 w-1/3">
