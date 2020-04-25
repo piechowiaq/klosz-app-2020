@@ -32,6 +32,7 @@
 
             </div>
         @endforeach
+
     </div>
 @endsection
 

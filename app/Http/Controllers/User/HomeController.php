@@ -62,35 +62,7 @@ class HomeController extends Controller
     {
         $company = Company::findOrFail($companyId);
 
-        $registryChart = new RegistryChart;
-        $registryChart->dataset('Registry Chart', 'doughnut', [90, 10])->options([
-            'backgroundColor' =>  ['#48BB78'],
-            'borderWidth' =>  0,
-        ]);
-        $registryChart->displayAxes(false);
-        $registryChart->height(150);
-        $registryChart->width(150);
-        $registryChart->options([
-            'circumference' => 1*pi(),
-            'rotation' => 1*pi(),
-        ]);
-
-        $trainingChart = new TrainingChart;
-        $trainingChart->dataset('Registry Chart', 'doughnut', [90, 10])->options([
-            'backgroundColor' =>  ['#48BB78'],
-            'borderWidth' =>  0,
-        ]);
-        $trainingChart->displayAxes(false);
-        $trainingChart->height(150);
-        $trainingChart->width(150);
-        $trainingChart->options([
-            'circumference' => 1*pi(),
-            'rotation' => 1*pi(),
-        ]);
-
-
-
-        return view('user.dashboard', compact('company', 'registryChart', 'trainingChart'));
+        return view('user.dashboard', compact('company'));
     }
 
 

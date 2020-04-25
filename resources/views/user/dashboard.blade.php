@@ -8,7 +8,7 @@
         <div class="my-4 ml-4 mr-2 p-4 w-1/2 h-full">
             <div class="flex justify-around h-full">
                 <div class="bg-white w-2/3">
-                    <div class="mt-5">{{$registryChart->container()}}</div>
+                    <canvas id="myChart"></canvas>
 
                 </div>
                 <div class="bg-indigo-100  text-center leading-loose p-4 w-1/3">
@@ -25,8 +25,9 @@
         <div class="my-4 ml-4 mr-2 p-4 w-1/2 h-full">
             <div class="flex justify-around h-full">
                 <div class="bg-white  w-2/3 ">
-                    <div class="mt-5">{{$trainingChart->container()}}</div>
+                     <registry-chart></registry-chart>
                 </div>
+
 
                 <div class="bg-indigo-100  text-center leading-loose p-4 w-1/3">
                     <h2 class="text-lg text-indigo-500 font-bold">Szkolenia</h2>
@@ -37,6 +38,9 @@
                         <li class="font-bold text-lg">20</li>
                     </ul>
                 </div>
+{{--                <canvas id="myBarChart"></canvas>--}}
+
+
             </div>
         </div>
     </div>
