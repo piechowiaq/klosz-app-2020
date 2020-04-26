@@ -9,6 +9,7 @@ require('./bootstrap');
 
 import Chart from 'chart.js';
 
+
 window.Vue = require('vue');
 
 /**
@@ -18,6 +19,7 @@ window.Vue = require('vue');
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
+
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
@@ -38,8 +40,7 @@ Vue.component('registry-chart', require('./components/RegistryChart.vue').defaul
 
 
 const app = new Vue({
-    el: '#app',
-
+    el: '#app'
 });
 
 

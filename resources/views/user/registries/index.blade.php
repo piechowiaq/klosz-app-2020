@@ -14,7 +14,7 @@
                 <div class="m-2 p-2 py-2 md:w-10/12 ">
                     <a href="{{route('user.registries.show', ['registry'=> $registry, 'company'=>$company->id])}}">{{ $registry->name}}</a>
                 </div>
-                @foreach ($registry->reports->where('registry_id', $registry->id)->sortByDesc('report_date') as $report)
+                @foreach ($registry->reports->where('registry_id', $registry->id)->sortByDesc('$report_date') as $report)
 
                     @if($loop->first)
                         <div class="w-2/12 text-right block mt-2 py-2 mr-4">
