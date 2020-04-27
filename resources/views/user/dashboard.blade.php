@@ -46,9 +46,13 @@
         </div>
     </div>
 
-    <script>
-        window.registryChartValue = "{{$registryChartValue}}";
-    </script>
+@push('charts-values')
+
+    <script> window.registryChartValue = "{{$registryChartValue}}";</script>
+
+ @endpush
+
+
 
 
 

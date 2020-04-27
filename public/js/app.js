@@ -66004,6 +66004,53 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/RegistryChart.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/RegistryChart.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var registryChartValue = window.registryChartValue;
+var chartColors = {
+  color1: '#FEB2B2',
+  color2: '#FBD38D',
+  color3: '#9ae6b4'
+};
+var ctx = document.getElementById("registryChart").getContext("2d");
+var myChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Aktulane szkolenia', 'Nieaktulane szkolnia'],
+    datasets: [{
+      label: 'Registry',
+      backgroundColor: [chartColors.color1, '#e2e8f0'],
+      data: [registryChartValue, 100 - registryChartValue]
+    }]
+  },
+  options: {
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 75
+  }
+});
+var colorChangeValue = 50; //set this to whatever is the deciding color change value
+
+var dataset = myChart.data.datasets[0];
+
+if (dataset.data[0] <= 50) {
+  dataset.backgroundColor[0] = chartColors.color1;
+} else if (dataset.data[0] > 51 && dataset.data[0] <= 75) {
+  dataset.backgroundColor[0] = chartColors.color2;
+} else {
+  dataset.backgroundColor[0] = chartColors.color3;
+}
+
+myChart.update();
+
+/***/ }),
+
 /***/ "./resources/js/components/RegistryChart.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/RegistryChart.vue ***!
@@ -66055,13 +66102,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/css/app.css ***!
-  \***********************************************************/
+/*!******************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/RegistryChart.js ./resources/css/app.css ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\xampp\htdocs\klosz-group\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\xampp\htdocs\klosz-group\resources\js\components\RegistryChart.js */"./resources/js/components/RegistryChart.js");
 module.exports = __webpack_require__(/*! D:\xampp\htdocs\klosz-group\resources\css\app.css */"./resources/css/app.css");
 
 

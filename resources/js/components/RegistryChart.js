@@ -1,4 +1,4 @@
-
+var registryChartValue = window.registryChartValue;
 
 var chartColors = {
     color1: '#FEB2B2',
@@ -20,7 +20,7 @@ var myChart = new Chart(ctx, {
                 '#e2e8f0'
 
             ],
-            data: [this.value,20 ]
+            data: [registryChartValue, 100-registryChartValue ]
         }],
     },
     options: {
