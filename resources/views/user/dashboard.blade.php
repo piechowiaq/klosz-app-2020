@@ -25,7 +25,8 @@
         <div class="my-4 ml-4 mr-2 p-4 w-1/2 h-full">
             <div class="flex justify-around h-full">
                 <div class="bg-white  w-2/3 ">
-                     <registry-chart></registry-chart>
+                    <canvas id="trainingChart"></canvas>
+
                 </div>
 
 
@@ -39,21 +40,24 @@
 
                     </ul>
                 </div>
-{{--                <canvas id="myBarChart"></canvas>--}}
+
 
 
             </div>
         </div>
     </div>
 
-@push('charts-values')
 
-    <script> window.registryChartValue = "{{$registryChartValue}}";</script>
+    @push('charts-values')
 
- @endpush
+        <script>
+            window.trainingChartValue = "{{$average}}";
+            window.registryChartValue = "{{$registryChartValue}}"
+        </script>
 
-
-
-
+    @endpush
 
 @endsection
+
+
+

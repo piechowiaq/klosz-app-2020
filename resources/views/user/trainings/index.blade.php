@@ -15,7 +15,8 @@
                         <a href="{{route('user.trainings.show', ['training'=> $training, 'company'=>$company->id])}}">{{ $training->name}}</a>
                     </div>
                     <div class="m-2 p-2 py-2 md:w-1/12">
-                        {{ $training->employees->where('company_id', $companyId)->count() == 0 ? : (round($training->employees()->certified($training, $companyId)->count()/$training->employees->where('company_id', $companyId)->count()*100))}} %
+
+                        {{ $training->employees->where('company_id', $companyId)->count() == 0 ? 0 : round($training->employees()->certified($training, $companyId)->count()/$training->employees->where('company_id', $companyId)->count()*100)}} %
                     </div>
 
                 </div>

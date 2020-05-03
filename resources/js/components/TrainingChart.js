@@ -1,4 +1,4 @@
-var registryChartValue = window.registryChartValue;
+var trainingChartValue = window.trainingChartValue;
 
 var chartColors = {
     color1: '#FEB2B2',
@@ -8,19 +8,19 @@ var chartColors = {
 };
 
 
-var ctx = document.getElementById("registryChart").getContext("2d");
+var ctx = document.getElementById("trainingChart").getContext("2d");
 var myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Aktulane rejestry', 'Nieaktulane rejestry'],
+        labels: ['Aktulane szkolenia', 'Nieaktulane szkolnia'],
         datasets: [{
-            label: 'Registry',
+            label: 'Training',
             backgroundColor: [
                 chartColors.color1,
                 '#e2e8f0'
 
             ],
-            data: [registryChartValue, 100-registryChartValue ]
+            data: [trainingChartValue, 100-trainingChartValue ]
         }],
     },
     options: {

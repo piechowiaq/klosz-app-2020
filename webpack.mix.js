@@ -20,6 +20,7 @@ mix.js('resources/js/app.js', 'public/js')
    .tailwind('./tailwind.config.js');
 
 mix.js('resources/js/components/RegistryChart.js', 'public/js/app.js');
+mix.js('resources/js/components/TrainingChart.js', 'public/js/app.js');
 
 
 

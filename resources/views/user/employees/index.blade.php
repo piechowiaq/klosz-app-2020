@@ -4,8 +4,24 @@
     @include('user.nav')
     <div class="md:w-5/6">
         @can('update', $employee)
-            <div class=" py-6 m-2 md:py-2">
-                <a href="{{route('user.employees.create', ['company'=>$company])}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Dodaj Pracownika</a>
+            <div class="flex justify-between py-6 m-2 md:py-2">
+                <div class="">
+                    <a href="{{route('user.employees.create', ['company'=>$company])}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Dodaj Pracownika</a>
+                </div>
+                <div class="italic text-gray-700">
+                    <form method="GET" action="{{route('user.search.show', ['employee'=> $employee, 'company'=>$company])}}">
+
+
+
+
+
+
+
+
+
+                        <input type="text" class="border border-indigo-200 px-" name="q"><button type="submit " class="py-2 px-2 text-sm text-indigo-500">Szukaj</button>
+                    </form>
+                </div>
             </div>
         @endcan
             @foreach ($employees as $employee)

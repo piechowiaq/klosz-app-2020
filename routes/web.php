@@ -38,7 +38,9 @@ Route::namespace('User')->name('user.')->group(function () {
     Route::get('/home', 'HomeController@home')->name('home');
     Route::get('/{company}', 'HomeController@index')->name('dashboard')->middleware('auth.user');
 
+    Route::get('/{company}/employees/search', 'SearchController@show')->name('search.show');
     Route::resource('/{company}/employees', 'EmployeeController');
+
     Route::get('/{company}/trainings/{training}/certificates', 'CertificateController@index')->name('certificates.index');
     Route::get('/{company}/certificates/create', 'CertificateController@create')->name('certificates.create');
     Route::post('/{company}/certificates', 'CertificateController@store')->name('certificates.store');

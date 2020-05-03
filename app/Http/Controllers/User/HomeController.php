@@ -71,10 +71,12 @@ class HomeController extends Controller
 
         foreach ($companyTrainings as $training) {
 
-            $collection->push( $training->employees->where('company_id', $companyId)->count() == 0 ?: (round($training->employees()->certified($training, $companyId)->count() / $training->employees->where('company_id', $companyId)->count() * 100)) );
+            $collection->push( $training->employees->where('company_id', $companyId)->count() == 0 ?0: round($training->employees()->certified($training, $companyId)->count() / $training->employees->where('company_id', $companyId)->count() * 100));
         }
 
-        $average = $collection->avg();
+        $average = round ($collection->avg());
+
+
 
         $companyRegistries = $company->registries;
 
@@ -90,7 +92,7 @@ class HomeController extends Controller
 
         $validRegistries = $collection->unique('registry_id')->count();
 
-        $registryChartValue= $companyRegistries->count() ==0 ?: round($validRegistries / $companyRegistries->count()*100);
+        $registryChartValue= $companyRegistries->count() ==0 ?0: round($validRegistries / $companyRegistries->count()*100);
 
 
         return view('user.dashboard', compact('company', 'companyTrainings' , 'average', 'companyRegistries', 'registryChartValue'));
