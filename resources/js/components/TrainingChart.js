@@ -8,8 +8,8 @@ var chartColors = {
 };
 
 
-var ctx = document.getElementById("trainingChart").getContext("2d");
-var myChart = new Chart(ctx, {
+// var ctx = document.getElementById("trainingChart").getContext("2d");
+var myChart = new Chart('trainingChart', {
     type: 'doughnut',
     data: {
         labels: ['Aktulane szkolenia', 'Nieaktulane szkolnia'],
@@ -30,7 +30,7 @@ var myChart = new Chart(ctx, {
     }
 });
 
-var colorChangeValue = 50; //set this to whatever is the deciding color change value
+
 var dataset = myChart.data.datasets[0];
 
 if (dataset.data[0] <= 50) {
@@ -43,4 +43,4 @@ else{
     dataset.backgroundColor[0] = chartColors.color3;
 }
 
-myChart.update();
+

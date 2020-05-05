@@ -7094,6 +7094,65 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Chart.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Chart.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['id', 'width', 'height', 'type', 'title', 'labels', 'data', 'fill', 'backgroundColor', 'borderColor', 'borderWidth'],
+  mounted: function mounted() {
+    var chartColors = {
+      color1: '#FEB2B2',
+      color2: '#FBD38D',
+      color3: '#9ae6b4'
+    };
+    var ctx = document.getElementById(this.id).getContext('2d');
+    var myChart = new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, {
+      type: this.type ? this.type : 'doughnut',
+      data: {
+        labels: ['Aktulane', 'Nieaktulane'],
+        datasets: [{
+          label: this.title,
+          data: this.data,
+          fill: this.fill,
+          backgroundColor: [chartColors.color1, '#e2e8f0'],
+          borderColor: this.borderColor,
+          borderWidth: this.borderWidth ? this.borderWidth : 0
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        cutoutPercentage: 75
+      }
+    });
+    var dataset = myChart.data.datasets[0];
+
+    if (dataset.data[0] <= 50) {
+      dataset.backgroundColor[0] = chartColors.color1;
+    } else if (dataset.data[0] > 51 && dataset.data[0] <= 75) {
+      dataset.backgroundColor[0] = chartColors.color2;
+    } else {
+      dataset.backgroundColor[0] = chartColors.color3;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -82731,6 +82790,32 @@ var L=function(e){var t=e.name;return{props:{classNames:{type:Object,default:voi
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Chart.vue?vue&type=template&id=30973183&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Chart.vue?vue&type=template&id=30973183&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("canvas", {
+    attrs: { width: _vm.width, height: _vm.height, id: _vm.id }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
@@ -94971,6 +95056,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.component('chart', __webpack_require__(/*! ./components/Chart.vue */ "./resources/js/components/Chart.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -95088,11 +95174,8 @@ var app = new Vue({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_instantsearch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-instantsearch */ "./node_modules/vue-instantsearch/dist/vue-instantsearch.esm.js");
+/* harmony import */ var vue_instantsearch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-instantsearch */ "./node_modules/vue-instantsearch/dist/vue-instantsearch.esm.js");
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -95112,7 +95195,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-Vue.use(vue_instantsearch__WEBPACK_IMPORTED_MODULE_1__["default"]);
+Vue.use(vue_instantsearch__WEBPACK_IMPORTED_MODULE_0__["default"]);
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
@@ -95128,6 +95211,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     useTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Chart.vue":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Chart.vue ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Chart_vue_vue_type_template_id_30973183_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Chart.vue?vue&type=template&id=30973183&scoped=true& */ "./resources/js/components/Chart.vue?vue&type=template&id=30973183&scoped=true&");
+/* harmony import */ var _Chart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Chart.vue?vue&type=script&lang=js& */ "./resources/js/components/Chart.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Chart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Chart_vue_vue_type_template_id_30973183_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Chart_vue_vue_type_template_id_30973183_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "30973183",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Chart.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Chart.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/Chart.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Chart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Chart.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Chart.vue?vue&type=template&id=30973183&scoped=true&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/Chart.vue?vue&type=template&id=30973183&scoped=true& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_template_id_30973183_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Chart.vue?vue&type=template&id=30973183&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Chart.vue?vue&type=template&id=30973183&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_template_id_30973183_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_template_id_30973183_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -95200,110 +95352,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/RegistryChart.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/RegistryChart.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var registryChartValue = window.registryChartValue;
-var chartColors = {
-  color1: '#FEB2B2',
-  color2: '#FBD38D',
-  color3: '#9ae6b4'
-};
-var ctx = document.getElementById("registryChart").getContext("2d");
-var myChart = new Chart(ctx, {
-  type: 'doughnut',
-  data: {
-    labels: ['Aktulane rejestry', 'Nieaktulane rejestry'],
-    datasets: [{
-      label: 'Registry',
-      backgroundColor: [chartColors.color1, '#e2e8f0'],
-      data: [registryChartValue, 100 - registryChartValue]
-    }]
-  },
-  options: {
-    legend: {
-      display: false
-    },
-    cutoutPercentage: 75
-  }
-});
-var colorChangeValue = 50; //set this to whatever is the deciding color change value
-
-var dataset = myChart.data.datasets[0];
-
-if (dataset.data[0] <= 50) {
-  dataset.backgroundColor[0] = chartColors.color1;
-} else if (dataset.data[0] > 51 && dataset.data[0] <= 75) {
-  dataset.backgroundColor[0] = chartColors.color2;
-} else {
-  dataset.backgroundColor[0] = chartColors.color3;
-}
-
-myChart.update();
-
-/***/ }),
-
-/***/ "./resources/js/components/TrainingChart.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/TrainingChart.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var trainingChartValue = window.trainingChartValue;
-var chartColors = {
-  color1: '#FEB2B2',
-  color2: '#FBD38D',
-  color3: '#9ae6b4'
-};
-var ctx = document.getElementById("trainingChart").getContext("2d");
-var myChart = new Chart(ctx, {
-  type: 'doughnut',
-  data: {
-    labels: ['Aktulane szkolenia', 'Nieaktulane szkolnia'],
-    datasets: [{
-      label: 'Training',
-      backgroundColor: [chartColors.color1, '#e2e8f0'],
-      data: [trainingChartValue, 100 - trainingChartValue]
-    }]
-  },
-  options: {
-    legend: {
-      display: false
-    },
-    cutoutPercentage: 75
-  }
-});
-var colorChangeValue = 50; //set this to whatever is the deciding color change value
-
-var dataset = myChart.data.datasets[0];
-
-if (dataset.data[0] <= 50) {
-  dataset.backgroundColor[0] = chartColors.color1;
-} else if (dataset.data[0] > 51 && dataset.data[0] <= 75) {
-  dataset.backgroundColor[0] = chartColors.color2;
-} else {
-  dataset.backgroundColor[0] = chartColors.color3;
-}
-
-myChart.update();
-
-/***/ }),
-
 /***/ 0:
-/*!*************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/RegistryChart.js ./resources/js/components/TrainingChart.js ./resources/css/app.css ***!
-  \*************************************************************************************************************************************************/
+/*!***********************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/css/app.css ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\xampp\htdocs\klosz-group\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\xampp\htdocs\klosz-group\resources\js\components\RegistryChart.js */"./resources/js/components/RegistryChart.js");
-__webpack_require__(/*! D:\xampp\htdocs\klosz-group\resources\js\components\TrainingChart.js */"./resources/js/components/TrainingChart.js");
 module.exports = __webpack_require__(/*! D:\xampp\htdocs\klosz-group\resources\css\app.css */"./resources/css/app.css");
 
 

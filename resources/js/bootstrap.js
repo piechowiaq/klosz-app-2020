@@ -1,6 +1,7 @@
 window._ = require('lodash');
 
-import Chart from 'chart.js';
+
+
 
 import InstantSearch from 'vue-instantsearch';
 /**
