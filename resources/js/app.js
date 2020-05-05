@@ -23,6 +23,7 @@ require('./bootstrap');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('chart', require('./components/Chart.vue').default);
+Vue.component('search', require('./components/Search.vue').default);
 
 
 
