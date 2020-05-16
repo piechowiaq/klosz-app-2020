@@ -17,3 +17,5 @@ $factory->define(Report::class, function (Faker $faker) {
         'expiry_date' => $faker->date(),
     ];
 });
+
+

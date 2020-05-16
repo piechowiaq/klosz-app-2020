@@ -3,11 +3,23 @@
 @section('content')
     @include('user.nav')
     <div class="md:w-5/6">
-        @can('update', $certificate)
-    <div class=" py-6 m-2 md:py-2">
-        <a href="{{route('user.certificates.create', ['company'=>$company])}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Dodaj Dyplom</a>
-    </div>
-        @endcan
+        <div class="flex justify-between mb-4">
+            @can('update', $certificate)
+                <div class="rounded border bg-transparent text-center">
+                    <div class="py-2 px-4 leading-tight text-indigo-500 focus:outline-none focus:border-indigo-500">
+                        <a href="{{route('user.certificates.create', ['company'=>$company])}}">Dodaj Dyplom</a>
+                    </div>
+                </div>
+            @endcan
+            <div>
+                <form method="GET" action="{{route('user.search.trainings', ['company'=> $company])}}">
+                    <input type="search" placeholder="Szukaj ..." name="q" class="bg-gray-200 appearance-none border border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                    {{--                    <button type="submit" >Szukaj</button>--}}
+                </form>
+            </div>
+        </div>
+
+
             @foreach ($companyTrainings as $training)
 
                 <div class="md:flex border  mb-1">

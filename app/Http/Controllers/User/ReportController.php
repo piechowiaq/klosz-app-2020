@@ -67,6 +67,8 @@ class ReportController extends Controller
 
         $report->expiry_date = $report->calculateExpiryDate(request('report_date'));
 
+        $report->report_path = request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 'public');
+
         $report->save();
 
         return redirect()->route('user.registries.index', [$companyId]);

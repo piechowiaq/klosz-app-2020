@@ -18,6 +18,7 @@ Auth::routes();
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
+Route::view('scan', 'scan');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
@@ -41,6 +42,7 @@ Route::namespace('User')->name('user.')->group(function () {
     Route::get('/{company}/employees/search', 'SearchController@show')->name('search.show');
     Route::resource('/{company}/employees', 'EmployeeController');
 
+    Route::get('/{company}/trainings/search', 'SearchController@trainings')->name('search.trainings');
     Route::get('/{company}/trainings/{training}/certificates', 'CertificateController@index')->name('certificates.index');
     Route::get('/{company}/certificates/create', 'CertificateController@create')->name('certificates.create');
     Route::post('/{company}/certificates', 'CertificateController@store')->name('certificates.store');
@@ -50,6 +52,8 @@ Route::namespace('User')->name('user.')->group(function () {
     Route::delete('/{company}/trainings/{training}/certificates/{certificate}', 'CertificateController@destroy')->name('certificates.destroy');
     Route::resource('/{company}/trainings', 'TrainingController')->only(['index', 'show']);
     Route::resource('/{company}/reports', 'ReportController');
+
+    Route::get('/{company}/registries/search', 'SearchController@registries')->name('search.registries');
     Route::resource('/{company}/registries', 'RegistryController');
 
 });

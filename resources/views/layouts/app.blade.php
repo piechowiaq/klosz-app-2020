@@ -12,6 +12,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
+    @livewireStyles
 
 </head>
 <body class=" h-screen antialiased leading-none">
@@ -76,10 +77,11 @@
 {{--        document.getElementById("demo").innerHTML = "My First JavaScript";--}}
 {{--    </script>--}}
 
-    @stack('charts-values')
+
 
     <script src="{{ mix('js/app.js') }}"></script>
 
+    @livewireScripts
 
 
 

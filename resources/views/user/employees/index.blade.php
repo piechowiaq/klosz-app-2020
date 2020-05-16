@@ -3,32 +3,30 @@
 @section('content')
     @include('user.nav')
     <div class="md:w-5/6">
-        @can('update', $employee)
-            <div class="flex justify-between py-6 m-2 md:py-2">
-                <div class="">
-                    <a href="{{route('user.employees.create', ['company'=>$company])}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Dodaj Pracownika</a>
+        <div class="flex justify-between mb-4">
+            @can('update', $employee)
+                <div class="rounded border bg-transparent text-center">
+                        <div class="py-2 px-4 leading-tight text-indigo-500 focus:outline-none focus:border-indigo-500">
+                            <a href="{{route('user.employees.create', ['company'=>$company])}}">Dodaj Pracownika</a>
+                        </div>
                 </div>
-                <div class="italic text-gray-700">
-                    <form method="GET" action="{{route('user.search.show', ['employee'=> $employee, 'company'=>$company])}}">
-
-
-
-
-
-
-
-
-
-                        <input type="text" class="border border-indigo-200 px-" name="q"><button type="submit " class="py-2 px-2 text-sm text-indigo-500">Szukaj</button>
-                    </form>
-                </div>
+            @endcan
+            <div>
+                <form method="GET" action="{{route('user.search.show', ['company'=> $company])}}">
+                    <input type="search" placeholder="Szukaj ..." name="q" class="bg-gray-200 appearance-none border border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+{{--                    <button type="submit" >Szukaj</button>--}}
+                </form>
             </div>
-        @endcan
-            @foreach ($employees as $employee)
+        </div>
+{{--        @livewire('search-employees', ['company'=>$company])--}}
 
-            <div class="md:flex border   mb-1">
 
-                <div class="m-2 p-2 py-2 md:w-5/6 ">
+{{--        <search>   </search>--}}
+        @foreach ($employees as $employee)
+
+            <div class="md:flex border mb-1">
+
+                <div class="m-2 p-2 md:w-5/6 ">
 
                     <a href="{{route('user.employees.show', ['employee'=> $employee, 'company'=>$company->id])}}">{{ $employee->full_name}}</a>
 
@@ -62,8 +60,5 @@
 
         @endforeach
     </div>
-
-
-
 
 @endsection

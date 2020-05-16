@@ -13,7 +13,7 @@
         <hr>
         <div>
 
-            <form action="{{route('user.reports.store', ['company'=>$company->id ?? 'company'])}}" method="POST">
+            <form action="{{route('user.reports.store', ['company'=>$company->id ?? 'company'])}}" method="POST" enctype="multipart/form-data">
 
                 @include('user.reports.form')
 

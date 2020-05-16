@@ -17,6 +17,12 @@
 
 </div>
 
+<div>
+    <label for="report_path" class="block mt-2 py-2">Kopia Raportu:</label>
+
+    <input type="file" name="report_path" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline">
+
+</div>
 
 
 

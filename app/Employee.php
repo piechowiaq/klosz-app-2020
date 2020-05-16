@@ -12,6 +12,14 @@ class Employee extends Model
 
     protected $guarded = [];
 
+//    public static function search($query)
+//    {
+//        return empty($query) ? static::query()
+//            : static::where('name', 'like', '%'.$query.'%')
+//                ->orWhere('surname', 'like', '%'.$query.'%');
+//    }
+
+
     public function path()
     {
         return "/admin/employees/{$this->id}";
@@ -62,5 +70,10 @@ class Employee extends Model
             $q->where('expiry_date', '>', \Carbon\Carbon::now())
                 ->where('training_id', $training->id);
         })->get();
+    }
+
+    public function toSearchableArray()
+    {
+        return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
     }
 }

@@ -4,7 +4,10 @@ namespace Tests\Feature;
 
 use App\Registry;
 use App\Report;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserReportManagementTest extends TestCase
@@ -90,11 +93,15 @@ class UserReportManagementTest extends TestCase
 
         $this->signInManager();
 
-        $response = $this->post('/1/reports', factory(Report::class)->raw());
+        Storage::fake('public');
+
+        $response = $this->post('/1/reports', factory(Report::class)->raw(["report_path" => $file = UploadedFile::fake()->image('report.jpg')]));
 
         $this->assertCount(1, Report::all());
 
         $report = Report::first();
+
+        Storage::disk('public')->assertExists('reports/'. $report->report_date . ' ' . $report->registry->name . ' ' . Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension());
 
         $response->assertRedirect('/1/registries');
     }
@@ -106,11 +113,15 @@ class UserReportManagementTest extends TestCase
 
         $this->signInAdmin();
 
-        $response = $this->post('/1/reports', factory(Report::class)->raw());
+        Storage::fake('public');
+
+        $response = $this->post('/1/reports', factory(Report::class)->raw(["report_path" => $file = UploadedFile::fake()->image('report.jpg')]));
 
         $this->assertCount(1, Report::all());
 
         $report = Report::first();
+
+        Storage::disk('public')->assertExists('reports/'. $report->report_date . ' ' . $report->registry->name . ' ' . Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension());
 
         $response->assertRedirect('/1/registries');
     }

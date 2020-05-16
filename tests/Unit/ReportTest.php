@@ -15,6 +15,8 @@ class ReportTest extends TestCase
     /** @test */
     function report_has_a_userpath()
     {
+        $this->withoutExceptionHandling();
+
         $report = factory(Report::class)->create();
 
         $this->signInManager();
