@@ -12,6 +12,12 @@ class Training extends Model
 
     protected $guarded = [];
 
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('name', 'like', '%'.$query.'%');
+    }
+
     public function path()
     {
         return "/admin/trainings/{$this->id}";
@@ -40,6 +46,11 @@ class Training extends Model
     public function certificates()
     {
         return $this->hasMany(Certificate::class);
+    }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class);
     }
 
 //    public function scopeCertified($query, $training)

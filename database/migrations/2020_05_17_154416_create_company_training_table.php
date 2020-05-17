@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCompanyPositionTable extends Migration
+class CreateCompanyTrainingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateCompanyPositionTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_position', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('company_training', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('position_id');
+            $table->unsignedBigInteger('training_id');
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
+            $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
 
         });
     }
@@ -32,6 +32,6 @@ class CreateCompanyPositionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_position');
+        Schema::dropIfExists('company_training');
     }
 }

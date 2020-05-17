@@ -99,12 +99,22 @@ class SearchTest extends TestCase
 
         $search = 'foobar';
 
-        factory(Training::class, 2)->create([
+        $company1 = Company::findOrfail(1);
 
+        $company2 = factory(Company::class)->create();
+
+        $training1 = factory(Training::class)->create();
+
+        $training2 = factory(Training::class)->create([
+            'name' => "Training with {$search} term.",
         ]);
-        factory(Training::class, 2)->create([
-            'name' => "Training with the {$search} term.",
+        $training3 = factory(Training::class)->create([
+            'name' => "Training with {$search} term.",
         ]);
+
+        $company1->trainings()->attach([$training1->id, $training2->id]);
+
+        $company2->trainings()->attach($training3->id);
 
         do {
             sleep(3);
@@ -113,9 +123,9 @@ class SearchTest extends TestCase
 
         } while(empty($results));
 
-        $this->assertCount(2, $results['data']);
+        $this->assertCount(1, $results['data']);
 
-       Training::latest()->take(4)->unsearchable();
+        Training::latest()->take(3)->unsearchable();
 
     }
 

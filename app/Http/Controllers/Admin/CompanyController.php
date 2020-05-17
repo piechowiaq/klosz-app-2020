@@ -57,17 +57,23 @@ class CompanyController extends Controller
             $positions= Position::whereIn('department_id',request('department_id'))->get();
 
             $company->positions()->sync($positions);
-        }else
+            $trainings=[];
+            foreach ($positions as $position){
+                foreach($position->trainings as $training){
+                    $company->trainings()->sync($training, false);
+                        }
+            }}else{
 
             $positions =[];
+            $trainings=[];
 
             $company->positions()->sync($positions);
+            $company->trainings()->sync($trainings);}
 
 
 
-
-//        $departmentsId =  $company->departments->map(function($department){
-//            return $department->id;
+//        $departmentsId =  $position->trainings->map(function($training){
+//           $company->trainings()->sync($position->trainings);
 //        });
 //
 //        Position::whereIn('department_id', $departmentsId)
@@ -113,24 +119,18 @@ class CompanyController extends Controller
             $positions= Position::whereIn('department_id',request('department_id'))->get();
 
             $company->positions()->sync($positions);
-        }else
+            $trainings=[];
+            foreach ($positions as $position){
+                foreach($position->trainings as $training){
+                    $company->trainings()->sync($training, false);
+                }
+            }}else{
 
             $positions =[];
+            $trainings=[];
 
-        $company->positions()->sync($positions);
-
-
-
-//        $departmentsId =  $company->departments->map(function($department){
-//            return $department->id;
-//        });
-//
-//        Position::whereIn('department_id', $departmentsId)
-//            ->get()
-//            ->map(function($position) use ($company)
-//            {
-//                $position->companies()->sync($company, false);
-//            });
+            $company->positions()->sync($positions);
+            $company->trainings()->sync($trainings);}
 
         return redirect($company->path());
     }
@@ -143,16 +143,4 @@ class CompanyController extends Controller
 
         return redirect('admin/companies');
     }
-
-//    public function active(Request $request, Company $company)
-//    {
-//        $this->authorize('update');
-//
-//        $positions= Position::whereIn('department_id',request('department_id'))->get();
-//
-//        $company->positions()->sync($positions);
-//
-//        return redirect('admin/companies');
-//    }
-
 }

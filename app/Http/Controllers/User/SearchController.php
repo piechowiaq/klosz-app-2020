@@ -37,7 +37,6 @@ class SearchController extends Controller
     {
         $this->authorize('view', $report);
 
-
         $company = Company::findOrFail($companyId);
 
         $search = \request('q');
@@ -61,21 +60,16 @@ class SearchController extends Controller
 
         $company = Company::findOrfail($companyId);
 
-
-
-
-
-
         $search = \request('q');
 
-
-        $companyTrainings =  Training::search($search)->paginate(25);
+        $companyTrainings = Training::search($search)->whereHas('companies', function($query) use ($companyId){
+            $query->where('company_id', '=', $companyId);
+        })->paginate(25);
 
         if(\request()->expectsJson()){
 
             return   $companyTrainings;
         }
-
 
         return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
     }

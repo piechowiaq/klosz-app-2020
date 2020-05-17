@@ -26,8 +26,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
-
-//    Route::patch('companies/{company}/active', 'CompanyController@active')->name('companies.active');
     Route::resource('companies', 'CompanyController');
     Route::resource('departments', 'DepartmentController');
     Route::resource('positions', 'PositionController');
@@ -45,6 +43,7 @@ Route::namespace('User')->name('user.')->group(function () {
     Route::resource('/{company}/employees', 'EmployeeController');
 
     Route::get('/{company}/trainings/search', 'SearchController@trainings')->name('search.trainings');
+
     Route::get('/{company}/trainings/{training}/certificates', 'CertificateController@index')->name('certificates.index');
     Route::get('/{company}/certificates/create', 'CertificateController@create')->name('certificates.create');
     Route::post('/{company}/certificates', 'CertificateController@store')->name('certificates.store');

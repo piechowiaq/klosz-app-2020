@@ -30,11 +30,16 @@ class Company extends Model
 
     public function positions()
     {
-        return $this->belongsToMany(Position::class)->withPivot('active');
+        return $this->belongsToMany(Position::class);
     }
 
     public function registries()
     {
         return $this->belongsToMany(Registry::class);
+    }
+
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class);
     }
 }

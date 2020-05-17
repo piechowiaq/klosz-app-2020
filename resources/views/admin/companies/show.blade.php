@@ -22,16 +22,17 @@
             @foreach ($company->positions as $position)
                 <div class="block mt-2 py-2">
 
-                        @method('PATCH')
+{{--                        @method('PATCH')--}}
 
-                        <input type="checkbox" name="position_active" id="position_active" class="mr-2 leading-tight" multiple="multiple" value="{{$position->pivot->active}}" {{$position->pivot->active  ? 'checked': ''  || ( old('position_active') ? 'checked="checked"' : '' )}}>
-                        {{ $position->name}}
+{{--                        <input type="checkbox" name="position_active[]" id="position_active" class="mr-2 leading-tight" multiple="multiple" value="{{$position->pivot->id}}" {{$position->pivot->active  ? 'checked': ''  || ( old('position_active') ? 'checked="checked"' : '' )}}>--}}
+{{--                        --}}
+                        {{ $position->name}}pj
 
                 </div>
             @endforeach
 
-                @csrf
-                <button type="submit" class="p-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded mt-4 ">Dodaj Firmę</button>
+{{--                @csrf--}}
+{{--                <button type="submit" class="p-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded mt-4 ">Dodaj Firmę</button>--}}
 
 {{--            </form>--}}
         </div>

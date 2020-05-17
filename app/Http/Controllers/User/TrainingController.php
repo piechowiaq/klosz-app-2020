@@ -30,9 +30,7 @@ class TrainingController extends Controller
         $company = Company::findOrfail($companyId);
 
 
-        $companyTrainings =  $company->positions->flatMap(function($position){
-            return $position->trainings;
-        })->unique('id');
+        $companyTrainings =  $company->trainings;
 
 
         return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
