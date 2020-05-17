@@ -13,7 +13,7 @@
         <hr>
         <div>
 
-            <form action="{{route('user.certificates.store', ['company'=>$company->id ?? 'company', 'training'=>$training->id ?? 'training'])}}" method="POST">
+            <form action="{{route('user.certificates.store', ['company'=>$company->id ?? 'company', 'training'=>$training->id ?? 'training'])}}" method="POST" enctype="multipart/form-data">
 
                 @include('user.certificates.form')
 

@@ -26,6 +26,7 @@ class UpdateUserCertificateRequest extends FormRequest
         return [
             'training_id' => 'exists:trainings,id|required|sometimes',
             'company_id' => 'exists:companies,id|required|sometimes',
+            'certificate_path' => 'required|sometimes|file',
             'training_date' => 'before:tomorrow|required|sometimes',
             'expiry_date' => 'required|sometimes',
             'employee_id' => 'exists:employees,id|required|sometimes',

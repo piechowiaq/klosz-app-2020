@@ -95,7 +95,7 @@ class UserReportManagementTest extends TestCase
 
         Storage::fake('public');
 
-        $response = $this->post('/1/reports', factory(Report::class)->raw(["report_path" => $file = UploadedFile::fake()->image('report.jpg')]));
+        $response = $this->post('/1/reports', factory(Report::class)->raw());
 
         $this->assertCount(1, Report::all());
 
@@ -115,7 +115,7 @@ class UserReportManagementTest extends TestCase
 
         Storage::fake('public');
 
-        $response = $this->post('/1/reports', factory(Report::class)->raw(["report_path" => $file = UploadedFile::fake()->image('report.jpg')]));
+        $response = $this->post('/1/reports', factory(Report::class)->raw());
 
         $this->assertCount(1, Report::all());
 
@@ -148,6 +148,26 @@ class UserReportManagementTest extends TestCase
         $response->assertRedirect($registry->userpath(1));
 
     }
+
+    /** @test */
+    public function a_report_uploaded_file_can_be_edited_by_signInAdmin()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        Storage::fake('public');
+
+        $report = factory(Report::class)->create();
+
+        $response = $this->patch($report->userpath(1), $attributes = [
+            'report_path'=> UploadedFile::fake()->image('report.jpg'),
+        ]);
+
+        Storage::disk('public')->assertExists('reports/'. $report->report_date . ' ' . $report->registry->name . ' ' . Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension());
+
+    }
+
 
     /** @test */
     public function a_report_can_be_destroyed_by_signInAdmin()
@@ -197,4 +217,14 @@ class UserReportManagementTest extends TestCase
 
         $this->post('/1/reports', factory(Report::class)->raw(['expiry_date' => '']))->assertSessionHasErrors('expiry_date');
     }
+
+    /** @test */
+    public function a_report_requires_a_report_path()
+    {
+        $this->signInManager();
+
+        $this->post('/1/reports', factory(Report::class)->raw(['report_path' => '']))->assertSessionHasErrors('report_path');
+    }
 }
+
+

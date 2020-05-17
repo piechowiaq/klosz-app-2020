@@ -16,7 +16,10 @@ class CompanyManagementTest extends TestCase
     /** @test */
     public function a_company_can_be_created()
     {
+//        $this->withoutExceptionHandling();
+
         $this->signInSuperAdmin();
+
 
         $this->post('/admin/companies', $attributes = factory(Company::class)->raw());
 
@@ -87,7 +90,7 @@ class CompanyManagementTest extends TestCase
             });
 
         $this->assertCount(3, $companies);
-        $this->assertCount(3, Position::all());
+        $this->assertCount(6, Position::all());
     }
 
 }

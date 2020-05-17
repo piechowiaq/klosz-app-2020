@@ -26,6 +26,7 @@ class UpdateUserReportRequest extends FormRequest
         return [
             'registry_id' => 'exists:registries,id|required|sometimes',
             'company_id' => 'exists:companies,id|required|sometimes',
+            'report_path' => 'required|sometimes|file',
             'report_date' => 'before:tomorrow|required|sometimes',
             'expiry_date' => 'required|sometimes',
         ];

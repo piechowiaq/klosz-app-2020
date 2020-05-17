@@ -4,8 +4,11 @@ namespace Tests\Feature;
 
 use App\Certificate;
 use App\Training;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserCertificateManagementTest extends TestCase
@@ -77,21 +80,21 @@ class UserCertificateManagementTest extends TestCase
     /** @test */
     public function a_certificate_can_be_created_by_signedInManager()
     {
-//        $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $this->signInManager();
+
+        Storage::fake('public');
 
         $response = $this->post('/1/certificates', $attributes = factory(Certificate::class)->raw([
             'company_id' => 1,
         ]));
 
-        $certificate = Certificate::all();
-
-        $this->assertCount(1,  $certificate);
+        $this->assertCount(1,  Certificate::all());
 
         $certificate = Certificate::where('id', 1)->first();
 
-
+        Storage::disk('public')->assertExists('certificates/'. $certificate->training_date . ' ' . $certificate->training->name . ' ' . Carbon::now()->format('His') . '.' . request('certificate_path')->getClientOriginalExtension());
 
         $response->assertRedirect('/1/trainings/1/certificates/1');
 
@@ -142,6 +145,32 @@ class UserCertificateManagementTest extends TestCase
 
         $response->assertRedirect($certificate->fresh()->userpath(1, 2));
     }
+
+    /** @test */
+    public function a_certificate_uploaded_file_can_be_updated_by_signedInManager()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signInManager();
+
+        Storage::fake('public');
+
+        $response = $this->post('/1/certificates', $attributes = factory(Certificate::class)->raw([
+            'company_id' => 1,
+        ]));
+
+        $certificate = Certificate::first();
+
+        $training = factory(Training::class)->create();
+
+        $response = $this->patch($certificate->userpath(1, 1), $attributes = [
+            'certificate_path'=> UploadedFile::fake()->image('update.jpg'),
+        ]);
+
+        Storage::disk('public')->assertExists('certificates/'. $certificate->training_date . ' ' . $certificate->training->name . ' ' . Carbon::now()->format('His') . '.' . request('certificate_path')->getClientOriginalExtension());
+
+    }
+
 
     /** @test */
     public function a_certificate_can_not_be_updated_by_signedInUser()

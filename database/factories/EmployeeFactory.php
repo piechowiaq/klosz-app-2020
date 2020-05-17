@@ -7,12 +7,11 @@ use App\Employee;
 use Faker\Generator as Faker;
 
 $factory->define(Employee::class, function (Faker $faker) {
-    $companies = factory(Company::class)->create()->pluck('id')->toArray();
 
     return [
         'name' => $faker->firstName,
         'number' => $faker->numberBetween(0,500),
         'surname' => $faker->lastName,
-        'company_id' => $faker->randomElement($companies),
+        'company_id' => factory(Company::class)->create(),
     ];
 });

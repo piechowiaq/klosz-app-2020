@@ -2,35 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/scan.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/user/employees/search.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/klosz-group.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/klosz-group.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Employee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreCompanyRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreCompanyRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreUserCertificateRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserReportRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreUserReportRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Registry.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Registry.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Training.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Training.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateCompanyRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateCompanyRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateUserCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateUserCertificateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateUserReportRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateUserReportRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/CertificateFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CertificateFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/CompanyFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CompanyFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/EmployeeFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/EmployeeFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/PositionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/PositionFactory.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/factories/ReportFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ReportFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_14_122807_create_company_position_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_14_122807_create_company_position_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_07_153646_create_reports_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_07_153646_create_reports_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/ExampleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ExampleComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Search.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Search.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/companies/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/companies/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/companies/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/companies/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/reports/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/reports/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/reports/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/reports/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/SearchTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/SearchTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/DepartmentManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/DepartmentManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/ReportTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ReportTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -218,24 +221,24 @@
     </option>
   </component>
   <component name="RunManager" selected="PHPUnit.tests">
-    <configuration name="ReportTest.report_has_a_userpath" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Unit\ReportTest" file="$PROJECT_DIR$/tests/Unit/ReportTest.php" method="report_has_a_userpath" scope="Method" />
+    <configuration name="DepartmentManagementTest.a_department_can_be_created" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\DepartmentManagementTest" file="$PROJECT_DIR$/tests/Feature/DepartmentManagementTest.php" method="a_department_can_be_created" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="DepartmentManagementTest.a_department_can_be_deleted" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\DepartmentManagementTest" file="$PROJECT_DIR$/tests/Feature/DepartmentManagementTest.php" method="a_department_can_be_deleted" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="PositionManagementTest.a_position_can_be_created" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\PositionManagementTest" file="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" method="a_position_can_be_created" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="PositionManagementTest.a_position_can_be_deleted" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\PositionManagementTest" file="$PROJECT_DIR$/tests/Feature/PositionManagementTest.php" method="a_position_can_be_deleted" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="RoleManagementTest.a_role_can_be_updated" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner class="Tests\Feature\RoleManagementTest" file="$PROJECT_DIR$/tests/Feature/RoleManagementTest.php" method="a_role_can_be_updated" scope="Method" />
-      <method v="2" />
-    </configuration>
-    <configuration name="SearchTest.a_user_can_search_trainings" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" method="a_user_can_search_trainings" scope="Method" />
-      <method v="2" />
-    </configuration>
-    <configuration name="UserReportManagementTest.a_report_can_be_created_by_signInAdmin" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\UserReportManagementTest" file="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" method="a_report_can_be_created_by_signInAdmin" scope="Method" />
-      <method v="2" />
-    </configuration>
-    <configuration name="UserReportManagementTest.a_report_can_be_created_by_signInManager" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\UserReportManagementTest" file="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" method="a_report_can_be_created_by_signInManager" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -249,10 +252,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="PHPUnit.tests" />
-        <item itemvalue="PHPUnit.UserReportManagementTest.a_report_can_be_created_by_signInAdmin" />
-        <item itemvalue="PHPUnit.ReportTest.report_has_a_userpath" />
-        <item itemvalue="PHPUnit.UserReportManagementTest.a_report_can_be_created_by_signInManager" />
-        <item itemvalue="PHPUnit.SearchTest.a_user_can_search_trainings" />
+        <item itemvalue="PHPUnit.DepartmentManagementTest.a_department_can_be_deleted" />
+        <item itemvalue="PHPUnit.DepartmentManagementTest.a_department_can_be_created" />
+        <item itemvalue="PHPUnit.PositionManagementTest.a_position_can_be_created" />
+        <item itemvalue="PHPUnit.PositionManagementTest.a_position_can_be_deleted" />
       </list>
     </recent_temporary>
   </component>
@@ -300,7 +303,10 @@
       <workItem from="1588498741187" duration="17894000" />
       <workItem from="1588533750271" duration="45471000" />
       <workItem from="1588999956291" duration="56445000" />
-      <workItem from="1589473377429" duration="14570000" />
+      <workItem from="1589473377429" duration="23540000" />
+      <workItem from="1589639197376" duration="352000" />
+      <workItem from="1589639560739" duration="17354000" />
+      <workItem from="1589699537789" duration="2776000" />
     </task>
     <servers />
   </component>

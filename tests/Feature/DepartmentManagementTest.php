@@ -46,9 +46,9 @@ class DepartmentManagementTest extends TestCase
 
         $department = Department::all();
 
-        $this->assertCount(1, $department);
+        $this->assertCount(2, $department);
 
-        $department = Department::where('id', 1)->first();
+        $department = Department::where('id', 2)->first();
 
         $response->assertRedirect($department->path());
 
@@ -86,11 +86,11 @@ class DepartmentManagementTest extends TestCase
 
         $department = Department::first();
 
-        $this->assertCount(1, Department::all());
+        $this->assertCount(2, Department::all());
 
         $response = $this->delete($department->path());
 
-        $this->assertCount(0, Department::all());
+        $this->assertCount(1, Department::all());
 
         $response->assertRedirect('/admin/departments');
 

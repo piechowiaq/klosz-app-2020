@@ -25,7 +25,7 @@ class StoreCompanyRequest extends FormRequest
     {
         return [
             'name'=> 'required|unique:companies,name|sometimes',
-            'department_id' => 'exists:departments,id|required|sometimes',
+
         ];
     }
 }

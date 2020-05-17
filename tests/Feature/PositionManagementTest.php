@@ -45,9 +45,9 @@ class PositionManagementTest extends TestCase
 
         $position = Position::all();
 
-        $this->assertCount(1, $position);
+        $this->assertCount(2, $position);
 
-        $position = Position::where('id', 1)->first();
+        $position = Position::where('id', 2)->first();
 
         $response->assertRedirect($position->path());
 
@@ -86,11 +86,11 @@ class PositionManagementTest extends TestCase
 
         $position = Position::first();
 
-        $this->assertCount(1, Position::all());
+        $this->assertCount(2, Position::all());
 
         $response = $this->delete($position->path());
 
-        $this->assertCount(0, Position::all());
+        $this->assertCount(1, Position::all());
 
         $response->assertRedirect('/admin/positions');
 

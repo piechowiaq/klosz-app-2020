@@ -26,8 +26,6 @@ class UpdateCompanyRequest extends FormRequest
     {
         return [
             'name' => ['required','sometimes', Rule::unique('companies', 'name')->ignore($this->company)],
-            'department_id' => 'exists:departments,id|required|sometimes',
-
         ];
     }
 }

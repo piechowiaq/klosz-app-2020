@@ -85,8 +85,6 @@ class ReportController extends Controller
     {
         $company = Company::findOrFail($companyId);
 
-
-
         return view('user.reports.show', compact('report', 'company'));
     }
 
@@ -119,6 +117,10 @@ class ReportController extends Controller
         $report->company_id = $companyId;
 
         $report->expiry_date = Carbon::create(request('report_date'))->addMonths(Registry::where('id', $report->registry_id)->first()->valid_for)->toDateString();
+
+        if (request()->has('report_path')) {
+            $report->report_path = request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 'public');
+        };
 
         $report->save();
 

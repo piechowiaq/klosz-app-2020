@@ -17,14 +17,27 @@
     </div>
     <hr>
         <div>
-            @foreach ($company->departments as $department)
+            <label class="block mt-2 py-2">Pozycje:</label>
+{{--            <form action="{{route('admin.companies.active', ['company' => $company])}}" method="POST">--}}
+            @foreach ($company->positions as $position)
                 <div class="block mt-2 py-2">
-                    {{ $department->name}}
+
+                        @method('PATCH')
+
+                        <input type="checkbox" name="position_active" id="position_active" class="mr-2 leading-tight" multiple="multiple" value="{{$position->pivot->active}}" {{$position->pivot->active  ? 'checked': ''  || ( old('position_active') ? 'checked="checked"' : '' )}}>
+                        {{ $position->name}}
+
                 </div>
             @endforeach
+
+                @csrf
+                <button type="submit" class="p-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded mt-4 ">Dodaj Firmę</button>
+
+{{--            </form>--}}
         </div>
         <hr>
         <div>
+            <label class="block mt-2 py-2">Działy:</label>
             @foreach ($company->departments as $department)
                 <div class="block mt-2 py-2">
                     {{ $department->name}}

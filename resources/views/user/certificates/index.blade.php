@@ -19,6 +19,10 @@
 
             <div class="flex  justify-center md:justify-end md:w-1/6 ">
 
+                <div class=" px-2 bg-transparent text-black-700 hover:text-indigo-700 text-indigo-500 rounded m-2 py-2 ">
+                    <a href="{{ asset('storage/'.$certificate->certificate_path)}}" class="">Download</a>
+                </div>
+
                 <div class=" px-2 bg-transparent hover:bg-blue-500 text-black-700 hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
                     <a href="{{route('user.certificates.edit', ['certificate'=>$certificate,'company'=>$company->id, 'training'=>$training, ])}}" class="">Edytuj</a>
                 </div>

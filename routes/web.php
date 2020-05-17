@@ -26,6 +26,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
+
+//    Route::patch('companies/{company}/active', 'CompanyController@active')->name('companies.active');
     Route::resource('companies', 'CompanyController');
     Route::resource('departments', 'DepartmentController');
     Route::resource('positions', 'PositionController');

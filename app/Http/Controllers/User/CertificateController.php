@@ -85,6 +85,8 @@ class CertificateController extends Controller
 
         $certificate->expiry_date = $expiry_date;
 
+        $certificate->certificate_path = request('certificate_path')->storeAs('certificates', $certificate->training_date . ' ' . $certificate->training->name . ' ' . Carbon::now()->format('His') . '.' . request('certificate_path')->getClientOriginalExtension(), 'public');
+
         $certificate->save();
 
         $certificate->employees()->sync(request('employee_id'));
@@ -158,13 +160,17 @@ class CertificateController extends Controller
     {
         $this->authorize('update', $certificate);
 
-        $expiry_date = Carbon::create(request('training_date'))->addMonths( Training::where('id', request('training_id'))->first()->valid_for)->toDateString();
+        $expiry_date = Carbon::create(request('training_date'))->addMonths( Training::where('id',  $trainingId)->first()->valid_for)->toDateString();
 
         $certificate->update(request(['training_id', 'company_id', 'training_date']));
 
         $certificate->company_id = $companyId;
 
         $certificate->expiry_date = $expiry_date;
+
+        if (request()->has('certificate_path')) {
+            $certificate->certificate_path = request('certificate_path')->storeAs('certificates', $certificate->training_date . ' ' . $certificate->training->name . ' ' . Carbon::now()->format('His') . '.' . request('certificate_path')->getClientOriginalExtension(), 'public');
+        };
 
         $certificate->save();
 

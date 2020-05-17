@@ -53,16 +53,29 @@ class CompanyController extends Controller
 
         $company->registries()->sync(request('registry_id'));
 
-        $departmentsId =  $company->departments->map(function($department){
-            return $department->id;
-        });
+        if(! empty(request('department_id'))){
+            $positions= Position::whereIn('department_id',request('department_id'))->get();
 
-        Position::whereIn('department_id', $departmentsId)
-                            ->get()
-                            ->map(function($position) use ($company)
-        {
-            $position->companies()->sync($company, false);
-        });
+            $company->positions()->sync($positions);
+        }else
+
+            $positions =[];
+
+            $company->positions()->sync($positions);
+
+
+
+
+//        $departmentsId =  $company->departments->map(function($department){
+//            return $department->id;
+//        });
+//
+//        Position::whereIn('department_id', $departmentsId)
+//                            ->get()
+//                            ->map(function($position) use ($company)
+//        {
+//           $position->companies()->sync($company,false);
+//        });
 
         return redirect($company->path());
     }
@@ -96,16 +109,28 @@ class CompanyController extends Controller
 
         $company->registries()->sync(request('registry_id'));
 
-        $departmentsId =  $company->departments->map(function($department){
-            return $department->id;
-        });
+        if(! empty(request('department_id'))){
+            $positions= Position::whereIn('department_id',request('department_id'))->get();
 
-        Position::whereIn('department_id', $departmentsId)
-            ->get()
-            ->map(function($position) use ($company)
-            {
-                $position->companies()->sync($company, false);
-            });
+            $company->positions()->sync($positions);
+        }else
+
+            $positions =[];
+
+        $company->positions()->sync($positions);
+
+
+
+//        $departmentsId =  $company->departments->map(function($department){
+//            return $department->id;
+//        });
+//
+//        Position::whereIn('department_id', $departmentsId)
+//            ->get()
+//            ->map(function($position) use ($company)
+//            {
+//                $position->companies()->sync($company, false);
+//            });
 
         return redirect($company->path());
     }
@@ -118,5 +143,16 @@ class CompanyController extends Controller
 
         return redirect('admin/companies');
     }
+
+//    public function active(Request $request, Company $company)
+//    {
+//        $this->authorize('update');
+//
+//        $positions= Position::whereIn('department_id',request('department_id'))->get();
+//
+//        $company->positions()->sync($positions);
+//
+//        return redirect('admin/companies');
+//    }
 
 }

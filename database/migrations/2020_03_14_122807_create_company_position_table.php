@@ -17,6 +17,7 @@ class CreateCompanyPositionTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('position_id');
+            $table->boolean('active')->default(true);
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
