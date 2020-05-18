@@ -10,7 +10,7 @@ $factory->define(Position::class, function (Faker $faker) {
 //    $departments = factory(Department::class)->create()->pluck('id')->toArray();
     return [
         'department_id' => factory(Department::class)->create(),
-        'name' => $faker->name,
+        'name' => $faker->jobTitle,
     ];
 
 });

@@ -3,15 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CompanyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Training.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Training.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_14_122807_create_company_position_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_14_122807_create_company_position_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/companies/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/companies/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/SearchTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/SearchTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/DepartmentFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/DepartmentFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/PositionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/PositionFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/RoleFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/RoleFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/TrainingFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/TrainingFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/EmployeesTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/EmployeesTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -198,17 +195,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHPUnit.tests">
-    <configuration name="DepartmentManagementTest.a_department_can_be_deleted" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\DepartmentManagementTest" file="$PROJECT_DIR$/tests/Feature/DepartmentManagementTest.php" method="a_department_can_be_deleted" scope="Method" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="PHPUnit.SearchTest.a_user_can_search_employees">
     <configuration name="RoleManagementTest.a_role_can_be_updated" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner class="Tests\Feature\RoleManagementTest" file="$PROJECT_DIR$/tests/Feature/RoleManagementTest.php" method="a_role_can_be_updated" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="SearchTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SearchTest.a_user_can_search_employees" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" method="a_user_can_search_employees" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SearchTest.a_user_can_search_registries" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" method="a_user_can_search_registries" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="SearchTest.a_user_can_search_trainings" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
@@ -223,16 +224,13 @@
       <TestRunner directory="$PROJECT_DIR$/tests" />
       <method v="2" />
     </configuration>
-    <configuration name="SearchController.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/app/Http/Controllers/User/SearchController.php">
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.tests" />
+        <item itemvalue="PHPUnit.SearchTest.a_user_can_search_employees" />
         <item itemvalue="PHPUnit.SearchTest.a_user_can_search_trainings" />
+        <item itemvalue="PHPUnit.SearchTest.a_user_can_search_registries" />
+        <item itemvalue="PHPUnit.tests" />
         <item itemvalue="PHPUnit.SearchTest" />
-        <item itemvalue="PHP Script.SearchController.php" />
-        <item itemvalue="PHPUnit.DepartmentManagementTest.a_department_can_be_deleted" />
       </list>
     </recent_temporary>
   </component>
@@ -284,7 +282,7 @@
       <workItem from="1589639197376" duration="352000" />
       <workItem from="1589639560739" duration="17354000" />
       <workItem from="1589699537789" duration="15444000" />
-      <workItem from="1589731604093" duration="3010000" />
+      <workItem from="1589731604093" duration="7605000" />
     </task>
     <servers />
   </component>

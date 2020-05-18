@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
         $user->roles()->save($role);
 
         factory(App\User::class, 10)->create()->each(function ($user) {
-            $user->roles()->save(factory(App\Role::class)->make());
+
             $user->companies()->save(factory(App\Company::class)->make());
         });
     }

@@ -31,5 +31,7 @@ class EmployeesTableSeeder extends Seeder
             $department->positions()->save(factory(App\Position::class)->make());
 
         });
+
+        factory(\App\Role::class, 3)->create();
     }
 }
