@@ -7161,6 +7161,8 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       dataset.backgroundColor[0] = chartColors.color3;
     }
+
+    myChart.update();
   }
 });
 

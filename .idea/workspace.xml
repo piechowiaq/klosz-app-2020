@@ -3,12 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/DepartmentFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/DepartmentFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/PositionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/PositionFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/RoleFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/RoleFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/TrainingFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/TrainingFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/EmployeesTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/EmployeesTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/TrainingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreUserCertificateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Chart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Chart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -195,13 +204,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHPUnit.SearchTest.a_user_can_search_employees">
+  <component name="RunManager" selected="PHPUnit.UserCertificateManagementTest.a_certificate_can_be_created_by_signedInManager">
     <configuration name="RoleManagementTest.a_role_can_be_updated" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner class="Tests\Feature\RoleManagementTest" file="$PROJECT_DIR$/tests/Feature/RoleManagementTest.php" method="a_role_can_be_updated" scope="Method" />
-      <method v="2" />
-    </configuration>
-    <configuration name="SearchTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" scope="Class" />
       <method v="2" />
     </configuration>
     <configuration name="SearchTest.a_user_can_search_employees" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
@@ -216,6 +221,10 @@
       <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" method="a_user_can_search_trainings" scope="Method" />
       <method v="2" />
     </configuration>
+    <configuration name="UserCertificateManagementTest.a_certificate_can_be_created_by_signedInManager" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserCertificateManagementTest" file="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" method="a_certificate_can_be_created_by_signedInManager" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -226,11 +235,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHPUnit.UserCertificateManagementTest.a_certificate_can_be_created_by_signedInManager" />
         <item itemvalue="PHPUnit.SearchTest.a_user_can_search_employees" />
         <item itemvalue="PHPUnit.SearchTest.a_user_can_search_trainings" />
         <item itemvalue="PHPUnit.SearchTest.a_user_can_search_registries" />
         <item itemvalue="PHPUnit.tests" />
-        <item itemvalue="PHPUnit.SearchTest" />
       </list>
     </recent_temporary>
   </component>
@@ -282,7 +291,8 @@
       <workItem from="1589639197376" duration="352000" />
       <workItem from="1589639560739" duration="17354000" />
       <workItem from="1589699537789" duration="15444000" />
-      <workItem from="1589731604093" duration="7605000" />
+      <workItem from="1589731604093" duration="23811000" />
+      <workItem from="1590829206697" duration="2331000" />
     </task>
     <servers />
   </component>

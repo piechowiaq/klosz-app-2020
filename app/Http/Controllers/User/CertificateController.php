@@ -45,24 +45,13 @@ class CertificateController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        $collection = collect();
+        $companyTrainings =  $company->trainings;
 
-        foreach ($company->positions as $position) {
+        $companyEmployees =  $company->employees;
 
-                foreach ($position->trainings as $training){
-                    $collection[] = $training;}
-        }
 
-        $trainings = $collection->unique('name');
 
-        $employees = collect();
-
-        foreach ($company->employees as $employee) {
-
-                  $employees[] = $employee;
-        }
-
-        return view('user.certificates.create', compact( 'trainings', 'certificate', 'company', 'employees'));
+        return view('user.certificates.create', compact( 'companyTrainings', 'certificate', 'company', 'companyEmployees'));
     }
 
     /**
@@ -79,7 +68,7 @@ class CertificateController extends Controller
 
         $expiry_date = Carbon::create(request('training_date'))->addMonths( Training::where('id', request('training_id'))->first()->valid_for)->toDateString();
 
-        $certificate = new Certificate(request(['training_id', 'company_id', 'training_date']));
+        $certificate = new Certificate(request(['training_id', 'training_date']));
 
         $certificate->company_id = $companyId;
 
@@ -128,24 +117,11 @@ class CertificateController extends Controller
 
         $training = Training::findOrfail($trainingId);
 
-        $collection = collect();
+        $companyTrainings =  $company->trainings;
 
-        foreach ($company->positions as $position) {
+        $companyEmployees =  $company->employees;
 
-            foreach ($position->trainings as $training){
-                $collection[] = $training;}
-        }
-
-        $trainings = $collection->unique('name');
-
-        $employees = collect();
-
-        foreach ($company->employees as $employee) {
-
-            $employees[] = $employee;
-        }
-
-        return view ( 'user.certificates.edit', compact('company', 'trainings', 'employees','training', 'certificate'));
+        return view ( 'user.certificates.edit', compact('company', 'companyTrainings', 'companyEmployees','training', 'certificate'));
     }
 
     /**

@@ -21,7 +21,7 @@
             <div class="container mx-auto px-6 md:px-0">
                 <div class="flex items-center justify-between text-yellow-500">
                     <div class="mr-6">
-                        <a href="{{ url('/') }}" class="text-lg font-semibold text-yellow-500 no-underline">
+                        <a href="{{ url('/login') }}" class="text-lg font-semibold text-yellow-500 no-underline">
                             {{ config('app.name', 'Klosz') }}
 
 

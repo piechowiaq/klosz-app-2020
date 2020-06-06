@@ -24,11 +24,11 @@ class StoreUserCertificateRequest extends FormRequest
     public function rules()
     {
         return [
-            'training_id' => 'exists:trainings,id|required|sometimes',
-            'company_id' => 'exists:companies,id|required|sometimes',
+            'training_id' => 'exists:trainings,id|required',
+//            'company_id' => 'exists:companies,id|required',
             'certificate_path' => 'required|file',
-            'training_date' => 'before:tomorrow|required|sometimes',
-            'expiry_date' => 'required|sometimes',
+            'training_date' => 'before:tomorrow|required',
+//            'expiry_date' => 'required',
             'employee_id' => 'exists:employees,id|required|sometimes',
 
         ];

@@ -63,9 +63,7 @@ class HomeController extends Controller
     {
         $company = Company::findOrFail($companyId);
 
-        $companyTrainings =  $company->positions->flatMap(function($position){
-            return $position->trainings;
-        })->unique('id');
+        $companyTrainings =  $company->trainings;
 
         $collection = collect([]);
 

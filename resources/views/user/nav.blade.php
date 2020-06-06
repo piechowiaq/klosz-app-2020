@@ -1,6 +1,10 @@
 <div class="md:w-1/6 ">
-    <div class="text-yellow-500 ">
-      <h1 class="text-lg font-semibold">Menu</h1>
+    <div class="mb-4">
+        <h1 class="text-xs text-indigo-500 font-semibold">{{$company->name}}</h1>
+    </div>
+
+    <div class="text-yellow-500">
+        <h1 class="text-lg font-semibold">Menu</h1>
     </div>
     <ul class="">
         <li class="md:mr-6 mt-6">

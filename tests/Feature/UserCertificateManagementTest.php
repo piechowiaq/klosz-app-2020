@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Certificate;
+use App\Company;
 use App\Training;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;

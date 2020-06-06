@@ -45,6 +45,8 @@
             else{
                 dataset.backgroundColor[0] = chartColors.color3;
             }
+
+            myChart.update();
         }
     }
 </script>

@@ -33,5 +33,8 @@
 
                 </div>
             @endforeach
+        <div class="livewire-pagination">
+            {{$companyTrainings->links()}}
+        </div>
     </div>
 @endsection

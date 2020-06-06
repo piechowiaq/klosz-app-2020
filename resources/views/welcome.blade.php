@@ -13,7 +13,7 @@
 
             <div class="container mx-auto px-6 md:px-0">
 
-                Welcome to Klosz
+                Nie używane !! Welcome to Klosz
 
             </div>
         </div>

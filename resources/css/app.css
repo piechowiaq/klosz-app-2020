@@ -60,3 +60,24 @@
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+.livewire-pagination {
+    @apply inline-block w-auto ml-auto float-right;
+}
+ul.pagination {
+    @apply flex rounded font-mono;
+}
+.page-link {
+    @apply block bg-white text-blue-800 border-r border-gray-200 outline-none py-2 w-12 text-sm text-center;
+}
+.page-link:last-child {
+    @apply border-0;
+}
+.page-link:hover {
+    @apply bg-indigo-500 text-white border-indigo-500;
+}
+.page-item.active .page-link {
+    @apply bg-indigo-500 text-white border-indigo-500;
+}
+.page-item.disabled .page-link {
+    @apply bg-white text-gray-300 border-gray-200;
+}

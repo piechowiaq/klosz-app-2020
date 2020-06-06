@@ -30,7 +30,7 @@ class TrainingController extends Controller
         $company = Company::findOrfail($companyId);
 
 
-        $companyTrainings =  $company->trainings;
+        $companyTrainings =  $company->trainings()->paginate(15);
 
 
         return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
