@@ -2,21 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/klosz-group.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/klosz-group.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserReportRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreUserReportRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Registry.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Registry.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Report.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Report.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/TrainingFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/TrainingFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_07_153646_create_reports_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_07_153646_create_reports_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/registries/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/reports/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/reports/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -300,7 +288,7 @@
       <workItem from="1590829206697" duration="2973000" />
       <workItem from="1591511399571" duration="2118000" />
       <workItem from="1591513952228" duration="252000" />
-      <workItem from="1591524064768" duration="22938000" />
+      <workItem from="1591524064768" duration="24397000" />
     </task>
     <servers />
   </component>

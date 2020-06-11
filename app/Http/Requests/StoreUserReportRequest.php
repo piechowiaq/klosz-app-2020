@@ -30,6 +30,7 @@ class StoreUserReportRequest extends FormRequest
             'report_name' => '',
             'report_date' => 'before:tomorrow|required|sometimes',
             'expiry_date' => 'required|sometimes',
+
         ];
     }
 }
