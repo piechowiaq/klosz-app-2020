@@ -28,9 +28,9 @@ class UsersTableSeeder extends Seeder
 
         $user->roles()->save($role);
 
-        factory(App\User::class, 10)->create()->each(function ($user) {
-
-            $user->companies()->save(factory(App\Company::class)->make());
-        });
+//        factory(App\User::class, 10)->create()->each(function ($user) {
+//
+//            $user->companies()->save(factory(App\Company::class)->make());
+//        });
     }
 }

@@ -8,7 +8,7 @@ use Laravel\Scout\Searchable;
 
 class Training extends Model
 {
-    use Searchable;
+//    use Searchable;
 
     protected $guarded = [];
 

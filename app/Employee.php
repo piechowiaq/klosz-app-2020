@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    use Searchable;
+//    use Searchable;
 
     protected $guarded = [];
 
