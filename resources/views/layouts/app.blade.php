@@ -25,7 +25,7 @@
                             {{ config('app.name', 'Klosz') }}
 
 
-                        </a><img src="{{ asset('/png/logo.png') }}"  class=" ml-4 h-16 w-16 inline" alt="Logo">
+                        </a><img src="{{ Storage::disk('s3')->url('images/Logo.png') }}"  class=" ml-4 h-16 w-16 inline" alt="Logo">
                     </div>
 
                     <div></div>
