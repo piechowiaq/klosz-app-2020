@@ -9,7 +9,7 @@ use Faker\Generator as Faker;
 $factory->define(Training::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'description' => $faker->paragraph,
+        'description' => $faker->colorName,
         'valid_for' => $faker->numberBetween(0,24),
     ];
 });

@@ -1,20 +1,22 @@
-@extends('layouts.app')
+{{--@extends('layouts.app')--}}
 
-@section('content')
+{{--@section('content')--}}
 
-    @include('user.nav')
-    <div class="md:w-5/6">
-    <div class="block mt-2 py-2">
-        <h1>{{$report->registry->name}} </h1>
-    </div>
-    <hr>
-        <div class="block mt-2 py-2">
-            <h1>{{$report->report_date}} </h1>
-        </div>
+{{--    @include('user.nav')--}}
+{{--    <div class="md:w-5/6">--}}
+{{--    <div class="block mt-2 py-2">--}}
+{{--        <h1>{{$report->registry->name}} </h1>--}}
+{{--    </div>--}}
+{{--    <hr>--}}
+{{--        <div class="block mt-2 py-2">--}}
+{{--            <h1>{{$report->report_date}} </h1>--}}
+{{--        </div>--}}
 
-        <div class="block mt-2 py-2">
-            <h1>{{$report->expiry_date}} </h1>
-        </div>
+{{--        <div class="block mt-2 py-2">--}}
+{{--            <h1>{{$report->expiry_date}} </h1>--}}
+{{--        </div>--}}
+
+{{-- {{$path}}--}}
 {{--    <div>--}}
 {{--        @foreach ($certificate->training as $training)--}}
 {{--            <div class="block mt-2 py-2">--}}
@@ -47,37 +49,37 @@
 
 
 
-    {{--    <div class=" py-6 m-2 md:py-2">--}}
+{{--    --}}{{--    <div class=" py-6 m-2 md:py-2">--}}
 
-    {{--        <a href="{{route('users.create')}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Create User</a>--}}
+{{--    --}}{{--        <a href="{{route('users.create')}}" class="rounded border text-indigo-500 p-2 bg-transparent" >Create User</a>--}}
 
-    {{--    </div>--}}
+{{--    --}}{{--    </div>--}}
 
-    {{--    @foreach ($users as $user)--}}
+{{--    --}}{{--    @foreach ($users as $user)--}}
 
-    {{--        <div class="md:flex border rounded shadow mb-1">--}}
+{{--    --}}{{--        <div class="md:flex border rounded shadow mb-1">--}}
 
-    {{--            <div class="m-2 p-2 py-2 md:w-5/6 ">--}}
-    {{--                {{ $user->name}} {{ $user->surname}}--}}
-    {{--            </div>--}}
+{{--    --}}{{--            <div class="m-2 p-2 py-2 md:w-5/6 ">--}}
+{{--    --}}{{--                {{ $user->name}} {{ $user->surname}}--}}
+{{--    --}}{{--            </div>--}}
 
-    {{--            <div class="flex  justify-center md:justify-end md:w-1/6 ">--}}
+{{--    --}}{{--            <div class="flex  justify-center md:justify-end md:w-1/6 ">--}}
 
-    {{--                <div class=" px-2 bg-transparent hover:bg-blue-500 text-black-700 hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">--}}
-    {{--                    <a href="{{route('users.edit', ['user'=> $user])}}" class="">Edytuj</a>--}}
-    {{--                </div>--}}
+{{--    --}}{{--                <div class=" px-2 bg-transparent hover:bg-blue-500 text-black-700 hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">--}}
+{{--    --}}{{--                    <a href="{{route('users.edit', ['user'=> $user])}}" class="">Edytuj</a>--}}
+{{--    --}}{{--                </div>--}}
 
-    {{--                <div class="px-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">--}}
-    {{--                    <form action="#" method="POST">--}}
-    {{--                        @method('DELETE')--}}
-    {{--                        @csrf--}}
-    {{--                        <button type="submit" class="">Usuń</button>--}}
-    {{--                    </form>--}}
-    {{--                </div>--}}
+{{--    --}}{{--                <div class="px-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">--}}
+{{--    --}}{{--                    <form action="#" method="POST">--}}
+{{--    --}}{{--                        @method('DELETE')--}}
+{{--    --}}{{--                        @csrf--}}
+{{--    --}}{{--                        <button type="submit" class="">Usuń</button>--}}
+{{--    --}}{{--                    </form>--}}
+{{--    --}}{{--                </div>--}}
 
-    {{--            </div>--}}
-    {{--        </div>--}}
+{{--    --}}{{--            </div>--}}
+{{--    --}}{{--        </div>--}}
 
-    {{--    @endforeach--}}
+{{--    --}}{{--    @endforeach--}}
 
-@endsection
+{{--@endsection--}}

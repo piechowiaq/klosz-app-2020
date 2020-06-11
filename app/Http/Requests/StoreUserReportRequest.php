@@ -26,7 +26,8 @@ class StoreUserReportRequest extends FormRequest
         return [
             'registry_id' => 'exists:registries,id|required|sometimes',
             'company_id' => 'exists:companies,id|required|sometimes',
-            'report_path' => 'required|file',
+            'report_path' => '',
+            'report_name' => '',
             'report_date' => 'before:tomorrow|required|sometimes',
             'expiry_date' => 'required|sometimes',
         ];

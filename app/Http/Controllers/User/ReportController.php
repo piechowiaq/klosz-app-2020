@@ -10,6 +10,7 @@ use App\Report;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
@@ -24,7 +25,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        //
+
+
+
     }
 
     /**
@@ -59,15 +62,20 @@ class ReportController extends Controller
     {
         $this->authorize('update', $report);
 
-        //$expiry_date = Carbon::create(request('report_date'))->addMonths( Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
-
         $report = new Report(request(['registry_id', 'report_date']));
+        //$expiry_date = Carbon::create(request('report_date'))->addMonths( Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
+        $path = request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 's3');
+
 
         $report->company_id = $companyId;
 
         $report->expiry_date = $report->calculateExpiryDate(request('report_date'));
 
-        $report->report_path = request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 'public');
+        $report->report_name = basename($path);
+
+        $report->report_path = Storage::disk('s3')->url($path) ;
+
+//        dd(basename(request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 's3')));
 
         $report->save();
 
@@ -87,6 +95,15 @@ class ReportController extends Controller
 
         return view('user.reports.show', compact('report', 'company'));
     }
+
+
+
+    public function download($companyId, Report $report)
+    {
+        return Storage::disk('s3')->response('reports/'. $report->report_name);
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -119,7 +136,7 @@ class ReportController extends Controller
         $report->expiry_date = Carbon::create(request('report_date'))->addMonths(Registry::where('id', $report->registry_id)->first()->valid_for)->toDateString();
 
         if (request()->has('report_path')) {
-            $report->report_path = request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 'public');
+            $report->report_path = request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 's3');
         };
 
         $report->save();

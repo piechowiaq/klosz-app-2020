@@ -53,6 +53,7 @@ Route::namespace('User')->name('user.')->group(function () {
     Route::delete('/{company}/trainings/{training}/certificates/{certificate}', 'CertificateController@destroy')->name('certificates.destroy');
     Route::resource('/{company}/trainings', 'TrainingController')->only(['index', 'show']);
     Route::resource('/{company}/reports', 'ReportController');
+    Route::get('/{company}/reports/{report}/download', 'ReportController@download')->name('reports.download');
 
     Route::get('/{company}/registries/search', 'SearchController@registries')->name('search.registries');
     Route::resource('/{company}/registries', 'RegistryController');

@@ -9,6 +9,7 @@
             {{$registry->name}}
         </div>
 
+
         @foreach ($registry->reports as $report)
 
             <div class="md:flex border mb-1">

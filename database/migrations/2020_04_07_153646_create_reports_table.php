@@ -17,6 +17,7 @@ class CreateReportsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('registry_id');
+            $table->string('report_name');
             $table->string('report_path');
             $table->date('report_date');
             $table->date('expiry_date');

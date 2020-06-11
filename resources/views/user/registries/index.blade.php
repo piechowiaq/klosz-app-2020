@@ -32,7 +32,7 @@
 
                     @if($loop->first)
                         <div class=" px-2 bg-transparent text-black-700 hover:text-indigo-700 text-indigo-500 rounded m-2 py-2 ">
-                            <a href="{{ asset('storage/'.$report->report_path) }}" class="">Download</a>
+                            <a href="{{ route('user.reports.download', ['company'=> $company->id, 'report'=>$report]) }}" class="">Download</a>
                         </div>
                         <div class="w-1/12 text-right block mt-2 py-2 mr-4">
                             @if(  Carbon\Carbon::now()->subDays(30) > $report->expiry_date)
