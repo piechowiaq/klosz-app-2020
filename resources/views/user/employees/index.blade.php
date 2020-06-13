@@ -24,7 +24,7 @@
 {{--        <search>   </search>--}}
         @foreach ($employees as $employee)
 
-            <div class="md:flex border mb-1">
+            <div class="md:flex md:text-left text-center border mb-1">
 
                 <div class="m-2 p-2 md:w-5/6 ">
 

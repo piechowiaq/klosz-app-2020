@@ -22,7 +22,7 @@
 
             @foreach ($companyTrainings as $training)
 
-                <div class="md:flex border  mb-1">
+                <div class="flex justify-between border  mb-1">
                     <div class="m-2 p-2 py-2 md:w-11/12 ">
                         <a href="{{route('user.trainings.show', ['training'=> $training, 'company'=>$company->id])}}">{{ $training->name}}</a>
                     </div>
