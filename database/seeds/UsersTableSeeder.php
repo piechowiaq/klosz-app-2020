@@ -28,8 +28,20 @@ class UsersTableSeeder extends Seeder
 
         $user->roles()->save($role);
 
-        factory(Role::class, 3)->create();
+        Role::create([
+            'name' => 'Admin',
+            'description' => 'Admin',
+        ]);
 
+        Role::create([
+            'name' => 'User',
+            'description' => 'User',
+        ]);
+
+        Role::create([
+            'name' => 'Manager',
+            'description' => 'User',
+        ]);
 //        factory(App\User::class, 10)->create()->each(function ($user) {
 //
 //            $user->companies()->save(factory(App\Company::class)->make());

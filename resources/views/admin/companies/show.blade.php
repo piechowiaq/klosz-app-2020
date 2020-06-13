@@ -26,7 +26,7 @@
 
 {{--                        <input type="checkbox" name="position_active[]" id="position_active" class="mr-2 leading-tight" multiple="multiple" value="{{$position->pivot->id}}" {{$position->pivot->active  ? 'checked': ''  || ( old('position_active') ? 'checked="checked"' : '' )}}>--}}
 {{--                        --}}
-                        {{ $position->name}}pj
+                        {{ $position->name}}
 
                 </div>
             @endforeach
