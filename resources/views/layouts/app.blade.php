@@ -55,7 +55,7 @@
             </div>
         </nav>
 
-        <div class="container mx-auto  flex ">
+        <div class="container mx-auto  md:flex ">
 
         @yield('content')
 
