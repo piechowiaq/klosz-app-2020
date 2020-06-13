@@ -2,7 +2,7 @@
 
 @section('content')
     @include('user.nav')
-    <div class="md:w-5/6">
+    <div class="md:w-5/6 md:m-0 m-2">
 
             <div class="flex justify-between py-6 m-2 md:py-2">
                 @can('update', $employee)

@@ -2,7 +2,7 @@
 @section('title', 'Companies')
 @section('content')
     @include('user.nav')
-    <div class="md:w-5/6">
+    <div class="md:w-5/6 md:m-0 m-2">
     <div>
         <div> <h1 class="text-lg font-semibold pb-2">Edytuj Pracownika</h1></div>
     </div>

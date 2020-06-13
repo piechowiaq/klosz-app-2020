@@ -2,10 +2,10 @@
 
 @section('content')
     @include('user.nav')
-    <div class="md:w-5/6">
-        <div class="flex justify-between mb-4">
+    <div class="md:w-5/6 md:m-0 m-2">
+        <div class="md:flex md:justify-between mb-4">
             @can('update', $employee)
-                <div class="rounded border bg-transparent text-center">
+                <div class="rounded border bg-transparent text-center md:mt-0 mt-4">
                         <div class="py-2 px-4 leading-tight text-indigo-500 focus:outline-none focus:border-indigo-500">
                             <a href="{{route('user.employees.create', ['company'=>$company])}}">Dodaj Pracownika</a>
                         </div>
@@ -13,7 +13,7 @@
             @endcan
             <div>
                 <form method="GET" action="{{route('user.search.show', ['company'=> $company])}}">
-                    <input type="search" placeholder="Szukaj ..." name="q" class="bg-gray-200 appearance-none border border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                    <input type="search" placeholder="Szukaj ..." name="q" class="md:mt-0 mt-4 bg-gray-200 appearance-none w-full border border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
 {{--                    <button type="submit" >Szukaj</button>--}}
                 </form>
             </div>

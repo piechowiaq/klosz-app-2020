@@ -4,8 +4,21 @@
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/search.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/employees/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/employees/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/registries/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/reports/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/reports/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/reports/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/reports/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/trainings/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/trainings/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/trainings/show.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -290,7 +303,7 @@
       <workItem from="1591511399571" duration="2118000" />
       <workItem from="1591513952228" duration="252000" />
       <workItem from="1591524064768" duration="28968000" />
-      <workItem from="1592046251780" duration="4593000" />
+      <workItem from="1592046251780" duration="9378000" />
     </task>
     <servers />
   </component>
