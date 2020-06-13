@@ -23,10 +23,12 @@ class UsersTableSeeder extends Seeder
             'name' => 'Bartosz',
             'surname' => 'Piechowiak',
             'email' => 'piechowiaq@gmail.com',
-            'password' => bcrypt('12345678'),
+            'password' => '123456',
             ]);
 
         $user->roles()->save($role);
+
+        factory(Role::class, 3)->create();
 
 //        factory(App\User::class, 10)->create()->each(function ($user) {
 //
