@@ -2,6 +2,7 @@
 
 use App\Role;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,8 @@ class UsersTableSeeder extends Seeder
             'name' => 'Bartosz',
             'surname' => 'Piechowiak',
             'email' => 'piechowiaq@gmail.com',
-            'password' => '123456',
+            'password' => bcrypt('12345678'),
+//
             ]);
 
         $user->roles()->save($role);
