@@ -20,7 +20,7 @@ class CertificateTest extends TestCase
 
         $certificate = factory(Certificate::class)->create();
 
-        $employee->certificates()->sync($certificate);
+        $certificate->employees()->sync($employee);
 
         $this->assertDatabaseHas('certificate_employee', [
             'certificate_id' => $certificate->id,

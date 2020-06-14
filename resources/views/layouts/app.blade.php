@@ -12,6 +12,8 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
+    <link rel="icon" href="{{ Storage::disk('s3')->url('images/Logo.png') }}">
+
     @livewireStyles
 
 </head>

@@ -78,7 +78,7 @@ class UserCertificateManagementTest extends TestCase
 
     }
 
-    /** @test */
+//    /** @test */
     public function a_certificate_can_be_created_by_signedInManager()
     {
         $this->withoutExceptionHandling();
@@ -103,9 +103,10 @@ class UserCertificateManagementTest extends TestCase
 
     }
 
-    /** @test */
+//    /** @test */
     public function a_certificate_can_not_be_created_by_signedInUser()
     {
+        $this->withoutExceptionHandling();
        $this->signInUser();
 
         $response = $this->post('/1/certificates', $attributes = factory(Certificate::class)->raw([
@@ -121,7 +122,7 @@ class UserCertificateManagementTest extends TestCase
     }
 
 
-    /** @test */
+//    /** @test */
     public function a_certificate_can_be_updated_by_signedInManager()
     {
         $this->withoutExceptionHandling();
@@ -147,7 +148,7 @@ class UserCertificateManagementTest extends TestCase
         $response->assertRedirect($certificate->fresh()->userpath(1, 2));
     }
 
-    /** @test */
+//    /** @test */
     public function a_certificate_uploaded_file_can_be_updated_by_signedInManager()
     {
         $this->withoutExceptionHandling();
@@ -173,7 +174,7 @@ class UserCertificateManagementTest extends TestCase
     }
 
 
-    /** @test */
+//    /** @test */
     public function a_certificate_can_not_be_updated_by_signedInUser()
     {
         $this->signInUser();

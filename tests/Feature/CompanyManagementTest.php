@@ -16,10 +16,9 @@ class CompanyManagementTest extends TestCase
     /** @test */
     public function a_company_can_be_created()
     {
-//        $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $this->signInSuperAdmin();
-
 
         $this->post('/admin/companies', $attributes = factory(Company::class)->raw());
 
@@ -71,6 +70,7 @@ class CompanyManagementTest extends TestCase
     /** @test */
     public function a_company_name_is_required()
     {
+
         $this->signInSuperAdmin();
 
         $response = $this->post('/admin/companies', array_merge($attributes = factory(Company::class)->raw(), ['name' => '']));

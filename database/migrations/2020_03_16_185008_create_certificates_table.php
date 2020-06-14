@@ -20,6 +20,7 @@ class CreateCertificatesTable extends Migration
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->string('certificate_path');
+            $table->string('certificate_name');
             $table->date('training_date');
             $table->date('expiry_date');
             $table->timestamps();

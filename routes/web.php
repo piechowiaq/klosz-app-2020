@@ -47,6 +47,7 @@ Route::namespace('User')->name('user.')->group(function () {
     Route::get('/{company}/trainings/{training}/certificates', 'CertificateController@index')->name('certificates.index');
     Route::get('/{company}/certificates/create', 'CertificateController@create')->name('certificates.create');
     Route::post('/{company}/certificates', 'CertificateController@store')->name('certificates.store');
+    Route::get('/{company}/certificates/{certificate}/download', 'CertificateController@download')->name('certificates.download');
     Route::get('/{company}/trainings/{training}/certificates/{certificate}', 'CertificateController@show')->name('certificates.show');
     Route::get('/{company}/trainings/{training}/certificates/{certificate}/edit', 'CertificateController@edit')->name('certificates.edit');
     Route::patch('/{company}/trainings/{training}/certificates/{certificate}', 'CertificateController@update')->name('certificates.update');

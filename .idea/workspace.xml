@@ -3,8 +3,27 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/companies/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/companies/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/CertificateController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreUserCertificateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserReportRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreUserReportRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateUserCertificateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateUserCertificateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateUserReportRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateUserReportRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/CertificateFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CertificateFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/ReportFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ReportFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_16_185008_create_certificates_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/companies/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/companies/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/certificates/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/reports/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/reports/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CompanyManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/SearchTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/SearchTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/CertificateTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/CertificateTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/TrainingTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/TrainingTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -197,42 +216,42 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHPUnit.UserCertificateManagementTest.a_certificate_can_be_created_by_signedInManager">
+  <component name="RunManager" selected="PHPUnit.UserReportManagementTest.a_report_requires_an_expiry_date">
     <configuration name="RoleManagementTest.a_role_can_be_updated" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner class="Tests\Feature\RoleManagementTest" file="$PROJECT_DIR$/tests/Feature/RoleManagementTest.php" method="a_role_can_be_updated" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="SearchTest.a_user_can_search_employees" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" method="a_user_can_search_employees" scope="Method" />
+    <configuration name="UserCertificateManagementTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserCertificateManagementTest" file="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" scope="Class" />
       <method v="2" />
     </configuration>
-    <configuration name="SearchTest.a_user_can_search_registries" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" method="a_user_can_search_registries" scope="Method" />
+    <configuration name="UserCertificateManagementTest.a_certificate_can_not_be_created_by_signedInUser" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserCertificateManagementTest" file="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" method="a_certificate_can_not_be_created_by_signedInUser" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="SearchTest.a_user_can_search_trainings" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\SearchTest" file="$PROJECT_DIR$/tests/Feature/SearchTest.php" method="a_user_can_search_trainings" scope="Method" />
+    <configuration name="UserReportManagementTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserReportManagementTest" file="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" scope="Class" />
       <method v="2" />
     </configuration>
-    <configuration name="UserCertificateManagementTest.a_certificate_can_be_created_by_signedInManager" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\UserCertificateManagementTest" file="$PROJECT_DIR$/tests/Feature/UserCertificateManagementTest.php" method="a_certificate_can_be_created_by_signedInManager" scope="Method" />
+    <configuration name="UserReportManagementTest.a_report_requires_a_file" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserReportManagementTest" file="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" method="a_report_requires_a_file" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="UserReportManagementTest.a_report_requires_an_expiry_date" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserReportManagementTest" file="$PROJECT_DIR$/tests/Feature/UserReportManagementTest.php" method="a_report_requires_an_expiry_date" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
-    <configuration name="tests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner directory="$PROJECT_DIR$/tests" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.UserCertificateManagementTest.a_certificate_can_be_created_by_signedInManager" />
-        <item itemvalue="PHPUnit.SearchTest.a_user_can_search_employees" />
-        <item itemvalue="PHPUnit.SearchTest.a_user_can_search_trainings" />
-        <item itemvalue="PHPUnit.SearchTest.a_user_can_search_registries" />
-        <item itemvalue="PHPUnit.tests" />
+        <item itemvalue="PHPUnit.UserReportManagementTest.a_report_requires_an_expiry_date" />
+        <item itemvalue="PHPUnit.UserReportManagementTest.a_report_requires_a_file" />
+        <item itemvalue="PHPUnit.UserReportManagementTest" />
+        <item itemvalue="PHPUnit.UserCertificateManagementTest" />
+        <item itemvalue="PHPUnit.UserCertificateManagementTest.a_certificate_can_not_be_created_by_signedInUser" />
       </list>
     </recent_temporary>
   </component>
@@ -289,7 +308,8 @@
       <workItem from="1591511399571" duration="2118000" />
       <workItem from="1591513952228" duration="252000" />
       <workItem from="1591524064768" duration="28968000" />
-      <workItem from="1592046251780" duration="11791000" />
+      <workItem from="1592046251780" duration="15799000" />
+      <workItem from="1592150386928" duration="3477000" />
     </task>
     <servers />
   </component>

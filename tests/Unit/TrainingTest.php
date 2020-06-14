@@ -34,7 +34,7 @@ class TrainingTest extends TestCase
 
         $training = factory(Training::class)->create();
 
-        $training->employees()->sync($training);
+        $training->employees()->sync($employee);
 
         $this->assertDatabaseHas('employee_training', [
             'training_id' => $training->id,

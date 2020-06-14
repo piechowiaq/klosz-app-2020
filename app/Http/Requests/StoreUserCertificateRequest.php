@@ -25,12 +25,9 @@ class StoreUserCertificateRequest extends FormRequest
     {
         return [
             'training_id' => 'exists:trainings,id|required',
-//            'company_id' => 'exists:companies,id|required',
-            'certificate_path' => 'required|file',
+            'file' => 'required|max:10000|mimes:doc,docx,pdf,jpeg,jpg',
             'training_date' => 'before:tomorrow|required',
-//            'expiry_date' => 'required',
             'employee_id' => 'exists:employees,id|required|sometimes',
-
         ];
     }
 }

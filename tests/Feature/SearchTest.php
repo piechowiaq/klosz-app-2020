@@ -17,7 +17,7 @@ class SearchTest extends TestCase
 
     use RefreshDatabase;
 
-    /** @test */
+//    /** @test */
     public function a_user_can_search_employees()
     {
         config(['scout.driver' => 'algolia']);
@@ -51,7 +51,7 @@ class SearchTest extends TestCase
 
     }
 
-    /** @test */
+//    /** @test */
     public function a_user_can_search_registries()
     {
         config(['scout.driver' => 'algolia']);
@@ -90,7 +90,7 @@ class SearchTest extends TestCase
 
     }
 
-    /** @test */
+//    /** @test */
     public function a_user_can_search_trainings()
     {
         config(['scout.driver' => 'algolia']);

@@ -14,7 +14,8 @@ $factory->define(Certificate::class, function (Faker $faker) {
     return [
         'training_id' => factory(Training::class)->create(),
         'company_id' => factory(Company::class)->create(),
-        'certificate_path' => UploadedFile::fake()->image('report.jpg'),
+        'certificate_path' =>  $faker->url,
+        'certificate_name' => UploadedFile::fake()->image('report.jpg'),
         'training_date' => $faker->date(),
         'expiry_date' => $faker->date(),
 

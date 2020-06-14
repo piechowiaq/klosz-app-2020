@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateUserCertificateRequest;
 use App\Training;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CertificateController extends Controller
 {
@@ -74,7 +75,11 @@ class CertificateController extends Controller
 
         $certificate->expiry_date = $expiry_date;
 
-        $certificate->certificate_path = request('certificate_path')->storeAs('certificates', $certificate->training_date . ' ' . $certificate->training->name . ' ' . Carbon::now()->format('His') . '.' . request('certificate_path')->getClientOriginalExtension(), 'public');
+        $path = request('file')->storeAs('certificates', $certificate->training_date . ' ' . $certificate->training->name . ' ' .$companyId. '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+
+        $certificate->certificate_name = basename($path);
+
+        $certificate->certificate_path = Storage::disk('s3')->url($path) ;
 
         $certificate->save();
 
@@ -100,6 +105,11 @@ class CertificateController extends Controller
 
 
         return view('user.certificates.show', compact('certificate', 'company','training'));
+    }
+
+    public function download($companyId, Certificate $certificate)
+    {
+        return Storage::disk('s3')->response('certificates/'. $certificate->certificate_name);
     }
 
     /**
@@ -138,17 +148,22 @@ class CertificateController extends Controller
 
         $expiry_date = Carbon::create(request('training_date'))->addMonths( Training::where('id',  $trainingId)->first()->valid_for)->toDateString();
 
-        $certificate->update(request(['training_id', 'company_id', 'training_date']));
+        $certificate->update(request(['training_id', 'training_date']));
 
         $certificate->company_id = $companyId;
 
         $certificate->expiry_date = $expiry_date;
 
-        if (request()->has('certificate_path')) {
-            $certificate->certificate_path = request('certificate_path')->storeAs('certificates', $certificate->training_date . ' ' . $certificate->training->name . ' ' . Carbon::now()->format('His') . '.' . request('certificate_path')->getClientOriginalExtension(), 'public');
-        };
+        if (request()->has('file')) {
+            $path = request('file')->storeAs('certificates', $certificate->training_date . ' ' . $certificate->training->name . ' ' .$companyId.'-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+
+            $certificate->certificate_name = basename($path);
+
+            $certificate->certificate_path = Storage::disk('s3')->url($path) ;};
 
         $certificate->save();
+
+        $certificate->employees()->sync(request('employee_id'));
 
         $trainingId = $certificate->training_id;
 
@@ -163,10 +178,6 @@ class CertificateController extends Controller
      */
     public function destroy($companyId, $trainingId, Certificate $certificate)
     {
-        $company =  Company::findOrfail($companyId);
-
-        $training = Training::findOrfail($trainingId);
-
         $certificate->delete();
 
         return redirect()->route('user.certificates.index', [$companyId, $trainingId]);

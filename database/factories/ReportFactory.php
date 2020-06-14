@@ -14,7 +14,8 @@ $factory->define(Report::class, function (Faker $faker) {
     return [
         'registry_id' => factory(Registry::class),
         'company_id' => factory(Company::class),
-        'report_path' => UploadedFile::fake()->image('report.jpg'),
+        'report_path' => $faker->url,
+        'report_name' => UploadedFile::fake()->image('report.jpg'),
         'report_date' => $faker->date(),
         'expiry_date' => $faker->date(),
     ];
