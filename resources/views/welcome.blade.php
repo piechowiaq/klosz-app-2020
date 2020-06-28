@@ -11,9 +11,18 @@
             @endif
 
 
-            <div class="container mx-auto px-6 md:px-0">
+            <div class="container mx-auto px-6 flex  ">
 
-                Nie używane !! Welcome to Klosz
+                    <div class="m-2 p-2 text-center text-lg md:text-6xl font-semibold text-gray-500 no-underline">
+
+                        <p>  Welcome to <span class="text-yellow-500">Klosz</span> </p>
+
+
+                        <p class="text-sm text-gray-400 mt-4"> Aplikacja do zarządzania <span class="text-yellow-400">PPOŻ, HACCP, BHP</span> dla obiektów hotelowych i lokali gastronomicznych</p>
+
+                    </div>
+
+
 
             </div>
         </div>
