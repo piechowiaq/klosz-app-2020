@@ -26,6 +26,8 @@ class RegistryController extends Controller
 
         $companyRegistries =  $company->registries;
 
+
+
         return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
     }
 

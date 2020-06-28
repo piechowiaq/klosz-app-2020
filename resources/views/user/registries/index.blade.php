@@ -29,7 +29,7 @@
                     <a href="{{route('user.registries.show', ['registry'=> $registry, 'company'=>$company->id])}}">{{ $registry->name}}</a>
                 </div>
 
-                @foreach ($registry->reports->where('registry_id', $registry->id)->sortByDesc('report_date') as $report)
+                @foreach ($registry->reports->where('company_id', $company->id)->sortByDesc('report_date') as $report)
 
                     @if($loop->first)
                     <div class="md:w-4/12 flex justify-around">

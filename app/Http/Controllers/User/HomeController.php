@@ -81,7 +81,7 @@ class HomeController extends Controller
         $collection = collect();
 
         foreach($company->registries as $registry) {
-            foreach($registry->reports as $report) {
+            foreach($registry->reports->where('company_id', $company->id) as $report) {
                    if($report->expiry_date > now()){
                 $collection->push($report);
 
