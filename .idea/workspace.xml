@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/RegistryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/RegistryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -291,7 +292,14 @@
       <workItem from="1592046251780" duration="15799000" />
       <workItem from="1592150386928" duration="11586000" />
       <workItem from="1593697626923" duration="7874000" />
-      <workItem from="1594747859559" duration="2554000" />
+      <workItem from="1594747859559" duration="3136000" />
+      <workItem from="1595157976828" duration="986000" />
+      <workItem from="1596882216274" duration="27000" />
+      <workItem from="1597583763717" duration="6659000" />
+      <workItem from="1597683888654" duration="1254000" />
+      <workItem from="1601819090269" duration="1292000" />
+      <workItem from="1602398332759" duration="606000" />
+      <workItem from="1605109539975" duration="475000" />
     </task>
     <servers />
   </component>

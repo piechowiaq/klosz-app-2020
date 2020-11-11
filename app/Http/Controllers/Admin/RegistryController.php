@@ -84,6 +84,8 @@ class RegistryController extends Controller
     public function edit(Registry $registry)
     {
         $this->authorize('update');
+
+        return view('admin.registries.edit', compact('registry'));
     }
 
     /**
