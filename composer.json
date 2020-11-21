@@ -65,6 +65,16 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "composer-audit": [
+            "php security-checker.phar security:check ./composer.lock"
+        ],
+        "npm-audit": [
+            "npm audit"
+        ],
+        "audit": [
+            "@composer-audit",
+            "@npm-audit"
         ]
     }
 }

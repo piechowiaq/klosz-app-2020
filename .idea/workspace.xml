@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2ec51a2-31fc-4fba-b7f7-12557b3fa344" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/klosz-group.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/klosz-group.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/RegistryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/RegistryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/registries/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,9 +13,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -162,21 +159,20 @@
   </component>
   <component name="ProjectId" id="1UFxHBJEzmLRVbfecgHPoDTvCJa" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/user/reports" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="ts.external.directory.path" value="D:\Program Files\PhpStorm 2019.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\User" />
-      <recent name="D:\xampp\htdocs\klosz-group\public\js" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\js\components" />
-      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\Admin" />
-      <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\user\reports" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\js\components" />
@@ -184,18 +180,13 @@
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\admin\registries" />
       <recent name="D:\xampp\htdocs\klosz-group\resources\views\user" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Kuba\Desktop\projects\klosz-group" />
+      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\User" />
+      <recent name="D:\xampp\htdocs\klosz-group\public\js" />
+      <recent name="D:\xampp\htdocs\klosz-group\resources\js\components" />
+      <recent name="D:\xampp\htdocs\klosz-group\app\Http\Controllers\Admin" />
+    </key>
   </component>
   <component name="RunManager" selected="PHPUnit.UserReportManagementTest.a_report_requires_an_expiry_date">
     <configuration name="RoleManagementTest.a_role_can_be_updated" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -236,6 +227,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -300,27 +292,27 @@
       <workItem from="1601819090269" duration="1292000" />
       <workItem from="1602398332759" duration="606000" />
       <workItem from="1605109539975" duration="475000" />
+      <workItem from="1605975702342" duration="2474000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/klosz_group@SearchTest.xml" NAME="SearchTest Coverage Results" MODIFIED="1588497283738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/klosz_group@SearchTest_a_user_can_search_employees.xml" NAME="SearchTest.a_user_can_search_employees Coverage Results" MODIFIED="1588701344026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/klosz_group@SearchTest.xml" NAME="SearchTest Coverage Results" MODIFIED="1588497283738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
