@@ -18,11 +18,7 @@ class ReportController extends Controller
     {
         $this->middleware(['auth', 'auth.user']);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 
@@ -30,13 +26,6 @@ class ReportController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param Report $report
-     * @return void
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function create($companyId, Report $report)
     {
         $this->authorize('update', $report);
@@ -49,15 +38,6 @@ class ReportController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param StoreUserReportRequest $request
-     * @param $companyId
-     * @param Report $report
-     * @return void
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function store(StoreUserReportRequest $request, $companyId, Report $report)
     {
         $this->authorize('update', $report);
@@ -81,13 +61,6 @@ class ReportController extends Controller
         return redirect()->route('user.registries.index', [$companyId]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param $companyId
-     * @param \App\Report $report
-     * @return void
-     */
     public function show($companyId, Report $report)
     {
         $company = Company::findOrFail($companyId);
@@ -102,14 +75,6 @@ class ReportController extends Controller
         return Storage::disk('s3')->response('reports/'. $report->report_name);
     }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
     public function edit($companyId, Report $report)
     {
         $company = Company::findOrFail($companyId);
@@ -117,13 +82,6 @@ class ReportController extends Controller
         return view('user.reports.edit', compact('report', 'company'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateUserReportRequest $request, $companyId, Report $report)
     {
         $company = Company::findOrfail($companyId);
@@ -150,12 +108,6 @@ class ReportController extends Controller
         return redirect($registry->userpath($companyId));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($companyId, Report $report)
     {
 

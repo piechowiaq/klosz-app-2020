@@ -17,14 +17,6 @@ class TrainingController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param $companyId
-     * @param $trainingId
-     * @param Certificate $certificate
-     * @return \Illuminate\Http\Response
-     */
     public function index($companyId, Certificate $certificate)
     {
         $company = Company::findOrfail($companyId);
@@ -36,12 +28,6 @@ class TrainingController extends Controller
         return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
-     */
     public function show($companyId, Training $training)
     {
         $company = Company::findOrFail($companyId);

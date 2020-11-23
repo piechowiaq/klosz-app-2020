@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCertificatesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('certificates', function (Blueprint $table) {
@@ -27,11 +23,6 @@ class CreateCertificatesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('certificates');

@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePositionTrainingTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('position_training', function (Blueprint $table) {
@@ -24,11 +20,6 @@ class CreatePositionTrainingTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('position_training');

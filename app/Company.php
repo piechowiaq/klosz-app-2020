@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
@@ -41,5 +42,15 @@ class Company extends Model
     public function trainings()
     {
         return $this->belongsToMany(Training::class);
+    }
+
+    public function getRegistries(): Collection
+    {
+        return $this->registries()->get();
+    }
+
+    public function getId(): string
+    {
+        return (string) $this->getAttribute('id');
     }
 }

@@ -1,23 +1,25 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers\Admin;
 
 use App\Department;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use function view;
+use function request;
 
 class DepartmentController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(): Renderable
     {
         $this->authorize('update');
 
@@ -26,27 +28,15 @@ class DepartmentController extends Controller
         return view('admin.departments.index', compact('departments'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): Renderable
     {
         $this->authorize('update');
-//
-        $department = new Department();
-//
-        return view('admin.departments.create', compact( 'department' ));
+        $department = new Department;
+
+        return view('admin.departments.create', compact('department'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -55,38 +45,19 @@ class DepartmentController extends Controller
         return redirect($department->path());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Department  $department
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Department $department)
+    public function show(Department $department): Response
     {
         $this->authorize('update');
 
         return view('admin.departments.show', compact('department'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Department  $department
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Department $department)
+    public function edit(Department $department): Response
     {
         return view('admin.departments.edit', compact('department'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Department  $department
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, Department $department): Response
     {
         $this->authorize('update');
 
@@ -95,13 +66,7 @@ class DepartmentController extends Controller
         return redirect($department->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Department  $department
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Department $department)
+    public function destroy(Department $department): Response
     {
         $this->authorize('update');
 
@@ -113,8 +78,9 @@ class DepartmentController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name'=> 'sometimes|required',
+            'name' => 'sometimes|required',
 
         ]);
     }
+
 }

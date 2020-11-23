@@ -15,11 +15,7 @@ class PositionController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 //        $this->authorize('update');
@@ -29,11 +25,6 @@ class PositionController extends Controller
         return view('admin.positions.index', compact('positions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $this->authorize('update');
@@ -45,12 +36,6 @@ class PositionController extends Controller
         return view('admin.positions.create', compact( 'position', 'departments' ));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StorePositionRequest $request)
     {
         $this->authorize('update');
@@ -60,12 +45,6 @@ class PositionController extends Controller
         return redirect($position->path());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
-     */
     public function show(Position $position)
     {
         $this->authorize('update');
@@ -73,12 +52,6 @@ class PositionController extends Controller
         return view('admin.positions.show', compact('position'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Position $position)
     {
         $this->authorize('update');
@@ -88,13 +61,6 @@ class PositionController extends Controller
         return view('admin.positions.edit', compact('position', 'departments'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdatePositionRequest $request, Position $position)
     {
         $this->authorize('update');
@@ -104,12 +70,6 @@ class PositionController extends Controller
         return redirect($position->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Position $position)
     {
         $this->authorize('update');

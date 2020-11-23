@@ -15,11 +15,6 @@ class RegistryController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $this->authorize('update');
@@ -29,11 +24,6 @@ class RegistryController extends Controller
         return view('admin.registries.index', compact('registries'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $this->authorize('update');
@@ -43,13 +33,6 @@ class RegistryController extends Controller
         return view('admin.registries.create', compact( 'registry' ));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function store(StoreRegistryRequest $request)
     {
         $this->authorize('update');
@@ -61,13 +44,6 @@ class RegistryController extends Controller
         return redirect($registry->path());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Registry $registry
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function show(Registry $registry)
     {
         $this->authorize('update');
@@ -75,12 +51,6 @@ class RegistryController extends Controller
         return view('admin.registries.show', compact('registry'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Registry $registry)
     {
         $this->authorize('update');
@@ -88,13 +58,6 @@ class RegistryController extends Controller
         return view('admin.registries.edit', compact('registry'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateRegistryRequest $request, Registry $registry)
     {
         $this->authorize('update');
@@ -106,12 +69,6 @@ class RegistryController extends Controller
         return redirect($registry->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Registry $registry)
     {
         $this->authorize('update');

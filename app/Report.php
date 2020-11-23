@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Report extends Model
 {
     protected $guarded = [];
-    /**
-     * @var string
-     */
+
     public function userpath($companyId)
     {
         return "/$companyId/reports/{$this->id}";

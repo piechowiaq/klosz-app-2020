@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "algolia/algoliasearch-client-php": "^2.6",
         "algolia/scout-extended": "^1.9",
         "consoletvs/charts": "6.*",
@@ -21,7 +21,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "livewire/livewire": "^1.0"
+        "livewire/livewire": "^1.0",
+        "slevomat/coding-standard": "^6.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

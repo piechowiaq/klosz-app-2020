@@ -24,13 +24,11 @@ class SearchController extends Controller
 
         $employees = Employee::search($search)->where('company_id', $companyId)->paginate(25);
 
-        if(\request()->expectsJson()){
-
+        if (\request()->expectsJson()) {
             return $employees;
         }
 
         return view('user.employees.index', compact('employees', 'company', 'employee'));
-
     }
 
     public function registries($companyId, Report $report)
@@ -41,18 +39,16 @@ class SearchController extends Controller
 
         $search = \request('q');
 
-        $companyRegistries = Registry::search($search)->whereHas('companies', function($query) use ($companyId){
+        $companyRegistries = Registry::search($search)->whereHas('companies', function ($query) use ($companyId) {
             $query->where('company_id', '=', $companyId);
         })->paginate(25);
 
 
-        if(\request()->expectsJson()){
-
+        if (\request()->expectsJson()) {
             return  $companyRegistries;
         }
 
         return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
-
     }
 
     public function trainings($companyId, Certificate $certificate)
@@ -62,12 +58,11 @@ class SearchController extends Controller
 
         $search = \request('q');
 
-        $companyTrainings = Training::search($search)->whereHas('companies', function($query) use ($companyId){
+        $companyTrainings = Training::search($search)->whereHas('companies', function ($query) use ($companyId) {
             $query->where('company_id', '=', $companyId);
         })->paginate(25);
 
-        if(\request()->expectsJson()){
-
+        if (\request()->expectsJson()) {
             return   $companyTrainings;
         }
 
