@@ -11,5 +11,5 @@
 
     <arg value="nps" />
     <rule ref="PSR2"/>
-    <rule ref="SlevomatCodingStandard" />
+    <tyle ref="SlevomatCodingStandard" />
 </ruleset>
