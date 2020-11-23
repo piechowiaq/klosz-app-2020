@@ -22,37 +22,33 @@ class EmployeeController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function index($companyId, Employee $employee): Renderable
+    public function index(Company $company, Employee $employee): Renderable
     {
         $this->authorize('view', $employee);
 
-        $company = Company::findOrFail($companyId);
-
-        $employees = Employee::where('company_id', $companyId)->get();
+        $employees = Employee::where('company_id', $company)->get();
 
         return view('user.employees.index', compact('employees', 'company', 'employee'));
     }
 
-    public function create($companyId, Employee $employee): Renderable
+    public function create(Company $company, Employee $employee): Renderable
     {
         $this->authorize('update', $employee);
 
         $employee = new Employee();
-
-        $company = Company::findOrFail($companyId);
 
         $positions = $company->positions;
 
         return view('user.employees.create', compact('positions', 'employee', 'company'));
     }
 
-    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee): RedirectResponse
+    public function store(StoreUserEmployeeRequest $request, Company $company, Employee $employee): RedirectResponse
     {
         $this->authorize('update', $employee);
 
         $employee = new Employee(request(['name', 'surname', 'number', 'company_id']));
 
-        $employee->company_id = $companyId;
+        $employee->company_id = $company;
 
         $employee->save();
 
@@ -65,34 +61,30 @@ class EmployeeController extends Controller
             }
         }
 
-        return redirect()->route('user.employees.index', [$companyId]);
+        return redirect()->route('user.employees.index', [$company]);
     }
 
-    public function show($companyId, Employee $employee): Renderable
+    public function show(Company $company, Employee $employee): Renderable
     {
-        $company = Company::findOrFail($companyId);
-
         return view('user.employees.show', compact('employee', 'company'));
     }
 
-    public function edit($companyId, Employee $employee): Renderable
+    public function edit(Company $company, Employee $employee): Renderable
     {
         $this->authorize('update', $employee);
 
         $positions = Position::all();
 
-        $company = Company::findOrFail($companyId);
-
         return view('user.employees.edit', compact('employee', 'company', 'positions'));
     }
 
-    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee): RedirectResponse
+    public function update(UpdateUserEmployeeRequest $request, Company $company, Employee $employee): RedirectResponse
     {
         $this->authorize('update', $employee);
 
         $employee->update(request(['name', 'surname', 'number']));
 
-        $employee->company_id = $companyId;
+        $employee->company_id = $company;
 
         $employee->save();
 
@@ -105,13 +97,13 @@ class EmployeeController extends Controller
             }
         }
 
-        return redirect($employee->userpath($companyId));
+        return redirect($employee->userpath($company));
     }
 
-    public function destroy($companyId, Employee $employee): RedirectResponse
+    public function destroy(Company $company, Employee $employee): RedirectResponse
     {
         $employee->delete();
 
-        return redirect()->route('user.employees.index', [$companyId]);
+        return redirect()->route('user.employees.index', [$company]);
     }
 }

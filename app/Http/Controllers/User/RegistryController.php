@@ -28,10 +28,8 @@ class RegistryController extends Controller
         return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
     }
 
-    public function show($companyId, Registry $registry, Report $report): Renderable
+    public function show(Company $company, Registry $registry, Report $report): Renderable
     {
-        $company = Company::findOrFail($companyId);
-
         return view('user.registries.show', compact('registry', 'company', 'report'));
     }
 }

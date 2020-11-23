@@ -18,15 +18,15 @@ use function request;
 
 class SearchController extends Controller
 {
-    public function show($companyId, Employee $employee): Renderable
+    public function show(Company $company, Employee $employee): Renderable
     {
         $this->authorize('view', $employee);
 
-        $company = Company::findOrFail($companyId);
+        $company = Company::findOrFail($company);
 
         $search = request('q');
 
-        $employees = Employee::search($search)->where('company_id', $companyId)->paginate(25);
+        $employees = Employee::search($search)->where('company_id', $company)->paginate(25);
 
         if (request()->expectsJson()) {
             return $employees;
@@ -35,16 +35,16 @@ class SearchController extends Controller
         return view('user.employees.index', compact('employees', 'company', 'employee'));
     }
 
-    public function registries($companyId, Report $report): Renderable
+    public function registries(Company $company, Report $report): Renderable
     {
         $this->authorize('view', $report);
 
-        $company = Company::findOrFail($companyId);
+        $company = Company::findOrFail($company);
 
         $search = request('q');
 
-        $companyRegistries = Registry::search($search)->whereHas('companies', static function ($query) use ($companyId): void {
-            $query->where('company_id', '=', $companyId);
+        $companyRegistries = Registry::search($search)->whereHas('companies', static function ($query) use ($company): void {
+            $query->where('company_id', '=', $company);
         })->paginate(25);
 
         if (request()->expectsJson()) {
@@ -54,14 +54,12 @@ class SearchController extends Controller
         return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
     }
 
-    public function trainings($companyId, Certificate $certificate): Renderable
+    public function trainings(Company $company, Certificate $certificate): Renderable
     {
-        $company = Company::findOrfail($companyId);
-
         $search = request('q');
 
-        $companyTrainings = Training::search($search)->whereHas('companies', static function ($query) use ($companyId): void {
-            $query->where('company_id', '=', $companyId);
+        $companyTrainings = Training::search($search)->whereHas('companies', static function ($query) use ($company): void {
+            $query->where('company_id', '=', $company);
         })->paginate(25);
 
         if (request()->expectsJson()) {
