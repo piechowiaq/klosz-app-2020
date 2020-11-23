@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
@@ -8,12 +10,13 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use function compact;
+use function redirect;
 use function view;
-use function request;
 
 class DepartmentController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -31,7 +34,7 @@ class DepartmentController extends Controller
     public function create(): Renderable
     {
         $this->authorize('update');
-        $department = new Department;
+        $department = new Department();
 
         return view('admin.departments.create', compact('department'));
     }
@@ -77,10 +80,6 @@ class DepartmentController extends Controller
 
     protected function validateRequest()
     {
-        return request()->validate([
-            'name' => 'sometimes|required',
-
-        ]);
+        return request()->validate(['name' => 'sometimes|required']);
     }
-
 }
