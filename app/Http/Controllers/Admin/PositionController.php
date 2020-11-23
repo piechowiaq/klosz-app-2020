@@ -10,6 +10,8 @@ use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
 
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use function compact;
 
 class PositionController extends Controller
@@ -19,7 +21,7 @@ class PositionController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
 //        $this->authorize('update');
 
@@ -28,7 +30,7 @@ class PositionController extends Controller
         return view('admin.positions.index', compact('positions'));
     }
 
-    public function create()
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -39,7 +41,7 @@ class PositionController extends Controller
         return view('admin.positions.create', compact('position', 'departments'));
     }
 
-    public function store(StorePositionRequest $request)
+    public function store(StorePositionRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -48,14 +50,14 @@ class PositionController extends Controller
         return redirect($position->path());
     }
 
-    public function show(Position $position)
+    public function show(Position $position): Renderable
     {
         $this->authorize('update');
 
         return view('admin.positions.show', compact('position'));
     }
 
-    public function edit(Position $position)
+    public function edit(Position $position): Renderable
     {
         $this->authorize('update');
 
@@ -64,7 +66,7 @@ class PositionController extends Controller
         return view('admin.positions.edit', compact('position', 'departments'));
     }
 
-    public function update(UpdatePositionRequest $request, Position $position)
+    public function update(UpdatePositionRequest $request, Position $position): RedirectResponse
     {
         $this->authorize('update');
 
@@ -73,7 +75,7 @@ class PositionController extends Controller
         return redirect($position->path());
     }
 
-    public function destroy(Position $position)
+    public function destroy(Position $position): RedirectResponse
     {
         $this->authorize('update');
 

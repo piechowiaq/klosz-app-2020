@@ -11,6 +11,8 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Position;
 
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use function compact;
 
 class EmployeeController extends Controller
@@ -20,7 +22,7 @@ class EmployeeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
         $this->authorize('update');
 
@@ -29,7 +31,7 @@ class EmployeeController extends Controller
         return view('admin.employees.index', compact('employees'));
     }
 
-    public function create()
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -42,7 +44,7 @@ class EmployeeController extends Controller
         return view('admin.employees.create', compact('positions', 'companies', 'employee'));
     }
 
-    public function store(StoreEmployeeRequest $request)
+    public function store(StoreEmployeeRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -62,14 +64,14 @@ class EmployeeController extends Controller
         return redirect($employee->path());
     }
 
-    public function show(Employee $employee)
+    public function show(Employee $employee): Renderable
     {
         $this->authorize('update');
 
         return view('admin.employees.show', compact('employee'));
     }
 
-    public function edit(Employee $employee)
+    public function edit(Employee $employee): Renderable
     {
         $this->authorize('update');
 
@@ -80,7 +82,7 @@ class EmployeeController extends Controller
         return view('admin.employees.edit', compact('employee', 'companies', 'positions'));
     }
 
-    public function update(UpdateEmployeeRequest $request, Employee $employee)
+    public function update(UpdateEmployeeRequest $request, Employee $employee): RedirectResponse
     {
         $this->authorize('update');
 
@@ -100,7 +102,7 @@ class EmployeeController extends Controller
         return redirect($employee->path());
     }
 
-    public function destroy(Employee $employee)
+    public function destroy(Employee $employee): RedirectResponse
     {
         $this->authorize('update');
 

@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
 
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use function compact;
 
 class TrainingController extends Controller
@@ -19,7 +21,7 @@ class TrainingController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
         $this->authorize('update');
 
@@ -28,7 +30,7 @@ class TrainingController extends Controller
         return view('admin.trainings.index', compact('trainings'));
     }
 
-    public function create()
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -39,7 +41,7 @@ class TrainingController extends Controller
         return view('admin.trainings.create', compact('training', 'positions'));
     }
 
-    public function store(StoreTrainingRequest $request)
+    public function store(StoreTrainingRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -59,14 +61,14 @@ class TrainingController extends Controller
         return redirect($training->path());
     }
 
-    public function show(Training $training)
+    public function show(Training $training): Renderable
     {
         $this->authorize('update');
 
         return view('admin.trainings.show', compact('training'));
     }
 
-    public function edit(Training $training)
+    public function edit(Training $training): Renderable
     {
         $this->authorize('update');
 
@@ -75,7 +77,7 @@ class TrainingController extends Controller
         return view('admin.trainings.edit', compact('training', 'positions'));
     }
 
-    public function update(UpdateTrainingRequest $request, Training $training)
+    public function update(UpdateTrainingRequest $request, Training $training): RedirectResponse
     {
         $this->authorize('update');
 
@@ -95,7 +97,7 @@ class TrainingController extends Controller
         return redirect($training->path());
     }
 
-    public function destroy(Training $training)
+    public function destroy(Training $training): RedirectResponse
     {
         $this->authorize('update');
 

@@ -12,6 +12,8 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
 use App\Registry;
 
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use function compact;
 
 class CompanyController extends Controller
@@ -21,7 +23,7 @@ class CompanyController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
         $this->authorize('update');
 
@@ -30,7 +32,7 @@ class CompanyController extends Controller
         return view('admin.companies.index', compact('companies'));
     }
 
-    public function create()
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -43,7 +45,7 @@ class CompanyController extends Controller
         return view('admin.companies.create', compact('company', 'departments', 'registries'));
     }
 
-    public function store(StoreCompanyRequest $request)
+    public function store(StoreCompanyRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -87,14 +89,14 @@ class CompanyController extends Controller
             return redirect($company->path());
     }
 
-    public function show(Company $company)
+    public function show(Company $company): Renderable
     {
         $this->authorize('update');
 
         return view('admin.companies.show', compact('company'));
     }
 
-    public function edit(Company $company)
+    public function edit(Company $company): Renderable
     {
         $this->authorize('update');
 
@@ -105,7 +107,7 @@ class CompanyController extends Controller
         return view('admin.companies.edit', compact('company', 'departments', 'registries'));
     }
 
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update(UpdateCompanyRequest $request, Company $company): RedirectResponse
     {
         $this->authorize('update');
 
@@ -136,7 +138,7 @@ class CompanyController extends Controller
             return redirect($company->path());
     }
 
-    public function destroy(Company $company)
+    public function destroy(Company $company): RedirectResponse
     {
         $this->authorize('update');
 

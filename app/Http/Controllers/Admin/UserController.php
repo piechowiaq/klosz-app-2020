@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 
 use function compact;
@@ -22,7 +24,7 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
         $this->authorize('update');
 
@@ -31,7 +33,7 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-    public function create()
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -44,7 +46,7 @@ class UserController extends Controller
         return view('admin.users.create', compact('roles', 'companies', 'user'));
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -63,14 +65,14 @@ class UserController extends Controller
         return redirect($user->path());
     }
 
-    public function show(User $user)
+    public function show(User $user): Renderable
     {
         $this->authorize('update');
 
         return view('admin.users.show', compact('user'));
     }
 
-    public function edit(User $user)
+    public function edit(User $user): Renderable
     {
         $this->authorize('update');
 
@@ -81,7 +83,7 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user', 'companies', 'roles'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $this->authorize('update');
 
@@ -100,7 +102,7 @@ class UserController extends Controller
         return redirect($user->path());
     }
 
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $this->authorize('update');
 

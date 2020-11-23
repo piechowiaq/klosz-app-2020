@@ -48,19 +48,19 @@ class DepartmentController extends Controller
         return redirect($department->path());
     }
 
-    public function show(Department $department): Response
+    public function show(Department $department): Renderable
     {
         $this->authorize('update');
 
         return view('admin.departments.show', compact('department'));
     }
 
-    public function edit(Department $department): Response
+    public function edit(Department $department): Renderable
     {
         return view('admin.departments.edit', compact('department'));
     }
 
-    public function update(Request $request, Department $department): Response
+    public function update(Request $request, Department $department): RedirectResponse
     {
         $this->authorize('update');
 
@@ -69,7 +69,7 @@ class DepartmentController extends Controller
         return redirect($department->path());
     }
 
-    public function destroy(Department $department): Response
+    public function destroy(Department $department): RedirectResponse
     {
         $this->authorize('update');
 

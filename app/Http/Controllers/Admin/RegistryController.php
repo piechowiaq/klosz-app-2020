@@ -9,6 +9,8 @@ use App\Http\Requests\StoreRegistryRequest;
 use App\Http\Requests\UpdateRegistryRequest;
 use App\Registry;
 
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use function compact;
 
 class RegistryController extends Controller
@@ -18,7 +20,7 @@ class RegistryController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
         $this->authorize('update');
 
@@ -27,7 +29,7 @@ class RegistryController extends Controller
         return view('admin.registries.index', compact('registries'));
     }
 
-    public function create()
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -36,7 +38,7 @@ class RegistryController extends Controller
         return view('admin.registries.create', compact('registry'));
     }
 
-    public function store(StoreRegistryRequest $request)
+    public function store(StoreRegistryRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -47,21 +49,21 @@ class RegistryController extends Controller
         return redirect($registry->path());
     }
 
-    public function show(Registry $registry)
+    public function show(Registry $registry): Renderable
     {
         $this->authorize('update');
 
         return view('admin.registries.show', compact('registry'));
     }
 
-    public function edit(Registry $registry)
+    public function edit(Registry $registry): Renderable
     {
         $this->authorize('update');
 
         return view('admin.registries.edit', compact('registry'));
     }
 
-    public function update(UpdateRegistryRequest $request, Registry $registry)
+    public function update(UpdateRegistryRequest $request, Registry $registry): RedirectResponse
     {
         $this->authorize('update');
 
@@ -72,7 +74,7 @@ class RegistryController extends Controller
         return redirect($registry->path());
     }
 
-    public function destroy(Registry $registry)
+    public function destroy(Registry $registry): RedirectResponse
     {
         $this->authorize('update');
 
