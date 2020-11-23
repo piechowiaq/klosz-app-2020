@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Department;
@@ -7,7 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
-use Illuminate\Http\Request;
+
+use function compact;
 
 class PositionController extends Controller
 {
@@ -32,8 +35,8 @@ class PositionController extends Controller
         $position = new Position();
 
         $departments = Department::all();
-//
-        return view('admin.positions.create', compact( 'position', 'departments' ));
+
+        return view('admin.positions.create', compact('position', 'departments'));
     }
 
     public function store(StorePositionRequest $request)
@@ -78,5 +81,4 @@ class PositionController extends Controller
 
         return redirect('admin/positions');
     }
-
 }

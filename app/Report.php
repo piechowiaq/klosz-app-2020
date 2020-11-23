@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
-use App\Http\Requests\StoreUserReportRequest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,12 +31,8 @@ class Report extends Model
 //        return $this->attributes['expiry_date'] = Carbon::create(request('report_date'))->addMonths( Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
 //    }
 
-    public function calculateExpiryDate($report_date){
-
-        return Carbon::create(request('report_date'))->addMonths( Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
+    public function calculateExpiryDate($report_date)
+    {
+        return Carbon::create(request('report_date'))->addMonths(Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
     }
-
-
-
-
 }

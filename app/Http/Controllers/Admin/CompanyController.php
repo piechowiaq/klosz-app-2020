@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
@@ -9,12 +11,11 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
 use App\Registry;
-use App\User;
-use Illuminate\Http\Request;
+
+use function compact;
 
 class CompanyController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -39,7 +40,7 @@ class CompanyController extends Controller
 
         $registries = Registry::all();
 
-        return view('admin.companies.create', compact( 'company' , 'departments', 'registries'));
+        return view('admin.companies.create', compact('company', 'departments', 'registries'));
     }
 
     public function store(StoreCompanyRequest $request)
@@ -54,24 +55,23 @@ class CompanyController extends Controller
 
         $company->registries()->sync(request('registry_id'));
 
-        if(! empty(request('department_id'))){
-            $positions= Position::whereIn('department_id',request('department_id'))->get();
+        if (! empty(request('department_id'))) {
+            $positions = Position::whereIn('department_id', request('department_id'))->get();
 
             $company->positions()->sync($positions);
-            $trainings=[];
-            foreach ($positions as $position){
-                foreach($position->trainings as $training){
+            $trainings = [];
+            foreach ($positions as $position) {
+                foreach ($position->trainings as $training) {
                     $company->trainings()->sync($training, false);
-                        }
-            }}else{
-
-            $positions =[];
-            $trainings=[];
+                }
+            }
+        } else {
+            $positions = [];
+            $trainings = [];
 
             $company->positions()->sync($positions);
-            $company->trainings()->sync($trainings);}
-
-
+            $company->trainings()->sync($trainings);
+        }
 
 //        $departmentsId =  $position->trainings->map(function($training){
 //           $company->trainings()->sync($position->trainings);
@@ -84,7 +84,7 @@ class CompanyController extends Controller
 //           $position->companies()->sync($company,false);
 //        });
 
-        return redirect($company->path());
+            return redirect($company->path());
     }
 
     public function show(Company $company)
@@ -96,14 +96,13 @@ class CompanyController extends Controller
 
     public function edit(Company $company)
     {
-
         $this->authorize('update');
 
         $departments = Department::all();
 
         $registries = Registry::all();
 
-        return view('admin.companies.edit', compact( 'company', 'departments','registries'));
+        return view('admin.companies.edit', compact('company', 'departments', 'registries'));
     }
 
     public function update(UpdateCompanyRequest $request, Company $company)
@@ -116,24 +115,25 @@ class CompanyController extends Controller
 
         $company->registries()->sync(request('registry_id'));
 
-        if(! empty(request('department_id'))){
-            $positions= Position::whereIn('department_id',request('department_id'))->get();
+        if (! empty(request('department_id'))) {
+            $positions = Position::whereIn('department_id', request('department_id'))->get();
 
             $company->positions()->sync($positions);
-            $trainings=[];
-            foreach ($positions as $position){
-                foreach($position->trainings as $training){
+            $trainings = [];
+            foreach ($positions as $position) {
+                foreach ($position->trainings as $training) {
                     $company->trainings()->sync($training, false);
                 }
-            }}else{
-
-            $positions =[];
-            $trainings=[];
+            }
+        } else {
+            $positions = [];
+            $trainings = [];
 
             $company->positions()->sync($positions);
-            $company->trainings()->sync($trainings);}
+            $company->trainings()->sync($trainings);
+        }
 
-        return redirect($company->path());
+            return redirect($company->path());
     }
 
     public function destroy(Company $company)

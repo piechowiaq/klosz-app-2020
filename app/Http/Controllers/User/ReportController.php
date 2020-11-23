@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
 use App\Company;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserReportRequest;
 use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
-use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
+use function basename;
+use function compact;
 
 class ReportController extends Controller
 {
@@ -19,11 +23,8 @@ class ReportController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function index()
+    public function index(): void
     {
-
-
-
     }
 
     public function create($companyId, Report $report)
@@ -34,8 +35,7 @@ class ReportController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        return view('user.reports.create', compact( 'report', 'company'));
-
+        return view('user.reports.create', compact('report', 'company'));
     }
 
     public function store(StoreUserReportRequest $request, $companyId, Report $report)
@@ -44,7 +44,7 @@ class ReportController extends Controller
 
         $report = new Report(request(['registry_id', 'report_date']));
 
-        $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+        $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $companyId . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
         $report->company_id = $companyId;
 
@@ -52,7 +52,7 @@ class ReportController extends Controller
 
         $report->report_name = basename($path);
 
-        $report->report_path = Storage::disk('s3')->url($path) ;
+        $report->report_path = Storage::disk('s3')->url($path);
 
 //        dd(basename(request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 's3')));
 
@@ -68,11 +68,9 @@ class ReportController extends Controller
         return view('user.reports.show', compact('report', 'company'));
     }
 
-
-
     public function download($companyId, Report $report)
     {
-        return Storage::disk('s3')->response('reports/'. $report->report_name);
+        return Storage::disk('s3')->response('reports/' . $report->report_name);
     }
 
     public function edit($companyId, Report $report)
@@ -93,13 +91,12 @@ class ReportController extends Controller
         $report->expiry_date = Carbon::create(request('report_date'))->addMonths(Registry::where('id', $report->registry_id)->first()->valid_for)->toDateString();
 
         if (request()->has('file')) {
-
-            $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+            $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $companyId . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
             $report->report_name = basename($path);
 
-            $report->report_path = Storage::disk('s3')->url($path) ;
-        };
+            $report->report_path = Storage::disk('s3')->url($path);
+        }
 
         $report->save();
 
@@ -110,7 +107,6 @@ class ReportController extends Controller
 
     public function destroy($companyId, Report $report)
     {
-
         $registry = Registry::where('id', $report->registry_id)->first();
 
         $report->delete();

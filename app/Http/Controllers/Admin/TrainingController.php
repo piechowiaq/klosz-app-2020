@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,8 @@ use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
-use Illuminate\Http\Request;
+
+use function compact;
 
 class TrainingController extends Controller
 {
@@ -32,8 +35,8 @@ class TrainingController extends Controller
         $training = new Training();
 
         $positions = Position::all();
-//
-        return view('admin.trainings.create', compact( 'training', 'positions' ));
+
+        return view('admin.trainings.create', compact('training', 'positions'));
     }
 
     public function store(StoreTrainingRequest $request)
@@ -47,10 +50,11 @@ class TrainingController extends Controller
         $training->positions()->sync(request('position_id'));
 
         foreach ($training->positions as $position) {
-            $training->departments()->sync($position->department_id,false);
-            foreach ($position->employees as $employee){
+            $training->departments()->sync($position->department_id, false);
+            foreach ($position->employees as $employee) {
                 $training->employees()->sync($employee, false);
-            }}
+            }
+        }
 
         return redirect($training->path());
     }
@@ -82,10 +86,11 @@ class TrainingController extends Controller
         $training->positions()->sync(request('position_id'));
 
         foreach ($training->positions as $position) {
-            $training->departments()->sync($position->department_id,false);
-            foreach ($position->employees as $employee){
+            $training->departments()->sync($position->department_id, false);
+            foreach ($position->employees as $employee) {
                 $training->employees()->sync($employee, false);
-            }}
+            }
+        }
 
         return redirect($training->path());
     }
@@ -102,9 +107,9 @@ class TrainingController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name'=> 'sometimes|required',
+            'name' => 'sometimes|required',
             'description' => 'required|min:3',
-            'valid_for'=> 'required',
+            'valid_for' => 'required',
 
         ]);
     }

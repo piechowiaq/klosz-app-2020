@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
-
-
 
 use App\Http\Controllers\Controller;
 use App\Role;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
+use function compact;
 
 class RoleController extends Controller
 {
@@ -31,7 +31,7 @@ class RoleController extends Controller
 
         $role = new Role();
 
-        return view('admin.roles.create', compact( 'role' ));
+        return view('admin.roles.create', compact('role'));
     }
 
     public function store()
@@ -43,14 +43,12 @@ class RoleController extends Controller
         return redirect($role->path());
     }
 
-    public function show()
+    public function show(): void
     {
-
         $this->authorize('update');
-
     }
 
-    public function edit(Role $role)
+    public function edit(Role $role): void
     {
         $this->authorize('update');
     }
@@ -76,14 +74,8 @@ class RoleController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name'=> 'required|sometimes',
-            'description'=> 'required|sometimes',
+            'name' => 'required|sometimes',
+            'description' => 'required|sometimes',
         ]);
     }
-
-
-
-
-
-
 }

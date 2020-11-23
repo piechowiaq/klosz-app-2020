@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,6 +9,7 @@ use App\Http\Requests\StoreRegistryRequest;
 use App\Http\Requests\UpdateRegistryRequest;
 use App\Registry;
 
+use function compact;
 
 class RegistryController extends Controller
 {
@@ -30,7 +33,7 @@ class RegistryController extends Controller
 
         $registry = new Registry();
 
-        return view('admin.registries.create', compact( 'registry' ));
+        return view('admin.registries.create', compact('registry'));
     }
 
     public function store(StoreRegistryRequest $request)
