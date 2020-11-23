@@ -26,9 +26,9 @@ class Employee extends Model
         return "/admin/employees/{$this->id}";
     }
 
-    public function userpath($companyId)
+    public function userpath(Company $company)
     {
-        return "/$companyId/employees/{$this->id}";
+        return "/$company/employees/{$this->id}";
     }
 
     public function departments()
@@ -66,9 +66,9 @@ class Employee extends Model
         return $this->trainings()->count();
     }
 
-    public function scopeCertified($query, $training, $companyId)
+    public function scopeCertified($query, Training $training, Company $company)
     {
-        return $query->where('company_id', $companyId)->whereHas('certificates', static function ($q) use ($training): void {
+        return $query->where('company_id', $company)->whereHas('certificates', static function ($q) use ($training): void {
             $q->where('expiry_date', '>', Carbon::now())
                 ->where('training_id', $training->id);
         })->get();

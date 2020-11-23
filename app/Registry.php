@@ -23,9 +23,9 @@ class Registry extends Model
         return "/admin/registries/{$this->id}";
     }
 
-    public function userpath($companyId)
+    public function userpath(Company $company)
     {
-        return "/$companyId/registries/{$this->id}";
+        return "/$company/registries/{$this->id}";
     }
 
     public function reports()

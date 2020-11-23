@@ -23,9 +23,9 @@ class Training extends Model
         return "/admin/trainings/{$this->id}";
     }
 
-    public function userpath($companyId)
+    public function userpath(Company $company)
     {
-        return "/$companyId/trainings/{$this->id}";
+        return "/$company/trainings/{$this->id}";
     }
 
     public function departments()

@@ -11,9 +11,9 @@ class Report extends Model
 {
     protected $guarded = [];
 
-    public function userpath($companyId)
+    public function userpath(Company $company)
     {
-        return "/$companyId/reports/{$this->id}";
+        return "/$company/reports/{$this->id}";
     }
 
     public function registry()

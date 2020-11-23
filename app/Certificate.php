@@ -13,9 +13,9 @@ class Certificate extends Model
         return "/admin/certificates/{$this->id}";
     }
 
-    public function userpath($companyId, $trainingId):
+    public function userpath(Company $company, Training $training):
     {
-        return "/$companyId/trainings/$trainingId/certificates/{$this->id}";
+        return "/$company/trainings/$training/certificates/{$this->id}";
     }
 
     public function training()
