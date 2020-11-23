@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
@@ -8,8 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Position;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
+use function compact;
 
 class EmployeeController extends Controller
 {
@@ -25,7 +27,7 @@ class EmployeeController extends Controller
         $employees = Employee::all();
 
         return view('admin.employees.index', compact('employees'));
-      }
+    }
 
     public function create()
     {
@@ -37,7 +39,7 @@ class EmployeeController extends Controller
 
         $employee = new Employee();
 
-        return view('admin.employees.create', compact( 'positions', 'companies','employee' ));
+        return view('admin.employees.create', compact('positions', 'companies', 'employee'));
     }
 
     public function store(StoreEmployeeRequest $request)
@@ -48,21 +50,20 @@ class EmployeeController extends Controller
 
         $employee->save();
 
-
         $employee->positions()->sync(request('position_id'));
 
         foreach ($employee->positions as $position) {
-            $employee->departments()->sync($position->department_id,false);
-            foreach ($position->trainings as $training){
+            $employee->departments()->sync($position->department_id, false);
+            foreach ($position->trainings as $training) {
                 $employee->trainings()->sync($training, false);
-            }}
+            }
+        }
 
         return redirect($employee->path());
     }
 
     public function show(Employee $employee)
     {
-
         $this->authorize('update');
 
         return view('admin.employees.show', compact('employee'));
@@ -70,14 +71,13 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-
         $this->authorize('update');
 
         $positions = Position::all();
 
         $companies = Company::all();
 
-        return view ( 'admin.employees.edit', compact('employee', 'companies', 'positions'));
+        return view('admin.employees.edit', compact('employee', 'companies', 'positions'));
     }
 
     public function update(UpdateEmployeeRequest $request, Employee $employee)
@@ -91,13 +91,13 @@ class EmployeeController extends Controller
         $employee->positions()->sync(request('position_id'));
 
         foreach ($employee->positions as $position) {
-            $employee->departments()->sync($position->department_id,false);
-            foreach ($position->trainings as $training){
+            $employee->departments()->sync($position->department_id, false);
+            foreach ($position->trainings as $training) {
                 $employee->trainings()->sync($training, false);
-            }}
+            }
+        }
 
         return redirect($employee->path());
-
     }
 
     public function destroy(Employee $employee)
@@ -107,7 +107,5 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect('admin/employees');
-
     }
-
 }

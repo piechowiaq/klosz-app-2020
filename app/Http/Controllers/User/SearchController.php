@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
 use App\Certificate;
 use App\Company;
 use App\Employee;
-use App\Position;
+use App\Http\Controllers\Controller;
 use App\Registry;
 use App\Report;
 use App\Training;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
+use function compact;
+use function request;
 
 class SearchController extends Controller
 {
@@ -20,11 +23,11 @@ class SearchController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        $search = \request('q');
+        $search = request('q');
 
         $employees = Employee::search($search)->where('company_id', $companyId)->paginate(25);
 
-        if (\request()->expectsJson()) {
+        if (request()->expectsJson()) {
             return $employees;
         }
 
@@ -37,15 +40,14 @@ class SearchController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        $search = \request('q');
+        $search = request('q');
 
-        $companyRegistries = Registry::search($search)->whereHas('companies', function ($query) use ($companyId) {
+        $companyRegistries = Registry::search($search)->whereHas('companies', static function ($query) use ($companyId): void {
             $query->where('company_id', '=', $companyId);
         })->paginate(25);
 
-
-        if (\request()->expectsJson()) {
-            return  $companyRegistries;
+        if (request()->expectsJson()) {
+            return $companyRegistries;
         }
 
         return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
@@ -53,42 +55,20 @@ class SearchController extends Controller
 
     public function trainings($companyId, Certificate $certificate)
     {
-
         $company = Company::findOrfail($companyId);
 
-        $search = \request('q');
+        $search = request('q');
 
-        $companyTrainings = Training::search($search)->whereHas('companies', function ($query) use ($companyId) {
+        $companyTrainings = Training::search($search)->whereHas('companies', static function ($query) use ($companyId): void {
             $query->where('company_id', '=', $companyId);
         })->paginate(25);
 
-        if (\request()->expectsJson()) {
-            return   $companyTrainings;
+        if (request()->expectsJson()) {
+            return $companyTrainings;
         }
 
         return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //        $companyRegistries = Registry::search($search)->whereHas('companies', function($query) use ($companyId){
 //            $query->where('company_id', '=', $companyId);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
@@ -9,10 +11,9 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
+
+use function compact;
 
 class UserController extends Controller
 {
@@ -40,7 +41,7 @@ class UserController extends Controller
 
         $user = new User();
 
-        return view('admin.users.create', compact( 'roles', 'companies','user' ));
+        return view('admin.users.create', compact('roles', 'companies', 'user'));
     }
 
     public function store(StoreUserRequest $request)
@@ -66,7 +67,6 @@ class UserController extends Controller
     {
         $this->authorize('update');
 
-
         return view('admin.users.show', compact('user'));
     }
 
@@ -78,7 +78,7 @@ class UserController extends Controller
 
         $roles = Role::all();
 
-        return view ( 'admin.users.edit', compact('user', 'companies', 'roles'));
+        return view('admin.users.edit', compact('user', 'companies', 'roles'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -108,5 +108,4 @@ class UserController extends Controller
 
         return redirect('/admin/users');
     }
-
 }

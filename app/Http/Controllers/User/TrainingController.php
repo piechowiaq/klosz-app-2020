@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
 use App\Certificate;
 use App\Company;
-use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Training;
-use Carbon\Carbon;
-use function GuzzleHttp\Promise\all;
+
+use function compact;
 
 class TrainingController extends Controller
 {
@@ -21,9 +22,7 @@ class TrainingController extends Controller
     {
         $company = Company::findOrfail($companyId);
 
-
         $companyTrainings =  $company->trainings()->paginate(15);
-
 
         return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
     }
@@ -32,14 +31,10 @@ class TrainingController extends Controller
     {
         $company = Company::findOrFail($companyId);
 
-        $trainingEmployees = $training->employees->filter(function ($employee) use ($companyId) {
-
-         return  $employee->company_id == $companyId;
-
+        $trainingEmployees = $training->employees->filter(static function ($employee) use ($companyId) {
+            return $employee->company_id === $companyId;
         });
 
         return view('user.trainings.show', compact('training', 'company', 'trainingEmployees'));
     }
-
-
 }

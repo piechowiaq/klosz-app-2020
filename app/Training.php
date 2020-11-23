@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
-
 
 class Training extends Model
 {
@@ -15,7 +15,7 @@ class Training extends Model
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('name', 'like', '%'.$query.'%');
+            : static::where('name', 'like', '%' . $query . '%');
     }
 
     public function path()
@@ -60,5 +60,4 @@ class Training extends Model
 //                ->where('training_id', $training->id);
 //        })->get();
 //    }
-
 }
