@@ -8,7 +8,7 @@ use App\Company;
 use App\Http\Controllers\Controller;
 use App\Registry;
 use App\Report;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\Support\Renderable;
 
 use function compact;
 
@@ -19,7 +19,7 @@ class RegistryController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function index(Company $company, Report $report): Response
+    public function index(Company $company, Report $report): Renderable
     {
         $companyId = $company->getId();
 
@@ -28,7 +28,7 @@ class RegistryController extends Controller
         return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
     }
 
-    public function show($companyId, Registry $registry, Report $report): Response
+    public function show($companyId, Registry $registry, Report $report): Renderable
     {
         $company = Company::findOrFail($companyId);
 

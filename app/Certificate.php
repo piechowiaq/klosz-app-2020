@@ -13,7 +13,7 @@ class Certificate extends Model
         return "/admin/certificates/{$this->id}";
     }
 
-    public function userpath($companyId, $trainingId)
+    public function userpath($companyId, $trainingId):
     {
         return "/$companyId/trainings/$trainingId/certificates/{$this->id}";
     }

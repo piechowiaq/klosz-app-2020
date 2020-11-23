@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
 use function basename;
@@ -27,7 +29,7 @@ class ReportController extends Controller
     {
     }
 
-    public function create($companyId, Report $report)
+    public function create($companyId, Report $report): Renderable
     {
         $this->authorize('update', $report);
 
@@ -38,7 +40,7 @@ class ReportController extends Controller
         return view('user.reports.create', compact('report', 'company'));
     }
 
-    public function store(StoreUserReportRequest $request, $companyId, Report $report)
+    public function store(StoreUserReportRequest $request, $companyId, Report $report): RedirectResponse
     {
         $this->authorize('update', $report);
 
@@ -61,7 +63,7 @@ class ReportController extends Controller
         return redirect()->route('user.registries.index', [$companyId]);
     }
 
-    public function show($companyId, Report $report)
+    public function show($companyId, Report $report): Renderable
     {
         $company = Company::findOrFail($companyId);
 
@@ -73,14 +75,14 @@ class ReportController extends Controller
         return Storage::disk('s3')->response('reports/' . $report->report_name);
     }
 
-    public function edit($companyId, Report $report)
+    public function edit($companyId, Report $report): Renderable
     {
         $company = Company::findOrFail($companyId);
 
         return view('user.reports.edit', compact('report', 'company'));
     }
 
-    public function update(UpdateUserReportRequest $request, $companyId, Report $report)
+    public function update(UpdateUserReportRequest $request, $companyId, Report $report): RedirectResponse
     {
         $company = Company::findOrfail($companyId);
 
@@ -105,7 +107,7 @@ class ReportController extends Controller
         return redirect($registry->userpath($companyId));
     }
 
-    public function destroy($companyId, Report $report)
+    public function destroy($companyId, Report $report): RedirectResponse
     {
         $registry = Registry::where('id', $report->registry_id)->first();
 

@@ -11,6 +11,8 @@ use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
 use App\Position;
 
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use function compact;
 
 class EmployeeController extends Controller
@@ -20,7 +22,7 @@ class EmployeeController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function index($companyId, Employee $employee)
+    public function index($companyId, Employee $employee): Renderable
     {
         $this->authorize('view', $employee);
 
@@ -31,7 +33,7 @@ class EmployeeController extends Controller
         return view('user.employees.index', compact('employees', 'company', 'employee'));
     }
 
-    public function create($companyId, Employee $employee)
+    public function create($companyId, Employee $employee): Renderable
     {
         $this->authorize('update', $employee);
 
@@ -44,7 +46,7 @@ class EmployeeController extends Controller
         return view('user.employees.create', compact('positions', 'employee', 'company'));
     }
 
-    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee)
+    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee): RedirectResponse
     {
         $this->authorize('update', $employee);
 
@@ -66,14 +68,14 @@ class EmployeeController extends Controller
         return redirect()->route('user.employees.index', [$companyId]);
     }
 
-    public function show($companyId, Employee $employee)
+    public function show($companyId, Employee $employee): Renderable
     {
         $company = Company::findOrFail($companyId);
 
         return view('user.employees.show', compact('employee', 'company'));
     }
 
-    public function edit($companyId, Employee $employee)
+    public function edit($companyId, Employee $employee): Renderable
     {
         $this->authorize('update', $employee);
 
@@ -84,7 +86,7 @@ class EmployeeController extends Controller
         return view('user.employees.edit', compact('employee', 'company', 'positions'));
     }
 
-    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee)
+    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee): RedirectResponse
     {
         $this->authorize('update', $employee);
 
@@ -106,7 +108,7 @@ class EmployeeController extends Controller
         return redirect($employee->userpath($companyId));
     }
 
-    public function destroy($companyId, Employee $employee)
+    public function destroy($companyId, Employee $employee): RedirectResponse
     {
         $employee->delete();
 

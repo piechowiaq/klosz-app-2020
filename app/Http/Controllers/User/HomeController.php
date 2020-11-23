@@ -6,6 +6,7 @@ namespace App\Http\Controllers\User;
 
 use App\Company;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -35,7 +36,7 @@ class HomeController extends Controller
         return $user->isSuperAdmin() ? Redirect::action('Admin\AdminController@index') : view('user.home', compact('user'));
     }
 
-    public function index(Company $company)
+    public function index(Company $company): Renderable
     {
         $companyTrainings = $company->trainings;
 

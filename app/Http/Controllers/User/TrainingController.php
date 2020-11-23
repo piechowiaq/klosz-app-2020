@@ -9,6 +9,7 @@ use App\Company;
 use App\Http\Controllers\Controller;
 use App\Training;
 
+use Illuminate\Contracts\Support\Renderable;
 use function compact;
 
 class TrainingController extends Controller
@@ -18,7 +19,7 @@ class TrainingController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function index($companyId, Certificate $certificate)
+    public function index($companyId, Certificate $certificate): Renderable
     {
         $company = Company::findOrfail($companyId);
 
@@ -27,7 +28,7 @@ class TrainingController extends Controller
         return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
     }
 
-    public function show($companyId, Training $training)
+    public function show($companyId, Training $training): Renderable
     {
         $company = Company::findOrFail($companyId);
 

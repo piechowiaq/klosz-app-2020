@@ -12,12 +12,13 @@ use App\Registry;
 use App\Report;
 use App\Training;
 
+use Illuminate\Contracts\Support\Renderable;
 use function compact;
 use function request;
 
 class SearchController extends Controller
 {
-    public function show($companyId, Employee $employee)
+    public function show($companyId, Employee $employee): Renderable
     {
         $this->authorize('view', $employee);
 
@@ -34,7 +35,7 @@ class SearchController extends Controller
         return view('user.employees.index', compact('employees', 'company', 'employee'));
     }
 
-    public function registries($companyId, Report $report)
+    public function registries($companyId, Report $report): Renderable
     {
         $this->authorize('view', $report);
 
@@ -53,7 +54,7 @@ class SearchController extends Controller
         return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
     }
 
-    public function trainings($companyId, Certificate $certificate)
+    public function trainings($companyId, Certificate $certificate): Renderable
     {
         $company = Company::findOrfail($companyId);
 
