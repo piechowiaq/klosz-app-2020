@@ -23,6 +23,8 @@ class TrainingController extends Controller
     {
         $companyTrainings =  $company->trainings()->paginate(15);
 
+        $companyId = $company->id;
+
         return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
     }
 
