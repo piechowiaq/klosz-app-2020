@@ -19,9 +19,6 @@ class Role extends Model
         return "/admin/roles/{$this->id}";
     }
 
-    public static function create(array $array): void
-    {
-        self::create(array $array);
-    }
+
 
 }

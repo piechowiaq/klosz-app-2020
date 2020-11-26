@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Http\Controllers\User;
 
 use App\Certificate;
@@ -95,7 +93,7 @@ class CertificateController extends Controller
         return view('user.certificates.show', compact('certificate', 'company', 'training'));
     }
 
-    public function download($companyId, Certificate $certificate)
+    public function download(Certificate $certificate)
     {
         return Storage::disk('s3')->response('certificates/' . $certificate->certificate_name);
     }

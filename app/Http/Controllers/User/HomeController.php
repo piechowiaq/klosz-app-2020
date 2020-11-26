@@ -43,7 +43,7 @@ class HomeController extends Controller
         $collection = collect([]);
 
         foreach ($companyTrainings as $training) {
-            $collection->push($training->employees->where('company_id', $companyId)->count() === 0 ? 0 : round($training->employees()->certified($training, $companyId)->count() / $training->employees->where('company_id', $companyId)->count() * 100));
+            $collection->push($training->employees->where('company_id', $company)->count() === 0 ? 0 : round($training->employees()->certified($training, $company)->count() / $training->employees->where('company_id', $company)->count() * 100));
         }
 
         $average = round($collection->avg());
