@@ -1,16 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
 use App\Company;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserReportRequest;
 use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
-use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+
+use function basename;
+use function compact;
+use function redirect;
+use function request;
+use function view;
 
 class ReportController extends Controller
 {
@@ -18,26 +29,20 @@ class ReportController extends Controller
     {
         $this->middleware(['auth', 'auth.user']);
     }
+
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
-
-
-
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param Report $report
-     * @return void
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
-    public function create($companyId, Report $report)
+    public function create($companyId, Report $report): Renderable
     {
         $this->authorize('update', $report);
 
@@ -45,26 +50,23 @@ class ReportController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        return view('user.reports.create', compact( 'report', 'company'));
-
+        return view('user.reports.create', compact('report', 'company'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreUserReportRequest $request
      * @param $companyId
-     * @param Report $report
-     * @return void
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @throws AuthorizationException
      */
-    public function store(StoreUserReportRequest $request, $companyId, Report $report)
+    public function store(StoreUserReportRequest $request, $companyId, Report $report): Response
     {
         $this->authorize('update', $report);
 
         $report = new Report(request(['registry_id', 'report_date']));
 
-        $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+        $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $companyId . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
         $report->company_id = $companyId;
 
@@ -72,7 +74,7 @@ class ReportController extends Controller
 
         $report->report_name = basename($path);
 
-        $report->report_path = Storage::disk('s3')->url($path) ;
+        $report->report_path = Storage::disk('s3')->url($path);
 
 //        dd(basename(request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 's3')));
 
@@ -85,32 +87,23 @@ class ReportController extends Controller
      * Display the specified resource.
      *
      * @param $companyId
-     * @param \App\Report $report
-     * @return void
      */
-    public function show($companyId, Report $report)
+    public function show($companyId, Report $report): Renderable
     {
         $company = Company::findOrFail($companyId);
 
         return view('user.reports.show', compact('report', 'company'));
     }
 
-
-
     public function download($companyId, Report $report)
     {
-        return Storage::disk('s3')->response('reports/'. $report->report_name);
+        return Storage::disk('s3')->response('reports/' . $report->report_name);
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
      */
-    public function edit($companyId, Report $report)
+    public function edit($companyId, Report $report): Response
     {
         $company = Company::findOrFail($companyId);
 
@@ -120,11 +113,9 @@ class ReportController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function update(UpdateUserReportRequest $request, $companyId, Report $report)
+    public function update(UpdateUserReportRequest $request, $companyId, Report $report): Response
     {
         $company = Company::findOrfail($companyId);
 
@@ -135,13 +126,12 @@ class ReportController extends Controller
         $report->expiry_date = Carbon::create(request('report_date'))->addMonths(Registry::where('id', $report->registry_id)->first()->valid_for)->toDateString();
 
         if (request()->has('file')) {
-
-            $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+            $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $companyId . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
             $report->report_name = basename($path);
 
-            $report->report_path = Storage::disk('s3')->url($path) ;
-        };
+            $report->report_path = Storage::disk('s3')->url($path);
+        }
 
         $report->save();
 
@@ -152,13 +142,9 @@ class ReportController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($companyId, Report $report)
+    public function destroy($companyId, Report $report): Response
     {
-
         $registry = Registry::where('id', $report->registry_id)->first();
 
         $report->delete();

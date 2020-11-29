@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Department;
@@ -8,6 +10,11 @@ use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+use function compact;
+use function redirect;
+use function view;
 
 class PositionController extends Controller
 {
@@ -15,12 +22,11 @@ class PositionController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
 //        $this->authorize('update');
 
@@ -31,27 +37,24 @@ class PositionController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('update');
 
         $position = new Position();
 
         $departments = Department::all();
-//
-        return view('admin.positions.create', compact( 'position', 'departments' ));
+
+        return view('admin.positions.create', compact('position', 'departments'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function store(StorePositionRequest $request)
+    public function store(StorePositionRequest $request): Response
     {
         $this->authorize('update');
 
@@ -62,11 +65,8 @@ class PositionController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
      */
-    public function show(Position $position)
+    public function show(Position $position): Response
     {
         $this->authorize('update');
 
@@ -75,11 +75,8 @@ class PositionController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Position $position)
+    public function edit(Position $position): Response
     {
         $this->authorize('update');
 
@@ -91,11 +88,9 @@ class PositionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function update(UpdatePositionRequest $request, Position $position)
+    public function update(UpdatePositionRequest $request, Position $position): Response
     {
         $this->authorize('update');
 
@@ -106,11 +101,8 @@ class PositionController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Position $position)
+    public function destroy(Position $position): Response
     {
         $this->authorize('update');
 
@@ -118,5 +110,4 @@ class PositionController extends Controller
 
         return redirect('admin/positions');
     }
-
 }

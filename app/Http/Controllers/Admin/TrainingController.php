@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -8,6 +10,12 @@ use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+use function compact;
+use function redirect;
+use function request;
+use function view;
 
 class TrainingController extends Controller
 {
@@ -15,12 +23,11 @@ class TrainingController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
         $this->authorize('update');
 
@@ -31,27 +38,24 @@ class TrainingController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('update');
 
         $training = new Training();
 
         $positions = Position::all();
-//
-        return view('admin.trainings.create', compact( 'training', 'positions' ));
+
+        return view('admin.trainings.create', compact('training', 'positions'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function store(StoreTrainingRequest $request)
+    public function store(StoreTrainingRequest $request): Response
     {
         $this->authorize('update');
 
@@ -62,21 +66,19 @@ class TrainingController extends Controller
         $training->positions()->sync(request('position_id'));
 
         foreach ($training->positions as $position) {
-            $training->departments()->sync($position->department_id,false);
-            foreach ($position->employees as $employee){
+            $training->departments()->sync($position->department_id, false);
+            foreach ($position->employees as $employee) {
                 $training->employees()->sync($employee, false);
-            }}
+            }
+        }
 
         return redirect($training->path());
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
      */
-    public function show(Training $training)
+    public function show(Training $training): Response
     {
         $this->authorize('update');
 
@@ -85,11 +87,8 @@ class TrainingController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Training $training)
+    public function edit(Training $training): Response
     {
         $this->authorize('update');
 
@@ -101,11 +100,9 @@ class TrainingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function update(UpdateTrainingRequest $request, Training $training)
+    public function update(UpdateTrainingRequest $request, Training $training): Response
     {
         $this->authorize('update');
 
@@ -116,21 +113,19 @@ class TrainingController extends Controller
         $training->positions()->sync(request('position_id'));
 
         foreach ($training->positions as $position) {
-            $training->departments()->sync($position->department_id,false);
-            foreach ($position->employees as $employee){
+            $training->departments()->sync($position->department_id, false);
+            foreach ($position->employees as $employee) {
                 $training->employees()->sync($employee, false);
-            }}
+            }
+        }
 
         return redirect($training->path());
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Training $training)
+    public function destroy(Training $training): Response
     {
         $this->authorize('update');
 
@@ -142,9 +137,9 @@ class TrainingController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name'=> 'sometimes|required',
+            'name' => 'sometimes|required',
             'description' => 'required|min:3',
-            'valid_for'=> 'required',
+            'valid_for' => 'required',
 
         ]);
     }

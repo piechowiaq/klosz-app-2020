@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
 use App\Company;
-use App\Employee;
-use App\Training;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Controllers\Controller;
-use App\Charts\RegistryChart;
-use App\Charts\TrainingChart;
+
+use function collect;
+use function compact;
+use function now;
+use function round;
+use function view;
 
 class HomeController extends Controller
 {
@@ -27,36 +30,24 @@ class HomeController extends Controller
 
     /**
      * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function home()
+    public function home(): RedirectResponse
     {
         $user = Auth::user();
 
-
-
-        if($user->companies()->count() == 1){
-
+        if ($user->companies()->count() === 1) {
             $company = $user->companies()->first();
 
             $companyId = $company->id;
 
-
             return Redirect::action('User\HomeController@index', $companyId);
-
         }
-        else if($user->isSuperAdmin()){
 
+        if ($user->isSuperAdmin()) {
             return Redirect::action('Admin\AdminController@index');
-
-        }
-        else {
-
-            return view('user.home', compact('user'));
-
         }
 
+        return view('user.home', compact('user'));
     }
 
     public function index($companyId)
@@ -68,33 +59,29 @@ class HomeController extends Controller
         $collection = collect([]);
 
         foreach ($companyTrainings as $training) {
-
-            $collection->push( $training->employees->where('company_id', $companyId)->count() == 0 ?0: round($training->employees()->certified($training, $companyId)->count() / $training->employees->where('company_id', $companyId)->count() * 100));
+            $collection->push($training->employees->where('company_id', $companyId)->count() === 0 ? 0 : round($training->employees()->certified($training, $companyId)->count() / $training->employees->where('company_id', $companyId)->count() * 100));
         }
 
-        $average = round ($collection->avg());
-
-
+        $average = round($collection->avg());
 
         $companyRegistries = $company->registries;
 
         $collection = collect();
 
-        foreach($company->registries as $registry) {
-            foreach($registry->reports->where('company_id', $company->id) as $report) {
-                   if($report->expiry_date > now()){
+        foreach ($company->registries as $registry) {
+            foreach ($registry->reports->where('company_id', $company->id) as $report) {
+                if ($report->expiry_date <= now()) {
+                    continue;
+                }
+
                 $collection->push($report);
-
-            }}}
-
+            }
+        }
 
         $validRegistries = $collection->unique('registry_id')->count();
 
-        $registryChartValue= $companyRegistries->count() ==0 ?0: round($validRegistries / $companyRegistries->count()*100);
+        $registryChartValue = $companyRegistries->count() === 0 ? 0 : round($validRegistries / $companyRegistries->count() * 100);
 
-
-        return view('user.dashboard', compact('company', 'companyTrainings' , 'average', 'companyRegistries', 'registryChartValue'));
+        return view('user.dashboard', compact('company', 'companyTrainings', 'average', 'companyRegistries', 'registryChartValue'));
     }
-
-
 }

@@ -1,12 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegistryRequest;
 use App\Http\Requests\UpdateRegistryRequest;
 use App\Registry;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
+use function compact;
+use function redirect;
+use function request;
+use function view;
 
 class RegistryController extends Controller
 {
@@ -17,10 +26,8 @@ class RegistryController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
         $this->authorize('update');
 
@@ -31,26 +38,24 @@ class RegistryController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('update');
 
         $registry = new Registry();
 
-        return view('admin.registries.create', compact( 'registry' ));
+        return view('admin.registries.create', compact('registry'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param Request $request
+     *
+     * @throws AuthorizationException
      */
-    public function store(StoreRegistryRequest $request)
+    public function store(StoreRegistryRequest $request): Response
     {
         $this->authorize('update');
 
@@ -64,11 +69,9 @@ class RegistryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Registry $registry
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
-    public function show(Registry $registry)
+    public function show(Registry $registry): Response
     {
         $this->authorize('update');
 
@@ -77,11 +80,8 @@ class RegistryController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Registry $registry)
+    public function edit(Registry $registry): Response
     {
         $this->authorize('update');
 
@@ -91,11 +91,9 @@ class RegistryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function update(UpdateRegistryRequest $request, Registry $registry)
+    public function update(UpdateRegistryRequest $request, Registry $registry): Response
     {
         $this->authorize('update');
 
@@ -108,11 +106,8 @@ class RegistryController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Registry $registry)
+    public function destroy(Registry $registry): Response
     {
         $this->authorize('update');
 

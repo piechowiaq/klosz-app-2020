@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
@@ -10,9 +12,13 @@ use App\Role;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
+
+use function compact;
+use function redirect;
+use function request;
+use function view;
 
 class UserController extends Controller
 {
@@ -32,10 +38,8 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('update');
 
@@ -45,16 +49,15 @@ class UserController extends Controller
 
         $user = new User();
 
-        return view('admin.users.create', compact( 'roles', 'companies','user' ));
+        return view('admin.users.create', compact('roles', 'companies', 'user'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): Response
     {
         $this->authorize('update');
 
@@ -75,25 +78,18 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user): Response
     {
         $this->authorize('update');
-
 
         return view('admin.users.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $user): Response
     {
         $this->authorize('update');
 
@@ -101,17 +97,15 @@ class UserController extends Controller
 
         $roles = Role::all();
 
-        return view ( 'admin.users.edit', compact('user', 'companies', 'roles'));
+        return view('admin.users.edit', compact('user', 'companies', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): Response
     {
         $this->authorize('update');
 
@@ -132,11 +126,8 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $user): Response
     {
         $this->authorize('update');
 
@@ -144,5 +135,4 @@ class UserController extends Controller
 
         return redirect('/admin/users');
     }
-
 }

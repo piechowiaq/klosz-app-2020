@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Renderable;
+
+use function view;
 
 class AdminController extends Controller
 {
@@ -12,7 +16,7 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
         $this->authorize('update');
 

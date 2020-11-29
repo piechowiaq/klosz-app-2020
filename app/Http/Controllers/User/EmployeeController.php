@@ -1,22 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
-use App\Certificate;
 use App\Company;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
 use App\Position;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
+use function compact;
+use function redirect;
+use function request;
+use function view;
 
 class EmployeeController extends Controller
 {
-
-       public function __construct()
+    public function __construct()
     {
         $this->middleware(['auth', 'auth.user']);
     }
@@ -25,9 +30,8 @@ class EmployeeController extends Controller
      * Display a listing of the resource.
      *
      * @param $companyId
-     * @return \Illuminate\Http\Response
      */
-    public function index($companyId, Employee $employee)
+    public function index($companyId, Employee $employee): Response
     {
         $this->authorize('view', $employee);
 
@@ -36,16 +40,14 @@ class EmployeeController extends Controller
         $employees = Employee::where('company_id', $companyId)->get();
 
         return view('user.employees.index', compact('employees', 'company', 'employee'));
-
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @param $id
-     * @return \Illuminate\Http\Response
      */
-    public function create($companyId, Employee $employee)
+    public function create($companyId, Employee $employee): Response
     {
         $this->authorize('update', $employee);
 
@@ -55,19 +57,17 @@ class EmployeeController extends Controller
 
         $positions = $company->positions;
 
-        return view('user.employees.create', compact( 'positions', 'employee', 'company'));
+        return view('user.employees.create', compact('positions', 'employee', 'company'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreUserEmployeeRequest $request
      * @param $companyId
-     * @param Employee $employee
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @throws AuthorizationException
      */
-    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee)
+    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee): Response
     {
         $this->authorize('update', $employee);
 
@@ -80,10 +80,11 @@ class EmployeeController extends Controller
         $employee->positions()->sync(request('position_id'));
 
         foreach ($employee->positions as $position) {
-            $employee->departments()->sync($position->department_id,false);
-            foreach ($position->trainings as $training){
+            $employee->departments()->sync($position->department_id, false);
+            foreach ($position->trainings as $training) {
                 $employee->trainings()->sync($training, false);
-            }}
+            }
+        }
 
         return redirect()->route('user.employees.index', [$companyId]);
     }
@@ -91,45 +92,35 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Employee $employee
      * @param $company
-     * @return \Illuminate\Http\Response
      */
-    public function show($companyId, Employee $employee)
+    public function show($companyId, Employee $employee): Response
     {
-
         $company = Company::findOrFail($companyId);
-
 
         return view('user.employees.show', compact('employee', 'company'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
      */
-    public function edit($companyId, Employee $employee)
+    public function edit($companyId, Employee $employee): Response
     {
-
         $this->authorize('update', $employee);
 
         $positions = Position::all();
 
         $company = Company::findOrFail($companyId);
 
-        return view ( 'user.employees.edit', compact('employee', 'company', 'positions'));
+        return view('user.employees.edit', compact('employee', 'company', 'positions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee)
+    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee): Response
     {
         $this->authorize('update', $employee);
 
@@ -142,13 +133,13 @@ class EmployeeController extends Controller
         $employee->positions()->sync(request('position_id'));
 
         foreach ($employee->positions as $position) {
-            $employee->departments()->sync($position->department_id,false);
-            foreach ($position->trainings as $training){
+            $employee->departments()->sync($position->department_id, false);
+            foreach ($position->trainings as $training) {
                 $employee->trainings()->sync($training, false);
-            }}
+            }
+        }
 
         return redirect($employee->userpath($companyId));
-
     }
 
     public function destroy($companyId, Employee $employee)
@@ -156,9 +147,5 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect()->route('user.employees.index', [$companyId]);
-
     }
-
-
-
 }

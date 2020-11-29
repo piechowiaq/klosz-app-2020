@@ -12,8 +12,8 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
 use App\Registry;
 use Illuminate\Contracts\Support\Renderable;
-
 use Illuminate\Http\RedirectResponse;
+
 use function compact;
 use function redirect;
 use function request;
@@ -43,7 +43,7 @@ class CompanyController extends Controller
         return view('admin.companies.create')->with(['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
 
-    public function store(StoreCompanyRequest $request):RedirectResponse
+    public function store(StoreCompanyRequest $request): RedirectResponse
     {
         $company = new Company();
         $company->setName($request->get('name'));
