@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ruleset>
+    <arg name="basepath" value="."/>
+    <arg name="extensions" value="php"/>
+    <arg name="parallel" value="16"/>
+    <arg name="colors"/>
+    <file>./app</file>
+    <exclude-pattern>*/*.blade.php</exclude-pattern>
+    <arg name="tab-width" value="4"/>
+    <arg value="nps"/>
+    <rule ref="PSR2"/>
+    <rule ref="Doctrine"/>
+
+</ruleset>
