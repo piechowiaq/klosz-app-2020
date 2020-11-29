@@ -9,10 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
-use function compact;
 use function redirect;
 use function view;
 
@@ -23,22 +22,16 @@ class PositionController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): Response
+    public function index(): Renderable
     {
 //        $this->authorize('update');
 
         $positions = Position::all();
 
-        return view('admin.positions.index', compact('positions'));
+        return view('admin.positions.index')->with(['positions' => $positions]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -46,15 +39,10 @@ class PositionController extends Controller
 
         $departments = Department::all();
 
-        return view('admin.positions.create', compact('position', 'departments'));
+        return view('admin.positions.create')->with(['position' => $position, 'departments' => $departments]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     */
-    public function store(StorePositionRequest $request): Response
+    public function store(StorePositionRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -63,34 +51,23 @@ class PositionController extends Controller
         return redirect($position->path());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Position $position): Response
+    public function show(Position $position): Renderable
     {
         $this->authorize('update');
 
-        return view('admin.positions.show', compact('position'));
+        return view('admin.positions.show')->with(['position' => $position]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Position $position): Response
+    public function edit(Position $position): Renderable
     {
         $this->authorize('update');
 
         $departments = Department::all();
 
-        return view('admin.positions.edit', compact('position', 'departments'));
+        return view('admin.positions.edit')->with(['position' => $position, 'departments' => $departments]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     */
-    public function update(UpdatePositionRequest $request, Position $position): Response
+    public function update(UpdatePositionRequest $request, Position $position): RedirectResponse
     {
         $this->authorize('update');
 
@@ -99,10 +76,7 @@ class PositionController extends Controller
         return redirect($position->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Position $position): Response
+    public function destroy(Position $position): RedirectResponse
     {
         $this->authorize('update');
 

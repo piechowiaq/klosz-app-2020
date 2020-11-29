@@ -11,8 +11,9 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 use function compact;
@@ -27,7 +28,7 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
         $this->authorize('update');
 
@@ -39,7 +40,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -57,7 +58,7 @@ class UserController extends Controller
      *
      * @param Request $request
      */
-    public function store(StoreUserRequest $request): Response
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -79,7 +80,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user): Response
+    public function show(User $user): Renderable
     {
         $this->authorize('update');
 
@@ -89,7 +90,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user): Response
+    public function edit(User $user): Renderable
     {
         $this->authorize('update');
 
@@ -105,7 +106,7 @@ class UserController extends Controller
      *
      * @param Request $request
      */
-    public function update(UpdateUserRequest $request, User $user): Response
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $this->authorize('update');
 
@@ -127,7 +128,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user): Response
+    public function destroy(User $user): RedirectResponse
     {
         $this->authorize('update');
 

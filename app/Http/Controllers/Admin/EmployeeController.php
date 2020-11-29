@@ -10,11 +10,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Position;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
-use function compact;
 use function redirect;
 use function request;
 use function view;
@@ -26,24 +24,16 @@ class EmployeeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): Response
+    public function index(): Renderable
     {
         $this->authorize('update');
 
         $employees = Employee::all();
 
-        return view('admin.employees.index', compact('employees'));
+        return view('admin.employees.index')->with(['employees' => $employees]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @throws AuthorizationException
-     */
-    public function create(): Response
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -53,15 +43,10 @@ class EmployeeController extends Controller
 
         $employee = new Employee();
 
-        return view('admin.employees.create', compact('positions', 'companies', 'employee'));
+        return view('admin.employees.create')->with(['positions' => $positions, 'companies' => $companies, 'employee' => $employee]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     */
-    public function store(StoreEmployeeRequest $request): Response
+    public function store(StoreEmployeeRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -81,20 +66,14 @@ class EmployeeController extends Controller
         return redirect($employee->path());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Employee $employee): Response
+    public function show(Employee $employee): Renderable
     {
         $this->authorize('update');
 
-        return view('admin.employees.show', compact('employee'));
+        return view('admin.employees.show')->with(['employee' => $employee]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Employee $employee): Response
+    public function edit(Employee $employee): Renderable
     {
         $this->authorize('update');
 
@@ -102,15 +81,10 @@ class EmployeeController extends Controller
 
         $companies = Company::all();
 
-        return view('admin.employees.edit', compact('employee', 'companies', 'positions'));
+        return view('admin.employees.edit')->with(['employee' => $employee, 'companies' => $companies, 'positions' => $positions]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     */
-    public function update(UpdateEmployeeRequest $request, Employee $employee): Response
+    public function update(UpdateEmployeeRequest $request, Employee $employee): RedirectResponse
     {
         $this->authorize('update');
 
@@ -130,10 +104,7 @@ class EmployeeController extends Controller
         return redirect($employee->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Employee $employee): Response
+    public function destroy(Employee $employee): RedirectResponse
     {
         $this->authorize('update');
 

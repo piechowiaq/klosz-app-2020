@@ -6,10 +6,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Department;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
-use function compact;
 use function redirect;
 use function request;
 use function view;
@@ -21,33 +21,24 @@ class DepartmentController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): Response
+    public function index(): Renderable
     {
         $this->authorize('update');
 
         $departments = Department::all();
 
-        return view('admin.departments.index', compact('departments'));
+        return view('admin.departments.index')->with(['departments' => $departments]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
+    public function create(): Renderable
     {
         $this->authorize('update');
         $department = new Department();
 
-        return view('admin.departments.create', compact('department'));
+        return view('admin.departments.create')->with(['department' => $department]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): Response
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -56,28 +47,19 @@ class DepartmentController extends Controller
         return redirect($department->path());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Department $department): Response
+    public function show(Department $department): Renderable
     {
         $this->authorize('update');
 
-        return view('admin.departments.show', compact('department'));
+        return view('admin.departments.show')->with(['department' => $department]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Department $department): Response
+    public function edit(Department $department): Renderable
     {
-        return view('admin.departments.edit', compact('department'));
+        return view('admin.departments.edit')->with(['department' => $department]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Department $department): Response
+    public function update(Request $request, Department $department): RedirectResponse
     {
         $this->authorize('update');
 
@@ -86,10 +68,7 @@ class DepartmentController extends Controller
         return redirect($department->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Department $department): Response
+    public function destroy(Department $department): RedirectResponse
     {
         $this->authorize('update');
 

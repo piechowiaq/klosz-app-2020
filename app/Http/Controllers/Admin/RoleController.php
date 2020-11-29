@@ -6,8 +6,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Role;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
-use function compact;
 use function redirect;
 use function request;
 use function view;
@@ -19,25 +20,25 @@ class RoleController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): Renderable
     {
         $this->authorize('update');
 
         $roles = Role::all();
 
-        return view('admin.roles.index', compact('roles'));
+        return view('admin.roles.index')->with(['roles' => $roles]);
     }
 
-    public function create()
+    public function create(): Renderable
     {
         $this->authorize('update');
 
         $role = new Role();
 
-        return view('admin.roles.create', compact('role'));
+        return view('admin.roles.create')->with(['role' => $role]);
     }
 
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->authorize('update');
 
@@ -56,7 +57,7 @@ class RoleController extends Controller
         $this->authorize('update');
     }
 
-    public function update(Role $role)
+    public function update(Role $role): RedirectResponse
     {
         $this->authorize('update');
 
@@ -65,7 +66,7 @@ class RoleController extends Controller
         return redirect($role->path());
     }
 
-    public function destroy(Role $role)
+    public function destroy(Role $role): RedirectResponse
     {
         $this->authorize('update');
 

@@ -14,7 +14,6 @@ use App\Registry;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 
-use function compact;
 use function redirect;
 use function request;
 use function view;
@@ -29,6 +28,8 @@ class CompanyController extends Controller
 
     public function index(): Renderable
     {
+        $this->authorize('update');
+
         $companies = Company::all();
 
         return view('admin.companies.index')->with(['companies' => $companies]);
@@ -36,6 +37,8 @@ class CompanyController extends Controller
 
     public function create(): Renderable
     {
+        $this->authorize('update');
+
         $company     = new Company();
         $departments = Department::all();
         $registries  = Registry::all();
@@ -45,6 +48,8 @@ class CompanyController extends Controller
 
     public function store(StoreCompanyRequest $request): RedirectResponse
     {
+        $this->authorize('update');
+
         $company = new Company();
         $company->setName($request->get('name'));
         $company->save();
@@ -84,22 +89,28 @@ class CompanyController extends Controller
             return redirect($company->path());
     }
 
-    public function show(Company $company)
+    public function show(Company $company): Renderable
     {
-        return view('admin.companies.show', compact('company'));
+        $this->authorize('update');
+
+        return view('admin.companies.show')->with(['company' => $company]);
     }
 
-    public function edit(Company $company)
+    public function edit(Company $company): Renderable
     {
+        $this->authorize('update');
+
         $departments = Department::all();
 
         $registries = Registry::all();
 
-        return view('admin.companies.edit', compact('company', 'departments', 'registries'));
+        return view('admin.companies.edit')->with(['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
 
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update(UpdateCompanyRequest $request, Company $company): RedirectResponse
     {
+        $this->authorize('update');
+
         $company->update(request(['name']));
 
         $company->departments()->sync(request('department_id'));
@@ -127,8 +138,10 @@ class CompanyController extends Controller
             return redirect($company->path());
     }
 
-    public function destroy(Company $company)
+    public function destroy(Company $company): RedirectResponse
     {
+        $this->authorize('update');
+
         $company->delete();
 
         return redirect('admin/companies');
