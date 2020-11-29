@@ -60,7 +60,7 @@ class Company extends Model
         return new DateTime($this->attributes[self::CREATED_AT_COLUMN]);
     }
 
-    public function setCreatedAt(DateTime $dateTime): void
+    public function setCreatedAtDateTime(DateTime $dateTime): void
     {
         $this->attributes[self::CREATED_AT_COLUMN] = $dateTime;
     }
@@ -70,7 +70,7 @@ class Company extends Model
         return new DateTime($this->attributes[self::UPDATED_AT_COLUMN]);
     }
 
-    public function setUpdatedAt(DateTime $dateTime): void
+    public function setUpdatedAtDateTime(DateTime $dateTime): void
     {
         $this->attributes[self::UPDATED_AT_COLUMN] = $dateTime;
     }
