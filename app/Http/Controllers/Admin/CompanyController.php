@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
@@ -9,68 +11,64 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
 use App\Registry;
-use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Support\Renderable;
+
+use Illuminate\Http\RedirectResponse;
+use function compact;
+use function redirect;
+use function request;
+use function view;
 
 class CompanyController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+//        $this->authorizeResource(Company::class, 'company');
     }
 
-    public function index()
+    public function index(): Renderable
     {
-        $this->authorize('update');
-
         $companies = Company::all();
 
-        return view('admin.companies.index', compact('companies'));
+        return view('admin.companies.index')->with(['companies' => $companies]);
     }
 
-    public function create()
+    public function create(): Renderable
     {
-        $this->authorize('update');
-
-        $company = new Company();
-
+        $company     = new Company();
         $departments = Department::all();
+        $registries  = Registry::all();
 
-        $registries = Registry::all();
-
-        return view('admin.companies.create', compact( 'company' , 'departments', 'registries'));
+        return view('admin.companies.create')->with(['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
 
-    public function store(StoreCompanyRequest $request)
+    public function store(StoreCompanyRequest $request):RedirectResponse
     {
-        $this->authorize('update');
-
-        $company = new Company(request(['name']));
-
+        $company = new Company();
+        $company->setName($request->get('name'));
         $company->save();
 
-        $company->departments()->sync(request('department_id'));
+        $company->departments()->sync($request->get('department_id'));
+        $company->registries()->sync($request->get('registry_id'));
 
-        $company->registries()->sync(request('registry_id'));
-
-        if(! empty(request('department_id'))){
-            $positions= Position::whereIn('department_id',request('department_id'))->get();
+        if (! empty(request('department_id'))) {
+            $positions = Position::whereIn('department_id', request('department_id'))->get();
 
             $company->positions()->sync($positions);
-            $trainings=[];
-            foreach ($positions as $position){
-                foreach($position->trainings as $training){
+            $trainings = [];
+            foreach ($positions as $position) {
+                foreach ($position->trainings as $training) {
                     $company->trainings()->sync($training, false);
-                        }
-            }}else{
-
-            $positions =[];
-            $trainings=[];
+                }
+            }
+        } else {
+            $positions = [];
+            $trainings = [];
 
             $company->positions()->sync($positions);
-            $company->trainings()->sync($trainings);}
-
-
+            $company->trainings()->sync($trainings);
+        }
 
 //        $departmentsId =  $position->trainings->map(function($training){
 //           $company->trainings()->sync($position->trainings);
@@ -83,62 +81,54 @@ class CompanyController extends Controller
 //           $position->companies()->sync($company,false);
 //        });
 
-        return redirect($company->path());
+            return redirect($company->path());
     }
 
     public function show(Company $company)
     {
-        $this->authorize('update');
-
         return view('admin.companies.show', compact('company'));
     }
 
     public function edit(Company $company)
     {
-
-        $this->authorize('update');
-
         $departments = Department::all();
 
         $registries = Registry::all();
 
-        return view('admin.companies.edit', compact( 'company', 'departments','registries'));
+        return view('admin.companies.edit', compact('company', 'departments', 'registries'));
     }
 
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $this->authorize('update');
-
         $company->update(request(['name']));
 
         $company->departments()->sync(request('department_id'));
 
         $company->registries()->sync(request('registry_id'));
 
-        if(! empty(request('department_id'))){
-            $positions= Position::whereIn('department_id',request('department_id'))->get();
+        if (! empty(request('department_id'))) {
+            $positions = Position::whereIn('department_id', request('department_id'))->get();
 
             $company->positions()->sync($positions);
-            $trainings=[];
-            foreach ($positions as $position){
-                foreach($position->trainings as $training){
+            $trainings = [];
+            foreach ($positions as $position) {
+                foreach ($position->trainings as $training) {
                     $company->trainings()->sync($training, false);
                 }
-            }}else{
-
-            $positions =[];
-            $trainings=[];
+            }
+        } else {
+            $positions = [];
+            $trainings = [];
 
             $company->positions()->sync($positions);
-            $company->trainings()->sync($trainings);}
+            $company->trainings()->sync($trainings);
+        }
 
-        return redirect($company->path());
+            return redirect($company->path());
     }
 
     public function destroy(Company $company)
     {
-        $this->authorize('update');
-
         $company->delete();
 
         return redirect('admin/companies');

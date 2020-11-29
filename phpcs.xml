@@ -9,6 +9,8 @@
     <arg name="tab-width" value="4"/>
     <arg value="nps"/>
     <rule ref="PSR2"/>
-    <rule ref="Doctrine"/>
+    <rule ref="Doctrine">
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint" />
+    </rule>
 
 </ruleset>
