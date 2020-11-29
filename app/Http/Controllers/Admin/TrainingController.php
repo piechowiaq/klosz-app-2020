@@ -9,10 +9,9 @@ use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
-use function compact;
 use function redirect;
 use function request;
 use function view;
@@ -24,22 +23,16 @@ class TrainingController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): Response
+    public function index(): Renderable
     {
         $this->authorize('update');
 
         $trainings = Training::all();
 
-        return view('admin.trainings.index', compact('trainings'));
+        return view('admin.trainings.index')->with(['trainings' => $trainings]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
+    public function create(): Renderable
     {
         $this->authorize('update');
 
@@ -47,15 +40,10 @@ class TrainingController extends Controller
 
         $positions = Position::all();
 
-        return view('admin.trainings.create', compact('training', 'positions'));
+        return view('admin.trainings.create')->with(['training' => $training, 'positions' => $positions]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     */
-    public function store(StoreTrainingRequest $request): Response
+    public function store(StoreTrainingRequest $request): RedirectResponse
     {
         $this->authorize('update');
 
@@ -75,34 +63,23 @@ class TrainingController extends Controller
         return redirect($training->path());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Training $training): Response
+    public function show(Training $training): Renderable
     {
         $this->authorize('update');
 
-        return view('admin.trainings.show', compact('training'));
+        return view('admin.trainings.show')->with(['training' => $training]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Training $training): Response
+    public function edit(Training $training): Renderable
     {
         $this->authorize('update');
 
         $positions = Position::all();
 
-        return view('admin.trainings.edit', compact('training', 'positions'));
+        return view('admin.trainings.edit')->with(['training' => $training, 'positions' => $positions]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     */
-    public function update(UpdateTrainingRequest $request, Training $training): Response
+    public function update(UpdateTrainingRequest $request, Training $training): RedirectResponse
     {
         $this->authorize('update');
 
@@ -122,10 +99,7 @@ class TrainingController extends Controller
         return redirect($training->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Training $training): Response
+    public function destroy(Training $training): RedirectResponse
     {
         $this->authorize('update');
 

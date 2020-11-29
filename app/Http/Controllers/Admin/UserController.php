@@ -13,10 +13,8 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-use function compact;
 use function redirect;
 use function request;
 use function view;
@@ -34,12 +32,9 @@ class UserController extends Controller
 
         $users = User::all();
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index')->with(['users' => $users]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(): Renderable
     {
         $this->authorize('update');
@@ -50,14 +45,9 @@ class UserController extends Controller
 
         $user = new User();
 
-        return view('admin.users.create', compact('roles', 'companies', 'user'));
+        return view('admin.users.create')->with(['roles' => $roles, 'companies' => $companies, 'user' => $user]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     */
     public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->authorize('update');
@@ -77,19 +67,13 @@ class UserController extends Controller
         return redirect($user->path());
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user): Renderable
     {
         $this->authorize('update');
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show')->with(['user' => $user]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(User $user): Renderable
     {
         $this->authorize('update');
@@ -98,14 +82,9 @@ class UserController extends Controller
 
         $roles = Role::all();
 
-        return view('admin.users.edit', compact('user', 'companies', 'roles'));
+        return view('admin.users.edit')->with(['user' => $user, 'companies' => $companies, 'roles' => $roles]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $this->authorize('update');
@@ -125,9 +104,6 @@ class UserController extends Controller
         return redirect($user->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user): RedirectResponse
     {
         $this->authorize('update');
