@@ -1,35 +1,30 @@
 <?php
 
-
+declare(strict_types=1);
 
 namespace App\Http\Controllers\User;
 
 use App\Company;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 use function collect;
-use function compact;
 use function now;
 use function round;
 use function view;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware(['auth']);
     }
 
     /**
-     * Show the application dashboard.
+     * @return RedirectResponse|Renderable
      */
     public function home()
     {
@@ -47,10 +42,10 @@ class HomeController extends Controller
             return Redirect::action('Admin\AdminController@index');
         }
 
-        return view('user.home', compact('user'));
+        return view('user.home')->with(['user' => $user]);
     }
 
-    public function index($companyId)
+    public function index($companyId): Renderable
     {
         $company = Company::findOrFail($companyId);
 
@@ -82,6 +77,6 @@ class HomeController extends Controller
 
         $registryChartValue = $companyRegistries->count() === 0 ? 0 : round($validRegistries / $companyRegistries->count() * 100);
 
-        return view('user.dashboard', compact('company', 'companyTrainings', 'average', 'companyRegistries', 'registryChartValue'));
+        return view('user.dashboard')->with(['company' => $company, 'companyTrainings' => $companyTrainings, 'average' => $average, 'companyRegistries' => $companyRegistries, 'registryChartValue' => $registryChartValue]);
     }
 }
