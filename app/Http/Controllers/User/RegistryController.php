@@ -19,9 +19,9 @@ class RegistryController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function index($companyId, Report $report): Renderable
+    public function index(Company $company, Report $report): Renderable
     {
-        $company = Company::findOrfail($companyId);
+
 
         $companyRegistries =  $company->registries;
 
