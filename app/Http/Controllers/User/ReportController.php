@@ -11,14 +11,12 @@ use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
 use Carbon\Carbon;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use function basename;
-use function compact;
 use function redirect;
 use function request;
 use function view;
@@ -30,18 +28,6 @@ class ReportController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): Response
-    {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @throws AuthorizationException
-     */
     public function create($companyId, Report $report): Renderable
     {
         $this->authorize('update', $report);
@@ -50,17 +36,10 @@ class ReportController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        return view('user.reports.create', compact('report', 'company'));
+        return view('user.reports.create')->with(['report' => $report, 'company' => $company]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param $companyId
-     *
-     * @throws AuthorizationException
-     */
-    public function store(StoreUserReportRequest $request, $companyId, Report $report): Response
+    public function store(StoreUserReportRequest $request, $companyId, Report $report): RedirectResponse
     {
         $this->authorize('update', $report);
 
@@ -83,39 +62,26 @@ class ReportController extends Controller
         return redirect()->route('user.registries.index', [$companyId]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param $companyId
-     */
     public function show($companyId, Report $report): Renderable
     {
         $company = Company::findOrFail($companyId);
 
-        return view('user.reports.show', compact('report', 'company'));
+        return view('user.reports.show')->with(['report' => $report, 'company' => $company]);
     }
 
-    public function download($companyId, Report $report)
+    public function download($companyId, Report $report): StreamedResponse
     {
         return Storage::disk('s3')->response('reports/' . $report->report_name);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($companyId, Report $report): Response
+    public function edit($companyId, Report $report): Renderable
     {
         $company = Company::findOrFail($companyId);
 
-        return view('user.reports.edit', compact('report', 'company'));
+        return view('user.reports.edit')->with(['report' => $report, 'company' => $company]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     */
-    public function update(UpdateUserReportRequest $request, $companyId, Report $report): Response
+    public function update(UpdateUserReportRequest $request, $companyId, Report $report): RedirectResponse
     {
         $company = Company::findOrfail($companyId);
 
@@ -140,10 +106,7 @@ class ReportController extends Controller
         return redirect($registry->userpath($companyId));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($companyId, Report $report): Response
+    public function destroy($companyId, Report $report): RedirectResponse
     {
         $registry = Registry::where('id', $report->registry_id)->first();
 

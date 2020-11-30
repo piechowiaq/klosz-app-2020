@@ -12,7 +12,6 @@ use App\Registry;
 use App\Report;
 use App\Training;
 
-use function compact;
 use function request;
 use function view;
 
@@ -32,7 +31,7 @@ class SearchController extends Controller
             return $employees;
         }
 
-        return view('user.employees.index', compact('employees', 'company', 'employee'));
+        return view('user.employees.index')->with(['employees' => $employees, 'company' => $company, 'employee' => $employee]);
     }
 
     public function registries($companyId, Report $report)
@@ -51,7 +50,7 @@ class SearchController extends Controller
             return $companyRegistries;
         }
 
-        return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
+        return view('user.registries.index')->with(['companyRegistries' => $companyRegistries, 'company' => $company, 'report' => $report]);
     }
 
     public function trainings($companyId, Certificate $certificate)
@@ -68,7 +67,7 @@ class SearchController extends Controller
             return $companyTrainings;
         }
 
-        return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
+        return view('user.trainings.index')->with(['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $companyId]);
     }
 
 //        $companyRegistries = Registry::search($search)->whereHas('companies', function($query) use ($companyId){

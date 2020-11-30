@@ -8,9 +8,8 @@ use App\Certificate;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\Training;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\Support\Renderable;
 
-use function compact;
 use function view;
 
 class TrainingController extends Controller
@@ -20,25 +19,16 @@ class TrainingController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param $companyId
-     * @param $trainingId
-     */
-    public function index($companyId, Certificate $certificate): Response
+    public function index($companyId, Certificate $certificate): Renderable
     {
         $company = Company::findOrfail($companyId);
 
         $companyTrainings =  $company->trainings()->paginate(15);
 
-        return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
+        return view('user.trainings.index')->with(['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $companyId]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($companyId, Training $training): Response
+    public function show($companyId, Training $training): Renderable
     {
         $company = Company::findOrFail($companyId);
 
@@ -46,6 +36,6 @@ class TrainingController extends Controller
             return $employee->company_id === $companyId;
         });
 
-        return view('user.trainings.show', compact('training', 'company', 'trainingEmployees'));
+        return view('user.trainings.show')->with(['training' => $training, 'company' => $company, 'trainingEmployees' => $trainingEmployees]);
     }
 }

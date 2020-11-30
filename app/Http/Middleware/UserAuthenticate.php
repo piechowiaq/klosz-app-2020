@@ -22,7 +22,7 @@ class UserAuthenticate
 
         foreach ($companies as $company){
 
-            if ($company->getId() === $request->route('company')){
+            if ($company->id == $request->route('company')){
                 return $next($request);
             }
 

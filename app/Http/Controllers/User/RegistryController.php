@@ -8,9 +8,8 @@ use App\Company;
 use App\Http\Controllers\Controller;
 use App\Registry;
 use App\Report;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\Support\Renderable;
 
-use function compact;
 use function view;
 
 class RegistryController extends Controller
@@ -20,25 +19,19 @@ class RegistryController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index($companyId, Report $report): Response
+    public function index($companyId, Report $report): Renderable
     {
         $company = Company::findOrfail($companyId);
 
         $companyRegistries =  $company->registries;
 
-        return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
+        return view('user.registries.index')->with(['companyRegistries' => $companyRegistries, 'company' => $company, 'report' => $report]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($companyId, Registry $registry, Report $report): Response
+    public function show($companyId, Registry $registry, Report $report): Renderable
     {
         $company = Company::findOrFail($companyId);
 
-        return view('user.registries.show', compact('registry', 'company', 'report'));
+        return view('user.registries.show')->with(['registry' => $registry, 'company' => $company, 'report' => $report]);
     }
 }

@@ -9,7 +9,6 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
-use App\Position;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 
@@ -81,9 +80,9 @@ class EmployeeController extends Controller
     {
         $this->authorize('update', $employee);
 
-        $positions = Position::all();
-
         $company = Company::findOrFail($companyId);
+
+        $positions = $company->positions;
 
         return view('user.employees.edit')->with(['employee' => $employee, 'company' => $company, 'positions' => $positions]);
     }
