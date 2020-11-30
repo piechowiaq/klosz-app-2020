@@ -10,11 +10,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
 use App\Position;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
-use function compact;
 use function redirect;
 use function request;
 use function view;
@@ -26,12 +24,7 @@ class EmployeeController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param $companyId
-     */
-    public function index($companyId, Employee $employee): Response
+    public function index($companyId, Employee $employee): Renderable
     {
         $this->authorize('view', $employee);
 
@@ -39,15 +32,10 @@ class EmployeeController extends Controller
 
         $employees = Employee::where('company_id', $companyId)->get();
 
-        return view('user.employees.index', compact('employees', 'company', 'employee'));
+        return view('user.employees.index')->with(['employees' => $employees, 'company' => $company, 'employee' => $employee]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param $id
-     */
-    public function create($companyId, Employee $employee): Response
+    public function create($companyId, Employee $employee): Renderable
     {
         $this->authorize('update', $employee);
 
@@ -57,17 +45,10 @@ class EmployeeController extends Controller
 
         $positions = $company->positions;
 
-        return view('user.employees.create', compact('positions', 'employee', 'company'));
+        return view('user.employees.create')->with(['positions' => $positions, 'employee' => $employee, 'company' => $company]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param $companyId
-     *
-     * @throws AuthorizationException
-     */
-    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee): Response
+    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee): RedirectResponse
     {
         $this->authorize('update', $employee);
 
@@ -89,22 +70,14 @@ class EmployeeController extends Controller
         return redirect()->route('user.employees.index', [$companyId]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param $company
-     */
-    public function show($companyId, Employee $employee): Response
+    public function show($companyId, Employee $employee): Renderable
     {
         $company = Company::findOrFail($companyId);
 
-        return view('user.employees.show', compact('employee', 'company'));
+        return view('user.employees.show')->with(['employee' => $employee, 'company' => $company]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($companyId, Employee $employee): Response
+    public function edit($companyId, Employee $employee): Renderable
     {
         $this->authorize('update', $employee);
 
@@ -112,15 +85,10 @@ class EmployeeController extends Controller
 
         $company = Company::findOrFail($companyId);
 
-        return view('user.employees.edit', compact('employee', 'company', 'positions'));
+        return view('user.employees.edit')->with(['employee' => $employee, 'company' => $company, 'positions' => $positions]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     */
-    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee): Response
+    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee): RedirectResponse
     {
         $this->authorize('update', $employee);
 
@@ -142,7 +110,7 @@ class EmployeeController extends Controller
         return redirect($employee->userpath($companyId));
     }
 
-    public function destroy($companyId, Employee $employee)
+    public function destroy($companyId, Employee $employee): RedirectResponse
     {
         $employee->delete();
 
