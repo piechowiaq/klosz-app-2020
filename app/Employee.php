@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
-use Laravel\Scout\Searchable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-
 
 class Employee extends Model
 {
@@ -47,7 +48,7 @@ class Employee extends Model
 
     public function getFullNameAttribute()
     {
-        return $this->name.' '.$this->surname;
+        return $this->name . ' ' . $this->surname;
     }
 
     public function company()
@@ -59,15 +60,16 @@ class Employee extends Model
     {
         return $this->belongsToMany(Certificate::class);
     }
-    public function getTrainingsCountAttribute(){
 
+    public function getTrainingsCountAttribute()
+    {
         return $this->trainings()->count();
     }
 
-    public function scopeCertified($query, $training, $companyId )
+    public function scopeCertified($query, Training $training, Company $company)
     {
-        return $query->where('company_id', $companyId)->whereHas('certificates', function($q) use ($training) {
-            $q->where('expiry_date', '>', \Carbon\Carbon::now())
+        return $query->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
+            $q->where('expiry_date', '>', Carbon::now())
                 ->where('training_id', $training->id);
         })->get();
     }

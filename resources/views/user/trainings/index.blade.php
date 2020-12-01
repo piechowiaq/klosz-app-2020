@@ -28,7 +28,7 @@
                     </div>
                     <div class="m-2 p-2 py-2 md:w-1/12">
 
-                        {{ $training->employees->where('company_id', $companyId)->count() == 0 ? 0 : round($training->employees()->certified($training, $companyId)->count()/$training->employees->where('company_id', $companyId)->count()*100)}} %
+                        {{ $training->employees->where('company_id', $company->getId())->count() == 0 ? 0 : round($training->employees()->certified($training, $company)->count()/$training->employees->where('company_id', $company->getId())->count()*100)}} %
                     </div>
 
                 </div>
