@@ -28,7 +28,7 @@
 
                 <div class="m-2 p-2 md:w-5/6 ">
 
-                    <a href="{{route('user.employees.show', ['employee'=> $employee, 'company'=>$company->id])}}">{{ $employee->full_name}}</a>
+                    <a href="{{route('user.employees.show', ['employee'=> $employee, 'company'=>$company])}}">{{ $employee->full_name}}</a>
 
                 </div>
 
