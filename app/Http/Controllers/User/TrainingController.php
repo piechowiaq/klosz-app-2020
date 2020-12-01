@@ -29,7 +29,7 @@ class TrainingController extends Controller
     public function show(Company $company, Training $training): Renderable
     {
         $trainingEmployees = $training->employees->filter(static function ($employee) use ($company) {
-            return $employee->company_id === $company;
+            return $employee->company_id === $company->getId();
         });
 
         return view('user.trainings.show')->with(['training' => $training, 'company' => $company, 'trainingEmployees' => $trainingEmployees]);
