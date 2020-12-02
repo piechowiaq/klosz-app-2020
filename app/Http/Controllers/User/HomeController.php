@@ -39,7 +39,6 @@ class HomeController extends Controller
         }
 
         if ($user->isSuperAdmin()) {
-
             return Redirect::action('Admin\AdminController@index');
         }
 
@@ -51,7 +50,7 @@ class HomeController extends Controller
         $collection = collect([]);
 
         foreach ($company->getTrainings() as $training) {
-            $collection->push($training->employees->where('company_id', $company)->count() === 0 ? 0 : round($training->employees()->certified($training, $company)->count() / $training->employees->where('company_id', $company)->count() * 100));
+            $collection->push($training->employees->where('company_id', $company->getId())->count() === 0 ? 0 : round($training->employees()->certified($training, $company)->count() / $training->employees->where('company_id', $company->getId())->count() * 100));
         }
 
         $average = round($collection->avg());
