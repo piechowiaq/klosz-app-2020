@@ -28,26 +28,24 @@ class ReportController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function create($companyId, Report $report): Renderable
+    public function create(Company $company, Report $report): Renderable
     {
         $this->authorize('update', $report);
 
         $report = new Report();
 
-        $company = Company::findOrFail($companyId);
-
         return view('user.reports.create')->with(['report' => $report, 'company' => $company]);
     }
 
-    public function store(StoreUserReportRequest $request, $companyId, Report $report): RedirectResponse
+    public function store(StoreUserReportRequest $request, Company $company, Report $report): RedirectResponse
     {
         $this->authorize('update', $report);
 
         $report = new Report(request(['registry_id', 'report_date']));
 
-        $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $companyId . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+        $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
-        $report->company_id = $companyId;
+        $report->company_id = $company->getId();
 
         $report->expiry_date = $report->calculateExpiryDate(request('report_date'));
 
@@ -59,40 +57,34 @@ class ReportController extends Controller
 
         $report->save();
 
-        return redirect()->route('user.registries.index', [$companyId]);
+        return redirect()->route('user.registries.index', [$company->getId()]);
     }
 
-    public function show($companyId, Report $report): Renderable
+    public function show(Company $company, Report $report): Renderable
     {
-        $company = Company::findOrFail($companyId);
-
         return view('user.reports.show')->with(['report' => $report, 'company' => $company]);
     }
 
-    public function download($companyId, Report $report): StreamedResponse
+    public function download(Company $company, Report $report): StreamedResponse
     {
         return Storage::disk('s3')->response('reports/' . $report->report_name);
     }
 
-    public function edit($companyId, Report $report): Renderable
+    public function edit(Company $company, Report $report): Renderable
     {
-        $company = Company::findOrFail($companyId);
-
         return view('user.reports.edit')->with(['report' => $report, 'company' => $company]);
     }
 
-    public function update(UpdateUserReportRequest $request, $companyId, Report $report): RedirectResponse
+    public function update(UpdateUserReportRequest $request, Company $company, Report $report): RedirectResponse
     {
-        $company = Company::findOrfail($companyId);
-
         $report->update(request(['registry_id', 'report_date']));
 
-        $report->company_id = $companyId;
+        $report->company_id = $company->getId();
 
         $report->expiry_date = Carbon::create(request('report_date'))->addMonths(Registry::where('id', $report->registry_id)->first()->valid_for)->toDateString();
 
         if (request()->has('file')) {
-            $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $companyId . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+            $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
             $report->report_name = basename($path);
 
@@ -103,15 +95,15 @@ class ReportController extends Controller
 
         $registry = Registry::where('id', $report->registry_id)->first();
 
-        return redirect($registry->userpath($companyId));
+        return redirect($registry->userpath($company->getId()));
     }
 
-    public function destroy($companyId, Report $report): RedirectResponse
+    public function destroy(Company $company, Report $report): RedirectResponse
     {
         $registry = Registry::where('id', $report->registry_id)->first();
 
         $report->delete();
 
-        return redirect($registry->userpath($companyId));
+        return redirect($registry->userpath($company->getId()));
     }
 }

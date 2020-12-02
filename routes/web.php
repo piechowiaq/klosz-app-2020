@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,7 +13,6 @@
 |
 */
 
-
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
@@ -20,8 +21,7 @@ Route::get('/', 'WelcomeController@index')->name('welcome');
 
 Route::view('scan', 'scan');
 
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
-
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(static function (): void {
     Route::get('/', 'AdminController@index')->name('home');
 
     Route::resource('users', 'UserController');
@@ -31,11 +31,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('positions', 'PositionController');
     Route::resource('trainings', 'TrainingController');
     Route::resource('registries', 'RegistryController');
+});
 
-    });
-
-Route::namespace('User')->name('user.')->group(function () {
-
+Route::namespace('User')->name('user.')->group(static function (): void {
     Route::get('/home', 'HomeController@home')->name('home');
     Route::get('/{company}', 'HomeController@index')->name('dashboard')->middleware('auth.user');
 
@@ -58,12 +56,4 @@ Route::namespace('User')->name('user.')->group(function () {
 
     Route::get('/{company}/registries/search', 'SearchController@registries')->name('search.registries');
     Route::resource('/{company}/registries', 'RegistryController');
-
 });
-
-
-
-
-
-
-

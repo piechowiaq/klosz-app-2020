@@ -21,17 +21,13 @@ class RegistryController extends Controller
 
     public function index(Company $company, Report $report): Renderable
     {
-
-
         $companyRegistries =  $company->registries;
 
         return view('user.registries.index')->with(['companyRegistries' => $companyRegistries, 'company' => $company, 'report' => $report]);
     }
 
-    public function show($companyId, Registry $registry, Report $report): Renderable
+    public function show(Company $company, Registry $registry, Report $report): Renderable
     {
-        $company = Company::findOrFail($companyId);
-
         return view('user.registries.show')->with(['registry' => $registry, 'company' => $company, 'report' => $report]);
     }
 }

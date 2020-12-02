@@ -39,6 +39,7 @@ class HomeController extends Controller
         }
 
         if ($user->isSuperAdmin()) {
+
             return Redirect::action('Admin\AdminController@index');
         }
 
@@ -71,6 +72,6 @@ class HomeController extends Controller
 
         $registryChartValue = $company->getRegistries()->count() === 0 ? 0 : round($validRegistries / $company->getRegistries()->count() * 100);
 
-        return view('user.dashboard')->with(['company' => $company, 'companyTrainings' => $company->getRegistries(), 'average' => $average, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
+        return view('user.dashboard')->with(['company' => $company, 'companyTrainings' => $company->getTrainings(), 'average' => $average, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
     }
 }
