@@ -54,8 +54,8 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $company->departments()->sync($request->get('department_id'));
-        $company->registries()->sync($request->get('registry_id'));
+        $company->setDepartments($request->get('department_id'));
+        $company->setRegistries($request->get('registry_id'));
 
         if (! empty(request('department_id'))) {
             $positions = Position::whereIn('department_id', request('department_id'))->get();
@@ -71,8 +71,8 @@ class CompanyController extends Controller
             $positions = [];
             $trainings = [];
 
-            $company->positions()->sync($positions);
-            $company->trainings()->sync($trainings);
+            $company->setPositions($positions);
+            $company->setTrainings($trainings);
         }
 
 //        $departmentsId =  $position->trainings->map(function($training){
@@ -113,9 +113,8 @@ class CompanyController extends Controller
 
         $company->update(request(['name']));
 
-        $company->departments()->sync(request('department_id'));
-
-        $company->registries()->sync(request('registry_id'));
+        $company->setDepartments($request->get('department_id'));
+        $company->setRegistries($request->get('registry_id'));
 
         if (! empty(request('department_id'))) {
             $positions = Position::whereIn('department_id', request('department_id'))->get();
@@ -131,8 +130,8 @@ class CompanyController extends Controller
             $positions = [];
             $trainings = [];
 
-            $company->positions()->sync($positions);
-            $company->trainings()->sync($trainings);
+            $company->setPositions($positions);
+            $company->setTrainings($trainings);
         }
 
             return redirect($company->path());

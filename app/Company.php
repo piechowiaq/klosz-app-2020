@@ -105,6 +105,14 @@ class Company extends Model
         return $this->departments()->get();
     }
 
+    /**
+     * @param array|string[] $ids
+     */
+    public function setDepartments(array $ids): void
+    {
+        $this->departments()->sync($ids);
+    }
+
     public function employees(): Relation
     {
         return $this->hasMany(Employee::class);
@@ -131,6 +139,14 @@ class Company extends Model
         return $this->positions()->get();
     }
 
+    /**
+     * @param array|string[] $ids
+     */
+    public function setPositions(array $ids): void
+    {
+        $this->positions()->sync($ids);
+    }
+
     public function registries(): Relation
     {
         return $this->belongsToMany(Registry::class);
@@ -144,6 +160,14 @@ class Company extends Model
         return $this->registries()->get();
     }
 
+    /**
+     * @param array|string[] $ids
+     */
+    public function setRegistries(array $ids): void
+    {
+        $this->registries()->sync($ids);
+    }
+
     public function trainings(): Relation
     {
         return $this->belongsToMany(Training::class);
@@ -155,5 +179,13 @@ class Company extends Model
     public function getTrainings(): Collection
     {
         return $this->trainings()->get();
+    }
+
+    /**
+     * @param array|string[] $ids
+     */
+    public function setTrainings(array $ids): void
+    {
+        $this->trainings()->sync($ids);
     }
 }
