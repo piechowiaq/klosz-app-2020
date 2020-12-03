@@ -125,6 +125,11 @@ class Report extends Model
         return $this->registry()->get();
     }
 
+    public function setRegistry(Registry $registry): void
+    {
+        $this->attributes[self::REGISTRY_ID_COLUMN] = $registry;
+    }
+
     public function company(): Relation
     {
         return $this->belongsTo(Company::class);
@@ -136,6 +141,11 @@ class Report extends Model
     public function getCompany(): Collection
     {
         return $this->company()->get();
+    }
+
+    public function setCompany(Company $company): void
+    {
+        $this->attributes[self::COMPANY_ID_COLUMN] = $company->getId();
     }
 
     public function userPath(Company $company): string

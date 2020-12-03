@@ -45,13 +45,13 @@ class ReportController extends Controller
 
         $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
-        $report->company_id = $company->getId();
+        $report->setCompany($company);
 
         $report->expiry_date = $report->calculateExpiryDate(request('report_date'));
 
-        $report->report_name = basename($path);
+        $report->setName(basename($path));
 
-        $report->report_path = Storage::disk('s3')->url($path);
+        $report->setPath(Storage::disk('s3')->url($path));
 
 //        dd(basename(request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 's3')));
 
@@ -67,7 +67,7 @@ class ReportController extends Controller
 
     public function download(Company $company, Report $report): StreamedResponse
     {
-        return Storage::disk('s3')->response('reports/' . $report->report_name);
+        return Storage::disk('s3')->response('reports/' . $report->getName());
     }
 
     public function edit(Company $company, Report $report): Renderable
@@ -79,16 +79,16 @@ class ReportController extends Controller
     {
         $report->update(request(['registry_id', 'report_date']));
 
-        $report->company_id = $company->getId();
+        $report->setCompany($company);
 
         $report->expiry_date = Carbon::create(request('report_date'))->addMonths(Registry::where('id', $report->registry_id)->first()->valid_for)->toDateString();
 
         if (request()->has('file')) {
             $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
-            $report->report_name = basename($path);
+            $report->setName(basename($path));
 
-            $report->report_path = Storage::disk('s3')->url($path);
+            $report->setPath(Storage::disk('s3')->url($path));
         }
 
         $report->save();
