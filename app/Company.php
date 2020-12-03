@@ -14,8 +14,7 @@ class Company extends Model
     private const ID_COLUMN         = 'id';
     private const NAME_COLUMN       = 'name';
     private const CREATED_AT_COLUMN = 'created_at';
-    private const UPDATED_AT_COLUMN = 'created_at';
-
+    private const UPDATED_AT_COLUMN = 'updated_at';
 
     /** @var array|string[] */
     protected $guarded = [];
