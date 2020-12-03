@@ -57,7 +57,7 @@ class ReportController extends Controller
 
         $report->save();
 
-        return redirect()->route('user.registries.index', [$company->getId()]);
+        return redirect()->route('user.registries.index', [$company]);
     }
 
     public function show(Company $company, Report $report): Renderable
@@ -95,7 +95,7 @@ class ReportController extends Controller
 
         $registry = Registry::where('id', $report->registry_id)->first();
 
-        return redirect($registry->userpath($company->getId()));
+        return redirect($registry->userpath($company));
     }
 
     public function destroy(Company $company, Report $report): RedirectResponse
@@ -104,6 +104,6 @@ class ReportController extends Controller
 
         $report->delete();
 
-        return redirect($registry->userpath($company->getId()));
+        return redirect($registry->userpath($company));
     }
 }

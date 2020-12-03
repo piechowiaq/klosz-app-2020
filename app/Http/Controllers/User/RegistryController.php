@@ -21,9 +21,7 @@ class RegistryController extends Controller
 
     public function index(Company $company, Report $report): Renderable
     {
-        $companyRegistries =  $company->registries;
-
-        return view('user.registries.index')->with(['companyRegistries' => $companyRegistries, 'company' => $company, 'report' => $report]);
+        return view('user.registries.index')->with(['companyRegistries' => $company->getRegistries(), 'company' => $company, 'report' => $report]);
     }
 
     public function show(Company $company, Registry $registry, Report $report): Renderable
