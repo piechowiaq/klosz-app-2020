@@ -72,6 +72,8 @@ class CertificateController extends Controller
 
         $certificate->setEmployees($request->get('employee_id'));
 
+        dd($certificate->getCompany());
+
         return redirect($certificate->userPath($company, $training));
     }
 

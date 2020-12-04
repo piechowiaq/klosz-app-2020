@@ -112,9 +112,6 @@ class Certificate extends Model
         return $this->belongsTo(Company::class);
     }
 
-    /**
-     * @return Collection|Company[]
-     */
     public function getCompany(): Collection
     {
         return $this->company()->get();
