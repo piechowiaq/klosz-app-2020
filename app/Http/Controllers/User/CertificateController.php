@@ -46,37 +46,37 @@ class CertificateController extends Controller
         return view('user.certificates.create')->with(['companyTrainings' => $companyTrainings, 'certificate' => $certificate, 'company' => $company, 'companyEmployees' => $companyEmployees]);
     }
 
-    public function store(StoreUserCertificateRequest $request, Company $company, Certificate $certificate): RedirectResponse
+    public function store(StoreUserCertificateRequest $request, Company $company, Certificate $certificate, Training $training): RedirectResponse
     {
         $this->authorize('update', $certificate);
 
         $expiry_date = Carbon::create(request('training_date'))->addMonths(Training::where('id', request('training_id'))->first()->valid_for)->toDateString();
 
-        $certificate = new Certificate(request(['training_id', 'training_date']));
+        $certificate = new Certificate(request(['training_date']));
 
-        $certificate->company_id = $company->getId();
+        $certificate->setCompany($company);
+
+        $training->setId(request('training_id'));
+
+        $certificate->setTraining($training);
 
         $certificate->expiry_date = $expiry_date;
 
         $path = request('file')->storeAs('certificates', $certificate->training_date . ' ' . $certificate->training->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
-        $certificate->certificate_name = basename($path);
+        $certificate->setName(basename($path));
 
-        $certificate->certificate_path = Storage::disk('s3')->url($path);
+        $certificate->setPath(Storage::disk('s3')->url($path));
 
         $certificate->save();
 
-        $certificate->employees()->sync(request('employee_id'));
+        $certificate->setEmployees($request->get('employee_id'));
 
-        $trainingId = $certificate->training_id;
-
-        return redirect($certificate->userpath($company->getId(), $trainingId));
+        return redirect($certificate->userPath($company, $training));
     }
 
     public function show(Company $company, Training $training, Certificate $certificate): Renderable
     {
-        $training = Training::where($training->id, $certificate->training_id);
-
         return view('user.certificates.show')->with(['certificate' => $certificate, 'company' => $company, 'training' => $training]);
     }
 
@@ -89,11 +89,7 @@ class CertificateController extends Controller
     {
         $this->authorize('update', $certificate);
 
-        $companyTrainings =  $company->getTrainings();
-
-        $companyEmployees =  $company->getEmployees();
-
-        return view('user.certificates.edit')->with(['company' => $company, 'companyTrainings' => $companyTrainings, 'companyEmployees' => $companyEmployees, 'training' => $training, 'certificate' => $certificate]);
+        return view('user.certificates.edit')->with(['company' => $company, 'companyTrainings' => $company->getTrainings(), 'companyEmployees' => $company->getEmployees(), 'training' => $training, 'certificate' => $certificate]);
     }
 
     public function update(UpdateUserCertificateRequest $request, Company $company, Training $training, Certificate $certificate): RedirectResponse
@@ -104,25 +100,23 @@ class CertificateController extends Controller
 
         $certificate->update(request(['training_id', 'training_date']));
 
-        $certificate->company_id = $company->getId();
+        $certificate->setCompany($company);
 
         $certificate->expiry_date = $expiry_date;
 
         if (request()->has('file')) {
             $path = request('file')->storeAs('certificates', $certificate->training_date . ' ' . $certificate->training->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
 
-            $certificate->certificate_name = basename($path);
+            $certificate->setName(basename($path));
 
-            $certificate->certificate_path = Storage::disk('s3')->url($path);
+            $certificate->setPath(Storage::disk('s3')->url($path));
         }
 
         $certificate->save();
 
-        $certificate->employees()->sync(request('employee_id'));
+        $certificate->setEmployees($request->get('employee_id'));
 
-        $training = $certificate->training_id;
-
-        return redirect($certificate->userpath($company->getId(), $training));
+        return redirect($certificate->userPath($company, $training));
     }
 
     public function destroy(Company $company, Training $training, Certificate $certificate): RedirectResponse

@@ -150,6 +150,22 @@ class Certificate extends Model
         return $this->belongsToMany(Employee::class);
     }
 
+    /**
+     * @return Collection|Employee[]
+     */
+    public function getEmployees(): Collection
+    {
+        return $this->employees()->get();
+    }
+
+    /**
+     * @param array|string[] $ids
+     */
+    public function setEmployees(array $ids): void
+    {
+        $this->employees()->sync($ids);
+    }
+
     public function path(): string
     {
         return '/admin/certificates/' . $this->getId();

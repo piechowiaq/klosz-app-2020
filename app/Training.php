@@ -10,7 +10,21 @@ class Training extends Model
 {
 //    use Searchable;
 
+    private const ID_COLUMN               = 'id';
+
+
     protected $guarded = [];
+
+    public function getId(): string
+    {
+        return (string) $this->attributes[self::ID_COLUMN];
+    }
+
+    public function setId(string $id): void
+    {
+        $this->attributes[self::ID_COLUMN] = $id;
+    }
+
 
     public static function search($query)
     {
