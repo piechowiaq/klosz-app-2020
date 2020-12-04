@@ -55,13 +55,23 @@ class Position extends Model
         $this->attributes[self::NAME_COLUMN] = $name;
     }
 
+    public function getDepartmentId(): string
+    {
+        return (string) $this->attributes[self::DEPARTMENT_ID_COLUMN];
+    }
+
+    public function setDepartmentId(string $id): void
+    {
+        $this->attributes[self::DEPARTMENT_ID_COLUMN] = $id;
+    }
+
     public function department(): Relation
     {
         return $this->belongsTo(Department::class);
     }
 
     /**
-     * @return Collection|Registry[]
+     * @return Collection|Department[]
      */
     public function getDepartment(): Collection
     {

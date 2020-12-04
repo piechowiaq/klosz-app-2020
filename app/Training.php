@@ -113,7 +113,7 @@ class Training extends Model
      */
     public function setDepartments(array $ids): void
     {
-        $this->departments()->sync($ids);
+        $this->departments()->sync($ids, false);
     }
 
     public function positions(): Relation
@@ -149,7 +149,7 @@ class Training extends Model
      */
     public function setEmployees(array $ids): void
     {
-        $this->employees()->sync($ids);
+        $this->employees()->sync($ids, false);
     }
 
     public function certificates(): Relation

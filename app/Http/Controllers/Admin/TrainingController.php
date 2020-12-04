@@ -51,7 +51,7 @@ class TrainingController extends Controller
 
         $training->save();
 
-        $training->positions()->sync(request('position_id'));
+        $training->setPositions(request('position_id'));
 
         foreach ($training->positions as $position) {
             $training->departments()->sync($position->department_id, false);
@@ -87,7 +87,7 @@ class TrainingController extends Controller
 
         $training->save();
 
-        $training->positions()->sync(request('position_id'));
+        $training->setPositions(request('position_id'));
 
         foreach ($training->positions as $position) {
             $training->departments()->sync($position->department_id, false);
