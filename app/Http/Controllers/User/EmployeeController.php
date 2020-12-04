@@ -27,9 +27,7 @@ class EmployeeController extends Controller
     {
         $this->authorize('view', $employee);
 
-        $employees = Employee::where('company_id', $company->getId())->get();
-
-        return view('user.employees.index')->with(['employees' => $employees, 'company' => $company, 'employee' => $employee]);
+        return view('user.employees.index')->with(['employees' => $company->getEmployees(), 'company' => $company, 'employee' => $employee]);
     }
 
     public function create(Company $company, Employee $employee): Renderable
@@ -38,9 +36,7 @@ class EmployeeController extends Controller
 
         $employee = new Employee();
 
-        $positions = $company->positions;
-
-        return view('user.employees.create')->with(['positions' => $positions, 'employee' => $employee, 'company' => $company]);
+        return view('user.employees.create')->with(['positions' => $company->getPositions(), 'employee' => $employee, 'company' => $company]);
     }
 
     public function store(StoreUserEmployeeRequest $request, Company $company, Employee $employee): RedirectResponse
@@ -49,11 +45,11 @@ class EmployeeController extends Controller
 
         $employee = new Employee(request(['name', 'surname', 'number', 'company_id']));
 
-        $employee->company_id = $company->getId();
+        $employee->setCompany($company);
 
         $employee->save();
 
-        $employee->positions()->sync(request('position_id'));
+        $employee->setPositions(request('position_id'));
 
         foreach ($employee->positions as $position) {
             $employee->departments()->sync($position->department_id, false);
@@ -87,7 +83,9 @@ class EmployeeController extends Controller
 
         $employee->save();
 
-        $employee->positions()->sync(request('position_id'));
+        $employee->setCompany($company);
+
+        $employee->setPositions(request('position_id'));
 
         foreach ($employee->positions as $position) {
             $employee->departments()->sync($position->department_id, false);
@@ -96,7 +94,7 @@ class EmployeeController extends Controller
             }
         }
 
-        return redirect($employee->userpath($company->getId()));
+        return redirect($employee->userPath($company));
     }
 
     public function destroy(Company $company, Employee $employee): RedirectResponse
