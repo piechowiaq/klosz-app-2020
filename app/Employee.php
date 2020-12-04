@@ -13,12 +13,7 @@ class Employee extends Model
 
     protected $guarded = [];
 
-//    public static function search($query)
-//    {
-//        return empty($query) ? static::query()
-//            : static::where('name', 'like', '%'.$query.'%')
-//                ->orWhere('surname', 'like', '%'.$query.'%');
-//    }
+
 
 
     public function path()
@@ -46,7 +41,7 @@ class Employee extends Model
         return $this->belongsToMany(Training::class);
     }
 
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
         return $this->name . ' ' . $this->surname;
     }
@@ -74,8 +69,15 @@ class Employee extends Model
         })->get();
     }
 
-    public function toSearchableArray()
-    {
-        return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
-    }
+//    public function toSearchableArray()
+//    {
+//        return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
+//    }
+//
+//    public static function search($query)
+//    {
+//        return empty($query) ? static::query()
+//            : static::where('name', 'like', '%'.$query.'%')
+//                ->orWhere('surname', 'like', '%'.$query.'%');
+//    }
 }
