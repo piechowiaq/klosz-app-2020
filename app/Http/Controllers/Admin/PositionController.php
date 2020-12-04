@@ -24,7 +24,7 @@ class PositionController extends Controller
 
     public function index(): Renderable
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
         $positions = Position::all();
 
