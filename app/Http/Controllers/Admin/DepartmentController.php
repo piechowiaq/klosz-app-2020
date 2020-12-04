@@ -33,6 +33,7 @@ class DepartmentController extends Controller
     public function create(): Renderable
     {
         $this->authorize('update');
+
         $department = new Department();
 
         return view('admin.departments.create')->with(['department' => $department]);
