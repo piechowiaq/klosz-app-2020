@@ -72,8 +72,6 @@ class CertificateController extends Controller
 
         $certificate->setEmployees($request->get('employee_id'));
 
-        dd($certificate->getCompany());
-
         return redirect($certificate->userPath($company, $training));
     }
 
@@ -84,7 +82,7 @@ class CertificateController extends Controller
 
     public function download(Company $company, Certificate $certificate): StreamedResponse
     {
-        return Storage::disk('s3')->response('certificates/' . $certificate->certificate_name);
+        return Storage::disk('s3')->response('certificates/' . $certificate->getName());
     }
 
     public function edit(Company $company, Training $training, Certificate $certificate): Renderable
@@ -98,7 +96,7 @@ class CertificateController extends Controller
     {
         $this->authorize('update', $certificate);
 
-        $expiry_date = Carbon::create(request('training_date'))->addMonths(Training::where('id', $training->id)->first()->valid_for)->toDateString();
+        $expiry_date = Carbon::create(request('training_date'))->addMonths(Training::where('id', $training->getID())->first()->valid_for)->toDateString();
 
         $certificate->update(request(['training_id', 'training_date']));
 

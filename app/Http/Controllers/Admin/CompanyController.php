@@ -11,8 +11,10 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
 use App\Registry;
-use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function request;
@@ -26,16 +28,22 @@ class CompanyController extends Controller
 //        $this->authorizeResource(Company::class, 'company');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 
         $companies = Company::all();
 
-        return view('admin.companies.index')->with(['companies' => $companies]);
+        return view('admin.companies.index', ['companies' => $companies]);
     }
 
-    public function create(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create()
     {
         $this->authorize('update');
 
@@ -43,10 +51,13 @@ class CompanyController extends Controller
         $departments = Department::all();
         $registries  = Registry::all();
 
-        return view('admin.companies.create')->with(['company' => $company, 'departments' => $departments, 'registries' => $registries]);
+        return view('admin.companies.create', ['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
 
-    public function store(StoreCompanyRequest $request): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function store(StoreCompanyRequest $request)
     {
         $this->authorize('update');
 
@@ -89,14 +100,20 @@ class CompanyController extends Controller
             return redirect($company->path());
     }
 
-    public function show(Company $company): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Company $company)
     {
         $this->authorize('update');
 
-        return view('admin.companies.show')->with(['company' => $company]);
+        return view('admin.companies.show', ['company' => $company]);
     }
 
-    public function edit(Company $company): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(Company $company)
     {
         $this->authorize('update');
 
@@ -104,14 +121,17 @@ class CompanyController extends Controller
 
         $registries = Registry::all();
 
-        return view('admin.companies.edit')->with(['company' => $company, 'departments' => $departments, 'registries' => $registries]);
+        return view('admin.companies.edit', ['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
 
-    public function update(UpdateCompanyRequest $request, Company $company): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
         $this->authorize('update');
 
-        $company->update(request(['name']));
+        $company->update($request->get('name'));
 
         $company->setDepartments($request->get('department_id'));
         $company->setRegistries($request->get('registry_id'));
@@ -137,7 +157,10 @@ class CompanyController extends Controller
             return redirect($company->path());
     }
 
-    public function destroy(Company $company): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function destroy(Company $company)
     {
         $this->authorize('update');
 
