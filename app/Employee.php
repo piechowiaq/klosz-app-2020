@@ -189,7 +189,7 @@ class Employee extends Model
 
     public function getFullNameAttribute(): string
     {
-        return $this->name . ' ' . $this->surname;
+        return $this->getName() . ' ' . $this->getSurname();
     }
 
     public function path(): string
