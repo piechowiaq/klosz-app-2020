@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace App;
 
-use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-
-use function request;
 
 class Report extends Model
 {
@@ -117,12 +114,9 @@ class Report extends Model
         return $this->belongsTo(Registry::class);
     }
 
-    /**
-     * @return Collection|Registry[]
-     */
-    public function getRegistry(): Collection
+    public function getRegistry(): Registry
     {
-        return $this->registry()->get();
+        return $this->registry()->get()->toArray()[0];
     }
 
     public function setRegistry(Registry $registry): void
@@ -153,8 +147,4 @@ class Report extends Model
         return '/' . $company->getId() . '/reports/' . $this->getID();
     }
 
-    public function calculateExpiryDate($report_date)
-    {
-        return Carbon::create(request('report_date'))->addMonths(Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
-    }
 }

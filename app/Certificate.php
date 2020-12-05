@@ -112,9 +112,9 @@ class Certificate extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function getCompany(): Collection
+    public function getCompany(): Company
     {
-        return $this->company()->get();
+        return $this->company()->get()->toArray()[0];
     }
 
     public function setCompany(Company $company): void
@@ -171,10 +171,5 @@ class Certificate extends Model
     public function userPath(Company $company, Training $training): string
     {
         return '/' . $company->getId() . '/trainings/' . $training->getId() . '/certificates/' . $this->getId();
-    }
-
-    public function scopeLatest($query)
-    {
-        return $query->orderBy('created_at', 'desc')->first();
     }
 }

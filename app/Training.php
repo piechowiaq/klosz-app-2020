@@ -103,6 +103,9 @@ class Training extends Model
         return $this->belongsToMany(Department::class);
     }
 
+    /**
+     * @return Collection|Department[]
+     */
     public function getDepartments(): Collection
     {
         return $this->departments()->get();
@@ -121,6 +124,9 @@ class Training extends Model
         return $this->belongsToMany(Position::class);
     }
 
+    /**
+     * @return Collection|Position[]
+     */
     public function getPositions(): Collection
     {
         return $this->positions()->get();
@@ -139,6 +145,9 @@ class Training extends Model
         return $this->belongsToMany(Employee::class);
     }
 
+    /**
+     * @return Collection|Employee[]
+     */
     public function getEmployees(): Collection
     {
         return $this->employees()->get();
@@ -157,6 +166,9 @@ class Training extends Model
         return $this->hasMany(Certificate::class);
     }
 
+    /**
+     * @return Collection|Certificate[]
+     */
     public function getCertificates(): Collection
     {
         return $this->certificates()->get();
@@ -175,6 +187,9 @@ class Training extends Model
         return $this->belongsToMany(Company::class);
     }
 
+    /**
+     * @return Collection|Company[]
+     */
     public function getCompanies(): Collection
     {
         return $this->companies()->get();
@@ -198,12 +213,6 @@ class Training extends Model
         return '/' . $company->getId() . '/trainings/' . $this->getId();
     }
 
-    public static function search($query)
-    {
-        return empty($query) ? static::query()
-            : static::where('name', 'like', '%' . $query . '%');
-    }
-
 //    public function scopeCertified($query, $training)
 //    {
 //        return $query->employees()->whereHas('certificates', function($q) use ($training) {
@@ -211,4 +220,15 @@ class Training extends Model
 //                ->where('training_id', $training->id);
 //        })->get();
 //    }
+
+    /**
+     * @return mixed
+     */
+    public static function findByNameAndCompanyAndPaginate(string $name, Company $company, int $paginate)
+    {
+        return self::where('name', 'like', '%' . $name . '%')
+            ->whereHas('companies', static function ($query) use ($company): void {
+                $query->where('company_id', '=', $company->getId());
+            })->paginate($paginate);
+    }
 }

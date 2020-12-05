@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Company;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
+
+use function assert;
 
 class StoreUserEmployeeRequest extends FormRequest
 {
@@ -17,10 +21,14 @@ class StoreUserEmployeeRequest extends FormRequest
     }
 
     /**
-     * @return string[]
+     * @return array|string[]
      */
     public function rules(): array
     {
+        if (! assert($this->route('company') instanceof Company)) {
+            throw new Exception('Received company is not the required object');
+        }
+
         return [
             'name' => 'sometimes|required',
             'surname' => 'sometimes|required',

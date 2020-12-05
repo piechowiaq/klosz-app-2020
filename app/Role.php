@@ -90,6 +90,9 @@ class Role extends Model
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * @return Collection|User[]
+     */
     public function getUsers(): Collection
     {
         return $this->users()->get();

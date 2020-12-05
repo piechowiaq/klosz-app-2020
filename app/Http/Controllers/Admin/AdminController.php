@@ -7,6 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Support\Renderable;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View as IlluminateView;
 use function view;
 
 class AdminController extends Controller
@@ -16,7 +18,10 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 

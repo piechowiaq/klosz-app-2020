@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection as SupportCollection;
 
 class Company extends Model
 {
@@ -16,8 +17,16 @@ class Company extends Model
     private const CREATED_AT_COLUMN = 'created_at';
     private const UPDATED_AT_COLUMN = 'updated_at';
 
-    /** @var array|string[] */
+    /** @var mixed|array|string[] */
     protected $guarded = [];
+
+    /**
+     * @return Collection|self[]
+     */
+    public static function getAll(): Collection
+    {
+        return self::all();
+    }
 
     public static function getCompanyById(string $id): ?self
     {
@@ -140,11 +149,14 @@ class Company extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param SupportCollection|Position[] $positions
      */
-    public function setPositions(array $ids): void
+    public function setPositions(SupportCollection $positions): void
     {
-        $this->positions()->sync($ids);
+        $positionIds = $positions->map(static function (Position $position) {
+            return $position->getID();
+        })->toArray();
+        $this->positions()->sync($positionIds);
     }
 
     public function registries(): Relation
@@ -187,5 +199,21 @@ class Company extends Model
     public function setTrainings(array $ids): void
     {
         $this->trainings()->sync($ids);
+    }
+
+    public function addTraining(Training $training): void
+    {
+        $this->trainings()->sync($training->getID(), false);
+    }
+
+    /**
+     * @param Collection|Training[] $trainings
+     */
+    public function addTrainings(Collection $trainings): void
+    {
+        $trainingIds = $trainings->map(static function (Training $training) {
+            return $training->getID();
+        })->toArray();
+        $this->trainings()->sync($trainingIds, false);
     }
 }

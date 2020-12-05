@@ -11,9 +11,12 @@ use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
 use Carbon\Carbon;
-use Illuminate\Contracts\Support\Renderable;
+use DateTime;
+use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View as IlluminateView;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use function basename;
@@ -28,26 +31,37 @@ class ReportController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function create(Company $company, Report $report): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create(Company $company, Report $report)
     {
         $this->authorize('update', $report);
 
         $report = new Report();
 
-        return view('user.reports.create')->with(['report' => $report, 'company' => $company]);
+        return view('user.reports.create', ['report' => $report, 'company' => $company]);
     }
 
     public function store(StoreUserReportRequest $request, Company $company, Report $report): RedirectResponse
     {
         $this->authorize('update', $report);
 
-        $report = new Report(request(['registry_id', 'report_date']));
+        $report   = new Report();
+        $registry = Registry::getRegistryById($request->get('registry_id'));
+        if ($registry === null) {
+            throw new Exception('No registry found!');
+        }
 
-        $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+        $report->setRegistry($registry);
+        $report->setReportDate(new DateTime($request->get('report_date')));
+
+        $fileName = $report->getReportDate()->format('Y-m-d') . ' ' . $report->getRegistry()->getName() . ' ' . $company->getId() . '-' . (new DateTime())->format('His') . '.' . $request->get('file')->getClientOriginalExtension();
+        $path     = $request->get('file')->storeAs('reports', $fileName, 's3');
 
         $report->setCompany($company);
 
-        $report->expiry_date = $report->calculateExpiryDate(request('report_date'));
+        $report->setExpiryDate($this->calculateExpiryDate($request->get('report_date'), $registry));
 
         $report->setName(basename($path));
 
@@ -60,9 +74,19 @@ class ReportController extends Controller
         return redirect()->route('user.registries.index', [$company]);
     }
 
-    public function show(Company $company, Report $report): Renderable
+    private function calculateExpiryDate(DateTime $reportDate, Registry $registry): DateTime
     {
-        return view('user.reports.show')->with(['report' => $report, 'company' => $company]);
+        $monthsToAdd = $registry->getValidFor();
+
+        return $reportDate->modify('+' . $monthsToAdd . ' month');
+    }
+
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Company $company, Report $report)
+    {
+        return view('user.reports.show', ['report' => $report, 'company' => $company]);
     }
 
     public function download(Company $company, Report $report): StreamedResponse
@@ -70,9 +94,12 @@ class ReportController extends Controller
         return Storage::disk('s3')->response('reports/' . $report->getName());
     }
 
-    public function edit(Company $company, Report $report): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(Company $company, Report $report)
     {
-        return view('user.reports.edit')->with(['report' => $report, 'company' => $company]);
+        return view('user.reports.edit', ['report' => $report, 'company' => $company]);
     }
 
     public function update(UpdateUserReportRequest $request, Company $company, Report $report): RedirectResponse

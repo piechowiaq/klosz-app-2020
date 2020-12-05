@@ -35,6 +35,14 @@ class Position extends Model
         return self::whereIn(self::ID_COLUMN, $ids)->get();
     }
 
+    /**
+     * @return Collection|Position[]
+     */
+    public static function getPositionsByDepartment(Department $department): Collection
+    {
+        return self::whereIn('department_id', $department->getId())->get();
+    }
+
     public function getID(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];
@@ -121,7 +129,7 @@ class Position extends Model
      */
     public function setTrainings(array $ids): void
     {
-        $this->positions()->sync($ids);
+        $this->trainings()->sync($ids);
     }
 
     public function employees(): Relation

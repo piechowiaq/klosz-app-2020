@@ -10,6 +10,8 @@ use App\Registry;
 use App\Report;
 use Illuminate\Contracts\Support\Renderable;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View as IlluminateView;
 use function view;
 
 class RegistryController extends Controller
@@ -19,13 +21,19 @@ class RegistryController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function index(Company $company, Report $report): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index(Company $company, Report $report)
     {
-        return view('user.registries.index')->with(['companyRegistries' => $company->getRegistries(), 'company' => $company, 'report' => $report]);
+        return view('user.registries.index', ['companyRegistries' => $company->getRegistries(), 'company' => $company, 'report' => $report]);
     }
 
-    public function show(Company $company, Registry $registry, Report $report): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Company $company, Registry $registry, Report $report)
     {
-        return view('user.registries.show')->with(['registry' => $registry, 'company' => $company, 'report' => $report]);
+        return view('user.registries.show', ['registry' => $registry, 'company' => $company, 'report' => $report]);
     }
 }

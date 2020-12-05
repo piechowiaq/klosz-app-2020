@@ -16,8 +16,16 @@ class Department extends Model
     private const CREATED_AT_COLUMN = 'created_at';
     private const UPDATED_AT_COLUMN = 'updated_at';
 
-    /** @var array|string[] */
+    /** @var mixed|array|string[] */
     protected $guarded = [];
+
+    /**
+     * @return Collection|self[]
+     */
+    public static function getAll(): Collection
+    {
+        return self::all();
+    }
 
     public static function getDepartmentById(string $id): ?self
     {
@@ -79,6 +87,9 @@ class Department extends Model
         return $this->belongsToMany(Employee::class);
     }
 
+    /**
+     * @return Collection|Employee[]
+     */
     public function getEmployees(): Collection
     {
         return $this->employees()->get();
@@ -97,6 +108,9 @@ class Department extends Model
         return $this->hasMany(Position::class);
     }
 
+    /**
+     * @return Collection|Position[]
+     */
     public function getPositions(): Collection
     {
         return $this->positions()->get();
@@ -120,6 +134,9 @@ class Department extends Model
         return $this->belongsToMany(Training::class);
     }
 
+    /**
+     * @return Collection|Training[]
+     */
     public function getTrainings(): Collection
     {
         return $this->trainings()->get();

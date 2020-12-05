@@ -6,10 +6,13 @@ namespace App\Http\Controllers\User;
 
 use App\Certificate;
 use App\Company;
+use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Training;
 use Illuminate\Contracts\Support\Renderable;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View as IlluminateView;
 use function view;
 
 class TrainingController extends Controller
@@ -19,19 +22,25 @@ class TrainingController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function index(Company $company, Certificate $certificate): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index(Company $company, Certificate $certificate)
     {
         $companyTrainings =  $company->trainings()->paginate(15);
 
-        return view('user.trainings.index')->with(['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $company]);
+        return view('user.trainings.index', ['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $company]);
     }
 
-    public function show(Company $company, Training $training): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Company $company, Training $training)
     {
-        $trainingEmployees = $training->employees->filter(static function ($employee) use ($company) {
-            return $employee->company_id === $company->getId();
+        $trainingEmployees = $training->getEmployees()->filter(static function (Employee $employee) use ($company) {
+            return $employee->getCompany()->getId() === $company->getId();
         });
 
-        return view('user.trainings.show')->with(['training' => $training, 'company' => $company, 'trainingEmployees' => $trainingEmployees]);
+        return view('user.trainings.show', ['training' => $training, 'company' => $company, 'trainingEmployees' => $trainingEmployees]);
     }
 }

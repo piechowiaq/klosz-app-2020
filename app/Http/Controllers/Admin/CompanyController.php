@@ -11,8 +11,12 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
 use App\Registry;
-use Illuminate\Contracts\Support\Renderable;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function request;
@@ -26,85 +30,91 @@ class CompanyController extends Controller
 //        $this->authorizeResource(Company::class, 'company');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 
-        $companies = Company::all();
+        $companies = Company::getAll();
 
-        return view('admin.companies.index')->with(['companies' => $companies]);
+        return view('admin.companies.index', ['companies' => $companies]);
     }
 
-    public function create(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create()
     {
         $this->authorize('update');
 
         $company     = new Company();
-        $departments = Department::all();
-        $registries  = Registry::all();
+        $departments = Department::getAll();
+        $registries  = Registry::getAll();
 
-        return view('admin.companies.create')->with(['company' => $company, 'departments' => $departments, 'registries' => $registries]);
+        return view('admin.companies.create', ['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
 
-    public function store(StoreCompanyRequest $request): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function store(StoreCompanyRequest $request)
     {
         $this->authorize('update');
 
         $company = new Company();
         $company->setName($request->get('name'));
+        $departmentId = $request->get('department_id');
+        $company->setDepartments($departmentId);
+        $company->setRegistries($request->get('registry_id'));
         $company->save();
 
-        $company->setDepartments($request->get('department_id'));
-        $company->setRegistries($request->get('registry_id'));
+        $positions = new Collection();
+        $trainings = new Collection();
+        if (! empty($request->get($departmentId))) {
+            $department = Department::getDepartmentById($departmentId);
+            if ($department === null) {
+                throw new Exception('Department not found');
+            }
 
-        if (! empty(request('department_id'))) {
-            $positions = Position::whereIn('department_id', request('department_id'))->get();
+            $positions = Position::getPositionsByDepartment($department);
 
-            $company->positions()->sync($positions);
-            $trainings = [];
             foreach ($positions as $position) {
-                foreach ($position->trainings as $training) {
-                    $company->trainings()->sync($training, false);
+                foreach ($position->getTrainings() as $training) {
+                    $trainings->add($training);
                 }
             }
-        } else {
-            $positions = [];
-            $trainings = [];
-
-            $company->setPositions($positions);
-            $company->setTrainings($trainings);
         }
 
-//        $departmentsId =  $position->trainings->map(function($training){
-//           $company->trainings()->sync($position->trainings);
-//        });
-//
-//        Position::whereIn('department_id', $departmentsId)
-//                            ->get()
-//                            ->map(function($position) use ($company)
-//        {
-//           $position->companies()->sync($company,false);
-//        });
+        $company->setPositions($positions);
+        $company->addTrainings($trainings);
 
-            return redirect($company->path());
+        return redirect($company->path());
     }
 
-    public function show(Company $company): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Company $company)
     {
         $this->authorize('update');
 
-        return view('admin.companies.show')->with(['company' => $company]);
+        return view('admin.companies.show', ['company' => $company]);
     }
 
-    public function edit(Company $company): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(Company $company)
     {
         $this->authorize('update');
 
-        $departments = Department::all();
+        $departments = Department::getAll();
 
-        $registries = Registry::all();
+        $registries = Registry::getAll();
 
-        return view('admin.companies.edit')->with(['company' => $company, 'departments' => $departments, 'registries' => $registries]);
+        return view('admin.companies.edit', ['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
 
     public function update(UpdateCompanyRequest $request, Company $company): RedirectResponse

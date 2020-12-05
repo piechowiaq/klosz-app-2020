@@ -18,8 +18,16 @@ class Registry extends Model
     private const CREATED_AT_COLUMN  = 'created_at';
     private const UPDATED_AT_COLUMN  = 'updated_at';
 
-    /** @var array|string[] */
+    /** @var mixed|array|string[] */
     protected $guarded = [];
+
+    /**
+     * @return Collection|self[]
+     */
+    public static function getAll(): Collection
+    {
+        return self::all();
+    }
 
     public static function getRegistryById(string $id): ?self
     {
@@ -137,4 +145,26 @@ class Registry extends Model
 ////        return empty($query) ? static::query()
 ////            : static::where('name', 'like', '%' . $query . '%');
 ////    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public static function findByNameAndCompany(string $name, Company $company): Collection
+    {
+        return self::where('name', 'like', '%' . $name . '%')
+            ->whereHas('companies', static function ($query) use ($company): void {
+                $query->where('company_id', '=', $company->getId());
+            })->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function findByNameAndCompanyAndPaginate(string $name, Company $company, int $paginate)
+    {
+        return self::where('name', 'like', '%' . $name . '%')
+            ->whereHas('companies', static function ($query) use ($company): void {
+                $query->where('company_id', '=', $company->getId());
+            })->paginate($paginate);
+    }
 }

@@ -75,9 +75,9 @@ class Employee extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function getCompany(): Collection
+    public function getCompany(): Company
     {
-        return $this->company()->get();
+        return $this->company()->get()->toArray()[0];
     }
 
     public function setCompany(Company $company): void
@@ -120,6 +120,9 @@ class Employee extends Model
         return $this->belongsToMany(Department::class);
     }
 
+    /**
+     * @return Collection|Department[]
+     */
     public function getDepartments(): Collection
     {
         return $this->departments()->get();
@@ -138,6 +141,9 @@ class Employee extends Model
         return $this->belongsToMany(Position::class);
     }
 
+    /**
+     * @return Collection|Position[]
+     */
     public function getPositions(): Collection
     {
         return $this->positions()->get();
@@ -156,6 +162,9 @@ class Employee extends Model
         return $this->belongsToMany(Training::class);
     }
 
+    /**
+     * @return Collection|Training[]
+     */
     public function getTrainings(): Collection
     {
         return $this->trainings()->get();
@@ -174,6 +183,9 @@ class Employee extends Model
         return $this->belongsToMany(Certificate::class);
     }
 
+    /**
+     * @return Collection|Certificate[]
+     */
     public function getCertificates(): Collection
     {
         return $this->certificates()->get();
@@ -189,7 +201,7 @@ class Employee extends Model
 
     public function getFullNameAttribute(): string
     {
-        return $this->name . ' ' . $this->surname;
+        return $this->getName() . ' ' . $this->getSurname();
     }
 
     public function path(): string
@@ -207,12 +219,14 @@ class Employee extends Model
         return $this->trainings()->count();
     }
 
-    public function scopeCertified($query, Training $training, Company $company)
+    /**
+     * @return mixed
+     */
+    public static function searchByNameAndCompanyAndPaginate(string $name, Company $company, int $paginate)
     {
-        return $query->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
-            $q->where('expiry_date', '>', Carbon::now())
-                ->where('training_id', $training->getID());
-        })->get();
+        return self::where($name, 'like', '%' . $name . '%')
+            ->where('company_id', $company->getId())
+            ->paginate($paginate);
     }
 
 //    public function toSearchableArray()

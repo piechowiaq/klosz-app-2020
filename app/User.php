@@ -1,69 +1,122 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
+
+use function bcrypt;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    private const ID_COLUMN       = 'id';
+    private const NAME_COLUMN     = 'name';
+    private const SURNAME_COLUMN  = 'surname';
+    private const EMAIL_COLUMN    = 'email';
+    private const PASSWORD_COLUMN = 'password';
+
+    /** @var array|string[] */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    /** @var array|string[] */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    /** @var array|string[] */
+    protected $casts = ['email_verified_at' => 'datetime'];
+
     /**
      * The role associated with the user.
-     *
-     * @return BelongsToMany
      */
-    public function roles()
+    public function roles(): Relation
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
-    public function companies()
+    /**
+     * @return Collection|Role[]
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles()->get();
+    }
+
+    public function companies(): Relation
     {
         return $this->belongsToMany(Company::class)->withTimestamps();
     }
 
-    public function path()
+    /**
+     * @return Collection|Company[]
+     */
+    public function getCompanies(): Collection
     {
-        return "/admin/users/{$this->id}";
+        return $this->companies()->get();
     }
 
-    public function isSuperAdmin()
+    public function path(): string
+    {
+        return "/admin/users/{$this->getId()}";
+    }
+
+    public function isSuperAdmin(): bool
     {
         return $this->roles()->where('name', 'SuperAdmin')->exists();
     }
 
-    public function getFullNameAttribute()
+    public function getId(): string
     {
-        return $this->name.' '.$this->surname;
+        return (string) $this->attributes[self::ID_COLUMN];
     }
 
+    public function getName(): string
+    {
+        return $this->attributes[self::NAME_COLUMN];
+    }
+
+    public function setName(string $name): void
+    {
+        $this->attributes[self::NAME_COLUMN] = $name;
+    }
+
+    public function getSurname(): string
+    {
+        return $this->attributes[self::SURNAME_COLUMN];
+    }
+
+    public function setSurname(string $surname): void
+    {
+        $this->attributes[self::SURNAME_COLUMN] = $surname;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->attributes[self::EMAIL_COLUMN];
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->attributes[self::EMAIL_COLUMN] = $email;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->attributes[self::PASSWORD_COLUMN] = bcrypt($password);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->getName() . ' ' . $this->getSurname();
+    }
 }
