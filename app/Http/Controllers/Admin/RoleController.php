@@ -6,8 +6,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Role;
-use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function request;
@@ -20,25 +22,34 @@ class RoleController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 
         $roles = Role::all();
 
-        return view('admin.roles.index')->with(['roles' => $roles]);
+        return view('admin.roles.index', ['roles' => $roles]);
     }
 
-    public function create(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create()
     {
         $this->authorize('update');
 
         $role = new Role();
 
-        return view('admin.roles.create')->with(['role' => $role]);
+        return view('admin.roles.create', ['role' => $role]);
     }
 
-    public function store(): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function store()
     {
         $this->authorize('update');
 
@@ -57,7 +68,10 @@ class RoleController extends Controller
         $this->authorize('update');
     }
 
-    public function update(Role $role): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function update(Role $role)
     {
         $this->authorize('update');
 
@@ -66,7 +80,10 @@ class RoleController extends Controller
         return redirect($role->path());
     }
 
-    public function destroy(Role $role): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function destroy(Role $role)
     {
         $this->authorize('update');
 
