@@ -1,0 +1,17 @@
+parameters:
+    level: 8
+    paths:
+        - app
+    ignoreErrors:
+        -
+            '#Call to an undefined static method [a-zA-Z0-9\\_]+::find\(\)#'
+#            path: app/Models/*
+        -
+            '#Call to an undefined static method [a-zA-Z0-9\\_]+::whereIn\(\)#'
+#            path: app/Models/*
+        -
+            '#Call to an undefined method [a-zA-Z0-9\\_]+::sync\(\)#'
+#            path: app/Models/*
+        -
+            '#Call to an undefined static method [a-zA-Z0-9\\_]+::where\(\)#'
+#            path: app/Models/*
