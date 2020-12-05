@@ -75,6 +75,9 @@ class Employee extends Model
         return $this->belongsTo(Company::class);
     }
 
+    /**
+     * @return Collection|Company[]
+     */
     public function getCompany(): Collection
     {
         return $this->company()->get();
@@ -120,6 +123,9 @@ class Employee extends Model
         return $this->belongsToMany(Department::class);
     }
 
+    /**
+     * @return Collection|Department[]
+     */
     public function getDepartments(): Collection
     {
         return $this->departments()->get();
@@ -138,6 +144,9 @@ class Employee extends Model
         return $this->belongsToMany(Position::class);
     }
 
+    /**
+     * @return Collection|Position[]
+     */
     public function getPositions(): Collection
     {
         return $this->positions()->get();
@@ -156,6 +165,9 @@ class Employee extends Model
         return $this->belongsToMany(Training::class);
     }
 
+    /**
+     * @return Collection|Training[]
+     */
     public function getTrainings(): Collection
     {
         return $this->trainings()->get();
@@ -174,6 +186,9 @@ class Employee extends Model
         return $this->belongsToMany(Certificate::class);
     }
 
+    /**
+     * @return Collection|Certificate[]
+     */
     public function getCertificates(): Collection
     {
         return $this->certificates()->get();
