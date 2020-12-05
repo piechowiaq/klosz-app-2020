@@ -6,12 +6,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Department;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Support\Renderable;
+use App\Http\Requests\StoreDepartmentRequest;
+use App\Http\Requests\UpdateDepartmentRequest;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
 use function redirect;
-use function request;
 use function view;
 
 class DepartmentController extends Controller
@@ -21,65 +23,85 @@ class DepartmentController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 
         $departments = Department::all();
 
-        return view('admin.departments.index')->with(['departments' => $departments]);
+        return view('admin.departments.index', ['departments' => $departments]);
     }
 
-    public function create(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create()
     {
         $this->authorize('update');
 
         $department = new Department();
 
-        return view('admin.departments.create')->with(['department' => $department]);
+        return view('admin.departments.create', ['department' => $department]);
     }
 
-    public function store(Request $request): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function store(StoreDepartmentRequest $request)
     {
         $this->authorize('update');
 
-        $department = Department::create($this->validateRequest());
+        $department = new Department();
+        $department->setName($request->get('name'));
+        $department->save();
 
         return redirect($department->path());
     }
 
-    public function show(Department $department): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Department $department)
     {
         $this->authorize('update');
 
-        return view('admin.departments.show')->with(['department' => $department]);
+        return view('admin.departments.show', ['department' => $department]);
     }
 
-    public function edit(Department $department): Renderable
-    {
-        return view('admin.departments.edit')->with(['department' => $department]);
-    }
-
-    public function update(Request $request, Department $department): RedirectResponse
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(Department $department)
     {
         $this->authorize('update');
 
-        $department->update($this->validateRequest());
+        return view('admin.departments.edit', ['department' => $department]);
+    }
+
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function update(UpdateDepartmentRequest $request, Department $department)
+    {
+        $this->authorize('update');
+
+        $department->update($request->validated());
 
         return redirect($department->path());
     }
 
-    public function destroy(Department $department): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function destroy(Department $department)
     {
         $this->authorize('update');
 
         $department->delete();
 
         return redirect('admin/departments');
-    }
-
-    protected function validateRequest()
-    {
-        return request()->validate(['name' => 'sometimes|required']);
     }
 }
