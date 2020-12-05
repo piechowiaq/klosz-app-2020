@@ -11,9 +11,12 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Contracts\Support\Renderable;
+use DateTime;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function request;
@@ -26,16 +29,22 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 
         $users = User::all();
 
-        return view('admin.users.index')->with(['users' => $users]);
+        return view('admin.users.index', ['users' => $users]);
     }
 
-    public function create(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create()
     {
         $this->authorize('update');
 
@@ -45,36 +54,44 @@ class UserController extends Controller
 
         $user = new User();
 
-        return view('admin.users.create')->with(['roles' => $roles, 'companies' => $companies, 'user' => $user]);
+        return view('admin.users.create', ['roles' => $roles, 'companies' => $companies, 'user' => $user]);
     }
 
-    public function store(StoreUserRequest $request): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function store(StoreUserRequest $request)
     {
         $this->authorize('update');
 
-        $user = new User(request(['name', 'surname', 'email']));
-
-        $user->password = Hash::make($request['password']);
-
-        $user->email_verified_at = Carbon::now();
-
+        $user = new User();
+        $user->setName($request->get('name'));
+        $user->setSurname($request->get('surname'));
+        $user->setEmail($request->get('email'));
+        $user->setPassword((int) Hash::make($request->get('password')));
+        $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $user->roles()->attach(request('role_id'));
-
-        $user->companies()->attach(request('company_id'));
+        $user->setRoles(Role::getRolesById($request->get('role_id')));
+        $user->setCompanies(Company::getCompaniesById($request->get('company_id')));
 
         return redirect($user->path());
     }
 
-    public function show(User $user): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(User $user)
     {
         $this->authorize('update');
 
-        return view('admin.users.show')->with(['user' => $user]);
+        return view('admin.users.show', ['user' => $user]);
     }
 
-    public function edit(User $user): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(User $user)
     {
         $this->authorize('update');
 
@@ -82,29 +99,32 @@ class UserController extends Controller
 
         $roles = Role::all();
 
-        return view('admin.users.edit')->with(['user' => $user, 'companies' => $companies, 'roles' => $roles]);
+        return view('admin.users.edit', ['user' => $user, 'companies' => $companies, 'roles' => $roles]);
     }
 
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function update(UpdateUserRequest $request, User $user)
     {
         $this->authorize('update');
 
         $user->update(request(['name', 'surname', 'email']));
 
-        $user->password = Hash::make($request['password']);
-
-        $user->email_verified_at = Carbon::now();
-
+        $user->setPassword((int) Hash::make($request->get('password')));
+        $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $user->roles()->sync(request('role_id'));
-
-        $user->companies()->sync(request('company_id'));
+        $user->setRoles(Role::getRolesById($request->get('role_id')));
+        $user->setCompanies(Company::getCompaniesById($request->get('company_id')));
 
         return redirect($user->path());
     }
 
-    public function destroy(User $user): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function destroy(User $user)
     {
         $this->authorize('update');
 
