@@ -79,6 +79,9 @@ class Department extends Model
         return $this->belongsToMany(Employee::class);
     }
 
+    /**
+     * @return Collection|Employee[]
+     */
     public function getEmployees(): Collection
     {
         return $this->employees()->get();
@@ -97,6 +100,9 @@ class Department extends Model
         return $this->hasMany(Position::class);
     }
 
+    /**
+     * @return Collection|Position[]
+     */
     public function getPositions(): Collection
     {
         return $this->positions()->get();
@@ -120,6 +126,9 @@ class Department extends Model
         return $this->belongsToMany(Training::class);
     }
 
+    /**
+     * @return Collection|Training[]
+     */
     public function getTrainings(): Collection
     {
         return $this->trainings()->get();
