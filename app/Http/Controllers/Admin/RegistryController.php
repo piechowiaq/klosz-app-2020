@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegistryRequest;
 use App\Http\Requests\UpdateRegistryRequest;
 use App\Registry;
-use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function request;
@@ -22,50 +24,70 @@ class RegistryController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 
         $registries = Registry::all();
 
-        return view('admin.registries.index')->with(['registries' => $registries]);
+        return view('admin.registries.index', ['registries' => $registries]);
     }
 
-    public function create(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create()
     {
         $this->authorize('update');
 
         $registry = new Registry();
 
-        return view('admin.registries.create')->with(['registry' => $registry]);
+        return view('admin.registries.create', ['registry' => $registry]);
     }
 
-    public function store(StoreRegistryRequest $request): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function store(StoreRegistryRequest $request)
     {
         $this->authorize('update');
 
-        $registry = new Registry(request(['name', 'description', 'valid_for']));
-
+        $registry = new Registry();
+        $registry->setName($request->get('name'));
+        $registry->setDescription($request->get('description'));
+        $registry->setValidFor($request->get('vallid_for'));
         $registry->save();
 
         return redirect($registry->path());
     }
 
-    public function show(Registry $registry): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Registry $registry)
     {
         $this->authorize('update');
 
-        return view('admin.registries.show')->with(['registry' => $registry]);
+        return view('admin.registries.show', ['registry' => $registry]);
     }
 
-    public function edit(Registry $registry): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(Registry $registry)
     {
         $this->authorize('update');
 
-        return view('admin.registries.edit')->with(['registry' => $registry]);
+        return view('admin.registries.edit', ['registry' => $registry]);
     }
 
-    public function update(UpdateRegistryRequest $request, Registry $registry): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function update(UpdateRegistryRequest $request, Registry $registry)
     {
         $this->authorize('update');
 
@@ -76,7 +98,10 @@ class RegistryController extends Controller
         return redirect($registry->path());
     }
 
-    public function destroy(Registry $registry): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function destroy(Registry $registry)
     {
         $this->authorize('update');
 
