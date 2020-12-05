@@ -9,8 +9,10 @@ use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
-use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function request;
@@ -23,16 +25,22 @@ class TrainingController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 
         $trainings = Training::all();
 
-        return view('admin.trainings.index')->with(['trainings' => $trainings]);
+        return view('admin.trainings.index', ['trainings' => $trainings]);
     }
 
-    public function create(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create()
     {
         $this->authorize('update');
 
@@ -40,18 +48,23 @@ class TrainingController extends Controller
 
         $positions = Position::all();
 
-        return view('admin.trainings.create')->with(['training' => $training, 'positions' => $positions]);
+        return view('admin.trainings.create', ['training' => $training, 'positions' => $positions]);
     }
 
-    public function store(StoreTrainingRequest $request): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function store(StoreTrainingRequest $request)
     {
         $this->authorize('update');
 
-        $training = new Training(request(['name', 'description', 'valid_for']));
-
+        $training = new Training();
+        $training->setName($request->get('name'));
+        $training->setDescription($request->get('description'));
+        $training->setValidFor($request->get('valid_for'));
         $training->save();
 
-        $training->setPositions(request('position_id'));
+        $training->setPositions($request->get('position_id'));
 
         foreach ($training->positions as $position) {
             $training->departments()->sync($position->department_id, false);
@@ -63,23 +76,32 @@ class TrainingController extends Controller
         return redirect($training->path());
     }
 
-    public function show(Training $training): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Training $training)
     {
         $this->authorize('update');
 
-        return view('admin.trainings.show')->with(['training' => $training]);
+        return view('admin.trainings.show', ['training' => $training]);
     }
 
-    public function edit(Training $training): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(Training $training)
     {
         $this->authorize('update');
 
         $positions = Position::all();
 
-        return view('admin.trainings.edit')->with(['training' => $training, 'positions' => $positions]);
+        return view('admin.trainings.edit', ['training' => $training, 'positions' => $positions]);
     }
 
-    public function update(UpdateTrainingRequest $request, Training $training): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function update(UpdateTrainingRequest $request, Training $training)
     {
         $this->authorize('update');
 
@@ -87,7 +109,7 @@ class TrainingController extends Controller
 
         $training->save();
 
-        $training->setPositions(request('position_id'));
+        $training->setPositions($request->get('position_id'));
 
         foreach ($training->positions as $position) {
             $training->departments()->sync($position->department_id, false);
@@ -99,22 +121,15 @@ class TrainingController extends Controller
         return redirect($training->path());
     }
 
-    public function destroy(Training $training): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function destroy(Training $training)
     {
         $this->authorize('update');
 
         $training->delete();
 
         return redirect('admin/trainings');
-    }
-
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'name' => 'sometimes|required',
-            'description' => 'required|min:3',
-            'valid_for' => 'required',
-
-        ]);
     }
 }
