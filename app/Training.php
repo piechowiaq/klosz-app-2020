@@ -23,7 +23,7 @@ class Training extends Model
     /** @var array|string[] */
     protected $guarded = [];
 
-    public static function getRegistryById(string $id): ?self
+    public static function getTrainingById(string $id): ?self
     {
         return self::find($id);
     }
@@ -33,7 +33,7 @@ class Training extends Model
      *
      * @return Collection|self[]
      */
-    public static function getRegistriesById(array $ids): Collection
+    public static function getTrainingsById(array $ids): Collection
     {
         return self::whereIn(self::ID_COLUMN, $ids)->get();
     }

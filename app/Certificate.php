@@ -54,9 +54,9 @@ class Certificate extends Model
         return $this->attributes[self::CERTIFICATE_NAME_COLUMN];
     }
 
-    public function setName(string $name): void
+    public function setName(string $fileName): void
     {
-        $this->attributes[self::CERTIFICATE_NAME_COLUMN] = $name;
+        $this->attributes[self::CERTIFICATE_NAME_COLUMN] = $fileName;
     }
 
     public function getPath(): string
@@ -71,7 +71,7 @@ class Certificate extends Model
 
     public function getTrainingDate(): DateTime
     {
-        return new DateTime($this->attributes[self::TRAINING_DATE_COLUMN]);
+        return $this->attributes[self::TRAINING_DATE_COLUMN];
     }
 
     public function setTrainingDate(DateTime $dateTime): void
@@ -81,7 +81,7 @@ class Certificate extends Model
 
     public function getExpiryDate(): DateTime
     {
-        return new DateTime($this->attributes[self::EXPIRY_DATE_COLUMN]);
+        return $this->attributes[self::EXPIRY_DATE_COLUMN];
     }
 
     public function setExpiryDate(DateTime $dateTime): void
@@ -174,6 +174,13 @@ class Certificate extends Model
     public function userPath(Company $company, Training $training): string
     {
         return '/' . $company->getId() . '/trainings/' . $training->getId() . '/certificates/' . $this->getId();
+    }
+
+    public function calculateExpiryDate(DateTime $trainingDate, Training $training): DateTime
+    {
+        $monthsToAdd = $training->getValidFor();
+
+        return $trainingDate->modify('+' . $monthsToAdd . ' month');
     }
 
     public function scopeLatest($query)
