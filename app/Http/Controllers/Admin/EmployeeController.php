@@ -10,8 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Position;
-use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function request;
@@ -24,16 +26,22 @@ class EmployeeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index()
     {
         $this->authorize('update');
 
         $employees = Employee::all();
 
-        return view('admin.employees.index')->with(['employees' => $employees]);
+        return view('admin.employees.index', ['employees' => $employees]);
     }
 
-    public function create(): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create()
     {
         $this->authorize('update');
 
@@ -43,10 +51,13 @@ class EmployeeController extends Controller
 
         $employee = new Employee();
 
-        return view('admin.employees.create')->with(['positions' => $positions, 'companies' => $companies, 'employee' => $employee]);
+        return view('admin.employees.create', ['positions' => $positions, 'companies' => $companies, 'employee' => $employee]);
     }
 
-    public function store(StoreEmployeeRequest $request): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function store(StoreEmployeeRequest $request)
     {
         $this->authorize('update');
 
@@ -66,14 +77,20 @@ class EmployeeController extends Controller
         return redirect($employee->path());
     }
 
-    public function show(Employee $employee): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Employee $employee)
     {
         $this->authorize('update');
 
-        return view('admin.employees.show')->with(['employee' => $employee]);
+        return view('admin.employees.show', ['employee' => $employee]);
     }
 
-    public function edit(Employee $employee): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(Employee $employee)
     {
         $this->authorize('update');
 
@@ -81,10 +98,13 @@ class EmployeeController extends Controller
 
         $companies = Company::all();
 
-        return view('admin.employees.edit')->with(['employee' => $employee, 'companies' => $companies, 'positions' => $positions]);
+        return view('admin.employees.edit', ['employee' => $employee, 'companies' => $companies, 'positions' => $positions]);
     }
 
-    public function update(UpdateEmployeeRequest $request, Employee $employee): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
         $this->authorize('update');
 
@@ -104,7 +124,10 @@ class EmployeeController extends Controller
         return redirect($employee->path());
     }
 
-    public function destroy(Employee $employee): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function destroy(Employee $employee)
     {
         $this->authorize('update');
 
