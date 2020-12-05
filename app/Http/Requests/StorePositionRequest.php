@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+declare(strict_types=1);
 
-use App\Position;
-use App\Department;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,10 +10,8 @@ class StorePositionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,10 +21,10 @@ class StorePositionRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name'=> 'required|unique:positions,name|sometimes',
+            'name' => 'required|unique:positions,name|sometimes',
             'department_id' => 'exists:departments,id|required|sometimes',
         ];
     }
