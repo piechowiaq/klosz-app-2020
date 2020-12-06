@@ -183,8 +183,8 @@ class Certificate extends Model
         return $trainingDate->modify('+' . $monthsToAdd . ' month');
     }
 
-    public function scopeLatest($query)
-    {
-        return $query->orderBy('created_at', 'desc')->first();
-    }
+//    public function scopeLatest($query)
+//    {
+//        return $query->orderBy('created_at', 'desc')->first();
+//    }
 }

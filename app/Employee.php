@@ -230,13 +230,13 @@ class Employee extends Model
         return self::whereIn('company_id', $company->getId())->get();
     }
 
-    public function scopeCertified($query, Training $training, Company $company)
-    {
-        return $query->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
-            $q->where('expiry_date', '>', Carbon::now())
-                ->where('training_id', $training->getID());
-        })->get();
-    }
+//    public function scopeCertified($query, Training $training, Company $company)
+//    {
+//        return $query->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
+//            $q->where('expiry_date', '>', Carbon::now())
+//                ->where('training_id', $training->getID());
+//        })->get();
+//    }
 
 //    public function toSearchableArray()
 //    {
