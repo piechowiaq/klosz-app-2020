@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Certificate;
 use App\Employee;
-
-use App\Policies\EmployeePolicy;
 use App\Policies\CertificatePolicy;
+use App\Policies\EmployeePolicy;
 use App\Policies\ReportPolicy;
 use App\Policies\UserPolicy;
 use App\Report;
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Contracts\Auth\Access\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,20 +33,15 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @param Gate $gate
-     * @return void
      */
-    public function boot(Gate $gate)
+    public function boot(Gate $gate): void
     {
         $this->registerPolicies();
 
-        $gate->before(function ($user) {
-
+        $gate->before(static function ($user) {
             if ($user->isSuperAdmin()) {
                 return true;
             }
-
         });
     }
 }

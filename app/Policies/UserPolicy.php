@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\User;
@@ -16,18 +18,10 @@ class UserPolicy
      */
     public function __construct()
     {
-        //
     }
 
-    public function view(User $user)
+    public function view(User $user): bool
     {
-
-        {
-            if ($user->companies()->count()>1 || $user->isSuperAdmin())
-            {
-                return true;
-            }
-        }
-        return false;
+        return $user->companies()->count() > 1 || $user->isSuperAdmin();
     }
 }
