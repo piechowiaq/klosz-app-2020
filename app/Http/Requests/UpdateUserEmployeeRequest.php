@@ -17,7 +17,7 @@ class UpdateUserEmployeeRequest extends FormRequest
     }
 
     /**
-     * @return array|string[]
+     * @return array|mixed[]
      */
     public function rules(): array
     {

@@ -20,7 +20,7 @@ class UpdatePositionRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array|string[]
+     * @return array|mixed[]
      */
     public function rules(): array
     {
