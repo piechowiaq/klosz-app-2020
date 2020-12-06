@@ -9,13 +9,14 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
+use Exception;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
-use function request;
 use function view;
 
 class EmployeeController extends Controller
@@ -49,27 +50,34 @@ class EmployeeController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function store(StoreUserEmployeeRequest $request, Company $company, Employee $employee)
     {
         $this->authorize('update', $employee);
 
-        $employee = new Employee(request(['name', 'surname', 'number', 'company_id']));
-
+        $employee = new Employee();
+        $employee->setName($request->get('name'));
+        $employee->setSurname($request->get('surname'));
+        $employee->setNumber($request->get('number'));
         $employee->setCompany($company);
-
         $employee->save();
 
-        $employee->setPositions(request('position_id'));
+        $employee->setPositions($request->get('position_id'));
 
-        foreach ($employee->positions as $position) {
-            $employee->departments()->sync($position->department_id, false);
-            foreach ($position->trainings as $training) {
-                $employee->trainings()->sync($training, false);
-            }
+        $departments = new Collection();
+        $trainings   = new Collection();
+
+        foreach ($employee->getPositions() as $position) {
+            $departments->add($position->getDepartment());
+            $trainings->add($position->getTrainings());
         }
 
-        return redirect()->route('user.employees.index', [$company]);
+        $employee->setDepartments($departments);
+        $employee->setTrainings($trainings);
+
+        return redirect($company->getId() . '/employees/' . $employee->getID());
     }
 
     /**
@@ -101,20 +109,24 @@ class EmployeeController extends Controller
     {
         $this->authorize('update', $employee);
 
-        $employee->update(request(['name', 'surname', 'number']));
-
+        $employee->setName($request->get('name'));
+        $employee->setSurname($request->get('surname'));
+        $employee->setNumber($request->get('number'));
+        $employee->setCompany($company);
         $employee->save();
 
-        $employee->setCompany($company);
+        $employee->setPositions($request->get('position_id'));
 
-        $employee->setPositions(request('position_id'));
+        $departments = new Collection();
+        $trainings   = new Collection();
 
-        foreach ($employee->positions as $position) {
-            $employee->departments()->sync($position->department_id, false);
-            foreach ($position->trainings as $training) {
-                $employee->trainings()->sync($training, false);
-            }
+        foreach ($employee->getPositions() as $position) {
+            $departments->add($position->getDepartment());
+            $trainings->add($position->getTrainings());
         }
+
+        $employee->setDepartments($departments);
+        $employee->setTrainings($trainings);
 
         return redirect($employee->userPath($company));
     }
@@ -126,6 +138,6 @@ class EmployeeController extends Controller
     {
         $employee->delete();
 
-        return redirect()->route('user.employees.index', [$company->getId()]);
+        return redirect($company->getId() . '/employees');
     }
 }
