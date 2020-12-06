@@ -10,15 +10,16 @@ use App\Http\Requests\StoreUserReportRequest;
 use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
-use Carbon\Carbon;
-use Illuminate\Contracts\Support\Renderable;
+use DateTime;
+use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View as IlluminateView;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-use function basename;
 use function redirect;
-use function request;
 use function view;
 
 class ReportController extends Controller
@@ -28,41 +29,54 @@ class ReportController extends Controller
         $this->middleware(['auth', 'auth.user']);
     }
 
-    public function create(Company $company, Report $report): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function create(Company $company, Report $report)
     {
         $this->authorize('update', $report);
 
         $report = new Report();
 
-        return view('user.reports.create')->with(['report' => $report, 'company' => $company]);
+        return view('user.reports.create', ['report' => $report, 'company' => $company]);
     }
 
-    public function store(StoreUserReportRequest $request, Company $company, Report $report): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
+     */
+    public function store(StoreUserReportRequest $request, Company $company, Report $report)
     {
         $this->authorize('update', $report);
 
-        $report = new Report(request(['registry_id', 'report_date']));
+        $registry = Registry::getRegistryById($request->get('registry_id'));
+        if ($registry === null) {
+            throw new Exception('No registry found!');
+        }
 
-        $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
+        $report = new Report();
+        $report->setReportDate(new DateTime($request->get('report_date')));
+        $report->setName($registry, $company, $request);
+        if ($request->file('file') === null) {
+            throw new Exception('No file found!');
+        }
 
+        $report->setPath(Storage::disk('s3')->url($request->file('file')->storeAs('reports', $report->getName(), 's3')));
+        $report->setExpiryDate($report->calculateExpiryDate($report->getReportDate(), $registry));
         $report->setCompany($company);
-
-        $report->expiry_date = $report->calculateExpiryDate(request('report_date'));
-
-        $report->setName(basename($path));
-
-        $report->setPath(Storage::disk('s3')->url($path));
-
-//        dd(basename(request('report_path')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' .$companyId.'-'. Carbon::now()->format('His') . '.' . request('report_path')->getClientOriginalExtension(), 's3')));
-
+        $report->setRegistry($registry);
         $report->save();
 
-        return redirect()->route('user.registries.index', [$company]);
+        return redirect($company->getId() . '/registries');
     }
 
-    public function show(Company $company, Report $report): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function show(Company $company, Report $report)
     {
-        return view('user.reports.show')->with(['report' => $report, 'company' => $company]);
+        return view('user.reports.show', ['report' => $report, 'company' => $company]);
     }
 
     public function download(Company $company, Report $report): StreamedResponse
@@ -70,40 +84,53 @@ class ReportController extends Controller
         return Storage::disk('s3')->response('reports/' . $report->getName());
     }
 
-    public function edit(Company $company, Report $report): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function edit(Company $company, Report $report)
     {
-        return view('user.reports.edit')->with(['report' => $report, 'company' => $company]);
+        return view('user.reports.edit', ['report' => $report, 'company' => $company]);
     }
 
-    public function update(UpdateUserReportRequest $request, Company $company, Report $report): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
+     */
+    public function update(UpdateUserReportRequest $request, Company $company, Report $report)
     {
-        $report->update(request(['registry_id', 'report_date']));
-
-        $report->setCompany($company);
-
-        $report->expiry_date = Carbon::create(request('report_date'))->addMonths(Registry::where('id', $report->registry_id)->first()->valid_for)->toDateString();
-
-        if (request()->has('file')) {
-            $path = request('file')->storeAs('reports', $report->report_date . ' ' . $report->registry->name . ' ' . $company->getId() . '-' . Carbon::now()->format('His') . '.' . request('file')->getClientOriginalExtension(), 's3');
-
-            $report->setName(basename($path));
-
-            $report->setPath(Storage::disk('s3')->url($path));
+        $registry = Registry::getRegistryById($request->get('registry_id'));
+        if ($registry === null) {
+            throw new Exception('No registry found!');
         }
 
-        $report->save();
+        $report->setReportDate(new DateTime($request->get('report_date')));
 
-        $registry = Registry::where('id', $report->registry_id)->first();
+        if (! empty($request->file('file'))) {
+            $report->setName($registry, $company, $request);
+            $report->setPath(Storage::disk('s3')->url($request->file('file')->storeAs('reports', $report->getName(), 's3')));
+        }
+
+        $report->setExpiryDate($report->calculateExpiryDate($report->getReportDate(), $registry));
+        $report->setCompany($company);
+        $report->setRegistry($registry);
+        $report->save();
 
         return redirect($registry->userpath($company));
     }
 
-    public function destroy(Company $company, Report $report): RedirectResponse
+    /**
+     * @return  RedirectResponse|Redirector
+     */
+    public function destroy(Company $company, Report $report)
     {
-        $registry = Registry::where('id', $report->registry_id)->first();
+        $registry = Registry::getRegistryById((string) $report->getRegistry()->pluck('id')->toArray()[0]);
+        if ($registry === null) {
+            throw new Exception('No registry found!');
+        }
 
         $report->delete();
 
-        return redirect($registry->userpath($company));
+        return redirect($company->getId() . '/registries/' . $registry->getID());
     }
 }

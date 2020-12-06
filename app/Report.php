@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App;
 
-use Carbon\Carbon;
+use App\Http\Requests\StoreUserReportRequest;
+use App\Http\Requests\UpdateUserReportRequest;
 use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
-use function request;
+use function date;
 
 class Report extends Model
 {
@@ -57,8 +58,13 @@ class Report extends Model
         return (string) $this->attributes[self::NAME_COLUMN];
     }
 
-    public function setName(string $name): void
+    /**
+     * @param  StoreUserReportRequest|UpdateUserReportRequest $request
+     */
+    public function setName(Registry $registry, Company $company, $request): void
     {
+        $name = $this->getReportDate()->format('Y-m-d') . ' ' . $registry->getName() . ' ' . $company->getId() . '-' . date('is') . '.' . $request->file('file')->getClientOriginalExtension();
+
         $this->attributes[self::NAME_COLUMN] = $name;
     }
 
@@ -74,7 +80,7 @@ class Report extends Model
 
     public function getReportDate(): DateTime
     {
-        return new DateTime($this->attributes[self::REPORT_DATE_COLUMN]);
+        return $this->attributes[self::REPORT_DATE_COLUMN];
     }
 
     public function setReportDate(DateTime $dateTime): void
@@ -84,12 +90,12 @@ class Report extends Model
 
     public function getExpiryDate(): DateTime
     {
-        return new DateTime($this->attributes[self::REPORT_EXPIRY_DATE_COLUMN]);
+        return $this->attributes[self::REPORT_EXPIRY_DATE_COLUMN];
     }
 
     public function setExpiryDate(DateTime $dateTime): void
     {
-        $this->attributes[self::REPORT_DATE_COLUMN] = $dateTime;
+        $this->attributes[self::REPORT_EXPIRY_DATE_COLUMN] = $dateTime;
     }
 
     public function getCreatedAt(): DateTime
@@ -117,9 +123,6 @@ class Report extends Model
         return $this->belongsTo(Registry::class);
     }
 
-    /**
-     * @return Collection|Registry[]
-     */
     public function getRegistry(): Collection
     {
         return $this->registry()->get();
@@ -127,7 +130,7 @@ class Report extends Model
 
     public function setRegistry(Registry $registry): void
     {
-        $this->attributes[self::REGISTRY_ID_COLUMN] = $registry;
+        $this->attributes[self::REGISTRY_ID_COLUMN] = $registry->getID();
     }
 
     public function company(): Relation
@@ -153,8 +156,10 @@ class Report extends Model
         return '/' . $company->getId() . '/reports/' . $this->getID();
     }
 
-    public function calculateExpiryDate($report_date)
+    public function calculateExpiryDate(DateTime $reportDate, Registry $registry): DateTime
     {
-        return Carbon::create(request('report_date'))->addMonths(Registry::where('id', request('registry_id'))->first()->valid_for)->toDateString();
+        $monthsToAdd = $registry->getValidFor();
+
+        return $reportDate->modify('+' . $monthsToAdd . ' month');
     }
 }
