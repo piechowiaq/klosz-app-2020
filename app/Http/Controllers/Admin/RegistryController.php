@@ -91,8 +91,9 @@ class RegistryController extends Controller
     {
         $this->authorize('update');
 
-        $registry->update(request(['name', 'description', 'valid_for']));
-
+        $registry->setName($request->get('name'));
+        $registry->setDescription($request->get('description'));
+        $registry->setValidFor($request->get('vallid_for'));
         $registry->save();
 
         return redirect($registry->path());
