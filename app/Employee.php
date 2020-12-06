@@ -9,6 +9,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Laravel\Scout\Builder;
 
 class Employee extends Model
 {
@@ -230,23 +231,23 @@ class Employee extends Model
         return self::whereIn('company_id', $company->getId())->get();
     }
 
-//    public function scopeCertified($query, Training $training, Company $company)
-//    {
-//        return $query->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
-//            $q->where('expiry_date', '>', Carbon::now())
-//                ->where('training_id', $training->getID());
-//        })->get();
-//    }
+    public function scopeCertified($query, Training $training, Company $company): void
+    {
+        $query->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
+            $q->where('expiry_date', '>', Carbon::now())
+                ->where('training_id', $training->getID());
+        })->get();
+    }
 
-//    public function toSearchableArray()
-//    {
-//        return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
-//    }
-//
-//    public static function search($query)
-//    {
-//        return empty($query) ? static::query()
-//            : static::where('name', 'like', '%'.$query.'%')
-//                ->orWhere('surname', 'like', '%'.$query.'%');
-//    }
+    public function toSearchableArray()
+    {
+        return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
+    }
+
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('name', 'like', '%'.$query.'%')
+                ->orWhere('surname', 'like', '%'.$query.'%');
+    }
 }
