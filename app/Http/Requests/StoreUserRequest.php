@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+declare(strict_types=1);
 
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -9,10 +10,8 @@ class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -20,18 +19,17 @@ class StoreUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param User $user
-     * @return array
+     * @return array|string[]
      */
-    public function rules()
+    public function rules(): array
     {
-       return [
-            'name'=> 'required|sometimes',
-            'surname'=> 'required|sometimes',
+        return [
+            'name' => 'required|sometimes',
+            'surname' => 'required|sometimes',
             'email' => 'required|unique:users,email|sometimes',
-            'password'=> 'required|sometimes',
+            'password' => 'required|sometimes',
             'role_id' => 'exists:roles,id|required|sometimes',
-            'company_id'=> 'exists:companies,id|required|sometimes',
+            'company_id' => 'exists:companies,id|required|sometimes',
 
         ];
     }

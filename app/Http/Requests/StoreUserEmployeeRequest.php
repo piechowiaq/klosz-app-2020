@@ -17,7 +17,7 @@ class StoreUserEmployeeRequest extends FormRequest
     }
 
     /**
-     * @return string[]
+     * @return array|string[]
      */
     public function rules(): array
     {

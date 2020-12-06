@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -9,10 +11,8 @@ class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -20,17 +20,17 @@ class UpdateUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array|string[]
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name'=> 'required|sometimes',
-            'surname'=> 'required|sometimes',
+            'name' => 'required|sometimes',
+            'surname' => 'required|sometimes',
             'email' => ['required','sometimes', Rule::unique('users', 'email')->ignore($this->user)],
-            'password'=> 'required|sometimes',
+            'password' => 'required|sometimes',
             'role_id' => 'exists:roles,id|required|sometimes',
-            'company_id'=> 'exists:companies,id|required|sometimes',
+            'company_id' => 'exists:companies,id|required|sometimes',
         ];
     }
 }

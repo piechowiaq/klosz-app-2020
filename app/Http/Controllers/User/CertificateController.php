@@ -11,6 +11,7 @@ use App\Http\Requests\StoreUserCertificateRequest;
 use App\Http\Requests\UpdateUserCertificateRequest;
 use App\Training;
 use DateTime;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -62,6 +63,9 @@ class CertificateController extends Controller
         $this->authorize('update', $certificate);
 
         $training = Training::getTrainingById($request->get('training_id'));
+        if ($training === null) {
+            throw new Exception('No training found!');
+        }
 
         $trainingDate = new DateTime($request->get('training_date'));
         $expiryDate   = $certificate->calculateExpiryDate(new DateTime($request->get('training_date')), $training);

@@ -24,7 +24,7 @@ class RegistryController extends Controller
     /**
      * @return Factory|IlluminateView
      */
-    public function index(Company $company, Report $report): Renderable
+    public function index(Company $company, Report $report)
     {
         return view('user.registries.index', ['companyRegistries' => $company->getRegistries(), 'company' => $company, 'report' => $report]);
     }
@@ -32,7 +32,7 @@ class RegistryController extends Controller
     /**
      * @return Factory|IlluminateView
      */
-    public function show(Company $company, Registry $registry, Report $report): Renderable
+    public function show(Company $company, Registry $registry, Report $report)
     {
         return view('user.registries.show', ['registry' => $registry, 'company' => $company, 'report' => $report]);
     }
