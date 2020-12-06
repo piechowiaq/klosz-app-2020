@@ -140,6 +140,6 @@ class CertificateController extends Controller
     {
         $certificate->delete();
 
-        return redirect()->route('user.certificates.index', [$company->getId(), $training]);
+        return redirect('/' . $company->getId() . '/trainings/' . $training->getId() . '/certificates');
     }
 }

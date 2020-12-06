@@ -7,10 +7,12 @@ namespace App\Http\Controllers\User;
 use App\Company;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\View\View as IlluminateView;
 use function collect;
 use function now;
 use function round;
@@ -42,10 +44,12 @@ class HomeController extends Controller
             return Redirect::action('Admin\AdminController@index');
         }
 
-        return view('user.home')->with(['user' => $user]);
+        return view('user.home', ['user' => $user]);
     }
-
-    public function index(Company $company): Renderable
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index(Company $company)
     {
         $collection = collect([]);
 
@@ -71,6 +75,6 @@ class HomeController extends Controller
 
         $registryChartValue = $company->getRegistries()->count() === 0 ? 0 : round($validRegistries / $company->getRegistries()->count() * 100);
 
-        return view('user.dashboard')->with(['company' => $company, 'companyTrainings' => $company->getTrainings(), 'average' => $average, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
+        return view('user.dashboard', ['company' => $company, 'companyTrainings' => $company->getTrainings(), 'average' => $average, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
     }
 }
