@@ -109,8 +109,9 @@ class UserController extends Controller
     {
         $this->authorize('update');
 
-        $user->update(request(['name', 'surname', 'email']));
-
+        $user->setName($request->get('name'));
+        $user->setSurname($request->get('surname'));
+        $user->setEmail($request->get('email'));
         $user->setPassword((int) Hash::make($request->get('password')));
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
