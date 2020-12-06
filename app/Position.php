@@ -121,7 +121,7 @@ class Position extends Model
      */
     public function setTrainings(array $ids): void
     {
-        $this->positions()->sync($ids);
+        $this->trainings()->sync($ids);
     }
 
     public function employees(): Relation

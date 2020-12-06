@@ -7,6 +7,7 @@ namespace App;
 use App\Http\Requests\StoreUserReportRequest;
 use App\Http\Requests\UpdateUserReportRequest;
 use DateTime;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -59,10 +60,16 @@ class Report extends Model
     }
 
     /**
-     * @param  StoreUserReportRequest|UpdateUserReportRequest $request
+     * @param StoreUserReportRequest|UpdateUserReportRequest $request
+     *
+     * @throws Exception
      */
     public function setName(Registry $registry, Company $company, $request): void
     {
+        if ($request->file('file') === null) {
+            throw new Exception('No file found!');
+        }
+
         $name = $this->getReportDate()->format('Y-m-d') . ' ' . $registry->getName() . ' ' . $company->getId() . '-' . date('is') . '.' . $request->file('file')->getClientOriginalExtension();
 
         $this->attributes[self::NAME_COLUMN] = $name;
@@ -123,6 +130,9 @@ class Report extends Model
         return $this->belongsTo(Registry::class);
     }
 
+    /**
+     * @return Collection|Registry[]
+     */
     public function getRegistry(): Collection
     {
         return $this->registry()->get();

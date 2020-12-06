@@ -147,7 +147,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return Collection|Company[]
+     * @return Collection|Role[]
      */
     public function getRoles(): Collection
     {
@@ -166,7 +166,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Company::class);
     }
-
+    /**
+     * @return Collection|Company[]
+     */
     public function getCompanies(): Collection
     {
         return $this->companies()->get();
