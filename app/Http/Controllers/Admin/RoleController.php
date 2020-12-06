@@ -34,69 +34,69 @@ class RoleController extends Controller
         return view('admin.roles.index', ['roles' => $roles]);
     }
 
-    /**
-     * @return Factory|IlluminateView
-     */
-    public function create()
-    {
-        $this->authorize('update');
-
-        $role = new Role();
-
-        return view('admin.roles.create', ['role' => $role]);
-    }
-
-    /**
-     * @return  RedirectResponse|Redirector
-     */
-    public function store()
-    {
-        $this->authorize('update');
-
-        $role = Role::create($this->validateRequest());
-
-        return redirect($role->path());
-    }
-
-    public function show(): void
-    {
-        $this->authorize('update');
-    }
-
-    public function edit(Role $role): void
-    {
-        $this->authorize('update');
-    }
-
-    /**
-     * @return  RedirectResponse|Redirector
-     */
-    public function update(Role $role)
-    {
-        $this->authorize('update');
-
-        $role->update($this->validateRequest());
-
-        return redirect($role->path());
-    }
-
-    /**
-     * @return  RedirectResponse|Redirector
-     */
-    public function destroy(Role $role)
-    {
-        $this->authorize('update');
-
-        $role->delete();
-
-        return redirect('/admin/roles');
-    }
-
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'name' => 'required|sometimes',
-            'description' => 'required|sometimes',
-        ]);
-    }
+//    /**
+//     * @return Factory|IlluminateView
+//     */
+//    public function create()
+//    {
+//        $this->authorize('update');
+//
+//        $role = new Role();
+//
+//        return view('admin.roles.create', ['role' => $role]);
+//    }
+//
+//    /**
+//     * @return  RedirectResponse|Redirector
+//     */
+//    public function store()
+//    {
+//        $this->authorize('update');
+//
+//        $role = Role::create($this->validateRequest());
+//
+//        return redirect($role->path());
+//    }
+//
+//    public function show(): void
+//    {
+//        $this->authorize('update');
+//    }
+//
+//    public function edit(Role $role): void
+//    {
+//        $this->authorize('update');
+//    }
+//
+//    /**
+//     * @return  RedirectResponse|Redirector
+//     */
+//    public function update(Role $role)
+//    {
+//        $this->authorize('update');
+//
+//        $role->update($this->validateRequest());
+//
+//        return redirect($role->path());
+//    }
+//
+//    /**
+//     * @return  RedirectResponse|Redirector
+//     */
+//    public function destroy(Role $role)
+//    {
+//        $this->authorize('update');
+//
+//        $role->delete();
+//
+//        return redirect('/admin/roles');
+//    }
+//
+//    protected function validateRequest()
+//    {
+//        return request()->validate([
+//            'name' => 'required|sometimes',
+//            'description' => 'required|sometimes',
+//        ]);
+//    }
 }

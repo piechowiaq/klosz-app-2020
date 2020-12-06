@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
@@ -66,12 +67,16 @@ class TrainingController extends Controller
 
         $training->setPositions($request->get('position_id'));
 
-        foreach ($training->positions as $position) {
-            $training->departments()->sync($position->department_id, false);
-            foreach ($position->employees as $employee) {
-                $training->employees()->sync($employee, false);
-            }
+        $departments = new Collection();
+        $employees   = new Collection();
+
+        foreach ($training->getPositions() as $position) {
+            $departments->add($position->getDepartment());
+            $employees->add($position->getEmployees());
         }
+
+        $training->setDepartments($departments);
+        $training->setEmployees($employees);
 
         return redirect($training->path());
     }
@@ -105,18 +110,23 @@ class TrainingController extends Controller
     {
         $this->authorize('update');
 
-        $training->update(request(['name', 'description', 'valid_for']));
-
+        $training->setName($request->get('name'));
+        $training->setDescription($request->get('description'));
+        $training->setValidFor($request->get('valid_for'));
         $training->save();
 
         $training->setPositions($request->get('position_id'));
 
-        foreach ($training->positions as $position) {
-            $training->departments()->sync($position->department_id, false);
-            foreach ($position->employees as $employee) {
-                $training->employees()->sync($employee, false);
-            }
+        $departments = new Collection();
+        $employees   = new Collection();
+
+        foreach ($training->getPositions() as $position) {
+            $departments->add($position->getDepartment());
+            $employees->add($position->getEmployees());
         }
+
+        $training->setDepartments($departments);
+        $training->setEmployees($employees);
 
         return redirect($training->path());
     }

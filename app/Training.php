@@ -68,12 +68,12 @@ class Training extends Model
         $this->attributes[self::DESCRIPTION_COLUMN] = $description;
     }
 
-    public function getValidFor(): int
+    public function getValidFor(): string
     {
-        return (int) $this->attributes[self::VALID_FOR_COLUMN];
+        return (string) $this->attributes[self::VALID_FOR_COLUMN];
     }
 
-    public function setValidFor(int $validFor): void
+    public function setValidFor(string $validFor): void
     {
         $this->attributes[self::VALID_FOR_COLUMN] = $validFor;
     }
@@ -109,11 +109,11 @@ class Training extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Department[] $departments
      */
-    public function setDepartments(array $ids): void
+    public function setDepartments($departments): void
     {
-        $this->departments()->sync($ids, false);
+        $this->departments()->sync($departments->flatten()->pluck('id'), false);
     }
 
     public function positions(): Relation
@@ -145,11 +145,11 @@ class Training extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Employee[] $employees
      */
-    public function setEmployees(array $ids): void
+    public function setEmployees($employees): void
     {
-        $this->employees()->sync($ids, false);
+        $this->employees()->sync($employees->flatten()->pluck('id'), false);
     }
 
     public function certificates(): Relation
