@@ -88,12 +88,12 @@ class Employee extends Model
         $this->attributes[self::COMPANY_ID_COLUMN] = $company->getId();
     }
 
-    public function getNumber(): int
+    public function getNumber(): string
     {
-        return (int) $this->attributes[self::NUMBER_COLUMN];
+        return (string) $this->attributes[self::NUMBER_COLUMN];
     }
 
-    public function setNumber(int $number): void
+    public function setNumber(string $number): void
     {
         $this->attributes[self::NUMBER_COLUMN] = $number;
     }
@@ -132,11 +132,11 @@ class Employee extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Department[] $departments
      */
-    public function setDepartments(array $ids): void
+    public function setDepartments($departments): void
     {
-        $this->departments()->sync($ids);
+        $this->departments()->sync($departments->flatten()->pluck('id'), false);
     }
 
     public function positions(): Relation
@@ -174,11 +174,11 @@ class Employee extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Training[] $trainings
      */
-    public function setTrainings(array $ids): void
+    public function setTrainings($trainings): void
     {
-        $this->trainings()->sync($ids);
+        $this->trainings()->sync($trainings->flatten()->pluck('id'), false);
     }
 
     public function certificates(): Relation
@@ -220,6 +220,14 @@ class Employee extends Model
     public function getTrainingsCountAttribute(): int
     {
         return $this->trainings()->count();
+    }
+
+    /**
+     * @return Collection|Employee[]
+     */
+    public function getEmployeesByCompany(Company $company): Collection
+    {
+        return self::whereIn('company_id', $company->getId())->get();
     }
 
     public function scopeCertified($query, Training $training, Company $company)
