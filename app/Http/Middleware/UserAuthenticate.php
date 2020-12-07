@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Company;
+use App\User;
 use Closure;
-use Illuminate\Database\Eloquent\Collection;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 
 use function assert;
@@ -15,13 +18,19 @@ use function redirect;
 
 class UserAuthenticate
 {
-
+    /**
+     * @return Application|RedirectResponse|Redirector|mixed
+     */
     public function handle(Request $request, Closure $next)
     {
-        /**
-         * @var Collection|Company[] $companies
-         */
-        $companies    = Auth::user()->companies;
+        $user = Auth::user();
+        if ($user === null) {
+            throw new Exception('User is null');
+        }
+
+        assert($user instanceof User);
+
+        $companies    = $user->getCompanies();
         $routeCompany = $request->route('company');
         assert($routeCompany instanceof Company);
         foreach ($companies as $company) {

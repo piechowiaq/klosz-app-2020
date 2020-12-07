@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Algolia\ScoutExtended\Builder;
 use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -209,11 +210,11 @@ class Training extends Model
         return '/' . $company->getId() . '/trainings/' . $this->getId();
     }
 
-    public static function search($query)
-    {
-        return empty($query) ? static::query()
-            : static::where('name', 'like', '%' . $query . '%');
-    }
+//    public static function search($query): \Illuminate\Database\Eloquent\Builder
+//    {
+//        return empty($query) ? static::query()
+//            : static::where('name', 'like', '%' . $query . '%');
+//    }
 
 //    public function scopeCertified($query, $training)
 //    {

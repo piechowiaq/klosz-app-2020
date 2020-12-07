@@ -9,7 +9,6 @@ use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Laravel\Scout\Builder;
 
 class Employee extends Model
 {
@@ -239,15 +238,18 @@ class Employee extends Model
         })->get();
     }
 
-    public function toSearchableArray()
+    /**
+     * @return array|string[]
+     */
+    public function toSearchableArray(): array
     {
         return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
     }
 
-    public static function search($query)
-    {
-        return empty($query) ? static::query()
-            : static::where('name', 'like', '%'.$query.'%')
-                ->orWhere('surname', 'like', '%'.$query.'%');
-    }
+//    public static function search($query)
+//    {
+//        return empty($query) ? static::query()
+//            : static::where('name', 'like', '%'.$query.'%')
+//                ->orWhere('surname', 'like', '%'.$query.'%');
+//    }
 }
