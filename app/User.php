@@ -26,6 +26,15 @@ class User extends Authenticatable
     /** @var array|string[] */
     protected $guarded = [];
 
+    /** @var array|string[] */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /** @var array|string[] */
+    protected $casts = ['email_verified_at' => 'datetime'];
+
     public static function getUserById(string $id): ?self
     {
         return self::find($id);
@@ -121,26 +130,6 @@ class User extends Authenticatable
         $this->attributes[self::UPDATED_AT_COLUMN] = $dateTime;
     }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = ['email_verified_at' => 'datetime'];
-
-    /**
-     * The role associated with the user.
-     */
     public function roles(): Relation
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
@@ -166,6 +155,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Company::class);
     }
+
     /**
      * @return Collection|Company[]
      */

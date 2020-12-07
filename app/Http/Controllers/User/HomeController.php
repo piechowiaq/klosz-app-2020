@@ -11,8 +11,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-
 use Illuminate\View\View as IlluminateView;
+
 use function collect;
 use function now;
 use function round;
@@ -46,6 +46,7 @@ class HomeController extends Controller
 
         return view('user.home', ['user' => $user]);
     }
+
     /**
      * @return Factory|IlluminateView
      */

@@ -11,12 +11,17 @@ use App\Http\Controllers\Controller;
 use App\Registry;
 use App\Report;
 use App\Training;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View as IlluminateView;
 
 use function request;
 use function view;
 
 class SearchController extends Controller
 {
+    /**
+     * @return mixed|Factory|IlluminateView
+     */
     public function show(Company $company, Employee $employee)
     {
         $this->authorize('view', $employee);
@@ -29,9 +34,12 @@ class SearchController extends Controller
             return $employees;
         }
 
-        return view('user.employees.index')->with(['employees' => $employees, 'company' => $company, 'employee' => $employee]);
+        return view('user.employees.index', ['employees' => $employees, 'company' => $company, 'employee' => $employee]);
     }
 
+    /**
+     * @return mixed|Factory|IlluminateView
+     */
     public function registries(Company $company, Report $report)
     {
         $this->authorize('view', $report);
@@ -46,9 +54,12 @@ class SearchController extends Controller
             return $companyRegistries;
         }
 
-        return view('user.registries.index')->with(['companyRegistries' => $companyRegistries, 'company' => $company, 'report' => $report]);
+        return view('user.registries.index', ['companyRegistries' => $companyRegistries, 'company' => $company, 'report' => $report]);
     }
 
+    /**
+     * @return mixed|Factory|IlluminateView
+     */
     public function trainings(Company $company, Certificate $certificate)
     {
         $search = request('q');
@@ -61,7 +72,7 @@ class SearchController extends Controller
             return $companyTrainings;
         }
 
-        return view('user.trainings.index')->with(['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $companyId]);
+        return view('user.trainings.index', ['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $companyId]);
     }
 
 //        $companyRegistries = Registry::search($search)->whereHas('companies', function($query) use ($companyId){
