@@ -182,5 +182,4 @@ class Certificate extends Model
 
         return $trainingDate->modify('+' . $monthsToAdd . ' month');
     }
-
 }

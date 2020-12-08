@@ -131,7 +131,7 @@ class CompanyController extends Controller
     {
         $this->authorize('update');
 
-        $company->update($request->get('name'));
+        $company->setName($request->get('name'));
 
         $company->setDepartments($request->get('department_id'));
         $company->setRegistries($request->get('registry_id'));

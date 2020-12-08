@@ -34,7 +34,7 @@ class StoreUserEmployeeRequest extends FormRequest
         return [
             'name' => 'sometimes|required',
             'surname' => 'sometimes|required',
-            'number' => 'required|unique:employees,number,NULL,id,company_id,' . $this->route('company')->getId(),
+            'number' => 'int|required|unique:employees,number,NULL,id,company_id,' . $this->route('company')->getId(),
             'company_id' => 'exists:companies,id|required|sometimes',
             'position_id' => 'exists:positions,id|required|sometimes',
         ];

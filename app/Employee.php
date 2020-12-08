@@ -6,6 +6,7 @@ namespace App;
 
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -88,12 +89,12 @@ class Employee extends Model
         $this->attributes[self::COMPANY_ID_COLUMN] = $company->getId();
     }
 
-    public function getNumber(): string
+    public function getNumber(): int
     {
-        return (string) $this->attributes[self::NUMBER_COLUMN];
+        return (int) $this->attributes[self::NUMBER_COLUMN];
     }
 
-    public function setNumber(string $number): void
+    public function setNumber(int $number): void
     {
         $this->attributes[self::NUMBER_COLUMN] = $number;
     }
@@ -230,7 +231,7 @@ class Employee extends Model
         return self::whereIn('company_id', $company->getId())->get();
     }
 
-    public function scopeCertified($query, Training $training, Company $company): void
+    public function scopeCertified(Builder $query, Training $training, Company $company): void
     {
         $query->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
             $q->where('expiry_date', '>', Carbon::now())
