@@ -121,6 +121,22 @@ class Department extends Model
         return $this->belongsToMany(Company::class);
     }
 
+    /**
+     * @return Collection|Company[]
+     */
+    public function getCompanies(): Collection
+    {
+        return $this->companies()->get();
+    }
+
+    /**
+     * @param Collection|Company[] $companies
+     */
+    public function setCompanies($companies): void
+    {
+        $this->companies()->sync($companies->flatten()->pluck('id'), false);
+    }
+
     public function trainings(): Relation
     {
         return $this->belongsToMany(Training::class);
