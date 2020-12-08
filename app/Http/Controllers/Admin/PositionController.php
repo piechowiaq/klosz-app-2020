@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -52,14 +53,22 @@ class PositionController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function store(StorePositionRequest $request)
     {
         $this->authorize('update');
 
+        $department = Department::getDepartmentById($request->get('department_id'));
+        if ($department === null) {
+            throw new Exception('No department found!');
+        }
+
         $position = new Position();
         $position->setName($request->get('name'));
-        $position->setDepartmentId($request->get('department_id'));
+        $position->setDepartment($department);
+
         $position->save();
 
         return redirect($position->path());

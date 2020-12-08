@@ -55,15 +55,6 @@ class Position extends Model
         $this->attributes[self::NAME_COLUMN] = $name;
     }
 
-    public function getDepartmentId(): string
-    {
-        return (string) $this->attributes[self::DEPARTMENT_ID_COLUMN];
-    }
-
-    public function setDepartmentId(string $id): void
-    {
-        $this->attributes[self::DEPARTMENT_ID_COLUMN] = $id;
-    }
 
     public function department(): Relation
     {
@@ -78,14 +69,14 @@ class Position extends Model
         return $this->department()->get();
     }
 
-    public function setRegistry(Department $department): void
+    public function setDepartment(Department $department): void
     {
-        $this->attributes[self::DEPARTMENT_ID_COLUMN] = $department;
+        $this->attributes[self::DEPARTMENT_ID_COLUMN] = $department->getId();
     }
 
     public function getCreatedAt(): DateTime
     {
-        return new DateTime($this->attributes[self::CREATED_AT_COLUMN]);
+        return $this->attributes[self::CREATED_AT_COLUMN];
     }
 
     public function setCreatedAtDateTime(DateTime $dateTime): void
@@ -95,7 +86,7 @@ class Position extends Model
 
     public function getUpdatedAt(): DateTime
     {
-        return new DateTime($this->attributes[self::UPDATED_AT_COLUMN]);
+        return $this->attributes[self::UPDATED_AT_COLUMN];
     }
 
     public function setUpdatedAtDateTime(DateTime $dateTime): void
