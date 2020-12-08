@@ -60,7 +60,7 @@ class EmployeeController extends Controller
         $employee = new Employee();
         $employee->setName($request->get('name'));
         $employee->setSurname($request->get('surname'));
-        $employee->setNumber($request->get('number'));
+        $employee->setNumber((int) $request->get('number'));
         $employee->setCompany($company);
         $employee->save();
 

@@ -6,13 +6,14 @@ namespace App\Http\Controllers\User;
 
 use App\Company;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Support\Renderable;
+use App\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View as IlluminateView;
 
+use function assert;
 use function collect;
 use function now;
 use function round;
@@ -26,14 +27,16 @@ class HomeController extends Controller
     }
 
     /**
-     * @return RedirectResponse|Renderable
+     * @return RedirectResponse|Factory|IlluminateView
      */
     public function home()
     {
         $user = Auth::user();
 
-        if ($user->companies()->count() === 1) {
-            $company = $user->companies()->first();
+        assert($user instanceof User);
+
+        if ($user->getCompanies()->count() === 1) {
+            $company = $user->getCompanies()->first();
 
             $companyId = $company->id;
 
@@ -55,7 +58,7 @@ class HomeController extends Controller
         $collection = collect([]);
 
         foreach ($company->getTrainings() as $training) {
-            $collection->push($training->employees->where('company_id', $company->getId())->count() === 0 ? 0 : round($training->employees()->certified($training, $company)->count() / $training->employees->where('company_id', $company->getId())->count() * 100));
+            $collection->push($training->getEmployees()->where('company_id', $company->getId())->count() === 0 ? 0 : round($training->employees()->certified($training, $company)->count() / $training->getEmployees()->where('company_id', $company->getId())->count() * 100));
         }
 
         $average = round($collection->avg());
@@ -63,8 +66,8 @@ class HomeController extends Controller
         $collection = collect();
 
         foreach ($company->getRegistries() as $registry) {
-            foreach ($registry->reports->where('company_id', $company->getId()) as $report) {
-                if ($report->expiry_date <= now()) {
+            foreach ($registry->getReports()->where('company_id', $company->getId()) as $report) {
+                if ($report->getExpiryDate() <= now()) {
                     continue;
                 }
 

@@ -69,12 +69,12 @@ class Training extends Model
         $this->attributes[self::DESCRIPTION_COLUMN] = $description;
     }
 
-    public function getValidFor(): string
+    public function getValidFor(): int
     {
-        return (string) $this->attributes[self::VALID_FOR_COLUMN];
+        return (int) $this->attributes[self::VALID_FOR_COLUMN];
     }
 
-    public function setValidFor(string $validFor): void
+    public function setValidFor(int $validFor): void
     {
         $this->attributes[self::VALID_FOR_COLUMN] = $validFor;
     }
