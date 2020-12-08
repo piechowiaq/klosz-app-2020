@@ -55,7 +55,6 @@ class Position extends Model
         $this->attributes[self::NAME_COLUMN] = $name;
     }
 
-
     public function department(): Relation
     {
         return $this->belongsTo(Department::class);
@@ -150,11 +149,11 @@ class Position extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Company[] $companies
      */
-    public function setCompanies(array $ids): void
+    public function setCompanies($companies): void
     {
-        $this->companies()->sync($ids);
+        $this->companies()->sync($companies->flatten()->pluck('id'), false);
     }
 
     public function path(): string

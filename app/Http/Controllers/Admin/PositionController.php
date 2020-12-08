@@ -11,6 +11,7 @@ use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
 use Exception;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
@@ -68,8 +69,15 @@ class PositionController extends Controller
         $position = new Position();
         $position->setName($request->get('name'));
         $position->setDepartment($department);
-
         $position->save();
+
+        $companies = new Collection();
+
+        foreach ($department->getCompanies() as $company) {
+            $companies->add($company);
+        }
+
+        $position->setCompanies($companies);
 
         return redirect($position->path());
     }
@@ -103,7 +111,22 @@ class PositionController extends Controller
     {
         $this->authorize('update');
 
-        $position->update($request->validated());
+        $department = Department::getDepartmentById($request->get('department_id'));
+        if ($department === null) {
+            throw new Exception('No department found!');
+        }
+
+        $position->setName($request->get('name'));
+        $position->setDepartment($department);
+        $position->save();
+
+        $companies = new Collection();
+
+        foreach ($department->getCompanies() as $company) {
+            $companies->add($company);
+        }
+
+        $position->setCompanies($companies);
 
         return redirect($position->path());
     }
