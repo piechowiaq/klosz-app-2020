@@ -106,11 +106,11 @@ class Company extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Department[] $departments
      */
-    public function setDepartments(array $ids): void
+    public function setDepartments($departments): void
     {
-        $this->departments()->sync($ids);
+        $this->departments()->sync($departments);
     }
 
     public function employees(): Relation
@@ -140,11 +140,11 @@ class Company extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Position[] $positions
      */
-    public function setPositions(array $ids): void
+    public function setPositions($positions): void
     {
-        $this->positions()->sync($ids);
+        $this->positions()->sync($positions);
     }
 
     public function registries(): Relation
@@ -161,11 +161,11 @@ class Company extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Registry[] $registries
      */
-    public function setRegistries(array $ids): void
+    public function setRegistries($registries): void
     {
-        $this->registries()->sync($ids);
+        $this->registries()->sync($registries);
     }
 
     public function trainings(): Relation
@@ -182,10 +182,10 @@ class Company extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Training[] $trainings
      */
-    public function setTrainings(array $ids): void
+    public function setTrainings($trainings): void
     {
-        $this->trainings()->sync($ids);
+        $this->trainings()->sync($trainings);
     }
 }

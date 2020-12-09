@@ -193,11 +193,11 @@ class Training extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Company[] $companies
      */
-    public function setCompanies(array $ids): void
+    public function setCompanies($companies): void
     {
-        $this->companies()->sync($ids);
+        $this->companies()->sync($companies);
     }
 
     public function path(): string

@@ -16,7 +16,6 @@ use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
-use function request;
 use function view;
 
 class TrainingController extends Controller
@@ -62,13 +61,14 @@ class TrainingController extends Controller
         $training = new Training();
         $training->setName($request->get('name'));
         $training->setDescription($request->get('description'));
-        $training->setValidFor($request->get('valid_for'));
+        $training->setValidFor((int) $request->get('valid_for'));
         $training->save();
 
         $training->setPositions($request->get('position_id'));
 
         $departments = new Collection();
         $employees   = new Collection();
+
 
         foreach ($training->getPositions() as $position) {
             $departments->add($position->getDepartment());
@@ -77,6 +77,16 @@ class TrainingController extends Controller
 
         $training->setDepartments($departments);
         $training->setEmployees($employees);
+
+        $companies = $training->getDepartments()->filter(static function($department){
+
+            return $department->getCompanies();
+        });
+
+           $training->setCompanies($companies);
+            dd($training->getCompanies());
+
+
 
         return redirect($training->path());
     }
@@ -112,13 +122,15 @@ class TrainingController extends Controller
 
         $training->setName($request->get('name'));
         $training->setDescription($request->get('description'));
-        $training->setValidFor($request->get('valid_for'));
+        $training->setValidFor((int) $request->get('valid_for'));
         $training->save();
 
         $training->setPositions($request->get('position_id'));
 
         $departments = new Collection();
         $employees   = new Collection();
+
+
 
         foreach ($training->getPositions() as $position) {
             $departments->add($position->getDepartment());

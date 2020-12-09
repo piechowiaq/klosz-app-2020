@@ -44,7 +44,16 @@
                     {{ $department->name}}
                 </div>
             @endforeach
+            <hr>
         </div>
+        <div>
+            @foreach ($company->trainings as $training)
+                <div class="block mt-2 py-2">
+                    {{ $training->name}}
+                </div>
+            @endforeach
+        </div>
+
 
 
 

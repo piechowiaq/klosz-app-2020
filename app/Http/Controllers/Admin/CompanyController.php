@@ -11,13 +11,13 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
 use App\Registry;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
-use function request;
 use function view;
 
 class CompanyController extends Controller
@@ -56,6 +56,8 @@ class CompanyController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function store(StoreCompanyRequest $request)
     {
@@ -65,39 +67,39 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $company->setDepartments($request->get('department_id'));
-        $company->setRegistries($request->get('registry_id'));
-
-        if (! empty(request('department_id'))) {
-            $positions = Position::whereIn('department_id', request('department_id'))->get();
-
-            $company->positions()->sync($positions);
-            $trainings = [];
-            foreach ($positions as $position) {
-                foreach ($position->trainings as $training) {
-                    $company->trainings()->sync($training, false);
-                }
-            }
-        } else {
-            $positions = [];
-            $trainings = [];
-
-            $company->setPositions($positions);
-            $company->setTrainings($trainings);
+        $departments = Department::getDepartmentsById($request->get('department_id'));
+        if ($departments === null) {
+            throw new Exception('No department found!');
         }
 
-//        $departmentsId =  $position->trainings->map(function($training){
-//           $company->trainings()->sync($position->trainings);
-//        });
-//
-//        Position::whereIn('department_id', $departmentsId)
-//                            ->get()
-//                            ->map(function($position) use ($company)
-//        {
-//           $position->companies()->sync($company,false);
-//        });
+        $company->setDepartments($departments);
 
-            return redirect($company->path());
+        $registries = Registry::getRegistriesById($request->get('registry_id'));
+        if ($registries === null) {
+            throw new Exception('No registry found!');
+        }
+
+        $company->setRegistries($registries);
+
+        $positions = $company->getDepartments()->flatMap(static function (Department $department) {
+            return $department->getPositions();
+        });
+
+        $company->setPositions($positions);
+
+        $trainings = $positions->flatMap(static function (Position $position) {
+            return $position->getTrainings();
+        });
+
+        $company->setTrainings($trainings);
+
+//        foreach ($company->getDepartments() as $department) {
+//            $positions->add($department->getPositions());
+//        }
+//
+//        $company->setPositions($positions);
+
+        return redirect($company->path());
     }
 
     /**
@@ -132,29 +134,10 @@ class CompanyController extends Controller
         $this->authorize('update');
 
         $company->setName($request->get('name'));
+        $company->save();
 
         $company->setDepartments($request->get('department_id'));
         $company->setRegistries($request->get('registry_id'));
-
-        if (! empty(request('department_id'))) {
-            $positions = Position::whereIn('department_id', request('department_id'))->get();
-
-            $company->positions()->sync($positions);
-
-
-
-            foreach ($positions as $position) {
-                foreach ($position->trainings as $training) {
-                    $company->trainings()->sync($training, false);
-                }
-            }
-        } else {
-            $positions = [];
-            $trainings = [];
-
-            $company->setPositions($positions);
-            $company->setTrainings($trainings);
-        }
 
             return redirect($company->path());
     }
