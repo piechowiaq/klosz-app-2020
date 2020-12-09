@@ -8,7 +8,6 @@ use App\Company;
 use App\Http\Controllers\Controller;
 use App\Registry;
 use App\Report;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View as IlluminateView;
 

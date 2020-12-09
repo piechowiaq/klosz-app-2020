@@ -16,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
+use function dd;
 use function redirect;
 use function view;
 
@@ -71,11 +72,15 @@ class PositionController extends Controller
         $position->setDepartment($department);
         $position->save();
 
-        $companies = new Collection();
+//        $companies = new Collection();
+//
+//        foreach ($department->getCompanies() as $company) {
+//            $companies->add($company);
+//        }
 
-        foreach ($department->getCompanies() as $company) {
-            $companies->add($company);
-        }
+        $companies = $department->getCompanies()->filter(static function ($company) {
+            return $company;
+        });
 
         $position->setCompanies($companies);
 

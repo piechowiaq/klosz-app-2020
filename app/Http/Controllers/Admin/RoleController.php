@@ -7,12 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Role;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
-use function redirect;
-use function request;
 use function view;
 
 class RoleController extends Controller

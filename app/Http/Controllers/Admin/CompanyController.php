@@ -140,7 +140,9 @@ class CompanyController extends Controller
             $positions = Position::whereIn('department_id', request('department_id'))->get();
 
             $company->positions()->sync($positions);
-            $trainings = [];
+
+
+
             foreach ($positions as $position) {
                 foreach ($position->trainings as $training) {
                     $company->trainings()->sync($training, false);
