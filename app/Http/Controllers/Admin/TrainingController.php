@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
+use function assert;
 use function redirect;
 use function view;
 
@@ -53,6 +56,7 @@ class TrainingController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     * @throws Exception
      */
     public function store(StoreTrainingRequest $request)
     {
@@ -69,7 +73,6 @@ class TrainingController extends Controller
         $departments = new Collection();
         $employees   = new Collection();
 
-
         foreach ($training->getPositions() as $position) {
             $departments->add($position->getDepartment());
             $employees->add($position->getEmployees());
@@ -78,15 +81,11 @@ class TrainingController extends Controller
         $training->setDepartments($departments);
         $training->setEmployees($employees);
 
-        $companies = $training->getDepartments()->filter(static function($department){
-
+        $companies = $training->getDepartments()->map(static function ($department) {
             return $department->getCompanies();
         });
 
-           $training->setCompanies($companies);
-            dd($training->getCompanies());
-
-
+        $training->setCompanies($companies);
 
         return redirect($training->path());
     }
@@ -129,8 +128,6 @@ class TrainingController extends Controller
 
         $departments = new Collection();
         $employees   = new Collection();
-
-
 
         foreach ($training->getPositions() as $position) {
             $departments->add($position->getDepartment());

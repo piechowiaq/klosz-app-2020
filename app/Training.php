@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App;
 
-use Algolia\ScoutExtended\Builder;
 use DateTime;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 
 class Training extends Model
 {
@@ -111,7 +110,6 @@ class Training extends Model
     {
         return $this->departments()->get();
     }
-
     /**
      * @param Collection|Department[] $departments
      */
@@ -124,6 +122,7 @@ class Training extends Model
     {
         return $this->belongsToMany(Position::class);
     }
+
     /**
      * @return Collection|Position[]
      */
@@ -133,17 +132,18 @@ class Training extends Model
     }
 
     /**
-     * @param array|string[] $ids
+     * @param Collection|Position[] $positions
      */
-    public function setPositions(array $ids): void
+    public function setPositions($positions): void
     {
-        $this->positions()->sync($ids);
+        $this->positions()->sync($positions);
     }
 
     public function employees(): Relation
     {
         return $this->belongsToMany(Employee::class);
     }
+
     /**
      * @return Collection|Employee[]
      */
@@ -164,6 +164,7 @@ class Training extends Model
     {
         return $this->hasMany(Certificate::class);
     }
+
     /**
      * @return Collection|Certificate[]
      */
@@ -184,6 +185,7 @@ class Training extends Model
     {
         return $this->belongsToMany(Company::class);
     }
+
     /**
      * @return Collection|Company[]
      */
@@ -197,7 +199,7 @@ class Training extends Model
      */
     public function setCompanies($companies): void
     {
-        $this->companies()->sync($companies);
+        $this->companies()->sync($companies->pluck('id'));
     }
 
     public function path(): string

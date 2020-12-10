@@ -11,6 +11,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Position;
 use App\Registry;
+use App\Training;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -81,9 +82,14 @@ class CompanyController extends Controller
 
         $company->setRegistries($registries);
 
-        $positions = $company->getDepartments()->flatMap(static function (Department $department) {
-            return $department->getPositions();
+        $positionsIds = $company->getDepartments()->flatMap(static function (Department $department) {
+            return $department->getPositions()->pluck('id');
         });
+
+        $positions = Position::getPositionsById($positionsIds->toArray());
+        if ($positions === null) {
+            throw new Exception('No Positions found!');
+        }
 
         $company->setPositions($positions);
 
@@ -91,13 +97,9 @@ class CompanyController extends Controller
             return $position->getTrainings();
         });
 
-        $company->setTrainings($trainings);
+        $trainings = Training::getTrainingsById($trainings->pluck('id')->toArray());
 
-//        foreach ($company->getDepartments() as $department) {
-//            $positions->add($department->getPositions());
-//        }
-//
-//        $company->setPositions($positions);
+        $company->setTrainings($trainings);
 
         return redirect($company->path());
     }
@@ -136,10 +138,33 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $company->setDepartments($request->get('department_id'));
-        $company->setRegistries($request->get('registry_id'));
+        $departments = Department::getDepartmentsById($request->get('department_id'));
+        if ($departments === null) {
+            throw new Exception('No department found!');
+        }
 
-            return redirect($company->path());
+        $company->setDepartments($departments);
+
+        $registries = Registry::getRegistriesById($request->get('registry_id'));
+        if ($registries === null) {
+            throw new Exception('No registry found!');
+        }
+
+        $company->setRegistries($registries);
+
+        $positions = $company->getDepartments()->flatMap(static function (Department $department) {
+            return $department->getPositions();
+        });
+
+        $company->setPositions($positions);
+
+        $trainings = $positions->flatMap(static function (Position $position) {
+            return $position->getTrainings();
+        });
+
+        $company->setTrainings($trainings);
+
+        return redirect($company->path());
     }
 
     /**
