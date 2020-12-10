@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 
 class Company extends Model
 {
@@ -144,7 +144,7 @@ class Company extends Model
      */
     public function setPositions($positions): void
     {
-        $this->positions()->sync($positions);
+        $this->positions()->sync($positions->pluck('id'));
     }
 
     public function registries(): Relation
@@ -186,6 +186,6 @@ class Company extends Model
      */
     public function setTrainings($trainings): void
     {
-        $this->trainings()->sync($trainings);
+        $this->trainings()->sync($trainings->pluck('id'));
     }
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 
 class Department extends Model
 {
