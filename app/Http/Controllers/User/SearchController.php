@@ -72,7 +72,7 @@ class SearchController extends Controller
             return $companyTrainings;
         }
 
-        return view('user.trainings.index', ['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $companyId]);
+        return view('user.trainings.index', ['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $company->getId()]);
     }
 
 //        $companyRegistries = Registry::search($search)->whereHas('companies', function($query) use ($companyId){
