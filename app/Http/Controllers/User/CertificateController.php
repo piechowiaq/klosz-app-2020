@@ -14,12 +14,14 @@ use DateTime;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View as IlluminateView;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use function date;
+use function is_array;
 use function redirect;
 use function request;
 use function view;
@@ -69,8 +71,13 @@ class CertificateController extends Controller
 
         $trainingDate = new DateTime($request->get('training_date'));
         $expiryDate   = $certificate->calculateExpiryDate(new DateTime($request->get('training_date')), $training);
-        $fileName     = $trainingDate->format('Y-m-d') . ' ' . $training->getName() . ' ' . $company->getId() . ' ' . date('is') . '.' . request('file')->getClientOriginalExtension();
-        $path         = request('file')->storeAs('certificates', $fileName, 's3');
+        $uploadedFile = $request->file('file');
+        if ($uploadedFile === null || is_array($uploadedFile)) {
+            throw new Exception('File not uploaded');
+        }
+
+        $fileName = $this->generateFileName($trainingDate, $training, $company, $uploadedFile);
+        $path     = $uploadedFile->storeAs('certificates', $fileName, 's3');
 
         $certificate = new Certificate();
         $certificate->setName($fileName);
@@ -147,5 +154,10 @@ class CertificateController extends Controller
         $certificate->delete();
 
         return redirect('/' . $company->getId() . '/trainings/' . $training->getId() . '/certificates');
+    }
+
+    private function generateFileName(DateTime $trainingDate, Training $training, Company $company, UploadedFile $uploadedFile): string
+    {
+        return $trainingDate->format('Y-m-d') . ' ' . $training->getName() . ' ' . $company->getId() . ' ' . date('is') . '.' . $uploadedFile->getClientOriginalExtension();
     }
 }

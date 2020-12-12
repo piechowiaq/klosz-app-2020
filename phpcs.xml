@@ -11,6 +11,7 @@
     <rule ref="PSR2"/>
     <rule ref="Doctrine">
         <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint" />
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix" />
     </rule>
 
 </ruleset>

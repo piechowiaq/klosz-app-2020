@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Core\Department\Domain\Repository\DepartmentRepositoryInterface;
 use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePositionRequest;
@@ -16,7 +17,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
-use function dd;
 use function redirect;
 use function view;
 
@@ -58,11 +58,10 @@ class PositionController extends Controller
      *
      * @throws Exception
      */
-    public function store(StorePositionRequest $request)
+    public function store(DepartmentRepositoryInterface $departmentRepository, StorePositionRequest $request)
     {
         $this->authorize('update');
-
-        $department = Department::getDepartmentById($request->get('department_id'));
+        $department = $departmentRepository->getById($request->get('department_id'));
         if ($department === null) {
             throw new Exception('No department found!');
         }

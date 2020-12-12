@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Collection;
 
 class Department extends Model
 {
-    private const ID_COLUMN         = 'id';
+    public const ID_COLUMN          = 'id';
     private const NAME_COLUMN       = 'name';
     private const CREATED_AT_COLUMN = 'created_at';
     private const UPDATED_AT_COLUMN = 'updated_at';

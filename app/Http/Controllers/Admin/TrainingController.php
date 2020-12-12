@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
@@ -81,7 +82,10 @@ class TrainingController extends Controller
         $training->setDepartments($departments);
         $training->setEmployees($employees);
 
-        $companies = $training->getDepartments()->map(static function ($department) {
+        /**
+         * @var Collection|Company[]
+         */
+        $companies = $training->getDepartments()->flatMap(static function (Department $department) {
             return $department->getCompanies();
         });
 

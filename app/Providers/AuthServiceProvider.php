@@ -11,8 +11,8 @@ use App\Policies\EmployeePolicy;
 use App\Policies\ReportPolicy;
 use App\Policies\UserPolicy;
 use App\Report;
+use App\User;
 use Illuminate\Contracts\Auth\Access\Gate;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -20,7 +20,7 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * The policy mappings for the application.
      *
-     * @var array
+     * @var array|mixed[]|string[]
      */
     protected $policies = [
 
@@ -38,10 +38,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $gate->before(static function ($user) {
-            if ($user->isSuperAdmin()) {
-                return true;
-            }
+        $gate->before(static function (User $user) {
+            return $user->isSuperAdmin();
         });
     }
 }

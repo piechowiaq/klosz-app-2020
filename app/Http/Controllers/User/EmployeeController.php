@@ -71,7 +71,7 @@ class EmployeeController extends Controller
 
         foreach ($employee->getPositions() as $position) {
             $departments->add($position->getDepartment());
-            $trainings->add($position->getTrainings());
+            $trainings =  $trainings->merge($position->getTrainings());
         }
 
         $employee->setDepartments($departments);

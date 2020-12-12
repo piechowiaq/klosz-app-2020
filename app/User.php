@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
+use function bcrypt;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -90,14 +92,9 @@ class User extends Authenticatable
         $this->attributes[self::EMAIL_COLUMN] = $email;
     }
 
-    public function getPassword(): string
+    public function setPassword(string $password): void
     {
-        return (string) $this->attributes[self::PASSWORD_COLUMN];
-    }
-
-    public function setPassword(int $email): void
-    {
-        $this->attributes[self::PASSWORD_COLUMN] = $email;
+        $this->attributes[self::PASSWORD_COLUMN] = bcrypt($password);
     }
 
     public function getEmailVerifiedAt(): DateTime

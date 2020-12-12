@@ -68,7 +68,7 @@ class UserController extends Controller
         $user->setName($request->get('name'));
         $user->setSurname($request->get('surname'));
         $user->setEmail($request->get('email'));
-        $user->setPassword((int) Hash::make($request->get('password')));
+        $user->setPassword($request->get('password'));
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
@@ -112,7 +112,7 @@ class UserController extends Controller
         $user->setName($request->get('name'));
         $user->setSurname($request->get('surname'));
         $user->setEmail($request->get('email'));
-        $user->setPassword((int) Hash::make($request->get('password')));
+        $user->setPassword($request->get('password'));
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 

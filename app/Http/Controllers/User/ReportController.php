@@ -108,7 +108,7 @@ class ReportController extends Controller
 
         if (! empty($request->file('file'))) {
             $report->setName($registry, $company, $request);
-            $report->setPath(Storage::disk('s3')->url($request->file('file')->storeAs('reports', $report->getName(), 's3')));
+            $report->setPath(Storage::url($request->file('file')->storeAs('reports', $report->getName(), 's3')));
         }
 
         $report->setExpiryDate($report->calculateExpiryDate($report->getReportDate(), $registry));

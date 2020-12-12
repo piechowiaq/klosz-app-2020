@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 
+use function route;
+
 class Position extends Model
 {
     private const ID_COLUMN            = 'id';
@@ -60,12 +62,9 @@ class Position extends Model
         return $this->belongsTo(Department::class);
     }
 
-    /**
-     * @return Collection|Department[]
-     */
-    public function getDepartment(): Collection
+    public function getDepartment(): Department
     {
-        return $this->department()->get();
+        return $this->department()->get()->first();
     }
 
     public function setDepartment(Department $department): void
@@ -158,6 +157,7 @@ class Position extends Model
 
     public function path(): string
     {
-        return '/admin/positions/' . $this->getId();
+        return route('admin.positions.show', ['position' => $this]);
+//        return '/admin/positions/' . $this->getId();
     }
 }
