@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Core\Department\Domain\Repository\DepartmentRepositoryInterface;
+use App\Core\Department\Infrastructure\Repository\EloquentDepartmentRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-
-use function view;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,14 +17,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(DepartmentRepositoryInterface::class, EloquentDepartmentRepository::class);
     }
 
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(View $view): void
     {
-        view()->composer('user.nav', static function ($view): void {
+        View::composer('user.nav', static function ($view): void {
             $user = Auth::user();
 
             $view->with('user', $user);

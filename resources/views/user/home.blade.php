@@ -21,7 +21,7 @@
                     @foreach ($user->companies as $company)
                         <div class="md:flex border mb-1">
                             <div class="m-2 p-2 py-2 ">
-                                <a href="{{route('user.dashboard', ['company'=>$company->getId()}}">{{ $company->name}}</a>
+                                <a href="{{ route('user.dashboard', ['company' => $company->getId()]) }}">{{ $company->name }}</a>
                             </div>
                         </div>
                     @endforeach

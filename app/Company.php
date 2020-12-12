@@ -108,7 +108,7 @@ class Company extends Model
     /**
      * @param Collection|Department[] $departments
      */
-    public function setDepartments($departments): void
+    public function setDepartments(Collection $departments): void
     {
         $this->departments()->sync($departments);
     }

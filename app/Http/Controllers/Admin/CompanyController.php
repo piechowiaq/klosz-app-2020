@@ -14,6 +14,7 @@ use App\Registry;
 use App\Training;
 use Exception;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
@@ -69,14 +70,14 @@ class CompanyController extends Controller
         $company->save();
 
         $departments = Department::getDepartmentsById($request->get('department_id'));
-        if ($departments === null) {
+        if ($departments->count() === 0) {
             throw new Exception('No department found!');
         }
 
         $company->setDepartments($departments);
 
         $registries = Registry::getRegistriesById($request->get('registry_id'));
-        if ($registries === null) {
+        if ($registries->count() === 0) {
             throw new Exception('No registry found!');
         }
 
@@ -87,7 +88,7 @@ class CompanyController extends Controller
         });
 
         $positions = Position::getPositionsById($positionsIds->toArray());
-        if ($positions === null) {
+        if ($positions->count() === 0) {
             throw new Exception('No Positions found!');
         }
 
@@ -139,25 +140,30 @@ class CompanyController extends Controller
         $company->save();
 
         $departments = Department::getDepartmentsById($request->get('department_id'));
-        if ($departments === null) {
+        if ($departments->count() === 0) {
             throw new Exception('No department found!');
         }
 
         $company->setDepartments($departments);
 
         $registries = Registry::getRegistriesById($request->get('registry_id'));
-        if ($registries === null) {
+        if ($registries->count() === 0) {
             throw new Exception('No registry found!');
         }
 
         $company->setRegistries($registries);
 
+        /**
+         * @var Collection|Position[]
+         */
         $positions = $company->getDepartments()->flatMap(static function (Department $department) {
             return $department->getPositions();
         });
 
         $company->setPositions($positions);
-
+        /**
+         * @var Collection|Training[]
+         */
         $trainings = $positions->flatMap(static function (Position $position) {
             return $position->getTrainings();
         });

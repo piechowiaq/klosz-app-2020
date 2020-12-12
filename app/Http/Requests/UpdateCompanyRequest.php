@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class UpdateCompanyRequest extends FormRequest
@@ -22,10 +23,10 @@ class UpdateCompanyRequest extends FormRequest
      *
      * @return array|mixed[]
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
         return [
-            'name' => ['required','sometimes', Rule::unique('companies', 'name')->ignore($this->company)],
+            'name' => ['required','sometimes', Rule::unique('companies', 'name')->ignore($request->get('company'))],
         ];
     }
 }
