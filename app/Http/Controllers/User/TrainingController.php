@@ -38,6 +38,8 @@ class TrainingController extends Controller
     {
         $trainingEmployees = $training->getEmployeesByCompany($company);
 
+
+
         return view('user.trainings.show', ['training' => $training, 'company' => $company, 'trainingEmployees' => $trainingEmployees]);
     }
 }
