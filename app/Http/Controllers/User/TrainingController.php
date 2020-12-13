@@ -36,9 +36,7 @@ class TrainingController extends Controller
      */
     public function show(Company $company, Training $training)
     {
-        $trainingEmployees = $training->getEmployees()->filter(static function (Employee $employee) use ($company) {
-            return (string) $employee->getCompany()->pluck('id')->toArray()[0] === $company->getId();
-        });
+        $trainingEmployees = $training->getEmployeesByCompany($company);
 
         return view('user.trainings.show', ['training' => $training, 'company' => $company, 'trainingEmployees' => $trainingEmployees]);
     }

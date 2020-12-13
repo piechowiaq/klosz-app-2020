@@ -14,7 +14,7 @@
 
     <link rel="icon" href="{{ Storage::disk('s3')->url('images/Logo.png') }}">
 
-    @livewireStyles
+
 
 </head>
 <body class=" h-screen antialiased leading-none">
@@ -84,7 +84,7 @@
 
     <script src="{{ mix('js/app.js') }}"></script>
 
-    @livewireScripts
+
 
 
 
