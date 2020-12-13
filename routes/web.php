@@ -37,10 +37,7 @@ Route::namespace('User')->name('user.')->group(static function (): void {
     Route::get('/home', 'HomeController@home')->name('home');
     Route::get('/{company}', 'HomeController@index')->name('dashboard')->middleware('auth.user');
 
-    Route::get('/{company}/employees/search', 'SearchController@show')->name('search.show');
     Route::resource('/{company}/employees', 'EmployeeController');
-
-    Route::get('/{company}/trainings/search', 'SearchController@trainings')->name('search.trainings');
 
     Route::get('/{company}/trainings/{training}/certificates', 'CertificateController@index')->name('certificates.index');
     Route::get('/{company}/certificates/create', 'CertificateController@create')->name('certificates.create');
@@ -54,6 +51,5 @@ Route::namespace('User')->name('user.')->group(static function (): void {
     Route::resource('/{company}/reports', 'ReportController');
     Route::get('/{company}/reports/{report}/download', 'ReportController@download')->name('reports.download');
 
-    Route::get('/{company}/registries/search', 'SearchController@registries')->name('search.registries');
     Route::resource('/{company}/registries', 'RegistryController');
 });
