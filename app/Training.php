@@ -6,9 +6,10 @@ namespace App;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Collection;
+
 
 class Training extends Model
 {
@@ -212,6 +213,14 @@ class Training extends Model
     public function userPath(Company $company): string
     {
         return '/' . $company->getId() . '/trainings/' . $this->getId();
+    }
+
+    /**
+     * @return Collection|Employee[]
+     */
+    public function getEmployeesByCompany(Company $company)
+    {
+        return $this->getEmployees()->where('company_id', $company->getId());
     }
 
 //    public function scopeCertified($query, $training)

@@ -246,4 +246,5 @@ class Employee extends Model
     {
         return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
     }
+
 }
