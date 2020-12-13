@@ -73,7 +73,7 @@ class CertificateController extends Controller
         $expiryDate   = $certificate->calculateExpiryDate(new DateTime($request->get('training_date')), $training);
         $uploadedFile = $request->file('file');
         if ($uploadedFile === null || is_array($uploadedFile)) {
-            throw new Exception('File not uploaded');
+            throw new Exception('File not uploaded.');
         }
 
         $fileName = $this->generateFileName($trainingDate, $training, $company, $uploadedFile);

@@ -26,7 +26,7 @@ class UpdateUserReportRequest extends FormRequest
         return [
             'registry_id' => 'exists:registries,id|required|sometimes',
             'report_date' => 'before:tomorrow|required|sometimes',
-            'file' => 'required|sometimes|max:10000|mimes:doc,docx,pdf,jpeg,jpg',
+            'file' => 'required|max:10000|mimes:doc,docx,pdf,jpeg,jpg',
 
         ];
     }
