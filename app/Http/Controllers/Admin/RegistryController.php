@@ -14,7 +14,6 @@ use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
-use function request;
 use function view;
 
 class RegistryController extends Controller
@@ -58,7 +57,7 @@ class RegistryController extends Controller
         $registry = new Registry();
         $registry->setName($request->get('name'));
         $registry->setDescription($request->get('description'));
-        $registry->setValidFor($request->get('vallid_for'));
+        $registry->setValidFor((int) $request->get('valid_for'));
         $registry->save();
 
         return redirect($registry->path());
@@ -93,7 +92,7 @@ class RegistryController extends Controller
 
         $registry->setName($request->get('name'));
         $registry->setDescription($request->get('description'));
-        $registry->setValidFor($request->get('vallid_for'));
+        $registry->setValidFor((int) $request->get('valid_for'));
         $registry->save();
 
         return redirect($registry->path());
