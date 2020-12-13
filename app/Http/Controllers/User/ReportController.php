@@ -14,11 +14,14 @@ use DateTime;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View as IlluminateView;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+use function date;
+use function is_array;
 use function redirect;
 use function view;
 
@@ -56,14 +59,20 @@ class ReportController extends Controller
         }
 
         $report = new Report();
-        $report->setReportDate(new DateTime($request->get('report_date')));
-        $report->setName($registry, $company, $request);
-        if ($request->file('file') === null) {
-            throw new Exception('No file found!');
+
+        $reportDate = new DateTime($request->get('report_date'));
+        $report->setReportDate($reportDate);
+        $report->setExpiryDate($report->calculateExpiryDate($reportDate, $registry));
+
+        $uploadedFile = $request->file('file');
+        if ($uploadedFile === null || is_array($uploadedFile)) {
+            throw new Exception('File not uploaded.');
         }
 
-        $report->setPath(Storage::disk('s3')->url($request->file('file')->storeAs('reports', $report->getName(), 's3')));
-        $report->setExpiryDate($report->calculateExpiryDate($report->getReportDate(), $registry));
+        $fileName = $this->generateFileName($reportDate, $registry, $company, $uploadedFile);
+        $report->setName($fileName);
+        $report->setPath(Storage::disk('s3')->url($uploadedFile->storeAs('reports', $fileName, 's3')));
+
         $report->setCompany($company);
         $report->setRegistry($registry);
         $report->save();
@@ -104,14 +113,19 @@ class ReportController extends Controller
             throw new Exception('No registry found!');
         }
 
-        $report->setReportDate(new DateTime($request->get('report_date')));
+        $reportDate = new DateTime($request->get('report_date'));
+        $report->setReportDate($reportDate);
+        $report->setExpiryDate($report->calculateExpiryDate($reportDate, $registry));
 
-        if (! empty($request->file('file'))) {
-            $report->setName($registry, $company, $request);
-            $report->setPath(Storage::url($request->file('file')->storeAs('reports', $report->getName(), 's3')));
+        $uploadedFile = $request->file('file');
+        if ($uploadedFile === null || is_array($uploadedFile)) {
+            throw new Exception('File not uploaded.');
         }
 
-        $report->setExpiryDate($report->calculateExpiryDate($report->getReportDate(), $registry));
+        $fileName = $this->generateFileName($reportDate, $registry, $company, $uploadedFile);
+        $report->setName($fileName);
+        $report->setPath(Storage::disk('s3')->url($uploadedFile->storeAs('reports', $fileName, 's3')));
+
         $report->setCompany($company);
         $report->setRegistry($registry);
         $report->save();
@@ -132,5 +146,10 @@ class ReportController extends Controller
         $report->delete();
 
         return redirect($company->getId() . '/registries/' . $registry->getID());
+    }
+
+    private function generateFileName(DateTime $reportDate, Registry $registry, Company $company, UploadedFile $uploadedFile): string
+    {
+        return $reportDate->format('Y-m-d') . ' ' . $registry->getName() . ' ' . $company->getId() . '-' . date('is') . '.' . $uploadedFile->getClientOriginalExtension();
     }
 }
