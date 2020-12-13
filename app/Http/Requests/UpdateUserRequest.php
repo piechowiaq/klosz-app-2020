@@ -7,7 +7,7 @@ namespace App\Http\Requests;
 use App\User;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
+
 use Illuminate\Validation\Rule;
 
 use function assert;
@@ -29,7 +29,7 @@ class UpdateUserRequest extends FormRequest
      *
      * @throws Exception
      */
-    public function rules(Request $request): array
+    public function rules(): array
     {
         if (! assert($this->route('user') instanceof User)) {
             throw new Exception('Received user is not the required object');
