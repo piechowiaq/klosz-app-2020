@@ -7,6 +7,7 @@ namespace App\Http\Requests;
 use App\Company;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 use function assert;
 
@@ -22,6 +23,8 @@ class UpdateUserEmployeeRequest extends FormRequest
 
     /**
      * @return array|mixed[]
+     *
+     * @throws Exception
      */
     public function rules(Request $request): array
     {
@@ -32,9 +35,7 @@ class UpdateUserEmployeeRequest extends FormRequest
         return [
             'name' => 'sometimes|required',
             'surname' => 'sometimes|required',
-//          'number'=> ['required','sometimes', Rule::unique('employees', 'number')->ignore($this->employee)],
-            'number' => 'unique:employees,number,' . $this->employee->number . ',number,company_id,' . $this->route('company')->getId(),
-//          'company_id'=> 'exists:companies,id|required|sometimes',
+            'number' => 'unique:employees,number,' . $request->get('number') . ',number,company_id,' . $this->route('company')->getId(),
             'position_id' => 'exists:positions,id|required|sometimes',
         ];
     }
