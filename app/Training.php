@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
@@ -110,6 +111,7 @@ class Training extends Model
     {
         return $this->departments()->get();
     }
+
     /**
      * @param Collection|Department[] $departments
      */
@@ -211,12 +213,6 @@ class Training extends Model
     {
         return '/' . $company->getId() . '/trainings/' . $this->getId();
     }
-
-//    public static function search($query): \Illuminate\Database\Eloquent\Builder
-//    {
-//        return empty($query) ? static::query()
-//            : static::where('name', 'like', '%' . $query . '%');
-//    }
 
 //    public function scopeCertified($query, $training)
 //    {

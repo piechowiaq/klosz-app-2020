@@ -12,7 +12,7 @@
                 </div>
             @endcan
             <div>
-                <form method="GET" action="{{route('user.search.registries', ['company'=> $company])}}">
+                <form method="GET" action="">
                     <input type="search" placeholder="Szukaj ..." name="q" class="md:mt-0 mt-4 bg-gray-200 w-full appearance-none border border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                     {{--                    <button type="submit" >Szukaj</button>--}}
                 </form>

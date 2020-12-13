@@ -131,10 +131,4 @@ class Registry extends Model
     {
         return $this->companies()->get();
     }
-
-///    public static function search($query): array
-////    {
-////        return empty($query) ? static::query()
-////            : static::where('name', 'like', '%' . $query . '%');
-////    }
 }

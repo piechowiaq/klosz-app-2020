@@ -126,22 +126,22 @@ class CertificateController extends Controller
 
         $trainingDate = new DateTime($request->get('training_date'));
         $expiryDate   = $certificate->calculateExpiryDate(new DateTime($request->get('training_date')), $training);
+        $uploadedFile = $request->file('file');
+        if ($uploadedFile === null || is_array($uploadedFile)) {
+            throw new Exception('File not uploaded.');
+        }
 
+        $fileName = $this->generateFileName($trainingDate, $training, $company, $uploadedFile);
+        $path     = $uploadedFile->storeAs('certificates', $fileName, 's3');
+
+        $certificate->setName($fileName);
+        $certificate->setPath(Storage::disk('s3')->url($path));
         $certificate->setTrainingDate($trainingDate);
         $certificate->setExpiryDate($expiryDate);
         $certificate->setTraining($training);
         $certificate->setCompany($company);
-        if (request()->has('file')) {
-            $fileName = $trainingDate->format('Y-m-d') . ' ' . $training->getName() . ' ' . $company->getId() . ' ' . date('is') . '.' . request('file')->getClientOriginalExtension();
-            $path     = request('file')->storeAs('certificates', $fileName, 's3');
-            $certificate->setName($fileName);
-            $certificate->setPath(Storage::disk('s3')->url($path));
-        }
 
-        $certificate->setExpiryDate($expiryDate);
         $certificate->save();
-
-        $certificate->setEmployees($request->get('employee_id'));
 
         return redirect($certificate->userPath($company, $training));
     }

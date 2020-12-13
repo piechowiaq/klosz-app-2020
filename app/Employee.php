@@ -246,11 +246,4 @@ class Employee extends Model
     {
         return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
     }
-
-//    public static function search($query)
-//    {
-//        return empty($query) ? static::query()
-//            : static::where('name', 'like', '%'.$query.'%')
-//                ->orWhere('surname', 'like', '%'.$query.'%');
-//    }
 }

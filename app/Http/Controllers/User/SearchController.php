@@ -30,10 +30,6 @@ class SearchController extends Controller
 
         $employees = Employee::search($search)->where('company_id', $company->getId())->paginate(25);
 
-        if (request()->expectsJson()) {
-            return $employees;
-        }
-
         return view('user.employees.index', ['employees' => $employees, 'company' => $company, 'employee' => $employee]);
     }
 
@@ -50,10 +46,6 @@ class SearchController extends Controller
             $query->where('company_id', '=', $company);
         })->paginate(25);
 
-        if (request()->expectsJson()) {
-            return $companyRegistries;
-        }
-
         return view('user.registries.index', ['companyRegistries' => $companyRegistries, 'company' => $company, 'report' => $report]);
     }
 
@@ -68,24 +60,6 @@ class SearchController extends Controller
             $query->where('company_id', '=', $company);
         })->paginate(25);
 
-        if (request()->expectsJson()) {
-            return $companyTrainings;
-        }
-
         return view('user.trainings.index', ['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $company->getId()]);
     }
-
-//        $companyRegistries = Registry::search($search)->whereHas('companies', function($query) use ($companyId){
-//            $query->where('company_id', '=', $companyId);
-//        })->paginate(25);
-//
-//
-//        if(\request()->expectsJson()){
-//
-//            return  $companyTrainings;
-//        }
-//
-//        return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
-//
-//    }
 }
