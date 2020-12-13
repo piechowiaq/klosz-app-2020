@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-
 
 class Training extends Model
 {
@@ -221,6 +219,25 @@ class Training extends Model
     public function getEmployeesByCompany(Company $company)
     {
         return $this->getEmployees()->where('company_id', $company->getId());
+    }
+
+    /**
+     * @return Collection|Employee[]
+     */
+    public function getValidCertificates(Company $company)
+    {
+        return $this->certificates()->where('expiry_date', '>', new DateTime('now'))
+                ->get();
+    }
+
+    /**
+     * @return Collection|Employee[]
+     */
+    public function getEmployeesWithValidCertificates(Company $company)
+    {
+        return $this->getValidCertificates($company)->flatMap(static function (Certificate $certificate) use ($company) {
+            return $certificate->getEmployeesByCompany($company);
+        });
     }
 
 //    public function scopeCertified($query, $training)

@@ -182,4 +182,12 @@ class Certificate extends Model
 
         return $trainingDate->modify('+' . $monthsToAdd . ' month');
     }
+
+    /**
+     * @return Collection|Employee[]
+     */
+    public function getEmployeesByCompany(Company $company)
+    {
+        return $this->getEmployees()->where('company_id', $company->getId());
+    }
 }
