@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use App\Company;
+use App\Employee;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -32,10 +33,14 @@ class UpdateUserEmployeeRequest extends FormRequest
             throw new Exception('Received company is not the required object');
         }
 
+        if (! assert($this->route('employee') instanceof Employee)) {
+            throw new Exception('Received employee is not the required object');
+        }
+
         return [
             'name' => 'sometimes|required',
             'surname' => 'sometimes|required',
-            'number' => 'unique:employees,number,' . $request->get('number') . ',number,company_id,' . $this->route('company')->getId(),
+            'number' => 'unique:employees,number,' . $this->route('employee')->getNumber() . ',number,company_id,' . $this->route('company')->getId(),
             'position_id' => 'exists:positions,id|required|sometimes',
         ];
     }
