@@ -18,12 +18,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View as IlluminateView;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use function date;
 use function is_array;
 use function redirect;
-use function request;
 use function view;
 
 class CertificateController extends Controller
@@ -59,6 +57,8 @@ class CertificateController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function store(StoreUserCertificateRequest $request, Company $company, Certificate $certificate)
     {
@@ -77,11 +77,16 @@ class CertificateController extends Controller
         }
 
         $fileName = $this->generateFileName($trainingDate, $training, $company, $uploadedFile);
-        $path     = $uploadedFile->storeAs('certificates', $fileName, 's3');
+
+        $certificatePath = Storage::putFileAs('certificate', $uploadedFile, $fileName);
+
+        if (! $certificatePath === true) {
+            throw new Exception('File not saved.');
+        }
 
         $certificate = new Certificate();
         $certificate->setName($fileName);
-        $certificate->setPath(Storage::disk('s3')->url($path));
+        $certificate->setPath($certificatePath);
         $certificate->setTrainingDate($trainingDate);
         $certificate->setExpiryDate($expiryDate);
         $certificate->setTraining($training);
@@ -102,9 +107,9 @@ class CertificateController extends Controller
         return view('user.certificates.show', ['certificate' => $certificate, 'company' => $company, 'training' => $training]);
     }
 
-    public function download(Company $company, Certificate $certificate): StreamedResponse
+    public function download(Company $company, Certificate $certificate): string
     {
-        return Storage::disk('s3')->response('certificates/' . $certificate->getName());
+        return Storage::url('certificates/' . $certificate->getName());
     }
 
     /**
@@ -119,6 +124,8 @@ class CertificateController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function update(UpdateUserCertificateRequest $request, Company $company, Training $training, Certificate $certificate)
     {
@@ -131,11 +138,15 @@ class CertificateController extends Controller
             throw new Exception('File not uploaded.');
         }
 
-        $fileName = $this->generateFileName($trainingDate, $training, $company, $uploadedFile);
-        $path     = $uploadedFile->storeAs('certificates', $fileName, 's3');
+        $fileName        = $this->generateFileName($trainingDate, $training, $company, $uploadedFile);
+        $certificatePath = Storage::putFileAs('certificate', $uploadedFile, $fileName);
+
+        if (! $certificatePath === true) {
+            throw new Exception('File not saved.');
+        }
 
         $certificate->setName($fileName);
-        $certificate->setPath(Storage::disk('s3')->url($path));
+        $certificate->setPath($certificatePath);
         $certificate->setTrainingDate($trainingDate);
         $certificate->setExpiryDate($expiryDate);
         $certificate->setTraining($training);

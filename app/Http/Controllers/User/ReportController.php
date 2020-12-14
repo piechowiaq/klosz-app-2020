@@ -71,7 +71,14 @@ class ReportController extends Controller
 
         $fileName = $this->generateFileName($reportDate, $registry, $company, $uploadedFile);
         $report->setName($fileName);
-        $report->setPath(Storage::disk('s3')->url($uploadedFile->storeAs('reports', $fileName, 's3')));
+
+        $reportPath = Storage::putFileAs('reports', $uploadedFile, $fileName);
+
+        if (! $reportPath === true) {
+            throw new Exception('File not saved.');
+        }
+
+        $report->setPath($reportPath);
 
         $report->setCompany($company);
         $report->setRegistry($registry);
@@ -88,9 +95,9 @@ class ReportController extends Controller
         return view('user.reports.show', ['report' => $report, 'company' => $company]);
     }
 
-    public function download(Company $company, Report $report): StreamedResponse
+    public function download(Company $company, Report $report): string
     {
-        return Storage::disk('s3')->response('reports/' . $report->getName());
+        return Storage::url('reports/' . $report->getName());
     }
 
     /**
@@ -124,7 +131,14 @@ class ReportController extends Controller
 
         $fileName = $this->generateFileName($reportDate, $registry, $company, $uploadedFile);
         $report->setName($fileName);
-        $report->setPath(Storage::disk('s3')->url($uploadedFile->storeAs('reports', $fileName, 's3')));
+
+        $reportPath = Storage::putFileAs('reports', $uploadedFile, $fileName);
+
+        if (! $reportPath === true) {
+            throw new Exception('File not saved.');
+        }
+
+        $report->setPath($reportPath);
 
         $report->setCompany($company);
         $report->setRegistry($registry);
