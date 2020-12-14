@@ -6,12 +6,12 @@ namespace App\Http\Controllers\User;
 
 use App\Certificate;
 use App\Company;
-use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Training;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View as IlluminateView;
 
+use function dd;
 use function view;
 
 class TrainingController extends Controller

@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Tests\Unit\CertificateTest;
 
 class Training extends Model
 {
@@ -222,12 +223,19 @@ class Training extends Model
     }
 
     /**
-     * @return Collection|Employee[]
+     * @return Collection|Certificate[]
      */
-    public function getValidCertificates(Company $company)
+    public function getCertificatesByCompany(Company $company)
     {
-        return $this->certificates()->where('expiry_date', '>', new DateTime('now'))
-                ->get();
+        return $this->getCertificates()->where('company_id', $company->getId());
+    }
+
+    /**
+     * @return Collection|Certificate[]
+     */
+    public function getValidCertificatesByCompany(Company $company)
+    {
+        return $this->getCertificatesByCompany($company)->where('expiry_date', '>', new DateTime('now'));
     }
 
     /**
@@ -235,7 +243,7 @@ class Training extends Model
      */
     public function getEmployeesWithValidCertificates(Company $company)
     {
-        return $this->getValidCertificates($company)->flatMap(static function (Certificate $certificate) use ($company) {
+        return $this->getValidCertificatesByCompany($company)->flatMap(static function (Certificate $certificate) use ($company) {
             return $certificate->getEmployeesByCompany($company);
         });
     }
