@@ -74,6 +74,7 @@ class Report extends Model
         return $this->attributes[self::REPORT_DATE_COLUMN];
     }
 
+
     public function setReportDate(DateTime $dateTime): void
     {
         $this->attributes[self::REPORT_DATE_COLUMN] = $dateTime;
@@ -81,7 +82,7 @@ class Report extends Model
 
     public function getExpiryDate(): DateTime
     {
-        return $this->attributes[self::REPORT_EXPIRY_DATE_COLUMN];
+        return new DateTime($this->attributes[self::REPORT_EXPIRY_DATE_COLUMN]);
     }
 
     public function setExpiryDate(DateTime $dateTime): void

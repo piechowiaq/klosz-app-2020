@@ -18,7 +18,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View as IlluminateView;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use function date;
 use function is_array;
@@ -58,11 +57,8 @@ class ReportController extends Controller
             throw new Exception('No registry found!');
         }
 
-        $report = new Report();
-
-        $reportDate = new DateTime($request->get('report_date'));
-        $report->setReportDate($reportDate);
-        $report->setExpiryDate($report->calculateExpiryDate($reportDate, $registry));
+        $reportDate       = new DateTime($request->get('report_date'));
+        $reportExpiryDate = $report->calculateExpiryDate($reportDate, $registry);
 
         $uploadedFile = $request->file('file');
         if ($uploadedFile === null || is_array($uploadedFile)) {
@@ -70,7 +66,6 @@ class ReportController extends Controller
         }
 
         $fileName = $this->generateFileName($reportDate, $registry, $company, $uploadedFile);
-        $report->setName($fileName);
 
         $reportPath = Storage::putFileAs('reports', $uploadedFile, $fileName);
 
@@ -78,8 +73,11 @@ class ReportController extends Controller
             throw new Exception('File not saved.');
         }
 
+        $report = new Report();
+        $report->setExpiryDate($reportExpiryDate);
+        $report->setName($fileName);
+        $report->setReportDate($reportDate);
         $report->setPath($reportPath);
-
         $report->setCompany($company);
         $report->setRegistry($registry);
         $report->save();
@@ -122,7 +120,10 @@ class ReportController extends Controller
 
         $reportDate = new DateTime($request->get('report_date'));
         $report->setReportDate($reportDate);
-        $report->setExpiryDate($report->calculateExpiryDate($reportDate, $registry));
+
+        $reportExpiryDate = $report->calculateExpiryDate($reportDate, $registry);
+
+        $report->setExpiryDate($reportExpiryDate);
 
         $uploadedFile = $request->file('file');
         if ($uploadedFile === null || is_array($uploadedFile)) {

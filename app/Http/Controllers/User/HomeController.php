@@ -63,7 +63,7 @@ class HomeController extends Controller
                 $training->getEmployees()->where('company_id', $company->getId())->count() === 0
                     ? 0
                     : round(
-                        Employee::getCertifiedByTrainingAndCompany($training, $company)->count()
+                        $training->getCertifiedEmployeesByCompany( $company,$training)->count()
                         / $training->getEmployees()->where('company_id', $company->getId())->count()
                         * 100
                     )
@@ -74,15 +74,12 @@ class HomeController extends Controller
 
         $collection = collect();
 
-        foreach ($company->getRegistries() as $registry) {
-            foreach ($registry->getReports()->where('company_id', $company->getId()) as $report) {
-
-                if ($report->getExpiryDate() <= new DateTime('now')) {
-                    continue;
-                }
+        foreach ($company->getReports() as $report) {
+            if ($report->getExpiryDate() <= new DateTime('now')) {
+                continue;
+            }
 
                 $collection->push($report);
-            }
         }
 
         $validRegistries = $collection->unique('registry_id')->count();

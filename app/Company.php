@@ -188,4 +188,14 @@ class Company extends Model
     {
         $this->trainings()->sync($trainings->pluck('id'));
     }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->registries()->get()->flatMap(static function (Registry $registry) {
+            return $registry->reports()->get();
+        });
+    }
 }

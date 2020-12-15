@@ -131,4 +131,12 @@ class Registry extends Model
     {
         return $this->companies()->get();
     }
+
+    /**
+     * @return Collection|Company[]
+     */
+    public function getReportsByCompany(Company $company): Collection
+    {
+        return $this->reports()->where('company_id', $company->getId())->get();
+    }
 }
