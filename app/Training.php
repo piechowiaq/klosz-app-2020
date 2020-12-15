@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Tests\Unit\CertificateTest;
 
 class Training extends Model
 {
@@ -222,30 +222,19 @@ class Training extends Model
         return $this->getEmployees()->where('company_id', $company->getId());
     }
 
-    /**
-     * @return Collection|Certificate[]
-     */
-    public function getCertificatesByCompany(Company $company)
-    {
-        return $this->getCertificates()->where('company_id', $company->getId());
-    }
+
+
+
 
     /**
-     * @return Collection|Certificate[]
+     * @return Builder[]|Collection|Relation[]
      */
-    public function getValidCertificatesByCompany(Company $company)
+    public function getCertifiedEmployeesByCompany(Company $company, Training $training)
     {
-        return $this->getCertificatesByCompany($company)->where('expiry_date', '>', new DateTime('now'));
-    }
-
-    /**
-     * @return Collection|Employee[]
-     */
-    public function getEmployeesWithValidCertificates(Company $company)
-    {
-        return $this->getValidCertificatesByCompany($company)->flatMap(static function (Certificate $certificate) use ($company) {
-            return $certificate->getEmployeesByCompany($company);
-        });
+        return $this->employees()->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
+            $q->where('expiry_date', '>', new DateTime('now'))
+                ->where('training_id', $training->getID());
+        })->get();
     }
 
 //    public function scopeCertified($query, $training)

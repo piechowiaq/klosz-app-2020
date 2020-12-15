@@ -8,6 +8,7 @@ use App\Company;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\User;
+use DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,6 @@ use Illuminate\View\View as IlluminateView;
 
 use function assert;
 use function collect;
-use function now;
 use function round;
 use function view;
 
@@ -76,7 +76,8 @@ class HomeController extends Controller
 
         foreach ($company->getRegistries() as $registry) {
             foreach ($registry->getReports()->where('company_id', $company->getId()) as $report) {
-                if ($report->getExpiryDate() <= now()) {
+
+                if ($report->getExpiryDate() <= new DateTime('now')) {
                     continue;
                 }
 
