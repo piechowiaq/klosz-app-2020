@@ -6,7 +6,6 @@ namespace App;
 
 use Carbon\Carbon;
 use DateTime;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -231,9 +230,12 @@ class Employee extends Model
         return self::whereIn('company_id', $company->getId())->get();
     }
 
-    public function scopeCertified(Builder $query, Training $training, Company $company): void
+    /**
+     * @return Collection|Employee[]
+     */
+    public static function getCertifiedByTrainingAndCompany(Training $training, Company $company): Collection
     {
-        $query->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
+        return self::where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
             $q->where('expiry_date', '>', Carbon::now())
                 ->where('training_id', $training->getID());
         })->get();
@@ -246,5 +248,4 @@ class Employee extends Model
     {
         return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
     }
-
 }

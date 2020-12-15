@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\User;
 
 use App\Company;
+use App\Employee;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Contracts\View\Factory;
@@ -58,7 +59,15 @@ class HomeController extends Controller
         $collection = collect([]);
 
         foreach ($company->getTrainings() as $training) {
-            $collection->push($training->getEmployees()->where('company_id', $company->getId())->count() === 0 ? 0 : round($training->employees()->certified($training, $company)->count() / $training->getEmployees()->where('company_id', $company->getId())->count() * 100));
+            $collection->push(
+                $training->getEmployees()->where('company_id', $company->getId())->count() === 0
+                    ? 0
+                    : round(
+                        Employee::getCertifiedByTrainingAndCompany($training, $company)->count()
+                        / $training->getEmployees()->where('company_id', $company->getId())->count()
+                        * 100
+                    )
+            );
         }
 
         $average = round($collection->avg());
