@@ -225,7 +225,7 @@ class Employee extends Model
     /**
      * @return Collection|Employee[]
      */
-    public function getEmployeesByCompany(Company $company): Collection
+    public function getEmployeesByCompany(Company $company)
     {
         return self::whereIn('company_id', $company->getId())->get();
     }
@@ -233,7 +233,7 @@ class Employee extends Model
     /**
      * @return Collection|Employee[]
      */
-    public static function getCertifiedByTrainingAndCompany(Training $training, Company $company): Collection
+    public static function getCertifiedByTrainingAndCompany(Training $training, Company $company)
     {
         return self::where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
             $q->where('expiry_date', '>', Carbon::now())
