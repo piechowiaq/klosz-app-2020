@@ -74,6 +74,14 @@ class Company extends Model
         $this->attributes[self::UPDATED_AT_COLUMN] = $dateTime;
     }
 
+    /**
+     * @return Collection|self[]
+     */
+    public static function getAll(): Collection
+    {
+        return self::all();
+    }
+
     public function path(): string
     {
         return '/admin/companies/' . $this->getId();

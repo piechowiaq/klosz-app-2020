@@ -74,6 +74,14 @@ class Department extends Model
         $this->attributes[self::UPDATED_AT_COLUMN] = $dateTime;
     }
 
+    /**
+     * @return Collection|self[]
+     */
+    public static function getAll(): Collection
+    {
+        return self::all();
+    }
+
     public function employees(): Relation
     {
         return $this->belongsToMany(Employee::class);

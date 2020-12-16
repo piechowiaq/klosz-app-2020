@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 
 class Registry extends Model
 {
@@ -94,6 +94,14 @@ class Registry extends Model
     public function setUpdatedAtDateTime(DateTime $dateTime): void
     {
         $this->attributes[self::UPDATED_AT_COLUMN] = $dateTime;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public static function getAll(): Collection
+    {
+        return self::all();
     }
 
     public function path(): string
