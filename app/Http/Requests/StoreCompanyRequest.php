@@ -23,6 +23,10 @@ class StoreCompanyRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ['name' => 'required|unique:companies,name|sometimes'];
+        return [
+            'name' => 'required|unique:companies,name',
+            'department_id' => 'required|exists:departments,id',
+            'registry_id' => 'required|exists:registries,id',
+        ];
     }
 }

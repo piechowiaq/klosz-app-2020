@@ -20,6 +20,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
+use function route;
 use function view;
 
 class CompanyController extends Controller
@@ -27,7 +28,6 @@ class CompanyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-//        $this->authorizeResource(Company::class, 'company');
     }
 
     /**
@@ -37,7 +37,7 @@ class CompanyController extends Controller
     {
         $this->authorize('update');
 
-        $companies = Company::all();
+        $companies = Company::getAll();
 
         return view('admin.companies.index', ['companies' => $companies]);
     }
@@ -50,8 +50,8 @@ class CompanyController extends Controller
         $this->authorize('update');
 
         $company     = new Company();
-        $departments = Department::all();
-        $registries  = Registry::all();
+        $departments = Department::getAll();
+        $registries  = Registry::getAll();
 
         return view('admin.companies.create', ['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
@@ -69,13 +69,6 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $departments = Department::getDepartmentsById($request->get('department_id'));
-        if ($departments->count() === 0) {
-            throw new Exception('No department found!');
-        }
-
-        $company->setDepartments($departments);
-
         $registries = Registry::getRegistriesById($request->get('registry_id'));
         if ($registries->count() === 0) {
             throw new Exception('No registry found!');
@@ -83,26 +76,32 @@ class CompanyController extends Controller
 
         $company->setRegistries($registries);
 
-        $positionsIds = $company->getDepartments()->flatMap(static function (Department $department) {
-            return $department->getPositions()->pluck('id');
-        });
-
-        $positions = Position::getPositionsById($positionsIds->toArray());
-        if ($positions->count() === 0) {
-            throw new Exception('No Positions found!');
+        $departments = Department::getDepartmentsById($request->get('department_id'));
+        if ($departments->count() === 0) {
+            throw new Exception('No department found!');
         }
+
+        $company->setDepartments($departments);
+
+        /**
+         * @var Collection|Position[]
+         */
+        $positions = $departments->flatMap(static function (Department $department) {
+            return $department->getPositions();
+        });
 
         $company->setPositions($positions);
 
+        /**
+         * @var Collection|Training[]
+         */
         $trainings = $positions->flatMap(static function (Position $position) {
             return $position->getTrainings();
         });
 
-        $trainings = Training::getTrainingsById($trainings->pluck('id')->toArray());
-
         $company->setTrainings($trainings);
 
-        return redirect($company->path());
+        return redirect(route('admin.companies.show', ['company' => $company]));
     }
 
     /**
@@ -122,15 +121,17 @@ class CompanyController extends Controller
     {
         $this->authorize('update');
 
-        $departments = Department::all();
+        $departments = Department::getAll();
 
-        $registries = Registry::all();
+        $registries = Registry::getAll();
 
         return view('admin.companies.edit', ['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
@@ -139,13 +140,6 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $departments = Department::getDepartmentsById($request->get('department_id'));
-        if ($departments->count() === 0) {
-            throw new Exception('No department found!');
-        }
-
-        $company->setDepartments($departments);
-
         $registries = Registry::getRegistriesById($request->get('registry_id'));
         if ($registries->count() === 0) {
             throw new Exception('No registry found!');
@@ -153,14 +147,22 @@ class CompanyController extends Controller
 
         $company->setRegistries($registries);
 
+        $departments = Department::getDepartmentsById($request->get('department_id'));
+        if ($departments->count() === 0) {
+            throw new Exception('No department found!');
+        }
+
+        $company->setDepartments($departments);
+
         /**
          * @var Collection|Position[]
          */
-        $positions = $company->getDepartments()->flatMap(static function (Department $department) {
+        $positions = $departments->flatMap(static function (Department $department) {
             return $department->getPositions();
         });
 
         $company->setPositions($positions);
+
         /**
          * @var Collection|Training[]
          */
@@ -170,7 +172,7 @@ class CompanyController extends Controller
 
         $company->setTrainings($trainings);
 
-        return redirect($company->path());
+        return redirect(route('admin.companies.show', ['company' => $company]));
     }
 
     /**
@@ -182,6 +184,6 @@ class CompanyController extends Controller
 
         $company->delete();
 
-        return redirect('admin/companies');
+        return redirect(route('admin.companies.index'));
     }
 }
