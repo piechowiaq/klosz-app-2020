@@ -19,6 +19,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
+use function is_array;
 use function redirect;
 use function route;
 use function view;
@@ -69,37 +70,35 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $registries = Registry::getRegistriesById($request->get('registry_id'));
-        if ($registries->count() === 0) {
-            throw new Exception('No registry found!');
+        $registryIds = $request->get('registry_id');
+
+        if (is_array($registryIds)) {
+            $registries = Registry::getRegistriesById($request->get('registry_id'));
+            $company->setRegistries($registries);
         }
 
-        $company->setRegistries($registries);
+        $departmentIds = $request->get('department_id');
+        if (is_array($departmentIds)) {
+            $departments = Department::getDepartmentsById($departmentIds);
 
-        $departments = Department::getDepartmentsById($request->get('department_id'));
-        if ($departments->count() === 0) {
-            throw new Exception('No department found!');
+            /**
+             * @var Collection|Position[]
+             */
+            $positions = $departments->flatMap(static function (Department $department) {
+                return $department->getPositions();
+            });
+
+            /**
+             * @var Collection|Training[]
+             */
+            $trainings = $positions->flatMap(static function (Position $position) {
+                return $position->getTrainings();
+            });
+
+            $company->setDepartments($departments);
+            $company->setPositions($positions);
+            $company->setTrainings($trainings);
         }
-
-        $company->setDepartments($departments);
-
-        /**
-         * @var Collection|Position[]
-         */
-        $positions = $departments->flatMap(static function (Department $department) {
-            return $department->getPositions();
-        });
-
-        $company->setPositions($positions);
-
-        /**
-         * @var Collection|Training[]
-         */
-        $trainings = $positions->flatMap(static function (Position $position) {
-            return $position->getTrainings();
-        });
-
-        $company->setTrainings($trainings);
 
         return redirect(route('admin.companies.show', ['company' => $company]));
     }
@@ -140,37 +139,35 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $registries = Registry::getRegistriesById($request->get('registry_id'));
-        if ($registries->count() === 0) {
-            throw new Exception('No registry found!');
+        $registryIds = $request->get('registry_id');
+
+        if (is_array($registryIds)) {
+            $registries = Registry::getRegistriesById($request->get('registry_id'));
+            $company->setRegistries($registries);
         }
 
-        $company->setRegistries($registries);
+        $departmentIds = $request->get('department_id');
+        if (is_array($departmentIds)) {
+            $departments = Department::getDepartmentsById($departmentIds);
 
-        $departments = Department::getDepartmentsById($request->get('department_id'));
-        if ($departments->count() === 0) {
-            throw new Exception('No department found!');
+            /**
+             * @var Collection|Position[]
+             */
+            $positions = $departments->flatMap(static function (Department $department) {
+                return $department->getPositions();
+            });
+
+            /**
+             * @var Collection|Training[]
+             */
+            $trainings = $positions->flatMap(static function (Position $position) {
+                return $position->getTrainings();
+            });
+
+            $company->setDepartments($departments);
+            $company->setPositions($positions);
+            $company->setTrainings($trainings);
         }
-
-        $company->setDepartments($departments);
-
-        /**
-         * @var Collection|Position[]
-         */
-        $positions = $departments->flatMap(static function (Department $department) {
-            return $department->getPositions();
-        });
-
-        $company->setPositions($positions);
-
-        /**
-         * @var Collection|Training[]
-         */
-        $trainings = $positions->flatMap(static function (Position $position) {
-            return $position->getTrainings();
-        });
-
-        $company->setTrainings($trainings);
 
         return redirect(route('admin.companies.show', ['company' => $company]));
     }

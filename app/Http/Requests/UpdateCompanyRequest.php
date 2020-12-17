@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Company;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+
+use function assert;
 
 class UpdateCompanyRequest extends FormRequest
 {
@@ -22,11 +25,21 @@ class UpdateCompanyRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array|mixed[]
+     *
+     * @throws Exception
      */
-    public function rules(Request $request): array
+    public function rules(): array
     {
+        if (! assert($this->route('company') instanceof Company)) {
+            throw new Exception('Received company is not the required object');
+        }
+
         return [
-            'name' => ['required','sometimes', Rule::unique('companies', 'name')->ignore($request->get('company'))],
+            'name' => ['required', Rule::unique('companies', 'name')->ignore($this->route('company')->getId())],
+            'department_id' => 'sometimes|array',
+            'department_id.+' => 'exists:departments,id',
+            'registry_id' => 'sometimes|array',
+            'registry_id.+' => 'exists:registries,id',
         ];
     }
 }
