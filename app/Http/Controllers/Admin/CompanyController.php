@@ -19,6 +19,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
+use function collect;
 use function is_array;
 use function redirect;
 use function route;
@@ -70,14 +71,14 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $registryIds = $request->get('registry_id');
+        $registryIds = $request->get('registry_ids');
 
         if (is_array($registryIds)) {
-            $registries = Registry::getRegistriesById($request->get('registry_id'));
+            $registries = Registry::getRegistriesById($registryIds);
             $company->setRegistries($registries);
         }
 
-        $departmentIds = $request->get('department_id');
+        $departmentIds = $request->get('department_ids');
         if (is_array($departmentIds)) {
             $departments = Department::getDepartmentsById($departmentIds);
 
@@ -121,8 +122,7 @@ class CompanyController extends Controller
         $this->authorize('update');
 
         $departments = Department::getAll();
-
-        $registries = Registry::getAll();
+        $registries  = Registry::getAll();
 
         return view('admin.companies.edit', ['company' => $company, 'departments' => $departments, 'registries' => $registries]);
     }
@@ -139,14 +139,16 @@ class CompanyController extends Controller
         $company->setName($request->get('name'));
         $company->save();
 
-        $registryIds = $request->get('registry_id');
+        $registryIds = $request->get('registry_ids');
 
         if (is_array($registryIds)) {
-            $registries = Registry::getRegistriesById($request->get('registry_id'));
+            $registries = Registry::getRegistriesById($registryIds);
             $company->setRegistries($registries);
+        } elseif (empty($registryIds)) {
+            $company->setRegistries(collect());
         }
 
-        $departmentIds = $request->get('department_id');
+        $departmentIds = $request->get('department_ids');
         if (is_array($departmentIds)) {
             $departments = Department::getDepartmentsById($departmentIds);
 
@@ -167,6 +169,10 @@ class CompanyController extends Controller
             $company->setDepartments($departments);
             $company->setPositions($positions);
             $company->setTrainings($trainings);
+        } elseif (empty($departmentIds)) {
+            $company->setDepartments(collect());
+            $company->setPositions(collect());
+            $company->setTrainings(collect());
         }
 
         return redirect(route('admin.companies.show', ['company' => $company]));

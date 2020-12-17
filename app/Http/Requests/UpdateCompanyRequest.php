@@ -36,10 +36,10 @@ class UpdateCompanyRequest extends FormRequest
 
         return [
             'name' => ['required', Rule::unique('companies', 'name')->ignore($this->route('company')->getId())],
-            'department_id' => 'sometimes|array',
-            'department_id.+' => 'exists:departments,id',
-            'registry_id' => 'sometimes|array',
-            'registry_id.+' => 'exists:registries,id',
+            'department_ids' => 'sometimes|array',
+            'department_ids.+' => 'exists:departments,id',
+            'registry_ids' => 'sometimes|array',
+            'registry_ids.+' => 'exists:registries,id',
         ];
     }
 }

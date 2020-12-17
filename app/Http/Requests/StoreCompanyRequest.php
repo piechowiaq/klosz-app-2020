@@ -25,10 +25,10 @@ class StoreCompanyRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:companies,name',
-            'department_id' => 'sometimes|array',
-            'department_id.+' => 'exists:departments,id',
-            'registry_id' => 'sometimes|array',
-            'registry_id.+' => 'exists:registries,id',
+            'department_ids' => 'sometimes|array',
+            'department_ids.+' => 'exists:departments,id',
+            'registry_ids' => 'sometimes|array',
+            'registry_ids.+' => 'exists:registries,id',
         ];
     }
 }
