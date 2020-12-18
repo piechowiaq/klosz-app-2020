@@ -24,21 +24,6 @@ class Certificate extends Model
     /** @var array|string[] */
     protected $guarded = [];
 
-    public static function getCertificateById(string $id): ?self
-    {
-        return self::find($id);
-    }
-
-    /**
-     * @param array|string[] $ids
-     *
-     * @return Collection|self[]
-     */
-    public static function getCertificatesById(array $ids): Collection
-    {
-        return self::whereIn(self::ID_COLUMN, $ids)->get();
-    }
-
     public function getId(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];

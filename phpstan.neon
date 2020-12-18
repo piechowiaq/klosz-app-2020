@@ -4,14 +4,18 @@ parameters:
         - app
     ignoreErrors:
         -
-            '#Call to an undefined static method [a-zA-Z0-9\\_]+::find\(\)#'
-#            path: app/Models/*
+            message: '#Call to an undefined static method [a-zA-Z0-9\\_]+::find\(\)#'
+            paths:
+                - app/Core/*/Infrastructure/Repository/*Eloquent*
+                - */Eloquent*Repository.php
         -
-            '#Call to an undefined static method [a-zA-Z0-9\\_]+::whereIn\(\)#'
-#            path: app/Models/*
+            message: '#Call to an undefined static method [a-zA-Z0-9\\_]+::whereIn\(\)#'
+            paths:
+                - app/Core/*/Infrastructure/Repository/*Eloquent*
+                - */Eloquent*Repository.php
         -
-            '#Call to an undefined method [a-zA-Z0-9\\_]+::sync\(\)#'
-#            path: app/Models/*
+            message: '#Call to an undefined method [a-zA-Z0-9\\_]+::sync\(\)#'
+            path: app/*.php
         -
-            '#Call to an undefined static method [a-zA-Z0-9\\_]+::where\(\)#'
-#            path: app/Models/*
+            message: '#Call to an undefined static method [a-zA-Z0-9\\_]+::where\(\)#'
+            path: app/*.php

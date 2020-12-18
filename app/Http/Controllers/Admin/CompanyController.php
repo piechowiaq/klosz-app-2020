@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
+use App\Core\Department\Domain\Repository\DepartmentRepositoryInterface;
+use App\Core\Registry\Domain\Repository\RegistryRepositoryInterface;
 use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCompanyRequest;
@@ -51,11 +53,10 @@ class CompanyController extends Controller
     {
         $this->authorize('update');
 
-        $company     = new Company();
         $departments = Department::getAll();
         $registries  = Registry::getAll();
 
-        return view('admin.companies.create', ['company' => $company, 'departments' => $departments, 'registries' => $registries]);
+        return view('admin.companies.create', ['departments' => $departments, 'registries' => $registries]);
     }
 
     /**
@@ -63,7 +64,7 @@ class CompanyController extends Controller
      *
      * @throws Exception
      */
-    public function store(StoreCompanyRequest $request)
+    public function store(RegistryRepositoryInterface $registryRepository, DepartmentRepositoryInterface $departmentRepository, StoreCompanyRequest $request)
     {
         $this->authorize('update');
 
@@ -74,13 +75,13 @@ class CompanyController extends Controller
         $registryIds = $request->get('registry_ids');
 
         if (is_array($registryIds)) {
-            $registries = Registry::getRegistriesById($registryIds);
+            $registries = $registryRepository->getManyByIds($registryIds);
             $company->setRegistries($registries);
         }
 
         $departmentIds = $request->get('department_ids');
         if (is_array($departmentIds)) {
-            $departments = Department::getDepartmentsById($departmentIds);
+            $departments = $departmentRepository->getManyByIds($departmentIds);
 
             /**
              * @var Collection|Position[]
@@ -132,7 +133,7 @@ class CompanyController extends Controller
      *
      * @throws Exception
      */
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update(RegistryRepositoryInterface $registryRepository, DepartmentRepositoryInterface $departmentRepository, UpdateCompanyRequest $request, Company $company)
     {
         $this->authorize('update');
 
@@ -141,16 +142,22 @@ class CompanyController extends Controller
 
         $registryIds = $request->get('registry_ids');
 
+        $registries = collect();
+
         if (is_array($registryIds)) {
-            $registries = Registry::getRegistriesById($registryIds);
-            $company->setRegistries($registries);
-        } elseif (empty($registryIds)) {
-            $company->setRegistries(collect());
+            $registries = $registryRepository->getManyByIds($registryIds);
         }
 
+        $company->setRegistries($registries);
+
         $departmentIds = $request->get('department_ids');
+
+        $departments = collect();
+        $positions   = collect();
+        $trainings   = collect();
+
         if (is_array($departmentIds)) {
-            $departments = Department::getDepartmentsById($departmentIds);
+            $departments = $departmentRepository->getManyByIds($departmentIds);
 
             /**
              * @var Collection|Position[]
@@ -165,15 +172,11 @@ class CompanyController extends Controller
             $trainings = $positions->flatMap(static function (Position $position) {
                 return $position->getTrainings();
             });
-
-            $company->setDepartments($departments);
-            $company->setPositions($positions);
-            $company->setTrainings($trainings);
-        } elseif (empty($departmentIds)) {
-            $company->setDepartments(collect());
-            $company->setPositions(collect());
-            $company->setTrainings(collect());
         }
+
+        $company->setDepartments($departments);
+        $company->setPositions($positions);
+        $company->setTrainings($trainings);
 
         return redirect(route('admin.companies.show', ['company' => $company]));
     }
