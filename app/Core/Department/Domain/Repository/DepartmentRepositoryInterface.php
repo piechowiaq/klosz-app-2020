@@ -16,5 +16,5 @@ interface DepartmentRepositoryInterface
      *
      * @return Collection|Department[]
      */
-    public function getByIds(array $ids): Collection;
+    public function getManyByIds(array $ids): Collection;
 }

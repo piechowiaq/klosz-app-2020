@@ -111,11 +111,11 @@ class PositionController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      */
-    public function update(UpdatePositionRequest $request, Position $position)
+    public function update(DepartmentRepositoryInterface $departmentRepository, UpdatePositionRequest $request, Position $position)
     {
         $this->authorize('update');
 
-        $department = Department::getDepartmentById($request->get('department_id'));
+        $department = $departmentRepository->getById($request->get('department_id'));
         if ($department === null) {
             throw new Exception('No department found!');
         }

@@ -18,8 +18,8 @@ class EloquentDepartmentRepository implements DepartmentRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getByIds(array $ids): Collection
+    public function getManyByIds(array $ids): Collection
     {
-        return Department::whereIn(Department::ID_COLUMN, $ids)->get();
+        return Department::whereIn('id', $ids)->get();
     }
 }

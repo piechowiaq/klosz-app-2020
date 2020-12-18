@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\User;
 
 use App\Company;
+use App\Core\Registry\Domain\Repository\RegistryRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserReportRequest;
 use App\Http\Requests\UpdateUserReportRequest;
@@ -48,11 +49,11 @@ class ReportController extends Controller
      *
      * @throws Exception
      */
-    public function store(StoreUserReportRequest $request, Company $company, Report $report)
+    public function store(RegistryRepositoryInterface  $registryRepository, StoreUserReportRequest $request, Company $company, Report $report)
     {
         $this->authorize('update', $report);
 
-        $registry = Registry::getRegistryById($request->get('registry_id'));
+        $registry = $registryRepository->getById($request->get('registry_id'));
         if ($registry === null) {
             throw new Exception('No registry found!');
         }
@@ -111,9 +112,9 @@ class ReportController extends Controller
      *
      * @throws Exception
      */
-    public function update(UpdateUserReportRequest $request, Company $company, Report $report)
+    public function update(RegistryRepositoryInterface $registryRepository, UpdateUserReportRequest $request, Company $company, Report $report)
     {
-        $registry = Registry::getRegistryById($request->get('registry_id'));
+        $registry = $registryRepository->getById($request->get('registry_id'));
         if ($registry === null) {
             throw new Exception('No registry found!');
         }
@@ -151,9 +152,9 @@ class ReportController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      */
-    public function destroy(Company $company, Report $report)
+    public function destroy(RegistryRepositoryInterface $registryRepository, Company $company, Report $report)
     {
-        $registry = Registry::getRegistryById((string) $report->getRegistry()->pluck('id')->toArray()[0]);
+        $registry = $registryRepository->getById((string) $report->getRegistry()->pluck('id')->toArray()[0]);
         if ($registry === null) {
             throw new Exception('No registry found!');
         }
