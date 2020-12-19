@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface RegistryRepositoryInterface
 {
-    public function getById(string $id): Registry;
+    public function getById(string $id): ?Registry;
 
     /**
      * @param array|string[] $ids

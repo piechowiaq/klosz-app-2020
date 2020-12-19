@@ -34,24 +34,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /** @var array|string[] */
-    protected $casts = ['email_verified_at' => 'datetime'];
-
-    public static function getUserById(string $id): ?self
-    {
-        return self::find($id);
-    }
-
-    /**
-     * @param array|string[] $ids
-     *
-     * @return Collection|self[]
-     */
-    public static function getUsersById(array $ids): Collection
-    {
-        return self::whereIn(self::ID_COLUMN, $ids)->get();
-    }
-
     public function getID(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];
