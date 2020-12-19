@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Training extends Model
 {
-//    use Searchable;
-
     private const ID_COLUMN          = 'id';
     private const NAME_COLUMN        = 'name';
     private const DESCRIPTION_COLUMN = 'description';
@@ -23,21 +21,6 @@ class Training extends Model
 
     /** @var array|string[] */
     protected $guarded = [];
-
-    public static function getTrainingById(string $id): ?self
-    {
-        return self::find($id);
-    }
-
-    /**
-     * @param array|string[] $ids
-     *
-     * @return Collection|self[]
-     */
-    public static function getTrainingsById(array $ids): Collection
-    {
-        return self::whereIn(self::ID_COLUMN, $ids)->get();
-    }
 
     public function getID(): string
     {

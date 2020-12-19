@@ -6,6 +6,7 @@ namespace App\Http\Controllers\User;
 
 use App\Certificate;
 use App\Company;
+use App\Core\Training\Domain\Repository\TrainingRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserCertificateRequest;
 use App\Http\Requests\UpdateUserCertificateRequest;
@@ -60,11 +61,11 @@ class CertificateController extends Controller
      *
      * @throws Exception
      */
-    public function store(StoreUserCertificateRequest $request, Company $company, Certificate $certificate)
+    public function store(TrainingRepositoryInterface $trainingRepository, StoreUserCertificateRequest $request, Company $company, Certificate $certificate)
     {
         $this->authorize('update', $certificate);
 
-        $training = Training::getTrainingById($request->get('training_id'));
+        $training = $trainingRepository->getById($request->get('training_id'));
         if ($training === null) {
             throw new Exception('No training found!');
         }
