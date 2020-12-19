@@ -12,6 +12,8 @@ use App\Core\Registry\Domain\Repository\RegistryRepositoryInterface;
 use App\Core\Registry\Infrastructure\Repository\EloquentRegistryRepository;
 use App\Core\Role\Domain\Repository\RoleRepositoryInterface;
 use App\Core\Role\Infrastructure\Repository\EloquentRoleRepository;
+use App\Core\Training\Domain\Repository\TrainingRepositoryInterface;
+use App\Core\Training\Infrastructure\Repository\EloquentTrainingRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CompanyRepositoryInterface::class, EloquentCompanyRepository::class);
         $this->app->bind(RegistryRepositoryInterface::class, EloquentRegistryRepository::class);
         $this->app->bind(RoleRepositoryInterface::class, EloquentRoleRepository::class);
+        $this->app->bind(TrainingRepositoryInterface::class, EloquentTrainingRepository::class);
     }
 
     /**
