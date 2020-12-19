@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Company\Domain\Repository;
+namespace App\Core\Role\Domain\Repository;
 
-use App\Company;
+use App\Role;
 use Illuminate\Database\Eloquent\Collection;
 
-interface CompanyRepositoryInterface
+interface RoleRepositoryInterface
 {
     /**
      * @param array|string[] $ids
      *
-     * @return Collection|Company[]
+     * @return Collection|Role[]
      */
     public function getManyByIds(array $ids): Collection;
 }

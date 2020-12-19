@@ -10,11 +10,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentCompanyRepository implements CompanyRepositoryInterface
 {
-    public function getById(string $id): Company
-    {
-        return Company::find($id);
-    }
-
     /**
      * @inheritDoc
      */
