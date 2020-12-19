@@ -34,7 +34,7 @@ class PositionController extends Controller
     {
         $this->authorize('update');
 
-        $positions = Position::all();
+        $positions = Position::getAll();
 
         return view('admin.positions.index', ['positions' => $positions]);
     }
@@ -48,7 +48,7 @@ class PositionController extends Controller
 
         $position = new Position();
 
-        $departments = Department::all();
+        $departments = Department::getAll();
 
         return view('admin.positions.create', ['position' => $position, 'departments' => $departments]);
     }
@@ -70,12 +70,6 @@ class PositionController extends Controller
         $position->setName($request->get('name'));
         $position->setDepartment($department);
         $position->save();
-
-//        $companies = new Collection();
-//
-//        foreach ($department->getCompanies() as $company) {
-//            $companies->add($company);
-//        }
 
         $companies = $department->getCompanies()->filter(static function ($company) {
             return $company;

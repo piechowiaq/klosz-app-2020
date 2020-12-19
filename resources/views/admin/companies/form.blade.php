@@ -5,14 +5,12 @@
      * @var App\Company $company
      */
 @endphp
-
 <div>
     <label for="name" class="block mt-2 py-2">Nazwa Firmy:</label>
     <input type="text" name="name" value="{{old('name', isset($company) ? $company->getName() : '') }}"
            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('name') ? 'is-invalid' : '' }}"
            required>
 </div>
-
 <div>
     <label for="department_ids" class="block mt-2 py-2">Dział:</label>
     @foreach ($departments as $department)
@@ -25,7 +23,6 @@
         </ol>
     @endforeach
 </div>
-
 <div>
     <label for="registry_ids" class="block mt-2 py-2">Rejestr:</label>
     @foreach ($registries as $registry)
@@ -37,5 +34,4 @@
         </ol>
     @endforeach
 </div>
-
 @csrf

@@ -3,19 +3,19 @@
     @include('admin.nav')
     @php
         /**
-        * @var Illuminate\Database\Eloquent\Collection|App\Company[] $companies
-        * @var App\Company $company
-        * /
+         * @var Illuminate\Database\Eloquent\Collection | App\Company[] $companies
+        */
     @endphp
     <div class="md:w-5/6">
         <div class=" py-6 m-2 md:py-2">
-            <a href="{{route('admin.companies.create')}}" class="rounded border text-indigo-500 p-2 bg-transparent">Create Company</a>
+            <a href="{{route('admin.companies.create')}}" class="rounded border text-indigo-500 p-2 bg-transparent">Create
+                Company</a>
         </div>
         @foreach ($companies as $company)
             <div class="md:flex border rounded shadow mb-1">
                 <div class="m-2 p-2 py-2 md:w-5/6 ">
                     <a href="{{route('admin.companies.show', ['company'=>$company])}}">{{ $company->getName()}}</a> <a
-                        href="{{route('user.dashboard', ['company'=>$company])}}">Dashborad</a>
+                        href="{{route('user.dashboard', ['company'=>$company])}}">Dashboard</a>
                 </div>
                 <div class="flex  justify-center md:justify-end md:w-1/6 ">
                     <div
