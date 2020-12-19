@@ -20,21 +20,6 @@ class Role extends Model
     /** @var array|string[] */
     protected $guarded = [];
 
-    public static function getRoleById(string $id): ?self
-    {
-        return self::find($id);
-    }
-
-    /**
-     * @param array|string[] $ids
-     *
-     * @return Collection|self[]
-     */
-    public static function getRolesById(array $ids): Collection
-    {
-        return self::whereIn(self::ID_COLUMN, $ids)->get();
-    }
-
     public function getID(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];

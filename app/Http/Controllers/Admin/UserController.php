@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Company;
 use App\Core\Company\Domain\Repository\CompanyRepositoryInterface;
+use App\Core\Role\Domain\Repository\RoleRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -61,7 +62,7 @@ class UserController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      */
-    public function store(CompanyRepositoryInterface $companyRepository, StoreUserRequest $request)
+    public function store(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, StoreUserRequest $request)
     {
         $this->authorize('update');
 
@@ -73,7 +74,7 @@ class UserController extends Controller
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $user->setRoles(Role::getRolesById($request->get('role_id')));
+        $user->setRoles($roleRepository->getManyByIds($request->get('role_id')));
         $user->setCompanies($companyRepository->getManyByIds($request->get('company_id')));
 
         return redirect($user->path());
@@ -106,7 +107,7 @@ class UserController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      */
-    public function update(CompanyRepositoryInterface $companyRepository, UpdateUserRequest $request, User $user)
+    public function update(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, UpdateUserRequest $request, User $user)
     {
         $this->authorize('update');
 
@@ -117,7 +118,7 @@ class UserController extends Controller
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $user->setRoles(Role::getRolesById($request->get('role_id')));
+        $user->setRoles($roleRepository->getManyByIds($request->get('role_id')));
         $user->setCompanies($companyRepository->getManyByIds($request->get('company_id')));
 
         return redirect($user->path());
