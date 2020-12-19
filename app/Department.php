@@ -150,9 +150,4 @@ class Department extends Model
     {
         $this->trainings()->sync($ids);
     }
-
-    public function path(): string
-    {
-        return '/admin/departments/' . $this->getId();
-    }
 }
