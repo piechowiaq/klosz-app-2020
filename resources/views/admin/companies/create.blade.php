@@ -1,9 +1,6 @@
 @extends('layouts.app')
-
 @section('content')
-
     @include('admin.nav')
-
     <div class="md:w-5/6">
         <div class="">
             <div><h1>Create Company</h1></div>

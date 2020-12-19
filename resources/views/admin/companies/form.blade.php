@@ -3,7 +3,7 @@
      * @var Illuminate\Database\Eloquent\Collection | App\Department[] $departments
      * @var Illuminate\Database\Eloquent\Collection | App\Registry[] $registries
      * @var App\Company $company
-    */
+     */
 @endphp
 
 <div>
