@@ -14,6 +14,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
+use function route;
 use function view;
 
 class DepartmentController extends Controller
@@ -30,7 +31,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('update');
 
-        $departments = Department::all();
+        $departments = Department::getAll();
 
         return view('admin.departments.index', ['departments' => $departments]);
     }
@@ -42,9 +43,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('update');
 
-        $department = new Department();
-
-        return view('admin.departments.create', ['department' => $department]);
+        return view('admin.departments.create');
     }
 
     /**
@@ -58,7 +57,7 @@ class DepartmentController extends Controller
         $department->setName($request->get('name'));
         $department->save();
 
-        return redirect($department->path());
+        return redirect(route('admin.departments.show', ['department' => $department]));
     }
 
     /**
@@ -88,9 +87,10 @@ class DepartmentController extends Controller
     {
         $this->authorize('update');
 
-        $department->update($request->validated());
+        $department->setName($request->get('name'));
+        $department->save();
 
-        return redirect($department->path());
+        return redirect(route('admin.departments.show', ['department' => $department]));
     }
 
     /**
@@ -102,6 +102,6 @@ class DepartmentController extends Controller
 
         $department->delete();
 
-        return redirect('admin/departments');
+        return redirect(route('admin.departments.index'));
     }
 }

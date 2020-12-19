@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Department;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+use function assert;
 
 class UpdateDepartmentRequest extends FormRequest
 {
@@ -19,10 +24,16 @@ class UpdateDepartmentRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array|string[]
+     * @return array|mixed[]
+     *
+     * @throws Exception
      */
     public function rules(): array
     {
-        return ['name' => 'sometimes|required'];
+        if (! assert($this->route('department') instanceof Department)) {
+            throw new Exception('Received department is not the required object');
+        }
+
+        return ['name' => ['required', Rule::unique('departments', 'name')->ignore($this->route('department')->getId())]];
     }
 }
