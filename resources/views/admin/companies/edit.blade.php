@@ -2,6 +2,11 @@
 @section('title', 'Companies')
 @section('content')
     @include('admin.nav')
+    @php
+        /**
+        * @var App\Company $company
+        * /
+    @endphp
     <div class="md:w-5/6">
         <div>
             <div><h1>Firmy</h1></div>
