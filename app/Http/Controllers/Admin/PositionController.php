@@ -46,11 +46,11 @@ class PositionController extends Controller
     {
         $this->authorize('update');
 
-        $position = new Position();
+//        $position = new Position();
 
         $departments = Department::getAll();
 
-        return view('admin.positions.create', ['position' => $position, 'departments' => $departments]);
+        return view('admin.positions.create', ['departments' => $departments]);
     }
 
     /**

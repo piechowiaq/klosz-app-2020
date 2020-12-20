@@ -36,7 +36,7 @@ class UpdatePositionRequest extends FormRequest
 
         return [
             'name' => ['required','sometimes', Rule::unique('positions', 'name')->ignore($this->route('position')->getId())],
-            'department_id' => 'exists:departments,id|required|sometimes',
+            'department_id' => 'exists:departments,id|required',
         ];
     }
 }
