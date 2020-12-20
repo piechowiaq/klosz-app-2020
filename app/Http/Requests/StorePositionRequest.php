@@ -24,8 +24,8 @@ class StorePositionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:positions,name|sometimes',
-            'department_id' => 'exists:departments,id|required|sometimes',
+            'name' => 'required|unique:positions,name',
+            'department_id' => 'exists:departments,id|required',
         ];
     }
 }
