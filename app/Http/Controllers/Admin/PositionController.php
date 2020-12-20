@@ -77,7 +77,7 @@ class PositionController extends Controller
 
         $position->setCompanies($companies);
 
-        return redirect($position->path());
+        return redirect(route('admin.positions.show', ['position' => $position]));
     }
 
     /**
@@ -126,7 +126,7 @@ class PositionController extends Controller
 
         $position->setCompanies($companies);
 
-        return redirect($position->path());
+        return redirect(route('admin.positions.show', ['position' => $position]));
     }
 
     /**
@@ -138,6 +138,6 @@ class PositionController extends Controller
 
         $position->delete();
 
-        return redirect('admin/positions');
+        return redirect(route('admin.positions.index'));
     }
 }
