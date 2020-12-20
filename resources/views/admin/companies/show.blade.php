@@ -2,9 +2,9 @@
 @section('content')
     @include('admin.nav')
     @php
-    /**
-    * @var App\Company $company
-    * /
+        /**
+        * @var App\Company $company
+        */
     @endphp
     <div class="md:w-5/6">
         <div class="block mt-2 py-2">

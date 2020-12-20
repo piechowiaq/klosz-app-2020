@@ -3,7 +3,7 @@
     @include('admin.nav')
     @php
         /**
-         * @var Illuminate\Database\Eloquent\Collection | App\Company[] $companies
+        * @var Illuminate\Database\Eloquent\Collection | App\Company[] $companies
         */
     @endphp
     <div class="md:w-5/6">
