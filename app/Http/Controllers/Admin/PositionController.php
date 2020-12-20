@@ -18,6 +18,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
+use function route;
 use function view;
 
 class PositionController extends Controller
@@ -45,8 +46,6 @@ class PositionController extends Controller
     public function create()
     {
         $this->authorize('update');
-
-//        $position = new Position();
 
         $departments = Department::getAll();
 
@@ -97,7 +96,7 @@ class PositionController extends Controller
     {
         $this->authorize('update');
 
-        $departments = Department::all();
+        $departments = Department::getAll();
 
         return view('admin.positions.edit', ['position' => $position, 'departments' => $departments]);
     }
