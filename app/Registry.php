@@ -89,11 +89,6 @@ class Registry extends Model
         return self::all();
     }
 
-    public function path(): string
-    {
-        return '/admin/registries/' . $this->getID();
-    }
-
     public function userPath(Company $company): string
     {
         return '/' . $company->getId() . '/registries/' . $this->getID();

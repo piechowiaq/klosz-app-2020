@@ -14,6 +14,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
+use function route;
 use function view;
 
 class RegistryController extends Controller
@@ -30,7 +31,7 @@ class RegistryController extends Controller
     {
         $this->authorize('update');
 
-        $registries = Registry::all();
+        $registries = Registry::getAll();
 
         return view('admin.registries.index', ['registries' => $registries]);
     }
@@ -60,7 +61,7 @@ class RegistryController extends Controller
         $registry->setValidFor((int) $request->get('valid_for'));
         $registry->save();
 
-        return redirect($registry->path());
+        return redirect(route('admin.registries.show', ['registry' => $registry]));
     }
 
     /**
@@ -95,7 +96,7 @@ class RegistryController extends Controller
         $registry->setValidFor((int) $request->get('valid_for'));
         $registry->save();
 
-        return redirect($registry->path());
+        return redirect(route('admin.registries.show', ['registry' => $registry]));
     }
 
     /**
@@ -107,6 +108,6 @@ class RegistryController extends Controller
 
         $registry->delete();
 
-        return redirect('admin/registries');
+        return redirect(route('admin.registries.index'));
     }
 }
