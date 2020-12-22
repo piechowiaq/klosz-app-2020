@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Employee extends Model
 {
-//    use Searchable;
 
     private const ID_COLUMN         = 'id';
     private const NAME_COLUMN       = 'name';

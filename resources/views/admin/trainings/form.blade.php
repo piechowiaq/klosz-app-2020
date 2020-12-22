@@ -17,7 +17,7 @@
 </div>
 <div>
     <label for="valid_for">Ważne przez okres:</label>
-    <input type="number" name="valid_for" value="{{old('valid_for') ?? isset($training) ? $training->getValidFor() : ''}}"
+    <input type="number" name="valid_for" value="{{old('valid_for', isset($training) ? $training->getValidFor() : '')}}"
            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('valid-for') ? 'is-invalid' : '' }}">
 </div>
 <div>

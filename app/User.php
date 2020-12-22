@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
 
 use function bcrypt;
 
@@ -107,6 +107,14 @@ class User extends Authenticatable
     public function setUpdatedAtDateTime(DateTime $dateTime): void
     {
         $this->attributes[self::UPDATED_AT_COLUMN] = $dateTime;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public static function getAll(): Collection
+    {
+        return self::all();
     }
 
     public function roles(): Relation

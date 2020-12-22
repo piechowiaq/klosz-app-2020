@@ -24,10 +24,10 @@ class StoreTrainingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:trainings,name|sometimes',
-            'description' => 'required|sometimes',
-            'valid_for' => 'required||sometimes',
-            'position_id' => 'exists:positions,id|required|sometimes',
+            'name' => 'required|unique:trainings,name',
+            'description' => 'required',
+            'valid_for' => 'required',
+            'position_id' => 'exists:positions,id|required',
         ];
     }
 }

@@ -36,12 +36,12 @@ class UpdateUserRequest extends FormRequest
         }
 
         return [
-            'name' => 'required|sometimes',
-            'surname' => 'required|sometimes',
-            'email' => ['required','sometimes', Rule::unique('users', 'email')->ignore($this->route('user')->getId())],
-            'password' => 'required|sometimes',
-            'role_id' => 'exists:roles,id|required|sometimes',
-            'company_id' => 'exists:companies,id|required|sometimes',
+            'name' => 'required',
+            'surname' => 'required',
+            'email' => ['required', Rule::unique('users', 'email')->ignore($this->route('user')->getId())],
+            'password' => 'required',
+            'role_id' => 'exists:roles,id|required',
+            'company_id' => 'exists:companies,id|required',
         ];
     }
 }

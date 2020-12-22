@@ -12,16 +12,15 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
-use Carbon\Carbon;
 use DateTime;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View as IlluminateView;
 
+use function is_array;
 use function redirect;
-use function request;
 use function view;
 
 class UserController extends Controller
@@ -38,7 +37,7 @@ class UserController extends Controller
     {
         $this->authorize('update');
 
-        $users = User::all();
+        $users = User::getAll();
 
         return view('admin.users.index', ['users' => $users]);
     }
@@ -50,13 +49,11 @@ class UserController extends Controller
     {
         $this->authorize('update');
 
-        $roles = Role::all();
+        $roles = Role::getAll();
 
-        $companies = Company::all();
+        $companies = Company::getAll();
 
-        $user = new User();
-
-        return view('admin.users.create', ['roles' => $roles, 'companies' => $companies, 'user' => $user]);
+        return view('admin.users.create', ['roles' => $roles, 'companies' => $companies]);
     }
 
     /**
@@ -74,8 +71,21 @@ class UserController extends Controller
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $user->setRoles($roleRepository->getManyByIds($request->get('role_id')));
-        $user->setCompanies($companyRepository->getManyByIds($request->get('company_id')));
+        $rolesIds = $request->get('role_id');
+        $roles    = new Collection();
+        if (is_array($rolesIds)) {
+            $roles = $roleRepository->getManyByIds($rolesIds);
+        }
+
+        $user->setRoles($roles);
+
+        $companyIds = $request->get('company_id');
+        $companies  = new Collection();
+        if (is_array($companyIds)) {
+            $companies = $companyRepository->getManyByIds($companyIds);
+        }
+
+        $user->setCompanies($companies);
 
         return redirect($user->path());
     }
@@ -97,9 +107,9 @@ class UserController extends Controller
     {
         $this->authorize('update');
 
-        $companies = Company::all();
+        $companies = Company::getAll();
 
-        $roles = Role::all();
+        $roles = Role::getAll();
 
         return view('admin.users.edit', ['user' => $user, 'companies' => $companies, 'roles' => $roles]);
     }
@@ -118,8 +128,22 @@ class UserController extends Controller
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $user->setRoles($roleRepository->getManyByIds($request->get('role_id')));
-        $user->setCompanies($companyRepository->getManyByIds($request->get('company_id')));
+        $rolesIds = $request->get('role_id');
+
+        $roles = new Collection();
+        if (is_array($rolesIds)) {
+            $roles = $roleRepository->getManyByIds($rolesIds);
+        }
+
+        $user->setRoles($roles);
+
+        $companyIds = $request->get('company_id');
+        $companies  = new Collection();
+        if (is_array($companyIds)) {
+            $companies = $companyRepository->getManyByIds($companyIds);
+        }
+
+        $user->setCompanies($companies);
 
         return redirect($user->path());
     }
