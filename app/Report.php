@@ -100,12 +100,9 @@ class Report extends Model
         return $this->belongsTo(Registry::class);
     }
 
-    /**
-     * @return Collection|Registry[]
-     */
-    public function getRegistry(): Collection
+    public function getRegistry(): Registry
     {
-        return $this->registry()->get();
+        return $this->registry()->get()->first();
     }
 
     public function setRegistry(Registry $registry): void
