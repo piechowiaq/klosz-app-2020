@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 class Company extends Model
 {
@@ -183,9 +184,9 @@ class Company extends Model
     }
 
     /**
-     * @return Collection|Report[]
+     * @return SupportCollection|Report[]
      */
-    public function getReports(): Collection
+    public function getReports(): SupportCollection
     {
         return $this->registries()->get()->flatMap(static function (Registry $registry) {
             return $registry->reports()->get();

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\User;
 
 use App\Company;
-use App\Employee;
 use App\Http\Controllers\Controller;
 use App\User;
 use DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View as IlluminateView;
@@ -63,7 +63,7 @@ class HomeController extends Controller
                 $training->getEmployees()->where('company_id', $company->getId())->count() === 0
                     ? 0
                     : round(
-                        $training->getCertifiedEmployeesByCompany( $company,$training)->count()
+                        $training->getCertifiedEmployeesByCompany($company, $training)->count()
                         / $training->getEmployees()->where('company_id', $company->getId())->count()
                         * 100
                     )
@@ -72,7 +72,7 @@ class HomeController extends Controller
 
         $average = round($collection->avg());
 
-        $collection = collect();
+        $collection = new Collection();
 
         foreach ($company->getReports() as $report) {
             if ($report->getExpiryDate() <= new DateTime('now')) {

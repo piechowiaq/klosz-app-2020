@@ -49,7 +49,7 @@ class ReportController extends Controller
      *
      * @throws Exception
      */
-    public function store(RegistryRepositoryInterface  $registryRepository, StoreUserReportRequest $request, Company $company, Report $report)
+    public function store(RegistryRepositoryInterface $registryRepository, StoreUserReportRequest $request, Company $company, Report $report)
     {
         $this->authorize('update', $report);
 
@@ -154,7 +154,7 @@ class ReportController extends Controller
      */
     public function destroy(RegistryRepositoryInterface $registryRepository, Company $company, Report $report)
     {
-        $registry = $registryRepository->getById((string) $report->getRegistry()->pluck('id')->toArray()[0]);
+        $registry = $registryRepository->getById((string) $report->getRegistry());
         if ($registry === null) {
             throw new Exception('No registry found!');
         }
