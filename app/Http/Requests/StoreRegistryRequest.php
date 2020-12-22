@@ -24,9 +24,9 @@ class StoreRegistryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:registries,name|sometimes',
-            'description' => 'required|sometimes',
-            'valid_for' => 'required||sometimes',
+            'name' => 'required|unique:registries,name',
+            'description' => 'required',
+            'valid_for' => 'required|int',
         ];
     }
 }
