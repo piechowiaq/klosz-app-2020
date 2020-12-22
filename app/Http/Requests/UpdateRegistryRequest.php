@@ -33,9 +33,9 @@ class UpdateRegistryRequest extends FormRequest
         }
 
         return [
-            'name' => ['required','sometimes', Rule::unique('registries', 'name')->ignore($this->route('registry')->getId())],
-            'description' => 'required|sometimes',
-            'valid_for' => 'required||sometimes',
+            'name' => ['required', Rule::unique('registries', 'name')->ignore($this->route('registry')->getId())],
+            'description' => 'required',
+            'valid_for' => 'required|int',
         ];
     }
 }

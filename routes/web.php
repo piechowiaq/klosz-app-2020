@@ -25,7 +25,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(static functio
     Route::get('/', 'AdminController@index')->name('home');
 
     Route::resource('users', 'UserController');
-    Route::resource('roles', 'RoleController');
     Route::resource('companies', 'CompanyController');
     Route::resource('departments', 'DepartmentController');
     Route::resource('positions', 'PositionController');
