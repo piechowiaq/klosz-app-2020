@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
+use function route;
+
 class Training extends Model
 {
     private const ID_COLUMN          = 'id';
@@ -189,12 +191,7 @@ class Training extends Model
 
     public function path(): string
     {
-        return '/admin/trainings/' . $this->getId();
-    }
-
-    public function userPath(Company $company): string
-    {
-        return '/' . $company->getId() . '/trainings/' . $this->getId();
+        return route('admin.trainings.show', ['training' => $this]);
     }
 
     /**
@@ -204,10 +201,6 @@ class Training extends Model
     {
         return $this->getEmployees()->where('company_id', $company->getId());
     }
-
-
-
-
 
     /**
      * @return Builder[]|Collection|Relation[]

@@ -18,8 +18,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
-use function assert;
 use function redirect;
+use function route;
 use function view;
 
 class TrainingController extends Controller
@@ -50,13 +50,14 @@ class TrainingController extends Controller
 
         $training = new Training();
 
-        $positions = Position::all();
+        $positions = Position::getAll();
 
         return view('admin.trainings.create', ['training' => $training, 'positions' => $positions]);
     }
 
     /**
      * @return  RedirectResponse|Redirector
+     *
      * @throws Exception
      */
     public function store(StoreTrainingRequest $request)
@@ -153,6 +154,6 @@ class TrainingController extends Controller
 
         $training->delete();
 
-        return redirect('admin/trainings');
+        return redirect(route('admin.trainings.index'));
     }
 }

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
+use function route;
+
 class Certificate extends Model
 {
     private const ID_COLUMN               = 'id';
@@ -158,7 +160,7 @@ class Certificate extends Model
 
     public function userPath(Company $company, Training $training): string
     {
-        return '/' . $company->getId() . '/trainings/' . $training->getId() . '/certificates/' . $this->getId();
+        return route('user.certificates.show', ['company' => $company, 'training' => $training, 'certificate' => $this]);
     }
 
     public function calculateExpiryDate(DateTime $trainingDate, Training $training): DateTime
