@@ -11,7 +11,6 @@ use App\Training;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View as IlluminateView;
 
-use function dd;
 use function view;
 
 class TrainingController extends Controller
@@ -38,8 +37,6 @@ class TrainingController extends Controller
     {
         $trainingEmployees = $training->getEmployeesByCompany($company);
 
-
-
-        return view('user.trainings.show', ['training' => $training, 'company' => $company, 'trainingEmployees' => $trainingEmployees]);
+        return view('user.trainings.show', ['company' => $company, 'training' => $training, 'trainingEmployees' => $trainingEmployees]);
     }
 }
