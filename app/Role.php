@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
+use function route;
+
 class Role extends Model
 {
     private const ID_COLUMN          = 'id';
@@ -70,10 +72,19 @@ class Role extends Model
         $this->attributes[self::UPDATED_AT_COLUMN] = $dateTime;
     }
 
+    /**
+     * @return Collection|self[]
+     */
+    public static function getAll(): Collection
+    {
+        return self::all();
+    }
+
     public function users(): Relation
     {
         return $this->belongsToMany(User::class);
     }
+
     /**
      * @return Collection|User[]
      */
@@ -92,6 +103,6 @@ class Role extends Model
 
     public function path(): string
     {
-        return '/admin/roles/' . $this->getID();
+        return route('admin.roles.show', ['role' => $this]);
     }
 }

@@ -141,9 +141,7 @@ class CompanyController extends Controller
         $company->save();
 
         $registryIds = $request->get('registry_ids');
-
-        $registries = collect();
-
+        $registries  = new Collection();
         if (is_array($registryIds)) {
             $registries = $registryRepository->getManyByIds($registryIds);
         }
@@ -152,9 +150,9 @@ class CompanyController extends Controller
 
         $departmentIds = $request->get('department_ids');
 
-        $departments = collect();
-        $positions   = collect();
-        $trainings   = collect();
+        $departments = new Collection();
+        $positions   = new Collection();
+        $trainings   = new Collection();
 
         if (is_array($departmentIds)) {
             $departments = $departmentRepository->getManyByIds($departmentIds);

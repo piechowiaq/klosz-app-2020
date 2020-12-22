@@ -35,10 +35,10 @@ class UpdateTrainingRequest extends FormRequest
         }
 
         return [
-            'name' => ['required','sometimes', Rule::unique('trainings', 'name')->ignore($this->route('training')->getId())],
-            'description' => 'required|sometimes',
-            'valid_for' => 'required|sometimes',
-            'position_id' => 'exists:positions,id|required|sometimes',
+            'name' => ['required', Rule::unique('trainings', 'name')->ignore($this->route('training')->getId())],
+            'description' => 'required',
+            'valid_for' => 'required',
+            'position_id' => 'exists:positions,id|required',
         ];
     }
 }
