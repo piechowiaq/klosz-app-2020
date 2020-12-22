@@ -48,11 +48,9 @@ class TrainingController extends Controller
     {
         $this->authorize('update');
 
-        $training = new Training();
-
         $positions = Position::getAll();
 
-        return view('admin.trainings.create', ['training' => $training, 'positions' => $positions]);
+        return view('admin.trainings.create', ['positions' => $positions]);
     }
 
     /**
