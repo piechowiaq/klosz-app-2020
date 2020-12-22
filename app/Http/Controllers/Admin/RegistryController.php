@@ -43,9 +43,7 @@ class RegistryController extends Controller
     {
         $this->authorize('update');
 
-        $registry = new Registry();
-
-        return view('admin.registries.create', ['registry' => $registry]);
+        return view('admin.registries.create');
     }
 
     /**
