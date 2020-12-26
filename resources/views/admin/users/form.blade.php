@@ -25,7 +25,7 @@
     <label for="role_id" class="block mt-2 py-2">Role:</label>
     <select name="role_id[]" id="role_id" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('role_id') ? 'is-invalid' : '' }}" multiple="multiple" >
         @foreach ($roles as $role)
-            <option value="{{$role->getID()}}" {{(isset($user) && in_array($role->getID(), $user->getRoles()->pluck('id')->toArray() ) ? 'selected': '') || in_array($role->getID(), old('role_id') ?: []) ? 'selected': '' }} >{{$role->getName()}}</option>
+            <option value="{{$role->getId()}}" {{(isset($user) && in_array($role->getId(), $user->getRoles()->pluck('id')->toArray() ) ? 'selected': '') || in_array($role->getID(), old('role_id') ?: []) ? 'selected': '' }} >{{$role->getName()}}</option>
      @endforeach
     </select>
 </div>
@@ -33,7 +33,9 @@
     <label for="company_id" class="block mt-2 py-2">Company:</label>
     <select name="company_id[]" id="company_id" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('company_id') ? 'is-invalid' : '' }}" multiple="multiple" >
         @foreach ($companies as $company)
-            <option value="{{$company->getId()}}"{{(isset($user) && in_array($company->getName(), $user->getCompanies()->pluck('id')->toArray() ) ? 'selected': '') || in_array($company->getId(), old('$company_id') ?: []) ? 'selected': ''}}>{{$company->getName()}}</option>
+
+
+            <option value="{{$company->getId()}}" {{(isset($user) && in_array($company->getId(), $user->getCompanies()->pluck('id')->toArray() ) ? 'selected': '') || in_array($company->getId(), old('$company_id') ?: []) ? 'selected': ''}}>{{$company->getName()}}</option>
         @endforeach
     </select>
 </div>
