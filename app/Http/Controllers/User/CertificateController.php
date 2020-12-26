@@ -23,6 +23,7 @@ use Illuminate\View\View as IlluminateView;
 use function date;
 use function is_array;
 use function redirect;
+use function route;
 use function view;
 
 class CertificateController extends Controller
@@ -165,7 +166,7 @@ class CertificateController extends Controller
     {
         $certificate->delete();
 
-        return redirect('/' . $company->getId() . '/trainings/' . $training->getId() . '/certificates');
+        return redirect(route('user.certificate.index', ['company' => $company, 'training' => $training]));
     }
 
     private function generateFileName(DateTime $trainingDate, Training $training, Company $company, UploadedFile $uploadedFile): string

@@ -25,9 +25,9 @@ class TrainingController extends Controller
      */
     public function index(Company $company, Certificate $certificate)
     {
-        $companyTrainings =  $company->trainings();
+        $companyTrainings =  $company->getTrainings();
 
-        return view('user.trainings.index', ['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate, 'companyId' => $company]);
+        return view('user.trainings.index', ['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate]);
     }
 
     /**
