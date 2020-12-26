@@ -48,13 +48,11 @@ class CertificateController extends Controller
     {
         $this->authorize('update', $certificate);
 
-        $certificate = new Certificate();
-
         $companyTrainings =  $company->getTrainings();
 
         $companyEmployees =  $company->getEmployees();
 
-        return view('user.certificates.create', ['companyTrainings' => $companyTrainings, 'certificate' => $certificate, 'company' => $company, 'companyEmployees' => $companyEmployees]);
+        return view('user.certificates.create', ['companyTrainings' => $companyTrainings, 'company' => $company, 'companyEmployees' => $companyEmployees]);
     }
 
     /**

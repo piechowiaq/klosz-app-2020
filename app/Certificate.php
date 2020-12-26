@@ -58,7 +58,7 @@ class Certificate extends Model
 
     public function getTrainingDate(): DateTime
     {
-        return $this->attributes[self::TRAINING_DATE_COLUMN];
+        return new DateTime($this->attributes[self::TRAINING_DATE_COLUMN]);
     }
 
     public function setTrainingDate(DateTime $dateTime): void
@@ -68,7 +68,7 @@ class Certificate extends Model
 
     public function getExpiryDate(): DateTime
     {
-        return $this->attributes[self::EXPIRY_DATE_COLUMN];
+        return new DateTime($this->attributes[self::EXPIRY_DATE_COLUMN]);
     }
 
     public function setExpiryDate(DateTime $dateTime): void
@@ -81,12 +81,9 @@ class Certificate extends Model
         return $this->belongsTo(Training::class);
     }
 
-    /**
-     * @return Collection|Training[]
-     */
-    public function getTraining(): Collection
+    public function getTraining(): Training
     {
-        return $this->training()->get();
+        return $this->training()->get()->first();
     }
 
     public function setTraining(Training $training): void

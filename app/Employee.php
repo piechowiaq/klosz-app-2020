@@ -24,7 +24,7 @@ class Employee extends Model
     /** @var array|string[] */
     protected $guarded = [];
 
-    public function getID(): string
+    public function getId(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];
     }
@@ -193,12 +193,12 @@ class Employee extends Model
 
     public function path(): string
     {
-        return '/admin/employees/' . $this->getID();
+        return '/admin/employees/' . $this->getId();
     }
 
     public function userPath(Company $company): string
     {
-        return '/' . $company->getId() . '/employees/' . $this->getID();
+        return '/' . $company->getId() . '/employees/' . $this->getId();
     }
 
     public function getTrainingsCountAttribute(): int
@@ -221,7 +221,7 @@ class Employee extends Model
     {
         return self::where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
             $q->where('expiry_date', '>', Carbon::now())
-                ->where('training_id', $training->getID());
+                ->where('training_id', $training->getId());
         })->get();
     }
 
