@@ -24,7 +24,7 @@ class Training extends Model
     /** @var array|string[] */
     protected $guarded = [];
 
-    public function getID(): string
+    public function getId(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];
     }
@@ -209,7 +209,7 @@ class Training extends Model
     {
         return $this->employees()->where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
             $q->where('expiry_date', '>', new DateTime('now'))
-                ->where('training_id', $training->getID());
+                ->where('training_id', $training->getId());
         })->get();
     }
 
