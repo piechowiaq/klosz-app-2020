@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View as IlluminateView;
 
 use function assert;
-use function collect;
+use function redirect;
 use function round;
+use function route;
 use function view;
 
 class HomeController extends Controller
@@ -39,13 +40,11 @@ class HomeController extends Controller
         if ($user->getCompanies()->count() === 1) {
             $company = $user->getCompanies()->first();
 
-            $companyId = $company->id;
-
-            return Redirect::action('User\HomeController@index', $companyId);
+            return view('user.dashboard', ['company' => $company]);
         }
 
         if ($user->isSuperAdmin()) {
-            return Redirect::action('Admin\AdminController@index');
+            return view('admin.home');
         }
 
         return view('user.home', ['user' => $user]);
@@ -56,10 +55,10 @@ class HomeController extends Controller
      */
     public function index(Company $company)
     {
-        $collection = collect([]);
+        $companyValidTrainings = new Collection();
 
         foreach ($company->getTrainings() as $training) {
-            $collection->push(
+            $companyValidTrainings->push(
                 $training->getEmployees()->where('company_id', $company->getId())->count() === 0
                     ? 0
                     : round(
@@ -70,22 +69,22 @@ class HomeController extends Controller
             );
         }
 
-        $average = round($collection->avg());
+        $trainingChartValue = round($companyValidTrainings->avg());
 
-        $collection = new Collection();
+        $companyValidReports = new Collection();
 
         foreach ($company->getReports() as $report) {
             if ($report->getExpiryDate() <= new DateTime('now')) {
                 continue;
             }
 
-                $collection->push($report);
+            $companyValidReports->push($report);
         }
 
-        $validRegistries = $collection->unique('registry_id')->count();
+        $validRegistries = $companyValidReports->unique('registry_id')->count();
 
         $registryChartValue = $company->getRegistries()->count() === 0 ? 0 : round($validRegistries / $company->getRegistries()->count() * 100);
 
-        return view('user.dashboard', ['company' => $company, 'companyTrainings' => $company->getTrainings(), 'average' => $average, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
+        return view('user.dashboard', ['company' => $company, 'companyTrainings' => $company->getTrainings(), 'trainingChartValue' => $trainingChartValue, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
     }
 }
