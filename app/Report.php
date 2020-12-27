@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
+use function route;
+
 class Report extends Model
 {
     private const ID_COLUMN                 = 'id';
@@ -24,7 +26,7 @@ class Report extends Model
     /** @var array|string[] */
     protected $guarded = [];
 
-    public function getID(): string
+    public function getId(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];
     }
@@ -56,9 +58,8 @@ class Report extends Model
 
     public function getReportDate(): DateTime
     {
-        return $this->attributes[self::REPORT_DATE_COLUMN];
+        return new DateTime($this->attributes[self::REPORT_DATE_COLUMN]);
     }
-
 
     public function setReportDate(DateTime $dateTime): void
     {
@@ -107,7 +108,7 @@ class Report extends Model
 
     public function setRegistry(Registry $registry): void
     {
-        $this->attributes[self::REGISTRY_ID_COLUMN] = $registry->getID();
+        $this->attributes[self::REGISTRY_ID_COLUMN] = $registry->getId();
     }
 
     public function company(): Relation
@@ -130,7 +131,7 @@ class Report extends Model
 
     public function userPath(Company $company): string
     {
-        return '/' . $company->getId() . '/reports/' . $this->getID();
+        return route('user.reports.show', ['company' => $company, 'report' => $this]);
     }
 
     public function calculateExpiryDate(DateTime $reportDate, Registry $registry): DateTime
