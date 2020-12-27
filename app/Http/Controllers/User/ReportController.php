@@ -23,6 +23,7 @@ use Illuminate\View\View as IlluminateView;
 use function date;
 use function is_array;
 use function redirect;
+use function route;
 use function view;
 
 class ReportController extends Controller
@@ -83,7 +84,7 @@ class ReportController extends Controller
         $report->setRegistry($registry);
         $report->save();
 
-        return redirect($company->getId() . '/registries');
+        return redirect(route('user.registries.index', ['company'=>$company]));
     }
 
     /**
@@ -154,14 +155,14 @@ class ReportController extends Controller
      */
     public function destroy(RegistryRepositoryInterface $registryRepository, Company $company, Report $report)
     {
-        $registry = $registryRepository->getById((string) $report->getRegistry());
+        $registry = $registryRepository->getById((string) $report->getRegistry()->getId());
         if ($registry === null) {
             throw new Exception('No registry found!');
         }
 
         $report->delete();
 
-        return redirect($company->getId() . '/registries/' . $registry->getID());
+        return redirect(route('user.registries.show', ['company' => $company, 'registry' => $registry]));
     }
 
     private function generateFileName(DateTime $reportDate, Registry $registry, Company $company, UploadedFile $uploadedFile): string

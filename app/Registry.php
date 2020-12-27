@@ -21,7 +21,7 @@ class Registry extends Model
     /** @var array|string[] */
     protected $guarded = [];
 
-    public function getID(): string
+    public function getId(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];
     }
@@ -91,7 +91,7 @@ class Registry extends Model
 
     public function userPath(Company $company): string
     {
-        return '/' . $company->getId() . '/registries/' . $this->getID();
+        return '/' . $company->getId() . '/registries/' . $this->getId();
     }
 
     public function reports(): Relation
