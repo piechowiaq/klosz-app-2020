@@ -22,7 +22,7 @@ class Position extends Model
     /** @var array|string[] */
     protected $guarded = [];
 
-    public function getID(): string
+    public function getId(): string
     {
         return (string) $this->attributes[self::ID_COLUMN];
     }
