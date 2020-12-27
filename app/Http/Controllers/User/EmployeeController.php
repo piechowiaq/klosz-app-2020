@@ -17,6 +17,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
 use function redirect;
+use function route;
 use function view;
 
 class EmployeeController extends Controller
@@ -77,7 +78,7 @@ class EmployeeController extends Controller
         $employee->setDepartments($departments);
         $employee->setTrainings($trainings);
 
-        return redirect($company->getId() . '/employees/' . $employee->getID());
+        return redirect(route('user.employees.show', ['company' => $company, 'employee' => $employee]));
     }
 
     /**
@@ -111,7 +112,7 @@ class EmployeeController extends Controller
 
         $employee->setName($request->get('name'));
         $employee->setSurname($request->get('surname'));
-        $employee->setNumber($request->get('number'));
+        $employee->setNumber((int) $request->get('number'));
         $employee->setCompany($company);
         $employee->save();
 
@@ -138,6 +139,6 @@ class EmployeeController extends Controller
     {
         $employee->delete();
 
-        return redirect($company->getId() . '/employees');
+        return redirect(route('user.employees.index', ['company' => $company]));
     }
 }
