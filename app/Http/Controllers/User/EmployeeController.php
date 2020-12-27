@@ -44,9 +44,7 @@ class EmployeeController extends Controller
     {
         $this->authorize('update', $employee);
 
-        $employee = new Employee();
-
-        return view('user.employees.create', ['positions' => $company->getPositions(), 'employee' => $employee, 'company' => $company]);
+        return view('user.employees.create', ['positions' => $company->getPositions(), 'company' => $company]);
     }
 
     /**
