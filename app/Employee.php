@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Employee extends Model
 {
-
     private const ID_COLUMN         = 'id';
     private const NAME_COLUMN       = 'name';
     private const SURNAME_COLUMN    = 'surname';
@@ -204,32 +202,5 @@ class Employee extends Model
     public function getTrainingsCountAttribute(): int
     {
         return $this->trainings()->count();
-    }
-
-    /**
-     * @return Collection|Employee[]
-     */
-    public function getEmployeesByCompany(Company $company)
-    {
-        return self::whereIn('company_id', $company->getId())->get();
-    }
-
-    /**
-     * @return Collection|Employee[]
-     */
-    public static function getCertifiedByTrainingAndCompany(Training $training, Company $company)
-    {
-        return self::where('company_id', $company->getId())->whereHas('certificates', static function ($q) use ($training): void {
-            $q->where('expiry_date', '>', Carbon::now())
-                ->where('training_id', $training->getId());
-        })->get();
-    }
-
-    /**
-     * @return array|string[]
-     */
-    public function toSearchableArray(): array
-    {
-        return $this->toArray() + ['path' => $this->userpath($this['company_id'])];
     }
 }
