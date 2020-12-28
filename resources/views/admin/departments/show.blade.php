@@ -1,12 +1,11 @@
 @extends('layouts.app')
-
 @section('content')
-
     @include('admin.nav')
-    @php/**
-    * @var Illuminate\Database\Eloquent\Collection | App\Department[] $departments
-    * @var App\Department $department
-    */
+    @php
+        /**
+        * @var Illuminate\Database\Eloquent\Collection | App\Department[] $departments
+        * @var App\Department $department
+        */
     @endphp
     <div class="md:w-5/6">
         <div class="block mt-2 py-2">
