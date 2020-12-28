@@ -23,13 +23,13 @@
 </div>
 
 <div>
-    <label for="position_id" class="block mt-2 py-2">Funkcja:</label>
-    <select name="position_id[]" id="position_id"
-            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('position_id') ? 'is-invalid' : '' }}"
+    <label for="position_ids" class="block mt-2 py-2">Funkcja:</label>
+    <select name="position_ids[]" id="position_ids"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('position_ids') ? 'is-invalid' : '' }}"
             multiple="multiple">
         @foreach ($positions as $position)
             <option
-                value="{{$position->getId()}}" {{(isset($employee) && in_array($position->getId(), $employee->getPositions()->pluck('id')->toArray() ) ? 'selected': '' )|| in_array($position->getId(), old('position_id')?:[])?'selected':''}} >{{$position->getName()}}</option>
+                value="{{$position->getId()}}" {{(isset($employee) && in_array($position->getId(), $employee->getPositions()->pluck('id')->toArray() ) ? 'selected': '' )|| in_array($position->getId(), old('position_ids')?:[])?'selected':''}} >{{$position->getName()}}</option>
 
         @endforeach
     </select>

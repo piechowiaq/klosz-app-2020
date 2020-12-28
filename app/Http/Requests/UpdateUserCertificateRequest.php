@@ -27,7 +27,8 @@ class UpdateUserCertificateRequest extends FormRequest
             'training_id' => 'exists:trainings,id|required',
             'file' => 'required|sometimes|max:10000|mimes:doc,docx,pdf,jpeg,jpg',
             'training_date' => 'before:tomorrow|required',
-            'employee_id' => 'exists:employees,id|required|sometimes',
+            'employee_ids' => 'required|array',
+            'employee_ids.+' => 'exists:employees,id',
         ];
     }
 }
