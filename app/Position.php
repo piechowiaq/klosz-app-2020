@@ -151,6 +151,5 @@ class Position extends Model
     public function path(): string
     {
         return route('admin.positions.show', ['position' => $this]);
-//        return '/admin/positions/' . $this->getId();
     }
 }

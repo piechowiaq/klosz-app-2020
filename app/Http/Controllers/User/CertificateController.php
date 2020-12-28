@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateUserCertificateRequest;
 use App\Training;
 use DateTime;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
@@ -43,6 +44,8 @@ class CertificateController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function create(Company $company, Certificate $certificate)
     {
@@ -107,13 +110,15 @@ class CertificateController extends Controller
         return view('user.certificates.show', ['certificate' => $certificate, 'company' => $company, 'training' => $training]);
     }
 
-    public function download(Company $company, Certificate $certificate): string
+    public function download(Certificate $certificate): string
     {
         return Storage::url('certificates/' . $certificate->getName());
     }
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function edit(Company $company, Training $training, Certificate $certificate)
     {
@@ -159,6 +164,8 @@ class CertificateController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function destroy(Company $company, Training $training, Certificate $certificate)
     {

@@ -12,13 +12,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View as IlluminateView;
 
 use function assert;
-use function redirect;
 use function round;
-use function route;
 use function view;
 
 class HomeController extends Controller

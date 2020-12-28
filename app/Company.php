@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection as SupportCollection;
 
+use function route;
+
 class Company extends Model
 {
     private const ID_COLUMN         = 'id';
@@ -70,7 +72,7 @@ class Company extends Model
 
     public function path(): string
     {
-        return '/admin/companies/' . $this->getId();
+        return route('admin.companies.show', ['company' => $this]);
     }
 
     public function users(): Relation

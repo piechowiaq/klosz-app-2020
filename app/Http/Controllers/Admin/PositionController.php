@@ -11,6 +11,7 @@ use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -30,6 +31,8 @@ class PositionController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -42,6 +45,8 @@ class PositionController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function create()
     {
@@ -81,6 +86,8 @@ class PositionController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function show(Position $position)
     {
@@ -91,6 +98,8 @@ class PositionController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function edit(Position $position)
     {
@@ -103,6 +112,9 @@ class PositionController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function update(DepartmentRepositoryInterface $departmentRepository, UpdatePositionRequest $request, Position $position)
     {
@@ -130,6 +142,9 @@ class PositionController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Position $position)
     {

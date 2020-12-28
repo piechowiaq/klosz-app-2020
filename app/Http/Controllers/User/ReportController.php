@@ -13,6 +13,7 @@ use App\Registry;
 use App\Report;
 use DateTime;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
@@ -35,6 +36,8 @@ class ReportController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function create(Company $company, Report $report)
     {
@@ -58,7 +61,7 @@ class ReportController extends Controller
         }
 
         $reportDate       = new DateTime($request->get('report_date'));
-        $reportExpiryDate = $report->calculateExpiryDate($reportDate, $registry);
+        $reportExpiryDate = $report->calculateExpiryDate(new DateTime($request->get('report_date')), $registry);
 
         $uploadedFile = $request->file('file');
         if ($uploadedFile === null || is_array($uploadedFile)) {
@@ -93,7 +96,7 @@ class ReportController extends Controller
         return view('user.reports.show', ['report' => $report, 'company' => $company]);
     }
 
-    public function download(Company $company, Report $report): string
+    public function download(Report $report): string
     {
         return Storage::url('reports/' . $report->getName());
     }
@@ -118,12 +121,8 @@ class ReportController extends Controller
             throw new Exception('No registry found!');
         }
 
-        $reportDate = new DateTime($request->get('report_date'));
-        $report->setReportDate($reportDate);
-
-        $reportExpiryDate = $report->calculateExpiryDate($reportDate, $registry);
-
-        $report->setExpiryDate($reportExpiryDate);
+        $reportDate       = new DateTime($request->get('report_date'));
+        $reportExpiryDate = $report->calculateExpiryDate(new DateTime($request->get('report_date')), $registry);
 
         $uploadedFile = $request->file('file');
         if ($uploadedFile === null || is_array($uploadedFile)) {
@@ -139,8 +138,9 @@ class ReportController extends Controller
             throw new Exception('File not saved.');
         }
 
+        $report->setExpiryDate($reportExpiryDate);
         $report->setPath($reportPath);
-
+        $report->setReportDate($reportDate);
         $report->setCompany($company);
         $report->setRegistry($registry);
         $report->save();
@@ -150,6 +150,8 @@ class ReportController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function destroy(RegistryRepositoryInterface $registryRepository, Company $company, Report $report)
     {

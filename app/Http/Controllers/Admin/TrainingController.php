@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -31,6 +32,8 @@ class TrainingController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -43,6 +46,8 @@ class TrainingController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function create()
     {
@@ -56,6 +61,7 @@ class TrainingController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      *
+     * @throws AuthorizationException
      * @throws Exception
      */
     public function store(StoreTrainingRequest $request)
@@ -95,6 +101,8 @@ class TrainingController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function show(Training $training)
     {
@@ -105,6 +113,8 @@ class TrainingController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function edit(Training $training)
     {
@@ -117,6 +127,8 @@ class TrainingController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
      */
     public function update(UpdateTrainingRequest $request, Training $training)
     {
@@ -145,6 +157,9 @@ class TrainingController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Training $training)
     {

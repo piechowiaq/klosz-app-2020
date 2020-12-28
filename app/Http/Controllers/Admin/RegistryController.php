@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegistryRequest;
 use App\Http\Requests\UpdateRegistryRequest;
 use App\Registry;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -26,6 +28,8 @@ class RegistryController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -38,6 +42,8 @@ class RegistryController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function create()
     {
@@ -48,6 +54,8 @@ class RegistryController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
      */
     public function store(StoreRegistryRequest $request)
     {
@@ -64,6 +72,8 @@ class RegistryController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function show(Registry $registry)
     {
@@ -74,6 +84,8 @@ class RegistryController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function edit(Registry $registry)
     {
@@ -84,6 +96,8 @@ class RegistryController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
      */
     public function update(UpdateRegistryRequest $request, Registry $registry)
     {
@@ -99,6 +113,9 @@ class RegistryController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Registry $registry)
     {

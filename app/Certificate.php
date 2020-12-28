@@ -152,7 +152,7 @@ class Certificate extends Model
 
     public function path(): string
     {
-        return '/admin/certificates/' . $this->getId();
+        return route('admin.certificates.show', ['certificate' => $this]);
     }
 
     public function userPath(Company $company, Training $training): string
@@ -165,13 +165,5 @@ class Certificate extends Model
         $monthsToAdd = $training->getValidFor();
 
         return $trainingDate->modify('+' . $monthsToAdd . ' month');
-    }
-
-    /**
-     * @return Collection|Employee[]
-     */
-    public function getEmployeesByCompany(Company $company)
-    {
-        return $this->getEmployees()->where('company_id', $company->getId());
     }
 }

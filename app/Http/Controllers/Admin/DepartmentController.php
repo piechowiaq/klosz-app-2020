@@ -8,6 +8,8 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -26,6 +28,8 @@ class DepartmentController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -38,6 +42,8 @@ class DepartmentController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function create()
     {
@@ -48,6 +54,8 @@ class DepartmentController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
      */
     public function store(StoreDepartmentRequest $request)
     {
@@ -62,6 +70,8 @@ class DepartmentController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function show(Department $department)
     {
@@ -72,6 +82,8 @@ class DepartmentController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function edit(Department $department)
     {
@@ -82,6 +94,8 @@ class DepartmentController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
      */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
@@ -95,6 +109,9 @@ class DepartmentController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Department $department)
     {
