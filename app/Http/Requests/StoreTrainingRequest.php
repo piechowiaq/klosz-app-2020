@@ -27,7 +27,9 @@ class StoreTrainingRequest extends FormRequest
             'name' => 'required|unique:trainings,name',
             'description' => 'required',
             'valid_for' => 'required',
-            'position_id' => 'exists:positions,id|required',
+            'position_ids' => 'required|array',
+            'position_ids.+' => 'exists:positions,id',
+
         ];
     }
 }

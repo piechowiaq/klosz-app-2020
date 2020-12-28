@@ -71,7 +71,7 @@ class UserController extends Controller
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $rolesIds = $request->get('role_id');
+        $rolesIds = $request->get('role_ids');
         $roles    = new Collection();
         if (is_array($rolesIds)) {
             $roles = $roleRepository->getManyByIds($rolesIds);
@@ -79,7 +79,7 @@ class UserController extends Controller
 
         $user->setRoles($roles);
 
-        $companyIds = $request->get('company_id');
+        $companyIds = $request->get('company_ids');
         $companies  = new Collection();
         if (is_array($companyIds)) {
             $companies = $companyRepository->getManyByIds($companyIds);
@@ -128,7 +128,7 @@ class UserController extends Controller
         $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $rolesIds = $request->get('role_id');
+        $rolesIds = $request->get('role_ids');
 
         $roles = new Collection();
         if (is_array($rolesIds)) {
@@ -137,7 +137,7 @@ class UserController extends Controller
 
         $user->setRoles($roles);
 
-        $companyIds = $request->get('company_id');
+        $companyIds = $request->get('company_ids');
         $companies  = new Collection();
         if (is_array($companyIds)) {
             $companies = $companyRepository->getManyByIds($companyIds);

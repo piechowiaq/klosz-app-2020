@@ -68,7 +68,7 @@ class TrainingController extends Controller
         $training->setValidFor((int) $request->get('valid_for'));
         $training->save();
 
-        $training->setPositions($request->get('position_id'));
+        $training->setPositions($request->get('position_ids'));
 
         $departments = new Collection();
         $employees   = new Collection();
@@ -127,7 +127,7 @@ class TrainingController extends Controller
         $training->setValidFor((int) $request->get('valid_for'));
         $training->save();
 
-        $training->setPositions($request->get('position_id'));
+        $training->setPositions($request->get('position_ids'));
 
         $departments = new Collection();
         $employees   = new Collection();
