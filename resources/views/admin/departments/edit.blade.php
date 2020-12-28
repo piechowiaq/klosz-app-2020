@@ -2,6 +2,11 @@
 @section('title', 'Departments')
 @section('content')
     @include('admin.nav')
+    @php
+      /**
+      * @var App\Department $department
+      /*
+    @endphp
     <div class="md:w-5/6">
         <div>
             <div><h1>Departments</h1></div>
