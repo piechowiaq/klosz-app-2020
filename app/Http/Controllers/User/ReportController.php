@@ -40,9 +40,7 @@ class ReportController extends Controller
     {
         $this->authorize('update', $report);
 
-        $report = new Report();
-
-        return view('user.reports.create', ['report' => $report, 'company' => $company]);
+        return view('user.reports.create', ['company' => $company]);
     }
 
     /**
@@ -84,7 +82,7 @@ class ReportController extends Controller
         $report->setRegistry($registry);
         $report->save();
 
-        return redirect(route('user.registries.index', ['company'=>$company]));
+             return redirect(route('user.registries.index', ['company' => $company]));
     }
 
     /**
