@@ -28,8 +28,10 @@ class StoreUserRequest extends FormRequest
             'surname' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required',
-            'role_id' => 'exists:roles,id|required',
-            'company_id' => 'exists:companies,id|required',
+            'role_ids' => 'required|array',
+            'role_ids.+' => 'exists:roles,id',
+            'company_ids' => 'required|array',
+            'company_ids.+' => 'exists:companies,id',
 
         ];
     }

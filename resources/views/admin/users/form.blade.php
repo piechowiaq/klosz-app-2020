@@ -26,20 +26,20 @@
            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('password') ? 'is-invalid' : '' }}">
 </div>
 <div>
-    <label for="role_id" class="block mt-2 py-2">Role:</label>
-    <select name="role_id[]" id="role_id"
-            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('role_id') ? 'is-invalid' : '' }}"
+    <label for="role_ids" class="block mt-2 py-2">Role:</label>
+    <select name="role_ids[]" id="role_ids"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('role_ids') ? 'is-invalid' : '' }}"
             multiple="multiple">
         @foreach ($roles as $role)
             <option
-                value="{{$role->getId()}}" {{(isset($user) && in_array($role->getId(), $user->getRoles()->pluck('id')->toArray() ) ? 'selected': '') || in_array($role->getID(), old('role_id') ?: []) ? 'selected': '' }} >{{$role->getName()}}</option>
+                value="{{$role->getId()}}" {{(isset($user) && in_array($role->getId(), $user->getRoles()->pluck('id')->toArray() ) ? 'selected': '') || in_array($role->getID(), old('role_ids') ?: []) ? 'selected': '' }} >{{$role->getName()}}</option>
         @endforeach
     </select>
 </div>
 <div>
-    <label for="company_id" class="block mt-2 py-2">Company:</label>
-    <select name="company_id[]" id="company_id"
-            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('company_id') ? 'is-invalid' : '' }}"
+    <label for="company_ids" class="block mt-2 py-2">Company:</label>
+    <select name="company_ids[]" id="company_ids"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('company_ids') ? 'is-invalid' : '' }}"
             multiple="multiple">
         @foreach ($companies as $company)
             <option
