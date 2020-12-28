@@ -36,7 +36,8 @@ class StoreUserEmployeeRequest extends FormRequest
             'surname' => 'sometimes|required',
             'number' => 'int|required|unique:employees,number,NULL,id,company_id,' . $this->route('company')->getId(),
             'company_id' => 'exists:companies,id|required|sometimes',
-            'position_id' => 'exists:positions,id|required|sometimes',
+            'position_ids' => 'required|array',
+            'position_ids.+' => 'exists:positions,id',
         ];
     }
 }

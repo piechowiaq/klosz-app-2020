@@ -8,7 +8,7 @@
 <div>
     <label for="training_id" class="block mt-2 py-2">Szkolenie:</label>
     <select name="training_id" id="training_id"
-            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('employee_id') ? 'is-invalid' : '' }}">
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('employee_ids') ? 'is-invalid' : '' }}">
         @foreach ($companyTrainings as $training)
             @if( old('training_id') === $training->getId())
                 <option
@@ -26,13 +26,13 @@
            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline  {{ $errors->has('training_date') ? 'is-invalid' : '' }}">
 </div>
 <div>
-    <label for="employee_id" class="block mt-2 py-2">Stanowisko Pracownika:</label>
-    <select name="employee_id[]" id="employee_id"
-            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('employee_id') ? 'is-invalid' : '' }}"
+    <label for="employee_ids" class="block mt-2 py-2">Stanowisko Pracownika:</label>
+    <select name="employee_ids[]" id="employee_ids"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 focus:shadow-outline {{ $errors->has('employee_ids') ? 'is-invalid' : '' }}"
             multiple="multiple">
         @foreach ($companyEmployees as $employee)
             <option value="{{$employee->getId()}}"
-                {{ (isset($certificate) && in_array($employee->getId(), $certificate->getEmployees()->pluck('id')->toArray() ) ? 'selected': '' ) || in_array($employee->getId(), old('employee_id') ?: []) ? 'selected': '' }}
+                {{ (isset($certificate) && in_array($employee->getId(), $certificate->getEmployees()->pluck('id')->toArray() ) ? 'selected': '' ) || in_array($employee->getId(), old('employee_ids') ?: []) ? 'selected': '' }}
             >{{$employee->full_name}}</option>
         @endforeach
     </select>

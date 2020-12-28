@@ -63,7 +63,7 @@ class EmployeeController extends Controller
         $employee->setCompany($company);
         $employee->save();
 
-        $employee->setPositions($request->get('position_id'));
+        $employee->setPositions($request->get('position_ids'));
 
         $departments = new Collection();
         $trainings   = new Collection();
@@ -114,7 +114,7 @@ class EmployeeController extends Controller
         $employee->setCompany($company);
         $employee->save();
 
-        $employee->setPositions($request->get('position_id'));
+        $employee->setPositions($request->get('position_ids'));
 
         $departments = new Collection();
         $trainings   = new Collection();

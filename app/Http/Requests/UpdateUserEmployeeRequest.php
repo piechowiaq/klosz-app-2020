@@ -41,7 +41,8 @@ class UpdateUserEmployeeRequest extends FormRequest
             'name' => 'sometimes|required',
             'surname' => 'sometimes|required',
             'number' => 'unique:employees,number,' . $this->route('employee')->getNumber() . ',number,company_id,' . $this->route('company')->getId(),
-            'position_id' => 'exists:positions,id|required|sometimes',
+            'position_ids' => 'required|array',
+            'position_ids.+' => 'exists:positions,id',
         ];
     }
 }
