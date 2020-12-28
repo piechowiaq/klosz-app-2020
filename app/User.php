@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use function bcrypt;
+use function route;
 
 class User extends Authenticatable
 {
@@ -161,7 +162,7 @@ class User extends Authenticatable
 
     public function path(): string
     {
-        return '/admin/users/' . $this->getID();
+        return route('admin.users.show', ['user' => $this]);
     }
 
     public function isSuperAdmin(): bool

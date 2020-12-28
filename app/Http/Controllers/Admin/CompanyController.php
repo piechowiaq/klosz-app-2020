@@ -15,13 +15,13 @@ use App\Position;
 use App\Registry;
 use App\Training;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View as IlluminateView;
 
-use function collect;
 use function is_array;
 use function redirect;
 use function route;
@@ -36,6 +36,8 @@ class CompanyController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -48,6 +50,8 @@ class CompanyController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function create()
     {
@@ -107,6 +111,8 @@ class CompanyController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function show(Company $company)
     {
@@ -117,6 +123,8 @@ class CompanyController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function edit(Company $company)
     {
@@ -181,6 +189,9 @@ class CompanyController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Company $company)
     {

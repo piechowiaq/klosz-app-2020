@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
+use function route;
+
 class Employee extends Model
 {
     private const ID_COLUMN         = 'id';
@@ -191,12 +193,12 @@ class Employee extends Model
 
     public function path(): string
     {
-        return '/admin/employees/' . $this->getId();
+        return route('admin.employees.show', ['employee' => $this]);
     }
 
     public function userPath(Company $company): string
     {
-        return '/' . $company->getId() . '/employees/' . $this->getId();
+        return route('user.employees.show', ['company' => $company, 'employee' => $this]);
     }
 
     public function getTrainingsCountAttribute(): int

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -29,6 +30,8 @@ class EmployeeController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function index(Company $company, Employee $employee)
     {
@@ -39,6 +42,8 @@ class EmployeeController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function create(Company $company, Employee $employee)
     {
@@ -81,6 +86,8 @@ class EmployeeController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function show(Company $company, Employee $employee)
     {
@@ -91,6 +98,8 @@ class EmployeeController extends Controller
 
     /**
      * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
      */
     public function edit(Company $company, Employee $employee)
     {
@@ -103,6 +112,8 @@ class EmployeeController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
      */
     public function update(UpdateUserEmployeeRequest $request, Company $company, Employee $employee)
     {
@@ -132,6 +143,8 @@ class EmployeeController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
      */
     public function destroy(Company $company, Employee $employee)
     {

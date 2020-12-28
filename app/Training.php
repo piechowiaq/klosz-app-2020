@@ -212,12 +212,4 @@ class Training extends Model
                 ->where('training_id', $training->getId());
         })->get();
     }
-
-//    public function scopeCertified($query, $training)
-//    {
-//        return $query->employees()->whereHas('certificates', function($q) use ($training) {
-//            $q->where('expiry_date', '>', \Carbon\Carbon::now())
-//                ->where('training_id', $training->id);
-//        })->get();
-//    }
 }
