@@ -61,7 +61,7 @@ class ReportController extends Controller
         }
 
         $reportDate       = new DateTime($request->get('report_date'));
-        $reportExpiryDate = $report->calculateExpiryDate(new DateTime($request->get('report_date')), $registry);
+        $reportExpiryDate = $report->calculateExpiryDate($reportDate, $registry);
 
         $uploadedFile = $request->file('file');
         if ($uploadedFile === null || is_array($uploadedFile)) {

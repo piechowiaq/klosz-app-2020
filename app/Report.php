@@ -136,8 +136,9 @@ class Report extends Model
 
     public function calculateExpiryDate(DateTime $reportDate, Registry $registry): DateTime
     {
+        $reported    = clone $reportDate;
         $monthsToAdd = $registry->getValidFor();
 
-        return $reportDate->modify('+' . $monthsToAdd . ' month');
+        return $reported->modify('+' . $monthsToAdd . ' month');
     }
 }
