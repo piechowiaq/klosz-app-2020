@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection as SupportCollection;
 
 use function route;
 
@@ -185,17 +186,12 @@ class Company extends Model
     }
 
     /**
-     * @return Collection|Report[]
+     * @return SupportCollection|Report[]
      */
-    public function getReports(): Collection
+    public function getReports(): SupportCollection
     {
-        /**
-         * @var Collection|Report[] $reports
-         */
-        $reports = $this->getRegistries()->flatMap(static function (Registry $registry) {
-            return $registry->getReports();
+        return $this->registries()->get()->flatMap(static function (Registry $registry) {
+            return $registry->reports()->get();
         });
-
-        return $reports;
     }
 }
