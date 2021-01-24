@@ -11,7 +11,6 @@ use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -24,20 +23,11 @@ use function view;
 
 class PositionController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function index()
     {
-        $this->authorize('update');
-
         $positions = Position::getAll();
 
         return view('admin.positions.index', ['positions' => $positions]);
@@ -45,13 +35,9 @@ class PositionController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function create()
     {
-        $this->authorize('update');
-
         $departments = Department::getAll();
 
         return view('admin.positions.create', ['departments' => $departments]);
@@ -59,12 +45,9 @@ class PositionController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
-     *
-     * @throws Exception
      */
     public function store(DepartmentRepositoryInterface $departmentRepository, StorePositionRequest $request)
     {
-        $this->authorize('update');
         $department = $departmentRepository->getById($request->get('department_id'));
         if ($department === null) {
             throw new Exception('No department found!');
@@ -86,25 +69,17 @@ class PositionController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function show(Position $position)
     {
-        $this->authorize('update');
-
         return view('admin.positions.show', ['position' => $position]);
     }
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function edit(Position $position)
     {
-        $this->authorize('update');
-
         $departments = Department::getAll();
 
         return view('admin.positions.edit', ['position' => $position, 'departments' => $departments]);
@@ -113,13 +88,10 @@ class PositionController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      *
-     * @throws AuthorizationException
      * @throws Exception
      */
     public function update(DepartmentRepositoryInterface $departmentRepository, UpdatePositionRequest $request, Position $position)
     {
-        $this->authorize('update');
-
         $department = $departmentRepository->getById($request->get('department_id'));
         if ($department === null) {
             throw new Exception('No department found!');
@@ -143,13 +115,10 @@ class PositionController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      *
-     * @throws AuthorizationException
      * @throws Exception
      */
     public function destroy(Position $position)
     {
-        $this->authorize('update');
-
         $position->delete();
 
         return redirect(route('admin.positions.index'));

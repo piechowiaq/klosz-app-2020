@@ -13,7 +13,6 @@ use App\Http\Requests\UpdateUserCertificateRequest;
 use App\Training;
 use DateTime;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
@@ -39,13 +38,9 @@ class CertificateController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function create(Company $company, Certificate $certificate)
     {
-        $this->authorize('update', $certificate);
-
         $companyTrainings =  $company->getTrainings();
 
         $companyEmployees =  $company->getEmployees();
@@ -60,8 +55,6 @@ class CertificateController extends Controller
      */
     public function store(TrainingRepositoryInterface $trainingRepository, StoreUserCertificateRequest $request, Company $company, Certificate $certificate)
     {
-        $this->authorize('update', $certificate);
-
         $training = $trainingRepository->getById($request->get('training_id'));
         if ($training === null) {
             throw new Exception('No training found!');
@@ -112,13 +105,9 @@ class CertificateController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function edit(Company $company, Training $training, Certificate $certificate)
     {
-        $this->authorize('update', $certificate);
-
         return view('user.certificates.edit', ['company' => $company, 'companyTrainings' => $company->getTrainings(), 'companyEmployees' => $company->getEmployees(), 'training' => $training, 'certificate' => $certificate]);
     }
 
@@ -129,8 +118,6 @@ class CertificateController extends Controller
      */
     public function update(UpdateUserCertificateRequest $request, Company $company, Training $training, Certificate $certificate)
     {
-        $this->authorize('update', $certificate);
-
         $trainingDate = new DateTime($request->get('training_date'));
         $expiryDate   = $certificate->calculateExpiryDate(new DateTime($request->get('training_date')), $training);
         $uploadedFile = $request->file('file');

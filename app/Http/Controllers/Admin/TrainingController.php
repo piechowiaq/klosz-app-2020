@@ -12,7 +12,6 @@ use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -25,20 +24,11 @@ use function view;
 
 class TrainingController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function index()
     {
-        $this->authorize('update');
-
         $trainings = Training::all();
 
         return view('admin.trainings.index', ['trainings' => $trainings]);
@@ -46,13 +36,9 @@ class TrainingController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function create()
     {
-        $this->authorize('update');
-
         $positions = Position::getAll();
 
         return view('admin.trainings.create', ['positions' => $positions]);
@@ -61,13 +47,10 @@ class TrainingController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      *
-     * @throws AuthorizationException
      * @throws Exception
      */
     public function store(StoreTrainingRequest $request)
     {
-        $this->authorize('update');
-
         $training = new Training();
         $training->setName($request->get('name'));
         $training->setDescription($request->get('description'));
@@ -101,25 +84,17 @@ class TrainingController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function show(Training $training)
     {
-        $this->authorize('update');
-
         return view('admin.trainings.show', ['training' => $training]);
     }
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function edit(Training $training)
     {
-        $this->authorize('update');
-
         $positions = Position::all();
 
         return view('admin.trainings.edit', ['training' => $training, 'positions' => $positions]);
@@ -127,13 +102,9 @@ class TrainingController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
-     *
-     * @throws AuthorizationException
      */
     public function update(UpdateTrainingRequest $request, Training $training)
     {
-        $this->authorize('update');
-
         $training->setName($request->get('name'));
         $training->setDescription($request->get('description'));
         $training->setValidFor((int) $request->get('valid_for'));
@@ -158,13 +129,10 @@ class TrainingController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      *
-     * @throws AuthorizationException
      * @throws Exception
      */
     public function destroy(Training $training)
     {
-        $this->authorize('update');
-
         $training->delete();
 
         return redirect(route('admin.trainings.index'));

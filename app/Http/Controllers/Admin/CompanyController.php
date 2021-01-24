@@ -15,7 +15,6 @@ use App\Position;
 use App\Registry;
 use App\Training;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -29,20 +28,11 @@ use function view;
 
 class CompanyController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
-     */
+       /**
+        * @return Factory|IlluminateView
+        */
     public function index()
     {
-        $this->authorize('update');
-
         $companies = Company::getAll();
 
         return view('admin.companies.index', ['companies' => $companies]);
@@ -50,13 +40,9 @@ class CompanyController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function create()
     {
-        $this->authorize('update');
-
         $departments = Department::getAll();
         $registries  = Registry::getAll();
 
@@ -70,8 +56,6 @@ class CompanyController extends Controller
      */
     public function store(RegistryRepositoryInterface $registryRepository, DepartmentRepositoryInterface $departmentRepository, StoreCompanyRequest $request)
     {
-        $this->authorize('update');
-
         $company = new Company();
         $company->setName($request->get('name'));
         $company->save();
@@ -111,25 +95,17 @@ class CompanyController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function show(Company $company)
     {
-        $this->authorize('update');
-
         return view('admin.companies.show', ['company' => $company]);
     }
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function edit(Company $company)
     {
-        $this->authorize('update');
-
         $departments = Department::getAll();
         $registries  = Registry::getAll();
 
@@ -143,8 +119,6 @@ class CompanyController extends Controller
      */
     public function update(RegistryRepositoryInterface $registryRepository, DepartmentRepositoryInterface $departmentRepository, UpdateCompanyRequest $request, Company $company)
     {
-        $this->authorize('update');
-
         $company->setName($request->get('name'));
         $company->save();
 
@@ -188,15 +162,12 @@ class CompanyController extends Controller
     }
 
     /**
-     * @return  RedirectResponse|Redirector
+     * @return RedirectResponse|Redirector
      *
-     * @throws AuthorizationException
      * @throws Exception
      */
     public function destroy(Company $company)
     {
-        $this->authorize('update');
-
         $company->delete();
 
         return redirect(route('admin.companies.index'));

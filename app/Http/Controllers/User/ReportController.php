@@ -13,7 +13,6 @@ use App\Registry;
 use App\Report;
 use DateTime;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
@@ -29,20 +28,11 @@ use function view;
 
 class ReportController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'auth.user']);
-    }
-
-    /**
+     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function create(Company $company, Report $report)
     {
-        $this->authorize('update', $report);
-
         return view('user.reports.create', ['company' => $company]);
     }
 
@@ -53,8 +43,6 @@ class ReportController extends Controller
      */
     public function store(RegistryRepositoryInterface $registryRepository, StoreUserReportRequest $request, Company $company, Report $report)
     {
-        $this->authorize('update', $report);
-
         $registry = $registryRepository->getById($request->get('registry_id'));
         if ($registry === null) {
             throw new Exception('No registry found!');

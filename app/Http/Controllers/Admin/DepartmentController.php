@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -21,20 +20,11 @@ use function view;
 
 class DepartmentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
-     */
+{     */
     public function index()
     {
-        $this->authorize('update');
-
         $departments = Department::getAll();
 
         return view('admin.departments.index', ['departments' => $departments]);
@@ -42,25 +32,17 @@ class DepartmentController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function create()
     {
-        $this->authorize('update');
-
         return view('admin.departments.create');
     }
 
     /**
      * @return  RedirectResponse|Redirector
-     *
-     * @throws AuthorizationException
      */
     public function store(StoreDepartmentRequest $request)
     {
-        $this->authorize('update');
-
         $department = new Department();
         $department->setName($request->get('name'));
         $department->save();
@@ -70,37 +52,25 @@ class DepartmentController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function show(Department $department)
     {
-        $this->authorize('update');
-
         return view('admin.departments.show', ['department' => $department]);
     }
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function edit(Department $department)
     {
-        $this->authorize('update');
-
         return view('admin.departments.edit', ['department' => $department]);
     }
 
     /**
      * @return  RedirectResponse|Redirector
-     *
-     * @throws AuthorizationException
      */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        $this->authorize('update');
-
         $department->setName($request->get('name'));
         $department->save();
 
@@ -110,13 +80,10 @@ class DepartmentController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      *
-     * @throws AuthorizationException
      * @throws Exception
      */
     public function destroy(Department $department)
     {
-        $this->authorize('update');
-
         $department->delete();
 
         return redirect(route('admin.departments.index'));

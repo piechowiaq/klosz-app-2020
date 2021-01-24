@@ -14,7 +14,6 @@ use App\Role;
 use App\User;
 use DateTime;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -27,17 +26,11 @@ use function view;
 
 class UserController extends Controller
 {
-
-
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function index()
     {
-
-
         $users = User::getAll();
 
         return view('admin.users.index', ['users' => $users]);
@@ -45,13 +38,9 @@ class UserController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function create()
     {
-
-
         $roles = Role::getAll();
 
         $companies = Company::getAll();
@@ -61,13 +50,9 @@ class UserController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
-     *
-     * @throws AuthorizationException
      */
     public function store(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, StoreUserRequest $request)
     {
-
-
         $user = new User();
         $user->setName($request->get('name'));
         $user->setSurname($request->get('surname'));
@@ -97,25 +82,17 @@ class UserController extends Controller
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function show(User $user)
     {
-
-
         return view('admin.users.show', ['user' => $user]);
     }
 
     /**
      * @return Factory|IlluminateView
-     *
-     * @throws AuthorizationException
      */
     public function edit(User $user)
     {
-
-
         $companies = Company::getAll();
 
         $roles = Role::getAll();
@@ -125,12 +102,9 @@ class UserController extends Controller
 
     /**
      * @return  RedirectResponse|Redirector
-     *
-     * @throws AuthorizationException
      */
     public function update(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, UpdateUserRequest $request, User $user)
     {
-
         $user->setName($request->get('name'));
         $user->setSurname($request->get('surname'));
         $user->setEmail($request->get('email'));
@@ -161,13 +135,10 @@ class UserController extends Controller
     /**
      * @return  RedirectResponse|Redirector
      *
-     * @throws AuthorizationException
      * @throws Exception
      */
     public function destroy(User $user)
     {
-        $this->authorize('update');
-
         $user->delete();
 
         return redirect('/admin/users');
