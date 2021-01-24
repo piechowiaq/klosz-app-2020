@@ -1,13 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
+use App\Core\Department\Domain\Repository\DepartmentRepositoryInterface;
 use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
-use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
+
+use function redirect;
+use function route;
+use function view;
 
 class PositionController extends Controller
 {
@@ -15,100 +28,123 @@ class PositionController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
-     * Display a listing of the resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function index()
     {
-//        $this->authorize('update');
+        $this->authorize('update');
 
-        $positions = Position::all();
+        $positions = Position::getAll();
 
-        return view('admin.positions.index', compact('positions'));
+        return view('admin.positions.index', ['positions' => $positions]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function create()
     {
         $this->authorize('update');
 
-        $position = new Position();
+        $departments = Department::getAll();
 
-        $departments = Department::all();
-//
-        return view('admin.positions.create', compact( 'position', 'departments' ));
+        return view('admin.positions.create', ['departments' => $departments]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @throws Exception
      */
-    public function store(StorePositionRequest $request)
+    public function store(DepartmentRepositoryInterface $departmentRepository, StorePositionRequest $request)
     {
         $this->authorize('update');
+        $department = $departmentRepository->getById($request->get('department_id'));
+        if ($department === null) {
+            throw new Exception('No department found!');
+        }
 
-        $position = Position::create($request->validated());
+        $position = new Position();
+        $position->setName($request->get('name'));
+        $position->setDepartment($department);
+        $position->save();
 
-        return redirect($position->path());
+        $companies = $department->getCompanies()->filter(static function ($company) {
+            return $company;
+        });
+
+        $position->setCompanies($companies);
+
+        return redirect(route('admin.positions.show', ['position' => $position]));
     }
 
     /**
-     * Display the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function show(Position $position)
     {
         $this->authorize('update');
 
-        return view('admin.positions.show', compact('position'));
+        return view('admin.positions.show', ['position' => $position]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function edit(Position $position)
     {
         $this->authorize('update');
 
-        $departments = Department::all();
+        $departments = Department::getAll();
 
-        return view('admin.positions.edit', compact('position', 'departments'));
+        return view('admin.positions.edit', ['position' => $position, 'departments' => $departments]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
+     * @throws Exception
      */
-    public function update(UpdatePositionRequest $request, Position $position)
+    public function update(DepartmentRepositoryInterface $departmentRepository, UpdatePositionRequest $request, Position $position)
     {
         $this->authorize('update');
 
-        $position->update($request->validated());
+        $department = $departmentRepository->getById($request->get('department_id'));
+        if ($department === null) {
+            throw new Exception('No department found!');
+        }
 
-        return redirect($position->path());
+        $position->setName($request->get('name'));
+        $position->setDepartment($department);
+        $position->save();
+
+        $companies = new Collection();
+
+        foreach ($department->getCompanies() as $company) {
+            $companies->add($company);
+        }
+
+        $position->setCompanies($companies);
+
+        return redirect(route('admin.positions.show', ['position' => $position]));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \App\Position  $position
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Position $position)
     {
@@ -116,7 +152,6 @@ class PositionController extends Controller
 
         $position->delete();
 
-        return redirect('admin/positions');
+        return redirect(route('admin.positions.index'));
     }
-
 }

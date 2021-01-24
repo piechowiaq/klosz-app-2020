@@ -1,59 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
 use App\Certificate;
 use App\Company;
-use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Training;
-use Carbon\Carbon;
-use function GuzzleHttp\Promise\all;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View as IlluminateView;
+
+use function view;
 
 class TrainingController extends Controller
 {
-    public function __construct()
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index(Company $company, Certificate $certificate)
     {
-        $this->middleware(['auth', 'auth.user']);
+        $companyTrainings =  $company->getTrainings();
+
+        return view('user.trainings.index', ['companyTrainings' => $companyTrainings, 'company' => $company, 'certificate' => $certificate]);
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param $companyId
-     * @param $trainingId
-     * @param Certificate $certificate
-     * @return \Illuminate\Http\Response
+     * @return Factory|IlluminateView
      */
-    public function index($companyId, Certificate $certificate)
+    public function show(Company $company, Training $training)
     {
-        $company = Company::findOrfail($companyId);
+        $trainingEmployees = $training->getEmployeesByCompany($company);
 
-
-        $companyTrainings =  $company->trainings()->paginate(15);
-
-
-        return view('user.trainings.index', compact('companyTrainings', 'company', 'certificate', 'companyId'));
+        return view('user.trainings.show', ['company' => $company, 'training' => $training, 'trainingEmployees' => $trainingEmployees]);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
-     */
-    public function show($companyId, Training $training)
-    {
-        $company = Company::findOrFail($companyId);
-
-        $trainingEmployees = $training->employees->filter(function ($employee) use ($companyId) {
-
-         return  $employee->company_id == $companyId;
-
-        });
-
-        return view('user.trainings.show', compact('training', 'company', 'trainingEmployees'));
-    }
-
-
 }

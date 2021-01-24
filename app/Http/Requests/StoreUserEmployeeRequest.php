@@ -1,37 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
+use App\Company;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
+
+use function assert;
 
 class StoreUserEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * @return array|string[]
      *
-     * @param $companyId
-     * @return array
+     * @throws Exception
      */
-    public function rules()
+    public function rules(): array
     {
-        $companyId = $this->route('company');
+        if (! assert($this->route('company') instanceof Company)) {
+            throw new Exception('Received company is not the required object');
+        }
 
         return [
-            'name'=> 'sometimes|required',
-            'surname'=> 'sometimes|required',
-            'number'=> 'required|unique:employees,number,NULL,id,company_id,'.$companyId,
-            'company_id'=> 'exists:companies,id|required|sometimes',
-            'position_id'=> 'exists:positions,id|required|sometimes',
+            'name' => 'sometimes|required',
+            'surname' => 'sometimes|required',
+            'number' => 'int|required|unique:employees,number,NULL,id,company_id,' . $this->route('company')->getId(),
+            'company_id' => 'exists:companies,id|required|sometimes',
+            'position_ids' => 'required|array',
+            'position_ids.+' => 'exists:positions,id',
         ];
     }
 }

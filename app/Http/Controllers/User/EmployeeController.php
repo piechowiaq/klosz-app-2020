@@ -1,164 +1,138 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
-use App\Certificate;
 use App\Company;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserEmployeeRequest;
 use App\Http\Requests\UpdateUserEmployeeRequest;
-use App\Position;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
+use function redirect;
+use function route;
+use function view;
 
 class EmployeeController extends Controller
 {
-
-       public function __construct()
+    /**
+     * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
+     */
+    public function index(Company $company, Employee $employee)
     {
-        $this->middleware(['auth', 'auth.user']);
+        return view('user.employees.index', ['employees' => $company->getEmployees(), 'company' => $company, 'employee' => $employee]);
     }
 
     /**
-     * Display a listing of the resource.
+     * @return Factory|IlluminateView
      *
-     * @param $companyId
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
-    public function index($companyId, Employee $employee)
+    public function create(Company $company, Employee $employee)
     {
-        $this->authorize('view', $employee);
-
-        $company = Company::findOrFail($companyId);
-
-        $employees = Employee::where('company_id', $companyId)->get();
-
-        return view('user.employees.index', compact('employees', 'company', 'employee'));
-
+        return view('user.employees.create', ['positions' => $company->getPositions(), 'company' => $company]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @return  RedirectResponse|Redirector
      *
-     * @param $id
-     * @return \Illuminate\Http\Response
+     * @throws Exception
      */
-    public function create($companyId, Employee $employee)
+    public function store(StoreUserEmployeeRequest $request, Company $company, Employee $employee)
     {
-        $this->authorize('update', $employee);
-
         $employee = new Employee();
-
-        $company = Company::findOrFail($companyId);
-
-        $positions = $company->positions;
-
-        return view('user.employees.create', compact( 'positions', 'employee', 'company'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param StoreUserEmployeeRequest $request
-     * @param $companyId
-     * @param Employee $employee
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function store(StoreUserEmployeeRequest $request, $companyId, Employee $employee)
-    {
-        $this->authorize('update', $employee);
-
-        $employee = new Employee(request(['name', 'surname', 'number', 'company_id']));
-
-        $employee->company_id = $companyId;
-
+        $employee->setName($request->get('name'));
+        $employee->setSurname($request->get('surname'));
+        $employee->setNumber((int) $request->get('number'));
+        $employee->setCompany($company);
         $employee->save();
 
-        $employee->positions()->sync(request('position_id'));
+        $employee->setPositions($request->get('position_ids'));
 
-        foreach ($employee->positions as $position) {
-            $employee->departments()->sync($position->department_id,false);
-            foreach ($position->trainings as $training){
-                $employee->trainings()->sync($training, false);
-            }}
+        $departments = new Collection();
+        $trainings   = new Collection();
 
-        return redirect()->route('user.employees.index', [$companyId]);
+        foreach ($employee->getPositions() as $position) {
+            $departments->add($position->getDepartment());
+            $trainings =  $trainings->merge($position->getTrainings());
+        }
+
+        $employee->setDepartments($departments);
+        $employee->setTrainings($trainings);
+
+        return redirect(route('user.employees.show', ['company' => $company, 'employee' => $employee]));
     }
 
     /**
-     * Display the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param \App\Employee $employee
-     * @param $company
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
-    public function show($companyId, Employee $employee)
+    public function show(Company $company, Employee $employee)
     {
-
-        $company = Company::findOrFail($companyId);
-
-
-        return view('user.employees.show', compact('employee', 'company'));
+        return view('user.employees.show', ['employee' => $employee, 'company' => $company]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
-    public function edit($companyId, Employee $employee)
+    public function edit(Company $company, Employee $employee)
     {
+        $positions = $company->getPositions();
 
-        $this->authorize('update', $employee);
-
-        $positions = Position::all();
-
-        $company = Company::findOrFail($companyId);
-
-        return view ( 'user.employees.edit', compact('employee', 'company', 'positions'));
+        return view('user.employees.edit', ['employee' => $employee, 'company' => $company, 'positions' => $positions]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
-    public function update(UpdateUserEmployeeRequest $request, $companyId, Employee $employee)
+    public function update(UpdateUserEmployeeRequest $request, Company $company, Employee $employee)
     {
-        $this->authorize('update', $employee);
-
-        $employee->update(request(['name', 'surname', 'number']));
-
-        $employee->company_id = $companyId;
-
+        $employee->setName($request->get('name'));
+        $employee->setSurname($request->get('surname'));
+        $employee->setNumber((int) $request->get('number'));
+        $employee->setCompany($company);
         $employee->save();
 
-        $employee->positions()->sync(request('position_id'));
+        $employee->setPositions($request->get('position_ids'));
 
-        foreach ($employee->positions as $position) {
-            $employee->departments()->sync($position->department_id,false);
-            foreach ($position->trainings as $training){
-                $employee->trainings()->sync($training, false);
-            }}
+        $departments = new Collection();
+        $trainings   = new Collection();
 
-        return redirect($employee->userpath($companyId));
+        foreach ($employee->getPositions() as $position) {
+            $departments->add($position->getDepartment());
+            $trainings->add($position->getTrainings());
+        }
 
+        $employee->setDepartments($departments);
+        $employee->setTrainings($trainings);
+
+        return redirect($employee->userPath($company));
     }
 
-    public function destroy($companyId, Employee $employee)
+    /**
+     * @return  RedirectResponse|Redirector
+     *
+     * @throws Exception
+     */
+    public function destroy(Company $company, Employee $employee)
     {
         $employee->delete();
 
-        return redirect()->route('user.employees.index', [$companyId]);
-
+        return redirect(route('user.employees.index', ['company' => $company]));
     }
-
-
-
 }

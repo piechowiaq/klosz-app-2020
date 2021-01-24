@@ -1,0 +1,21 @@
+parameters:
+    level: 8
+    paths:
+        - app
+    ignoreErrors:
+        -
+            message: '#Call to an undefined static method [a-zA-Z0-9\\_]+::find\(\)#'
+            paths:
+                - app/Core/*/Infrastructure/Repository/*Eloquent*
+                - */Eloquent*Repository.php
+        -
+            message: '#Call to an undefined static method [a-zA-Z0-9\\_]+::whereIn\(\)#'
+            paths:
+                - app/Core/*/Infrastructure/Repository/*Eloquent*
+                - */Eloquent*Repository.php
+        -
+            message: '#Call to an undefined method [a-zA-Z0-9\\_]+::sync\(\)#'
+            path: app/*.php
+        -
+            message: '#Call to an undefined static method [a-zA-Z0-9\\_]+::where\(\)#'
+            path: app/*.php

@@ -1,25 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Certificate;
 use App\Employee;
-
-use App\Policies\EmployeePolicy;
 use App\Policies\CertificatePolicy;
+use App\Policies\EmployeePolicy;
 use App\Policies\ReportPolicy;
 use App\Policies\UserPolicy;
 use App\Report;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\User;
 use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
     /**
      * The policy mappings for the application.
      *
-     * @var array
+     * @var array|mixed[]|string[]
      */
     protected $policies = [
 
@@ -32,20 +33,9 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @param Gate $gate
-     * @return void
      */
-    public function boot(Gate $gate)
+    public function boot(Gate $gate): void
     {
         $this->registerPolicies();
-
-        $gate->before(function ($user) {
-
-            if ($user->isSuperAdmin()) {
-                return true;
-            }
-
-        });
     }
 }

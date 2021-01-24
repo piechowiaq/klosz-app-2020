@@ -1,13 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
+use App\Company;
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Position;
 use App\Training;
-use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
+
+use function redirect;
+use function route;
+use function view;
 
 class TrainingController extends Controller
 {
@@ -15,10 +29,11 @@ class TrainingController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
-     * Display a listing of the resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -26,68 +41,80 @@ class TrainingController extends Controller
 
         $trainings = Training::all();
 
-        return view('admin.trainings.index', compact('trainings'));
+        return view('admin.trainings.index', ['trainings' => $trainings]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function create()
     {
         $this->authorize('update');
 
-        $training = new Training();
+        $positions = Position::getAll();
 
-        $positions = Position::all();
-//
-        return view('admin.trainings.create', compact( 'training', 'positions' ));
+        return view('admin.trainings.create', ['positions' => $positions]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function store(StoreTrainingRequest $request)
     {
         $this->authorize('update');
 
-        $training = new Training(request(['name', 'description', 'valid_for']));
-
+        $training = new Training();
+        $training->setName($request->get('name'));
+        $training->setDescription($request->get('description'));
+        $training->setValidFor((int) $request->get('valid_for'));
         $training->save();
 
-        $training->positions()->sync(request('position_id'));
+        $training->setPositions($request->get('position_ids'));
 
-        foreach ($training->positions as $position) {
-            $training->departments()->sync($position->department_id,false);
-            foreach ($position->employees as $employee){
-                $training->employees()->sync($employee, false);
-            }}
+        $departments = new Collection();
+        $employees   = new Collection();
+
+        foreach ($training->getPositions() as $position) {
+            $departments->add($position->getDepartment());
+            $employees->add($position->getEmployees());
+        }
+
+        $training->setDepartments($departments);
+        $training->setEmployees($employees);
+
+        /**
+         * @var Collection|Company[]
+         */
+        $companies = $training->getDepartments()->flatMap(static function (Department $department) {
+            return $department->getCompanies();
+        });
+
+        $training->setCompanies($companies);
 
         return redirect($training->path());
     }
 
     /**
-     * Display the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function show(Training $training)
     {
         $this->authorize('update');
 
-        return view('admin.trainings.show', compact('training'));
+        return view('admin.trainings.show', ['training' => $training]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function edit(Training $training)
     {
@@ -95,40 +122,44 @@ class TrainingController extends Controller
 
         $positions = Position::all();
 
-        return view('admin.trainings.edit', compact('training', 'positions'));
+        return view('admin.trainings.edit', ['training' => $training, 'positions' => $positions]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function update(UpdateTrainingRequest $request, Training $training)
     {
         $this->authorize('update');
 
-        $training->update(request(['name', 'description', 'valid_for']));
-
+        $training->setName($request->get('name'));
+        $training->setDescription($request->get('description'));
+        $training->setValidFor((int) $request->get('valid_for'));
         $training->save();
 
-        $training->positions()->sync(request('position_id'));
+        $training->setPositions($request->get('position_ids'));
 
-        foreach ($training->positions as $position) {
-            $training->departments()->sync($position->department_id,false);
-            foreach ($position->employees as $employee){
-                $training->employees()->sync($employee, false);
-            }}
+        $departments = new Collection();
+        $employees   = new Collection();
+
+        foreach ($training->getPositions() as $position) {
+            $departments->add($position->getDepartment());
+            $employees->add($position->getEmployees());
+        }
+
+        $training->setDepartments($departments);
+        $training->setEmployees($employees);
 
         return redirect($training->path());
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Training $training)
     {
@@ -136,16 +167,6 @@ class TrainingController extends Controller
 
         $training->delete();
 
-        return redirect('admin/trainings');
-    }
-
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'name'=> 'sometimes|required',
-            'description' => 'required|min:3',
-            'valid_for'=> 'required',
-
-        ]);
+        return redirect(route('admin.trainings.index'));
     }
 }

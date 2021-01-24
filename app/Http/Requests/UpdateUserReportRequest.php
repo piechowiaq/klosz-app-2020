@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -8,10 +10,8 @@ class UpdateUserReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -19,14 +19,14 @@ class UpdateUserReportRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array|string[]
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'registry_id' => 'exists:registries,id|required|sometimes',
             'report_date' => 'before:tomorrow|required|sometimes',
-            'file' => 'required|sometimes|max:10000|mimes:doc,docx,pdf,jpeg,jpg'
+            'file' => 'required|max:10000|mimes:doc,docx,pdf,jpeg,jpg',
 
         ];
     }

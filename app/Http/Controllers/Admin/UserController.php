@@ -1,140 +1,168 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
+use App\Core\Company\Domain\Repository\CompanyRepositoryInterface;
+use App\Core\Role\Domain\Repository\RoleRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
+use DateTime;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
+
+use function is_array;
+use function redirect;
+use function view;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
+
+    /**
+     * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
+     */
     public function index()
     {
-        $this->authorize('update');
 
-        $users = User::all();
 
-        return view('admin.users.index', compact('users'));
+        $users = User::getAll();
+
+        return view('admin.users.index', ['users' => $users]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function create()
     {
-        $this->authorize('update');
 
-        $roles = Role::all();
 
-        $companies = Company::all();
+        $roles = Role::getAll();
 
-        $user = new User();
+        $companies = Company::getAll();
 
-        return view('admin.users.create', compact( 'roles', 'companies','user' ));
+        return view('admin.users.create', ['roles' => $roles, 'companies' => $companies]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
-    public function store(StoreUserRequest $request)
+    public function store(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, StoreUserRequest $request)
     {
-        $this->authorize('update');
 
-        $user = new User(request(['name', 'surname', 'email']));
 
-        $user->password = Hash::make($request['password']);
-
-        $user->email_verified_at = Carbon::now();
-
+        $user = new User();
+        $user->setName($request->get('name'));
+        $user->setSurname($request->get('surname'));
+        $user->setEmail($request->get('email'));
+        $user->setPassword($request->get('password'));
+        $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $user->roles()->attach(request('role_id'));
+        $rolesIds = $request->get('role_ids');
+        $roles    = new Collection();
+        if (is_array($rolesIds)) {
+            $roles = $roleRepository->getManyByIds($rolesIds);
+        }
 
-        $user->companies()->attach(request('company_id'));
+        $user->setRoles($roles);
+
+        $companyIds = $request->get('company_ids');
+        $companies  = new Collection();
+        if (is_array($companyIds)) {
+            $companies = $companyRepository->getManyByIds($companyIds);
+        }
+
+        $user->setCompanies($companies);
 
         return redirect($user->path());
     }
 
     /**
-     * Display the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function show(User $user)
     {
-        $this->authorize('update');
 
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show', ['user' => $user]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function edit(User $user)
     {
-        $this->authorize('update');
 
-        $companies = Company::all();
 
-        $roles = Role::all();
+        $companies = Company::getAll();
 
-        return view ( 'admin.users.edit', compact('user', 'companies', 'roles'));
+        $roles = Role::getAll();
+
+        return view('admin.users.edit', ['user' => $user, 'companies' => $companies, 'roles' => $roles]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, UpdateUserRequest $request, User $user)
     {
-        $this->authorize('update');
 
-        $user->update(request(['name', 'surname', 'email']));
-
-        $user->password = Hash::make($request['password']);
-
-        $user->email_verified_at = Carbon::now();
-
+        $user->setName($request->get('name'));
+        $user->setSurname($request->get('surname'));
+        $user->setEmail($request->get('email'));
+        $user->setPassword($request->get('password'));
+        $user->setEmailVerifiedAt(new DateTime());
         $user->save();
 
-        $user->roles()->sync(request('role_id'));
+        $rolesIds = $request->get('role_ids');
 
-        $user->companies()->sync(request('company_id'));
+        $roles = new Collection();
+        if (is_array($rolesIds)) {
+            $roles = $roleRepository->getManyByIds($rolesIds);
+        }
+
+        $user->setRoles($roles);
+
+        $companyIds = $request->get('company_ids');
+        $companies  = new Collection();
+        if (is_array($companyIds)) {
+            $companies = $companyRepository->getManyByIds($companyIds);
+        }
+
+        $user->setCompanies($companies);
 
         return redirect($user->path());
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(User $user)
     {
@@ -144,5 +172,4 @@ class UserController extends Controller
 
         return redirect('/admin/users');
     }
-
 }

@@ -1,9 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View as IlluminateView;
+
+use function view;
 
 class AdminController extends Controller
 {
@@ -12,9 +18,13 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
+     */
     public function index()
     {
-        $this->authorize('update');
 
         return view('admin.home');
     }

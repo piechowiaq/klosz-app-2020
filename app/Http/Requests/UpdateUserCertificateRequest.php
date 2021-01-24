@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -8,10 +10,8 @@ class UpdateUserCertificateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -19,15 +19,16 @@ class UpdateUserCertificateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array|string[]
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'training_id' => 'exists:trainings,id|required',
             'file' => 'required|sometimes|max:10000|mimes:doc,docx,pdf,jpeg,jpg',
             'training_date' => 'before:tomorrow|required',
-            'employee_id' => 'exists:employees,id|required|sometimes',
+            'employee_ids' => 'required|array',
+            'employee_ids.+' => 'exists:employees,id',
         ];
     }
 }

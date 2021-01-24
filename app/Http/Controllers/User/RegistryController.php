@@ -1,47 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
-use App\Certificate;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\Registry;
 use App\Report;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View as IlluminateView;
+
+use function view;
 
 class RegistryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'auth.user']);
-    }
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Factory|IlluminateView
      */
-    public function index($companyId, Report $report)
+    public function index(Company $company, Report $report)
     {
-        $company = Company::findOrfail($companyId);
-
-        $companyRegistries =  $company->registries;
-
-
-
-        return view('user.registries.index', compact('companyRegistries', 'company', 'report'));
+        return view('user.registries.index', ['companyRegistries' => $company->getRegistries(), 'company' => $company, 'report' => $report]);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
+     * @return Factory|IlluminateView
      */
-    public function show($companyId, Registry $registry, Report $report)
+    public function show(Company $company, Registry $registry, Report $report)
     {
-        $company = Company::findOrFail($companyId);
-
-        return view('user.registries.show', compact('registry', 'company', 'report'));
+        return view('user.registries.show', ['registry' => $registry, 'company' => $company, 'report' => $report]);
     }
-
 }

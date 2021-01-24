@@ -1,18 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
+use App\Company;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+
+use function assert;
 
 class UpdateCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -20,12 +24,22 @@ class UpdateCompanyRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array|mixed[]
+     *
+     * @throws Exception
      */
-    public function rules()
+    public function rules(): array
     {
+        if (! assert($this->route('company') instanceof Company)) {
+            throw new Exception('Received company is not the required object');
+        }
+
         return [
-            'name' => ['required','sometimes', Rule::unique('companies', 'name')->ignore($this->company)],
+            'name' => ['required', Rule::unique('companies', 'name')->ignore($this->route('company')->getId())],
+            'department_ids' => 'sometimes|array',
+            'department_ids.+' => 'exists:departments,id',
+            'registry_ids' => 'sometimes|array',
+            'registry_ids.+' => 'exists:registries,id',
         ];
     }
 }

@@ -7,9 +7,6 @@
             <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.users.index') }}">Users</a>
         </li>
         <li class="md:mr-6 mt-6">
-            <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.roles.index') }}">Roles</a>
-        </li>
-        <li class="md:mr-6 mt-6">
             <a class="text-indigo-500 hover:text-red-800" href="{{ route('admin.companies.index') }}">Companies</a>
         </li>
         <li class="md:mr-6 mt-6">

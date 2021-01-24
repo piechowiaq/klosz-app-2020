@@ -1,12 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegistryRequest;
 use App\Http\Requests\UpdateRegistryRequest;
 use App\Registry;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
 
+use function redirect;
+use function route;
+use function view;
 
 class RegistryController extends Controller
 {
@@ -16,101 +27,95 @@ class RegistryController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function index()
     {
         $this->authorize('update');
 
-        $registries = Registry::all();
+        $registries = Registry::getAll();
 
-        return view('admin.registries.index', compact('registries'));
+        return view('admin.registries.index', ['registries' => $registries]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function create()
     {
         $this->authorize('update');
 
-        $registry = new Registry();
-
-        return view('admin.registries.create', compact( 'registry' ));
+        return view('admin.registries.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function store(StoreRegistryRequest $request)
     {
         $this->authorize('update');
 
-        $registry = new Registry(request(['name', 'description', 'valid_for']));
-
+        $registry = new Registry();
+        $registry->setName($request->get('name'));
+        $registry->setDescription($request->get('description'));
+        $registry->setValidFor((int) $request->get('valid_for'));
         $registry->save();
 
-        return redirect($registry->path());
+        return redirect(route('admin.registries.show', ['registry' => $registry]));
     }
 
     /**
-     * Display the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param \App\Registry $registry
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function show(Registry $registry)
     {
         $this->authorize('update');
 
-        return view('admin.registries.show', compact('registry'));
+        return view('admin.registries.show', ['registry' => $registry]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function edit(Registry $registry)
     {
         $this->authorize('update');
 
-        return view('admin.registries.edit', compact('registry'));
+        return view('admin.registries.edit', ['registry' => $registry]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function update(UpdateRegistryRequest $request, Registry $registry)
     {
         $this->authorize('update');
 
-        $registry->update(request(['name', 'description', 'valid_for']));
-
+        $registry->setName($request->get('name'));
+        $registry->setDescription($request->get('description'));
+        $registry->setValidFor((int) $request->get('valid_for'));
         $registry->save();
 
-        return redirect($registry->path());
+        return redirect(route('admin.registries.show', ['registry' => $registry]));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \App\Registry  $registry
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Registry $registry)
     {
@@ -118,6 +123,6 @@ class RegistryController extends Controller
 
         $registry->delete();
 
-        return redirect('admin/registries');
+        return redirect(route('admin.registries.index'));
     }
 }

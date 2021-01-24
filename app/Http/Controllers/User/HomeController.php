@@ -1,100 +1,87 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
 use App\Company;
-use App\Employee;
-use App\Training;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
-use App\Charts\RegistryChart;
-use App\Charts\TrainingChart;
+use App\User;
+use DateTime;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View as IlluminateView;
+
+use function assert;
+use function round;
+use function view;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware(['auth']);
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse|Factory|IlluminateView
      */
     public function home()
     {
         $user = Auth::user();
 
+        assert($user instanceof User);
 
+        if ($user->getCompanies()->count() === 1) {
+            $company = $user->getCompanies()->first();
 
-        if($user->companies()->count() == 1){
-
-            $company = $user->companies()->first();
-
-            $companyId = $company->id;
-
-
-            return Redirect::action('User\HomeController@index', $companyId);
-
-        }
-        else if($user->isSuperAdmin()){
-
-            return Redirect::action('Admin\AdminController@index');
-
-        }
-        else {
-
-            return view('user.home', compact('user'));
-
+            return view('user.dashboard', ['company' => $company]);
         }
 
+        if ($user->isSuperAdmin()) {
+            return view('admin.home');
+        }
+
+        return view('user.home', ['user' => $user]);
     }
 
-    public function index($companyId)
+    /**
+     * @return Factory|IlluminateView
+     */
+    public function index(Company $company)
     {
-        $company = Company::findOrFail($companyId);
+        $companyValidTrainings = new Collection();
 
-        $companyTrainings =  $company->trainings;
-
-        $collection = collect([]);
-
-        foreach ($companyTrainings as $training) {
-
-            $collection->push( $training->employees->where('company_id', $companyId)->count() == 0 ?0: round($training->employees()->certified($training, $companyId)->count() / $training->employees->where('company_id', $companyId)->count() * 100));
+        foreach ($company->getTrainings() as $training) {
+            $companyValidTrainings->push(
+                $training->getEmployees()->where('company_id', $company->getId())->count() === 0
+                    ? 0
+                    : round(
+                        $training->getCertifiedEmployeesByCompany($company, $training)->count()
+                        / $training->getEmployees()->where('company_id', $company->getId())->count()
+                        * 100
+                    )
+            );
         }
 
-        $average = round ($collection->avg());
+        $trainingChartValue = round($companyValidTrainings->avg());
 
+        $companyValidReports = new Collection();
 
+        foreach ($company->getReports() as $report) {
+            if ($report->getExpiryDate() <= new DateTime('now')) {
+                continue;
+            }
 
-        $companyRegistries = $company->registries;
+            $companyValidReports->push($report);
+        }
 
-        $collection = collect();
+        $validRegistries = $companyValidReports->unique('registry_id')->count();
 
-        foreach($company->registries as $registry) {
-            foreach($registry->reports->where('company_id', $company->id) as $report) {
-                   if($report->expiry_date > now()){
-                $collection->push($report);
+        $registryChartValue = $company->getRegistries()->count() === 0 ? 0 : round($validRegistries / $company->getRegistries()->count() * 100);
 
-            }}}
-
-
-        $validRegistries = $collection->unique('registry_id')->count();
-
-        $registryChartValue= $companyRegistries->count() ==0 ?0: round($validRegistries / $companyRegistries->count()*100);
-
-
-        return view('user.dashboard', compact('company', 'companyTrainings' , 'average', 'companyRegistries', 'registryChartValue'));
+        return view('user.dashboard', ['company' => $company, 'companyTrainings' => $company->getTrainings(), 'trainingChartValue' => $trainingChartValue, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
     }
-
-
 }

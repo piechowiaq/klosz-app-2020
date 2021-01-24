@@ -1,10 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Department;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreDepartmentRequest;
+use App\Http\Requests\UpdateDepartmentRequest;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View as IlluminateView;
+
+use function redirect;
+use function route;
+use function view;
 
 class DepartmentController extends Controller
 {
@@ -12,94 +25,93 @@ class DepartmentController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
-     * Display a listing of the resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function index()
     {
         $this->authorize('update');
 
-        $departments = Department::all();
+        $departments = Department::getAll();
 
-        return view('admin.departments.index', compact('departments'));
+        return view('admin.departments.index', ['departments' => $departments]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @return Factory|IlluminateView
      *
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function create()
     {
         $this->authorize('update');
-//
-        $department = new Department();
-//
-        return view('admin.departments.create', compact( 'department' ));
+
+        return view('admin.departments.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(StoreDepartmentRequest $request)
     {
         $this->authorize('update');
 
-        $department = Department::create($this->validateRequest());
+        $department = new Department();
+        $department->setName($request->get('name'));
+        $department->save();
 
-        return redirect($department->path());
+        return redirect(route('admin.departments.show', ['department' => $department]));
     }
 
     /**
-     * Display the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\Department  $department
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function show(Department $department)
     {
         $this->authorize('update');
 
-        return view('admin.departments.show', compact('department'));
+        return view('admin.departments.show', ['department' => $department]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @return Factory|IlluminateView
      *
-     * @param  \App\Department  $department
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
     public function edit(Department $department)
     {
-        return view('admin.departments.edit', compact('department'));
+        $this->authorize('update');
+
+        return view('admin.departments.edit', ['department' => $department]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Department  $department
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
      */
-    public function update(Request $request, Department $department)
+    public function update(UpdateDepartmentRequest $request, Department $department)
     {
         $this->authorize('update');
 
-        $department->update($this->validateRequest());
+        $department->setName($request->get('name'));
+        $department->save();
 
-        return redirect($department->path());
+        return redirect(route('admin.departments.show', ['department' => $department]));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @return  RedirectResponse|Redirector
      *
-     * @param  \App\Department  $department
-     * @return \Illuminate\Http\Response
+     * @throws AuthorizationException
+     * @throws Exception
      */
     public function destroy(Department $department)
     {
@@ -107,14 +119,6 @@ class DepartmentController extends Controller
 
         $department->delete();
 
-        return redirect('admin/departments');
-    }
-
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'name'=> 'sometimes|required',
-
-        ]);
+        return redirect(route('admin.departments.index'));
     }
 }
