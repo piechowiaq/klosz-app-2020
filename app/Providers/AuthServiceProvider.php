@@ -37,9 +37,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(Gate $gate): void
     {
         $this->registerPolicies();
-
-        $gate->before(static function (User $user) {
-            return $user->isSuperAdmin();
-        });
     }
 }
