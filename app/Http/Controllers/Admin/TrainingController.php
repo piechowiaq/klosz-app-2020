@@ -13,10 +13,10 @@ use App\Position;
 use App\Training;
 use Exception;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View as IlluminateView;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function route;

@@ -14,11 +14,11 @@ use App\Report;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View as IlluminateView;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View as IlluminateView;
 
 use function date;
 use function is_array;
@@ -29,8 +29,8 @@ use function view;
 class ReportController extends Controller
 {
      /**
-     * @return Factory|IlluminateView
-     */
+      * @return Factory|IlluminateView
+      */
     public function create(Company $company, Report $report)
     {
         return view('user.reports.create', ['company' => $company]);

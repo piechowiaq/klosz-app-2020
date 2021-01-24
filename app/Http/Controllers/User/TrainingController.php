@@ -9,7 +9,7 @@ use App\Company;
 use App\Http\Controllers\Controller;
 use App\Training;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\View\View as IlluminateView;
+use Illuminate\Contracts\View\View as IlluminateView;
 
 use function view;
 

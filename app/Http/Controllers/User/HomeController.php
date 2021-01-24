@@ -9,10 +9,10 @@ use App\Http\Controllers\Controller;
 use App\User;
 use DateTime;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View as IlluminateView;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View as IlluminateView;
 
 use function assert;
 use function round;

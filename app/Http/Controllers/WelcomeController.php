@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\Factory;
-use Illuminate\View\View as IlluminateView;
+use Illuminate\Contracts\View\View as IlluminateView;
 
 use function view;
 

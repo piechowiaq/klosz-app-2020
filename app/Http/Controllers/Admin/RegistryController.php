@@ -10,9 +10,9 @@ use App\Http\Requests\UpdateRegistryRequest;
 use App\Registry;
 use Exception;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View as IlluminateView;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View as IlluminateView;
 
 use function redirect;
 use function route;
