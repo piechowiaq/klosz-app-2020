@@ -23,11 +23,6 @@ use function view;
 
 class EmployeeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'auth.user']);
-    }
-
     /**
      * @return Factory|IlluminateView
      *
@@ -35,8 +30,6 @@ class EmployeeController extends Controller
      */
     public function index(Company $company, Employee $employee)
     {
-        $this->authorize('view', $employee);
-
         return view('user.employees.index', ['employees' => $company->getEmployees(), 'company' => $company, 'employee' => $employee]);
     }
 
@@ -47,8 +40,6 @@ class EmployeeController extends Controller
      */
     public function create(Company $company, Employee $employee)
     {
-        $this->authorize('update', $employee);
-
         return view('user.employees.create', ['positions' => $company->getPositions(), 'company' => $company]);
     }
 
@@ -59,8 +50,6 @@ class EmployeeController extends Controller
      */
     public function store(StoreUserEmployeeRequest $request, Company $company, Employee $employee)
     {
-        $this->authorize('update', $employee);
-
         $employee = new Employee();
         $employee->setName($request->get('name'));
         $employee->setSurname($request->get('surname'));
@@ -91,8 +80,6 @@ class EmployeeController extends Controller
      */
     public function show(Company $company, Employee $employee)
     {
-        $this->authorize('update', $employee);
-
         return view('user.employees.show', ['employee' => $employee, 'company' => $company]);
     }
 
@@ -103,8 +90,6 @@ class EmployeeController extends Controller
      */
     public function edit(Company $company, Employee $employee)
     {
-        $this->authorize('update', $employee);
-
         $positions = $company->getPositions();
 
         return view('user.employees.edit', ['employee' => $employee, 'company' => $company, 'positions' => $positions]);
@@ -117,8 +102,6 @@ class EmployeeController extends Controller
      */
     public function update(UpdateUserEmployeeRequest $request, Company $company, Employee $employee)
     {
-        $this->authorize('update', $employee);
-
         $employee->setName($request->get('name'));
         $employee->setSurname($request->get('surname'));
         $employee->setNumber((int) $request->get('number'));

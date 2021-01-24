@@ -15,11 +15,6 @@ use function view;
 
 class RegistryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'auth.user']);
-    }
-
     /**
      * @return Factory|IlluminateView
      */
