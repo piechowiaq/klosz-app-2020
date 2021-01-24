@@ -27,10 +27,7 @@ use function view;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
     /**
      * @return Factory|IlluminateView
@@ -39,7 +36,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('update');
+
 
         $users = User::getAll();
 
@@ -53,7 +50,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('update');
+
 
         $roles = Role::getAll();
 
@@ -69,7 +66,7 @@ class UserController extends Controller
      */
     public function store(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, StoreUserRequest $request)
     {
-        $this->authorize('update');
+
 
         $user = new User();
         $user->setName($request->get('name'));
@@ -105,7 +102,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('update');
+
 
         return view('admin.users.show', ['user' => $user]);
     }
@@ -117,7 +114,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('update');
+
 
         $companies = Company::getAll();
 
@@ -133,7 +130,6 @@ class UserController extends Controller
      */
     public function update(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, UpdateUserRequest $request, User $user)
     {
-        $this->authorize('update');
 
         $user->setName($request->get('name'));
         $user->setSurname($request->get('surname'));
