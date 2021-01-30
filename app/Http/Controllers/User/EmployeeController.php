@@ -22,6 +22,11 @@ use function view;
 
 class EmployeeController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Employee::class, 'employee');
+    }
+
     /**
      * @return Factory|IlluminateView
      */

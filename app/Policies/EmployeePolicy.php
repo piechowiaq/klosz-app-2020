@@ -12,6 +12,11 @@ class EmployeePolicy
 {
     use HandlesAuthorization;
 
+    public function after(User $user): bool
+    {
+        return $user->isSuperAdmin();
+    }
+
     /**
      * Determine whether the user can view any employees.
      *
@@ -19,6 +24,7 @@ class EmployeePolicy
      */
     public function viewAny(User $user)
     {
+        return $user->isAdmin() || $user->isManager() || $user->isUser();
     }
 
     /**
@@ -28,13 +34,7 @@ class EmployeePolicy
      */
     public function view(User $user, Employee $employee)
     {
-        foreach ($user->roles()->get() as $role) {
-            if ($role->name === 'SuperAdmin' || $role->name === 'Admin' || $role->name === 'Manager' || $role->name === 'User') {
-                return true;
-            }
-        }
-
-        return false;
+        return ($user->getEmployees()->contains($employee)) && ($user->isAdmin() || $user->isManager() || $user->isUser());
     }
 
     /**
@@ -44,6 +44,7 @@ class EmployeePolicy
      */
     public function create(User $user)
     {
+        return $user->isAdmin() || $user->isManager();
     }
 
     /**
@@ -53,13 +54,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee)
     {
-        foreach ($user->roles()->get() as $role) {
-            if ($role->name === 'SuperAdmin' || $role->name === 'Admin' || $role->name === 'Manager') {
-                return true;
-            }
-        }
-
-        return false;
+          return ($user->getEmployees()->contains($employee)) && ($user->isAdmin() || $user->isManager());
     }
 
     /**
@@ -69,6 +64,7 @@ class EmployeePolicy
      */
     public function delete(User $user, Employee $employee)
     {
+        return ($user->getEmployees()->contains($employee)) && ($user->isAdmin() || $user->isManager());
     }
 
     /**

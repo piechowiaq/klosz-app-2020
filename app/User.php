@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection as SupportCollection;
 
 use function bcrypt;
 use function route;
@@ -170,8 +171,33 @@ class User extends Authenticatable
         return $this->roles()->where('name', 'SuperAdmin')->exists();
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->roles()->where('name', 'Admin')->exists();
+    }
+
+    public function isUser(): bool
+    {
+        return $this->roles()->where('name', 'User')->exists();
+    }
+
+    public function isManager(): bool
+    {
+        return $this->roles()->where('name', 'Manager')->exists();
+    }
+
     public function getFullNameAttribute(): string
     {
         return $this->getName() . ' ' . $this->getSurname();
+    }
+
+    /**
+     * @return SupportCollection | Employee[]
+     */
+    public function getEmployees(): SupportCollection
+    {
+        return $this->companies()->get()->flatMap(static function (Company $company) {
+            return $company->getEmployees();
+        });
     }
 }

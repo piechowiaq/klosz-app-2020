@@ -10,7 +10,7 @@
     @endphp
     <div class="md:w-5/6 md:m-0 m-2">
         <div class="md:flex md:justify-between mb-4">
-            @can('update', $employee)
+            @can('create', $employee)
                 <div class="rounded border bg-transparent text-center md:mt-0 mt-4">
                     <div class="py-2 px-4 leading-tight text-indigo-500 focus:outline-none focus:border-indigo-500">
                         <a href="{{route('user.employees.create', ['company'=>$company])}}">Dodaj Pracownika</a>
