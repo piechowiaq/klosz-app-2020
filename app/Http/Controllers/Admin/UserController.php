@@ -22,6 +22,7 @@ use Illuminate\Routing\Redirector;
 
 use function is_array;
 use function redirect;
+use function route;
 use function view;
 
 class UserController extends Controller
@@ -141,6 +142,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect('/admin/users');
+        return redirect(route('admin.index'));
     }
 }

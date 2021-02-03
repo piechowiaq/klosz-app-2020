@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Report;
+use App\Registry;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ReportPolicy
+class RegistryPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ReportPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Report  $report
+     * @param  \App\Registry  $registry
      * @return mixed
      */
-    public function view(User $user, Report $report)
+    public function view(User $user, Registry $registry)
     {
         //
     }
@@ -48,10 +48,10 @@ class ReportPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Report  $report
+     * @param  \App\Registry  $registry
      * @return mixed
      */
-    public function update(User $user, Report $report)
+    public function update(User $user, Registry $registry)
     {
         //
     }
@@ -60,10 +60,10 @@ class ReportPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Report  $report
+     * @param  \App\Registry  $registry
      * @return mixed
      */
-    public function delete(User $user, Report $report)
+    public function delete(User $user, Registry $registry)
     {
         //
     }
@@ -72,10 +72,10 @@ class ReportPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Report  $report
+     * @param  \App\Registry  $registry
      * @return mixed
      */
-    public function restore(User $user, Report $report)
+    public function restore(User $user, Registry $registry)
     {
         //
     }
@@ -84,10 +84,10 @@ class ReportPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Report  $report
+     * @param  \App\Registry  $registry
      * @return mixed
      */
-    public function forceDelete(User $user, Report $report)
+    public function forceDelete(User $user, Registry $registry)
     {
         //
     }
