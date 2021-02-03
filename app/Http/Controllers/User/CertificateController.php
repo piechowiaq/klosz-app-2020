@@ -28,6 +28,11 @@ use function view;
 
 class CertificateController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Certificate::class, 'certificate');
+    }
+
     /**
      * @return Factory|IlluminateView
      */

@@ -191,7 +191,7 @@ class Company extends Model
     public function getReports(): SupportCollection
     {
         return $this->registries()->get()->flatMap(static function (Registry $registry) {
-            return $registry->reports()->get();
+            return $registry->getReports();
         });
     }
 }

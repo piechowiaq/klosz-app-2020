@@ -200,4 +200,14 @@ class User extends Authenticatable
             return $company->getEmployees();
         });
     }
+
+    /**
+     * @return SupportCollection | Employee[]
+     */
+    public function getCertificates(): SupportCollection
+    {
+        return $this->companies()->get()->flatMap(static function (Company $company) {
+            return $company->getEmployees();
+        });
+    }
 }

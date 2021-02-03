@@ -12,6 +12,11 @@ class CertificatePolicy
 {
     use HandlesAuthorization;
 
+    public function after(User $user): bool
+    {
+        return $user->isSuperAdmin();
+    }
+
     /**
      * Determine whether the user can view any certificates.
      *
@@ -19,6 +24,7 @@ class CertificatePolicy
      */
     public function viewAny(User $user)
     {
+        return $user->isAdmin() || $user->isManager() || $user->isUser();
     }
 
     /**
@@ -28,6 +34,7 @@ class CertificatePolicy
      */
     public function view(User $user, Certificate $certificate)
     {
+        return $user->getCompanies()->contains($certificate->getCompany()->first()) && ($user->isAdmin() || $user->isManager() || $user->isUser());
     }
 
     /**
@@ -37,6 +44,7 @@ class CertificatePolicy
      */
     public function create(User $user)
     {
+        return $user->isAdmin() || $user->isManager() || $user->isUser();
     }
 
     /**
@@ -46,13 +54,7 @@ class CertificatePolicy
      */
     public function update(User $user, Certificate $certificate)
     {
-        foreach ($user->roles()->get() as $role) {
-            if ($role->name === 'Manager' || $role->name === 'Admin') {
-                return true;
-            }
-        }
-
-        return false;
+        return $user->isAdmin() || $user->isManager() || $user->isUser();
     }
 
     /**
@@ -62,6 +64,7 @@ class CertificatePolicy
      */
     public function delete(User $user, Certificate $certificate)
     {
+        return $user->isAdmin() || $user->isManager() || $user->isUser();
     }
 
     /**
