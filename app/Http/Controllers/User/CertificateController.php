@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserCertificateRequest;
 use App\Http\Requests\UpdateUserCertificateRequest;
 use App\Training;
-use DateTime;
+use Safe\DateTime;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;

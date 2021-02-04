@@ -18,6 +18,8 @@ use App\Core\Role\Domain\Repository\RoleRepositoryInterface;
 use App\Core\Role\Infrastructure\Repository\EloquentRoleRepository;
 use App\Core\Training\Domain\Repository\TrainingRepositoryInterface;
 use App\Core\Training\Infrastructure\Repository\EloquentTrainingRepository;
+use App\Shared\Db\Db;
+use App\Shared\Db\DbInterface;
 use App\Shared\Http\Response\ResponseFactory;
 use App\Shared\Http\Response\ResponseFactoryInterface;
 use App\Shared\MessageBus\MessageBus;
@@ -46,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
         // SHARED
         $this->app->bind(MessageBusInterface::class, MessageBus::class);
         $this->app->bind(ResponseFactoryInterface::class, ResponseFactory::class);
+        $this->app->bind(DbInterface::class, Db::class);
     }
 
     /**
