@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  nginx:
+    image: nginx:alpine
+    tty: true
+    volumes:
+      - ./:/var/www
+      - .docker/nginx/conf.d/:/etc/nginx/conf.d
+    depends_on:
+      - php
+      - mysql
+  php:
+    image: "klosz:latest"
+    depends_on:
+      - mysql
+  mysql:
+    image: mariadb:10.5
+    tty: true
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USERNAME: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - .docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+
+volumes:
+  mysql-data: {}

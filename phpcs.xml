@@ -8,10 +8,11 @@
     <exclude-pattern>*/*.blade.php</exclude-pattern>
     <arg name="tab-width" value="4"/>
     <arg value="nps"/>
-    <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
     <rule ref="Doctrine">
         <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint" />
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix" />
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming.SuperfluousPrefix" />
     </rule>
 
 </ruleset>
