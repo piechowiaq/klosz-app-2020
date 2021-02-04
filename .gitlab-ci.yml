@@ -1,6 +1,7 @@
 variables:
   PHP_LOCAL_IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   PHP_DEVELOP_IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  REGISTRY: registry.gitlab.com
 
 stages:
   - Build
@@ -13,7 +14,7 @@ Image:
   stage: Build
   image: docker:19.03
   before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $REGISTRY
     - docker rmi -f $PHP_LOCAL_IMAGE_TAG || true
     - docker pull $PHP_LOCAL_IMAGE_TAG || docker pull $PHP_DEVELOP_IMAGE_TAG || true
   script:
