@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection as SupportCollection;
 
+use function assert;
 use function bcrypt;
 use function route;
 
@@ -209,5 +210,27 @@ class User extends Authenticatable
         return $this->companies()->get()->flatMap(static function (Company $company) {
             return $company->getEmployees();
         });
+    }
+
+    /**
+     * @return SupportCollection | Registry[]
+     */
+    public function getRegistries(): SupportCollection
+    {
+        return $this->companies()->get()->flatMap(static function (Company $company) {
+            return $company->getRegistries();
+        });
+    }
+
+    /**
+     * @return Collection | Registry []
+     */
+    public function getRegistriesByCompany(Company $company): Collection
+    {
+        $companyRegistries = $this->getCompanies()->find($company);
+
+        assert($companyRegistries instanceof Company);
+
+        return $companyRegistries->getRegistries();
     }
 }
