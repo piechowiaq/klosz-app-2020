@@ -37,7 +37,7 @@
                                class="">Edytuj</a>
                         </div>
                     @endcan
-                    @can('update', $employee)
+                    @can('delete', $employee)
                         <div
                             class="px-2 bg-transparent hover:bg-red-500 text-black-700  hover:text-white border text-indigo-500 hover:border-transparent rounded m-2 py-2 ">
                             <form

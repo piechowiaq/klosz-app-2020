@@ -11,17 +11,8 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
     public function view(User $user): bool
     {
-        return $user->companies()->count() > 1 || $user->isSuperAdmin();
+        return $user->getCompanies()->count() > 1 || $user->isSuperAdmin();
     }
 }
