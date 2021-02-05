@@ -9,8 +9,10 @@ use App\Employee;
 use App\Policies\CertificatePolicy;
 use App\Policies\EmployeePolicy;
 use App\Policies\ReportPolicy;
+use App\Policies\TrainingPolicy;
 use App\Policies\UserPolicy;
 use App\Report;
+use App\Training;
 use App\User;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -28,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         Certificate::class => CertificatePolicy::class,
         Report::class => ReportPolicy::class,
         User::class => UserPolicy::class,
+        Training::class => TrainingPolicy::class,
 
     ];
 

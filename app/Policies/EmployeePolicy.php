@@ -34,7 +34,7 @@ class EmployeePolicy
      */
     public function view(User $user, Employee $employee)
     {
-        return ($user->getEmployees()->contains($employee)) && ($user->isAdmin() || $user->isManager() || $user->isUser());
+        return $user->getCompanies()->contains($employee->getCompany()->first()) && $user->isAdmin() || $user->isManager() || $user->isUser();
     }
 
     /**
@@ -54,7 +54,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee)
     {
-          return ($user->getEmployees()->contains($employee)) && ($user->isAdmin() || $user->isManager());
+          return $user->getCompanies()->contains($employee->getCompany()->first()) && $user->isAdmin() || $user->isManager();
     }
 
     /**
@@ -64,7 +64,7 @@ class EmployeePolicy
      */
     public function delete(User $user, Employee $employee)
     {
-        return ($user->getEmployees()->contains($employee)) && ($user->isAdmin() || $user->isManager());
+        $user->getCompanies()->contains($employee->getCompany()->first()) && $user->isAdmin() || $user->isManager();
     }
 
     /**

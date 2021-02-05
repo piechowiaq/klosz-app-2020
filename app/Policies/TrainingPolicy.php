@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Report;
+use App\Company;
+use App\Training;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ReportPolicy
+class TrainingPolicy
 {
     use HandlesAuthorization;
 
@@ -24,7 +25,7 @@ class ReportPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->isAdmin() || $user->isManager() || $user->isUser();
     }
 
     /**
@@ -32,9 +33,9 @@ class ReportPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Report $report)
+    public function view(User $user, Training $training, Company $company)
     {
-        return false;
+        return $user->getTrainingsByCompany($company)->contains($training) && $user->isAdmin() || $user->isManager() || $user->isUser();
     }
 
     /**
@@ -44,7 +45,6 @@ class ReportPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin();
     }
 
     /**
@@ -52,9 +52,8 @@ class ReportPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Report $report)
+    public function update(User $user, Training $training)
     {
-        return $user->getCompanies()->contains($report->getCompany()->first()) && $user->isAdmin();
     }
 
     /**
@@ -62,9 +61,8 @@ class ReportPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Report $report)
+    public function delete(User $user, Training $training)
     {
-        return $user->getCompanies()->contains($report->getCompany()->first()) && $user->isAdmin();
     }
 
     /**
@@ -72,7 +70,7 @@ class ReportPolicy
      *
      * @return mixed
      */
-    public function restore(User $user, Report $report)
+    public function restore(User $user, Training $training)
     {
     }
 
@@ -81,7 +79,7 @@ class ReportPolicy
      *
      * @return mixed
      */
-    public function forceDelete(User $user, Report $report)
+    public function forceDelete(User $user, Training $training)
     {
     }
 }

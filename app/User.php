@@ -235,24 +235,24 @@ class User extends Authenticatable
     }
 
     /**
-     * @return SupportCollection | Report []
+     * @return SupportCollection | Training []
      */
-    public function getReports(): SupportCollection
+    public function getTrainings(): SupportCollection
     {
         return $this->companies()->get()->flatMap(static function (Company $company) {
-            return $company->getReports();
+            return $company->getTrainings();
         });
     }
 
     /**
-     * @return SupportCollection | Report []
+     * @return Collection | Training []
      */
-    public function getReportsByCompany(Company $company): SupportCollection
+    public function getTrainingsByCompany(Company $company): Collection
     {
         $company = $this->getCompanies()->find($company);
 
         assert($company instanceof Company);
 
-        return $company->getReports();
+        return $company->getTrainings();
     }
 }
