@@ -13,6 +13,7 @@ use App\Registry;
 use App\Report;
 use DateTime;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View as IlluminateView;
 use Illuminate\Http\RedirectResponse;
@@ -28,9 +29,18 @@ use function view;
 
 class ReportController extends Controller
 {
-     /**
-      * @return Factory|IlluminateView
-      */
+    public function __construct()
+    {
+        $this->authorizeResource(Report::class, 'report', [
+            'except' => ['update'],
+        ]);
+    }
+
+    /**
+     * @return Factory|IlluminateView
+     *
+     * @throws AuthorizationException
+     */
     public function create(Company $company, Report $report)
     {
         return view('user.reports.create', ['company' => $company]);

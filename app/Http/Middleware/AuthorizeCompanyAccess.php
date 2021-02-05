@@ -29,6 +29,7 @@ class AuthorizeCompanyAccess
         $currentUser   = $this->getUser();
         $userCompanies = $currentUser->getCompanies();
         $routeCompany  = $request->route('company');
+
         assert($routeCompany instanceof Company);
         if ($currentUser->isSuperAdmin() || $userCompanies->contains($routeCompany)) {
             return $next($request);

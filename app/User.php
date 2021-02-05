@@ -227,10 +227,32 @@ class User extends Authenticatable
      */
     public function getRegistriesByCompany(Company $company): Collection
     {
-        $companyRegistries = $this->getCompanies()->find($company);
+        $company = $this->getCompanies()->find($company);
 
-        assert($companyRegistries instanceof Company);
+        assert($company instanceof Company);
 
-        return $companyRegistries->getRegistries();
+        return $company->getRegistries();
+    }
+
+    /**
+     * @return SupportCollection | Report []
+     */
+    public function getReports(): SupportCollection
+    {
+        return $this->companies()->get()->flatMap(static function (Company $company) {
+            return $company->getReports();
+        });
+    }
+
+    /**
+     * @return SupportCollection | Report []
+     */
+    public function getReportsByCompany(Company $company): SupportCollection
+    {
+        $company = $this->getCompanies()->find($company);
+
+        assert($company instanceof Company);
+
+        return $company->getReports();
     }
 }
