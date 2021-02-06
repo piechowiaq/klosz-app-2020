@@ -8,7 +8,7 @@
     <title>{{ config('app.name', 'Klosz') }}</title>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-{{--    <link rel="icon" href="{{ Storage::disk('s3')->url('images/Logo.png') }}">--}}
+    <link rel="icon" href="{{ asset('storage/logo/klosz_logo.png') }}">
 </head>
 <body class=" h-screen antialiased leading-none">
 <div id="app">
@@ -19,7 +19,7 @@
                     <a href="{{ url('/login') }}" class="text-lg font-semibold text-yellow-500 no-underline">
                         {{ config('app.name', 'Klosz') }}
                     </a>
-{{--                    <img src="{{ Storage::disk('s3')->url('images/Logo.png') }}" class=" ml-4 h-16 w-16 inline" alt="Logo">--}}
+                  <img  id="image" src="{{ asset('storage/logo/klosz_logo.png') }}"  class=" ml-4 h-16 w-16 inline" alt="Logo">
                 </div>
                 <div class="text-right text-center ">
                     @guest
