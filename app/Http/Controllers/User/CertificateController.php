@@ -11,7 +11,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserCertificateRequest;
 use App\Http\Requests\UpdateUserCertificateRequest;
 use App\Training;
-use Safe\DateTime;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View as IlluminateView;
@@ -19,6 +18,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
+use Safe\DateTime;
 
 use function date;
 use function is_array;

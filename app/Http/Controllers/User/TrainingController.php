@@ -40,7 +40,6 @@ class TrainingController extends Controller
      */
     public function show(Company $company, Training $training)
     {
-
         $this->authorize('view', [$training, $company]);
 
         $trainingEmployees = $training->getEmployeesByCompany($company);

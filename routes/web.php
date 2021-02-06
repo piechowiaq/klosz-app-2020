@@ -28,6 +28,11 @@ Route::group(['namespace' => '\App\Core'], function()
         'uses' => 'Example\Application\ExampleController@index'
     ]);
 
+    Route::get('/random', [
+       'as'=>'random',
+       'uses'=> 'Example\Application\ExampleController@randomNumber'
+    ]);
+
 });
 
 Route::middleware('auth')->group(static function (): void {

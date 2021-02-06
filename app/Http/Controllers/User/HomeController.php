@@ -7,12 +7,12 @@ namespace App\Http\Controllers\User;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\User;
-use Safe\DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View as IlluminateView;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Safe\DateTime;
 
 use function assert;
 use function round;

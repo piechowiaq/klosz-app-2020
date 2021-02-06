@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Core\Example\Application;
 
 use App\Core\Example\Application\Query\GetRandomModelQuery;
+use App\Core\Example\Application\Query\GetRandomNumberQuery;
 use App\Shared\MessageBus\MessageBusInterface;
 
 use function dd;
@@ -23,5 +24,12 @@ class ExampleController
         $query  = new GetRandomModelQuery();
         $result = $this->messageBus->dispatchSyncQuery($query);
         dd($result);
+    }
+
+    public function randomNumber(): int
+    {
+        $query = new GetRandomNumberQuery(1, 9);
+
+        return $this->messageBus->dispatchSyncQuery($query);
     }
 }

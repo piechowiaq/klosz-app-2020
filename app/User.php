@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App;
 
-use Safe\DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection as SupportCollection;
+use Safe\DateTime;
 
 use function assert;
 use function bcrypt;

@@ -11,7 +11,6 @@ use App\Http\Requests\StoreUserReportRequest;
 use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
-use Safe\DateTime;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
@@ -20,6 +19,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
+use Safe\DateTime;
 
 use function date;
 use function is_array;
