@@ -10,18 +10,21 @@ use App\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View as IlluminateView;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Safe\DateTime;
 
 use function assert;
+use function redirect;
 use function round;
+use function route;
 use function view;
 
 class HomeController extends Controller
 {
     /**
-     * @return RedirectResponse|Factory|IlluminateView
+     * @return RedirectResponse|Factory|IlluminateView|Redirector
      */
     public function home()
     {
@@ -29,14 +32,14 @@ class HomeController extends Controller
 
         assert($user instanceof User);
 
-        if ($user->getCompanies()->count() === 1) {
+        if ($user->getCompanies()->count() === 1 && ! $user->isSuperAdmin()) {
             $company = $user->getCompanies()->first();
 
             return view('user.dashboard', ['company' => $company]);
         }
 
         if ($user->isSuperAdmin()) {
-            return view('admin.home');
+            return redirect(route('admin.companies.index'));
         }
 
         return view('user.home', ['user' => $user]);
@@ -61,7 +64,11 @@ class HomeController extends Controller
             );
         }
 
-        $trainingChartValue = round($companyValidTrainings->avg());
+        $trainingChartValue = 0;
+
+        if ($companyValidTrainings->avg() !== null) {
+            $trainingChartValue = round($companyValidTrainings->avg());
+        }
 
         $companyValidReports = new Collection();
 
@@ -77,6 +84,6 @@ class HomeController extends Controller
 
         $registryChartValue = $company->getRegistries()->count() === 0 ? 0 : round($validRegistries / $company->getRegistries()->count() * 100);
 
-        return view('user.dashboard', ['company' => $company, 'companyTrainings' => $company->getTrainings(), 'trainingChartValue' => $trainingChartValue, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
+               return view('user.dashboard', ['company' => $company, 'companyTrainings' => $company->getTrainings(), 'trainingChartValue' => $trainingChartValue, 'companyRegistries' => $company->getRegistries(), 'registryChartValue' => $registryChartValue]);
     }
 }
