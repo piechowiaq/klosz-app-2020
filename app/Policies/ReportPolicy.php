@@ -4,37 +4,13 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Report;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ReportPolicy
 {
     use HandlesAuthorization;
-
-    public function after(User $user): bool
-    {
-        return $user->isSuperAdmin();
-    }
-
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @return mixed
-     */
-    public function viewAny(User $user)
-    {
-        return true;
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @return mixed
-     */
-    public function view(User $user, Report $report)
-    {
-        return false;
-    }
 
     /**
      * Determine whether the user can create models.

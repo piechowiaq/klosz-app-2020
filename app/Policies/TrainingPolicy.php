@@ -13,11 +13,6 @@ class TrainingPolicy
 {
     use HandlesAuthorization;
 
-    public function after(User $user): bool
-    {
-        return $user->isSuperAdmin();
-    }
-
     /**
      * Determine whether the user can view any models.
      *
