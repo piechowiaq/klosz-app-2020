@@ -11,7 +11,7 @@ use App\Http\Requests\StoreUserReportRequest;
 use App\Http\Requests\UpdateUserReportRequest;
 use App\Registry;
 use App\Report;
-use DateTime;
+use Safe\DateTime;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;

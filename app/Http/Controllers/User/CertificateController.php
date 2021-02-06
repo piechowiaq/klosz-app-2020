@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserCertificateRequest;
 use App\Http\Requests\UpdateUserCertificateRequest;
 use App\Training;
-use DateTime;
+use Safe\DateTime;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View as IlluminateView;

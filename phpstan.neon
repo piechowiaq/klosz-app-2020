@@ -1,7 +1,11 @@
+includes:
+    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+    - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
 parameters:
     level: 8
     paths:
         - app
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         -
             message: '#Call to an undefined static method [a-zA-Z0-9\\_]+::find\(\)#'

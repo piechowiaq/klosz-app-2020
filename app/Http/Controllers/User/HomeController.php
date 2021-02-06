@@ -7,7 +7,7 @@ namespace App\Http\Controllers\User;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\User;
-use DateTime;
+use Safe\DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View as IlluminateView;
 use Illuminate\Http\RedirectResponse;

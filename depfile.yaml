@@ -1,0 +1,201 @@
+paths:
+  - ./app/Core
+layers:
+  # Company
+  - name: Company-Application
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Company\\Application.*
+  - name: Company-Domain
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Company\\Domain.*
+  - name: Company-Infrastructure
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Company\\Infrastructure.*
+  - name: Company-UI
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Company\\UI.*
+  # Department
+  - name: Department-Application
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Department\\Application.*
+  - name: Department-Domain
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Department\\Domain.*
+  - name: Department-Infrastructure
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Department\\Infrastructure.*
+  - name: Department-UI
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Department\\UI.*
+  # Registry
+  - name: Registry-Application
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Registry\\Application.*
+  - name: Registry-Domain
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Registry\\Domain.*
+  - name: Registry-Infrastructure
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Registry\\Infrastructure.*
+  - name: Registry-UI
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Registry\\UI.*
+  # Role
+  - name: Role-Application
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Role\\Application.*
+  - name: Role-Domain
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Role\\Domain.*
+  - name: Role-Infrastructure
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Role\\Infrastructure.*
+  - name: Role-UI
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Role\\UI.*
+  # Training
+  - name: Training-Application
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Training\\Application.*
+  - name: Training-Domain
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Training\\Domain.*
+  - name: Training-Infrastructure
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Training\\Infrastructure.*
+  - name: Training-UI
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Training\\UI.*
+  # Example
+  - name: Example-Application
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Example\\Application.*
+  - name: Example-Domain
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Example\\Domain.*
+  - name: Example-Infrastructure
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Example\\Infrastructure.*
+  - name: Example-UI
+    collectors:
+      - type: className
+        regex: .*App\\Core\\Example\\UI.*
+  # SHARED
+  - name: Shared
+    collectors:
+      - type: className
+        regex: .*App\\Shared.*
+ruleset:
+  # Company
+  Company-Application:
+    - Company-Domain
+    - Shared
+  Company-Domain:
+    - Shared
+  Company-Infrastructure:
+    - Company-Domain
+    - Company-Application
+    - Company-UI
+    - Shared
+  Company-UI:
+    - Company-Domain
+    - Company-Application
+    - Shared
+  # Department
+  Department-Application:
+    - Department-Domain
+    - Shared
+  Department-Domain:
+    - Shared
+  Department-Infrastructure:
+    - Department-Domain
+    - Department-Application
+    - Department-UI
+    - Shared
+  Department-UI:
+    - Department-Domain
+    - Department-Application
+    - Shared
+  # Registry
+  Registry-Application:
+    - Registry-Domain
+    - Shared
+  Registry-Domain:
+    - Shared
+  Registry-Infrastructure:
+    - Registry-Domain
+    - Registry-Application
+    - Registry-UI
+    - Shared
+  Registry-UI:
+    - Registry-Domain
+    - Registry-Application
+    - Shared
+  # Role
+  Role-Application:
+    - Role-Domain
+    - Shared
+  Role-Domain:
+    - Shared
+  Role-Infrastructure:
+    - Role-Domain
+    - Role-Application
+    - Role-UI
+    - Shared
+  Role-UI:
+    - Role-Domain
+    - Role-Application
+    - Shared
+  # Training
+  Training-Application:
+    - Training-Domain
+    - Shared
+  Training-Domain:
+    - Shared
+  Training-Infrastructure:
+    - Training-Domain
+    - Training-Application
+    - Training-UI
+    - Shared
+  Training-UI:
+    - Training-Domain
+    - Training-Application
+    - Shared
+  # Example
+  Example-Application:
+    - Example-Domain
+    - Shared
+  Example-Domain:
+    - Shared
+  Example-Infrastructure:
+    - Example-Domain
+    - Example-Application
+    - Example-UI
+    - Shared
+  Example-UI:
+    - Example-Domain
+    - Example-Application
+    - Shared
