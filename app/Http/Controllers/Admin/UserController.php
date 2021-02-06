@@ -12,7 +12,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
-use DateTime;
+use Safe\DateTime;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
@@ -27,8 +27,6 @@ use function view;
 
 class UserController extends Controller
 {
-
-
     /**
      * @return Factory|IlluminateView
      *
@@ -36,8 +34,6 @@ class UserController extends Controller
      */
     public function index()
     {
-
-
         $users = User::getAll();
 
         return view('admin.users.index', ['users' => $users]);
@@ -50,8 +46,6 @@ class UserController extends Controller
      */
     public function create()
     {
-
-
         $roles = Role::getAll();
 
         $companies = Company::getAll();
@@ -66,8 +60,6 @@ class UserController extends Controller
      */
     public function store(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, StoreUserRequest $request)
     {
-
-
         $user = new User();
         $user->setName($request->get('name'));
         $user->setSurname($request->get('surname'));
@@ -102,8 +94,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-
-
         return view('admin.users.show', ['user' => $user]);
     }
 
@@ -114,8 +104,6 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-
-
         $companies = Company::getAll();
 
         $roles = Role::getAll();
@@ -130,7 +118,6 @@ class UserController extends Controller
      */
     public function update(RoleRepositoryInterface $roleRepository, CompanyRepositoryInterface $companyRepository, UpdateUserRequest $request, User $user)
     {
-
         $user->setName($request->get('name'));
         $user->setSurname($request->get('surname'));
         $user->setEmail($request->get('email'));

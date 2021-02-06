@@ -20,6 +20,16 @@ Auth::routes();
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
+Route::group(['namespace' => '\App\Core'], function()
+{
+
+    Route::get('/example', [
+        'as' => 'example',
+        'uses' => 'Example\Application\ExampleController@index'
+    ]);
+
+});
+
 Route::middleware('auth')->group(static function (): void {
     Route::namespace('Admin')->middleware('admin.authorize')->prefix('admin')->name('admin.')->group(static function (): void {
         Route::get('/', 'AdminController@index')->name('home');

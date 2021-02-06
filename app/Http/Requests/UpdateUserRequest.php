@@ -7,7 +7,6 @@ namespace App\Http\Requests;
 use App\User;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
-
 use Illuminate\Validation\Rule;
 
 use function assert;
